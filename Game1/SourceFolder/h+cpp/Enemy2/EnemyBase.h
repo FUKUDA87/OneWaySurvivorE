@@ -2,7 +2,6 @@
 #include"../Draw3DBase/CarE.h"
 #include"../Enemy/Vector.h"
 #include"../Enemy/HpEne.h"
-#include"../Draw/Hp/HpBase.h"
 
 class C_EnemyBase :public C_CarE {
 public:
@@ -30,8 +29,6 @@ public:
 protected:
 	//–îˆó
 	Vector *Vect;
-
-	C_HpBase* m_HpBase;
 
 	D3DXVECTOR3 Pos2D;
 	D3DXVECTOR3 targetPos;//player‚ÌposŽæ“¾—p

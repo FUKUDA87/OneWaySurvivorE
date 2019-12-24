@@ -46,10 +46,10 @@ C_EnemyA::C_EnemyA(const int * EnemyNo, D3DXMATRIX GroundMat, float * TransX)
 	m_Ai = e_DB->GetAiPhase();
 
 	if (*EnemyNo > 100) {
-		m_HpBase = new C_Hp2DEnemy(&D3DXVECTOR3(800.0f,30.0f,1.0f),&D3DXVECTOR3(1280.0f/2.0f,720.0f*0.1f,0.0f));
+		Hp_Init(new C_Hp2DEnemy(&D3DXVECTOR3(800.0f, 30.0f, 1.0f), &D3DXVECTOR3(1280.0f / 2.0f, 720.0f*0.1f, 0.0f)));
 	}
 	else {
-		m_HpBase = new C_Hp3D(&D3DXVECTOR2(0.7f,0.1f));
+		Hp_Init(new C_Hp3D(&D3DXVECTOR2(0.7f, 0.1f)));
 	}
 }
 

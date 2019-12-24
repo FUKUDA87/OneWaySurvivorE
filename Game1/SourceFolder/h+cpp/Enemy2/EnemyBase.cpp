@@ -10,9 +10,6 @@ C_EnemyBase::~C_EnemyBase()
 	//矢印の削除
 	delete Vect;
 
-	if (m_HpBase != nullptr) {
-		delete m_HpBase;
-	}
 }
 
 void C_EnemyBase::InitEnemy(void)
@@ -67,10 +64,7 @@ void C_EnemyBase::Draw3DAll(const D3DXVECTOR3 * CamPos)
 	//ボス以外なら表示
 	if (BodyData.CarBodyNo < 200) {
 		CHARABASE c = GetCharaBase();
-		if (m_HpBase != nullptr) {
-			CHARABASE l_c = GetCharaBase();
-			m_HpBase->Draw3DAll(&l_c.NowHp, &l_c.MaxHp, CamPos, &Car.Base.Mat, 1.5f*Car.Base.ScaPos.y);
-		}
+		Hp_Draw3D(CamPos, &Car.Base.Mat, 1.5f*Car.Base.ScaPos.y);
 	}
 
 	Draw3DCar();
@@ -92,10 +86,7 @@ void C_EnemyBase::Draw3DAll(const D3DXVECTOR3 * CamPos)
 void C_EnemyBase::Draw2DAll(void)
 {
 	Vect->Draw(Car.Base.Flg);
-	if (m_HpBase != nullptr) {
-		CHARABASE l_c = GetCharaBase();
-		m_HpBase->Draw2DAll(&l_c.NowHp, &l_c.MaxHp);
-	}
+	Hp_Draw2D();
 }
 
 void C_EnemyBase::GetPos2DSet(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport)

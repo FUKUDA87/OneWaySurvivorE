@@ -1,10 +1,12 @@
 #pragma once
 #include<d3dx9.h>
 #include"Struct.h"
+#include"../Draw/Hp/HpBase.h"
 
 class C_CharaBase {
 public:
 	C_CharaBase();
+	~C_CharaBase();
 	//構造体代入
 	void SetCharaBase(const CHARABASE *CharaBaseS);
 	//初期化渡し
@@ -31,7 +33,16 @@ public:
 	void SetCharaBase(const STATUS* S);
 
 protected:
-
+	//Hp表示渡し
+	void Hp_Init(C_HpBase* InitHpBase);
+	//Hp削除
+	void Hp_Delete(void);
+	//Hp２D表示
+	void Hp_Draw2D(void);
+	//Hp3D表示
+	void Hp_Draw3D(const D3DXVECTOR3 *CamPos, const D3DXMATRIX *Mat, const float UpY);
 private: 
 	CHARABASE CharaBase;
+
+	C_HpBase *HpBase;
 };

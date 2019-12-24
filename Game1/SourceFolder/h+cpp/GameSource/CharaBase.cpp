@@ -5,6 +5,11 @@ C_CharaBase::C_CharaBase()
 	SetCharaBase(&GetInitCharaBase());
 }
 
+C_CharaBase::~C_CharaBase()
+{
+	Hp_Delete();
+}
+
 void C_CharaBase::SetCharaBase(const CHARABASE * CharaBaseS)
 {
 	CharaBase = *CharaBaseS;
@@ -82,4 +87,32 @@ void C_CharaBase::SetCharaBase(const STATUS * S)
 {
 	/*SetHp(&S->MaxHp);
 	SetDamageFlg(&S->DamageSetFlg);*/
+}
+
+void C_CharaBase::Hp_Init(C_HpBase * InitHpBase)
+{
+	Hp_Delete();
+
+	HpBase = InitHpBase;
+}
+
+void C_CharaBase::Hp_Delete(void)
+{
+	if (HpBase != nullptr) {
+		delete HpBase;
+	}
+}
+
+void C_CharaBase::Hp_Draw2D(void)
+{
+	if (HpBase != nullptr) {
+		HpBase->Draw2DAll(&CharaBase.NowHp, &CharaBase.MaxHp);
+	}
+}
+
+void C_CharaBase::Hp_Draw3D(const D3DXVECTOR3 *CamPos, const D3DXMATRIX *Mat, const float UpY)
+{
+	if (HpBase != nullptr) {
+		HpBase->Draw3DAll(&CharaBase.NowHp, &CharaBase.MaxHp, CamPos, Mat, UpY);
+	}
 }

@@ -44,6 +44,8 @@ StageSelectScene::StageSelectScene()
 	//選択モードの初期化
 	InitStaSel();
 
+	M_CarSet = new C_CarSet();
+
 }
 
 StageSelectScene::~StageSelectScene()
@@ -68,6 +70,11 @@ StageSelectScene::~StageSelectScene()
 	delete Ok;
 
 	EndFlg = false;
+
+	if (M_CarSet != nullptr) {
+		delete M_CarSet;
+	}
+
 }
 
 void StageSelectScene::Render2D(void)
@@ -77,37 +84,23 @@ void StageSelectScene::Render2D(void)
 	//////////////////////////////////////////////////
 	// 描画開始
 	lpSprite->Begin(D3DXSPRITE_ALPHABLEND);
-	//戻る
-	modoru->DrawSu();
-	//ステージ
-	if (stage.size() > 0) {
-		for (unsigned int s = 0; s < stage.size(); s++) {
-			stage[s]->DrawSu();
-		}
-	}
-
-	if (CarSel.size() > 0) {
-		for (unsigned int c = 0; c < CarSel.size(); c++) {
-			CarSel[c]->Draw2DAll();
-		}
-	}
-
-	Ok->Draw2DOK();
-
-	fade->Draw();
-	mouse->Draw2D();
+	Draw2D_Normal();
 	// 描画終了
 	lpSprite->End();
+
+	M_CarSet->DrawTxt();
 }
 
 void StageSelectScene::Render3D(void)
 {
+	M_CarSet->Draw3D();
+
 	//ステージ外
 
 	//ガレージ
 	sky->Draw();
-	//車体
-	car->Draw3DAll();
+
+	Draw3D_Normal();
 }
 
 bool StageSelectScene::Update(void)
@@ -134,11 +127,12 @@ bool StageSelectScene::Update(void)
 		}
 	}
 
-	ChangeMode();
+	ChangeMode_Car();
 
-	D3DXMATRIX cTmp;
-	D3DXMatrixTranslation(&cTmp, 0.0f, 1.0f, 0.0f);
-	cam->Update(car->GetMatCar(), cTmp, true);
+	
+
+	Update_Normal();
+	Update_Car();
 
 	car->UpdateAll();
 
@@ -367,4 +361,114 @@ void StageSelectScene::ChangeCar(int * No)
 	//データにセット
 	PlayerBody->SetPData(&pData);
 
+}
+
+void StageSelectScene::ChangeMode_Car(void)
+{
+	if (fade->GetMoveFlg() != false)return;
+
+	if (CarModeFlg != true)return;
+
+	if (key.RETURNKeyF() != true)return;
+
+	if (GetAsyncKeyState('8') & 0x8000) {
+		if (GetAsyncKeyState('9') & 0x8000) {
+			M_CarSet->ChangeMode(true);
+			if (M_CarSet->GetModeFlg() == true)mouse->Init();
+		}
+	}
+}
+
+bool StageSelectScene::Update_Normal(void)
+{
+	if (M_CarSet->GetModeFlg() != false)return false;
+
+	ChangeMode();
+
+	D3DXMATRIX cTmp;
+	D3DXMatrixTranslation(&cTmp, 0.0f, 1.0f, 0.0f);
+	cam->Update(car->GetMatCar(), cTmp, true);
+
+	return false;
+}
+
+bool StageSelectScene::Update_Car(void)
+{
+	if (M_CarSet->GetModeFlg() != true)return false;
+
+	D3DXVECTOR3 l_Pos = M_CarSet->GetPartsPos();
+	if (key.AKey() == true)l_Pos.x -= M_CarSet->GetUp();
+	if (key.FKey() == true)l_Pos.x += M_CarSet->GetUp();
+
+	if (key.WKey() == true)l_Pos.y += M_CarSet->GetUp();
+	if (key.SKey() == true)l_Pos.y -= M_CarSet->GetUp();
+
+	if (key.EKey() == true)l_Pos.z += M_CarSet->GetUp();
+	if (key.DKey() == true)l_Pos.z -= M_CarSet->GetUp();
+	M_CarSet->SetPartsPos(&l_Pos);
+
+	if (key.XKeyF() == true)M_CarSet->ChangeCar();
+
+	cam->UpdateCar(mouse);
+
+	mouse->Init();
+
+	float y = cam->GetHeight();
+
+	if (key.TKey() == true)y += M_CarSet->GetUp();
+	if (key.GKey() == true)y -= M_CarSet->GetUp();
+
+	cam->SetHeight(&y);
+
+	if (key.ZKeyF() == true)M_CarSet->ChangePartsMeshFlg(true);
+
+	//パーツ座標変更後
+	l_Pos = M_CarSet->GetPartsPos();
+	float l_Dis;
+	if (judg.Mesh(l_Pos, D3DXVECTOR3(0.0f, -1.0f, 0.0f), sky->GetDrawSkyMat(), sky->GetSkyMesh(), &l_Dis) == true) {
+		D3DXVECTOR3 l_Pos2 = l_Pos + D3DXVECTOR3(0.0f, -1.0f, 0.0f)*l_Dis;
+		
+		D3DXMATRIX Mat;
+		D3DXMatrixTranslation(&Mat, l_Pos.x, l_Pos.y, l_Pos.z);
+		if (judg.Mesh(l_Pos2, D3DXVECTOR3(0.0f, 1.0f, 0.0f), Mat, M_CarSet->GetTire(), &l_Dis) == true) {
+			l_Pos2 = l_Pos2 + D3DXVECTOR3(0.0f, 1.0f, 0.0f)*l_Dis;
+
+			M_CarSet->GroundSize(&l_Pos2.y);
+		}
+	}
+
+	return false;
+}
+
+void StageSelectScene::Draw3D_Normal(void)
+{
+	if (M_CarSet->GetModeFlg() != false)return;
+
+	//車体
+	car->Draw3DAll();
+}
+
+void StageSelectScene::Draw2D_Normal(void)
+{
+	if (M_CarSet->GetModeFlg() != false)return;
+
+	//戻る
+	modoru->DrawSu();
+	//ステージ
+	if (stage.size() > 0) {
+		for (unsigned int s = 0; s < stage.size(); s++) {
+			stage[s]->DrawSu();
+		}
+	}
+
+	if (CarSel.size() > 0) {
+		for (unsigned int c = 0; c < CarSel.size(); c++) {
+			CarSel[c]->Draw2DAll();
+		}
+	}
+
+	Ok->Draw2DOK();
+
+	fade->Draw();
+	mouse->Draw2D();
 }

@@ -14,6 +14,16 @@ public:
 	~Sky();
 	bool Update(D3DXMATRIX PM);
 	void Draw();
+
+	LPD3DXMESH GetSkyMesh(void) {
+		return sky.Mesh.lpMesh;
+	}
+
+	D3DXMATRIX GetDrawSkyMat(void) {
+		D3DXMATRIX Mat = sky.Base.Scal*sky.Base.Mat;
+		return Mat;
+	}
+
 };
 
 #endif // !Sky_H

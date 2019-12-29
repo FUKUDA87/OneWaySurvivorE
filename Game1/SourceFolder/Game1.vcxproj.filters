@@ -756,6 +756,12 @@
     <ClInclude Include="h+cpp\TitleParts\TitleSky.h">
       <Filter>ソース ファイル\TitleParts</Filter>
     </ClInclude>
+    <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\CarNoManager.h">
+      <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\StageParts\CarSet.h">
+      <Filter>ソース ファイル\StageParts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="h+cpp\2DDraw\BulletHole.cpp">
@@ -1303,6 +1309,12 @@
     </ClCompile>
     <ClCompile Include="h+cpp\main.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\CarNoManager.cpp">
+      <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\StageParts\CarSet.cpp">
+      <Filter>ソース ファイル\StageParts</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

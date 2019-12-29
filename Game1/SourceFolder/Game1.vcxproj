@@ -153,6 +153,7 @@
     <ClInclude Include="h+cpp\Draw3DBase\CarE.h" />
     <ClInclude Include="h+cpp\Draw3DBase\CarParts.h" />
     <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\CarMeshManager.h" />
+    <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\CarNoManager.h" />
     <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\GunManager.h" />
     <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\GunMeshManager.h" />
     <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\MeshManager.h" />
@@ -312,6 +313,7 @@
     <ClInclude Include="h+cpp\Sound\Click.h" />
     <ClInclude Include="h+cpp\Sound\SoundGun1.h" />
     <ClInclude Include="h+cpp\StageParts\CarSelect.h" />
+    <ClInclude Include="h+cpp\StageParts\CarSet.h" />
     <ClInclude Include="h+cpp\StageParts\OkButton.h" />
     <ClInclude Include="h+cpp\StageParts\StageCamera.h" />
     <ClInclude Include="h+cpp\StageParts\StageCar.h" />
@@ -361,6 +363,7 @@
     <ClCompile Include="h+cpp\Draw3DBase\CarE.cpp" />
     <ClCompile Include="h+cpp\Draw3DBase\CarParts.cpp" />
     <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\CarMeshManager.cpp" />
+    <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\CarNoManager.cpp" />
     <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\GunManager.cpp" />
     <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\GunMeshManager.cpp" />
     <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\PartsMeshManager.cpp" />
@@ -496,6 +499,7 @@
     <ClCompile Include="h+cpp\Sound\Click.cpp" />
     <ClCompile Include="h+cpp\Sound\SoundGun1.cpp" />
     <ClCompile Include="h+cpp\StageParts\CarSelect.cpp" />
+    <ClCompile Include="h+cpp\StageParts\CarSet.cpp" />
     <ClCompile Include="h+cpp\StageParts\OkButton.cpp" />
     <ClCompile Include="h+cpp\StageParts\StageCamera.cpp" />
     <ClCompile Include="h+cpp\StageParts\StageCar.cpp" />

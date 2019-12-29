@@ -393,3 +393,72 @@ bool Key::YKeyF()
 	return false;
 }
 
+bool Key::FKey()
+{
+	if (GetAsyncKeyState('F') & 0x8000) {
+		return true;
+	}
+	return false;
+}
+
+bool Key::FKeyF()
+{
+	static bool KeyFlg = false;
+	if (FKey() == true) {
+		if (KeyFlg == false) {
+			KeyFlg = true;
+			return true;
+		}
+	}
+	else {
+		KeyFlg = false;
+	}
+	return false;
+}
+
+bool Key::XKey()
+{
+	if (GetAsyncKeyState('X') & 0x8000) {
+		return true;
+	}
+	return false;
+}
+
+bool Key::XKeyF()
+{
+	static bool KeyFlg = false;
+	if (XKey() == true) {
+		if (KeyFlg == false) {
+			KeyFlg = true;
+			return true;
+		}
+	}
+	else {
+		KeyFlg = false;
+	}
+	return false;
+}
+
+bool Key::GKey()
+{
+	if (GetAsyncKeyState('G') & 0x8000) {
+		return true;
+	}
+	return false;
+}
+
+bool Key::GKeyF()
+{
+	static bool KeyFlg = false;
+	if (GKey() == true) {
+		if (KeyFlg == false) {
+			KeyFlg = true;
+			return true;
+		}
+	}
+	else {
+		KeyFlg = false;
+	}
+	return false;
+}
+

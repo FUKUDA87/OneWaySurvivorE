@@ -84,6 +84,18 @@ public:
 	bool YKey();
 	//Yキー+KeyFlg
 	bool YKeyF();
+	//Fキー
+	bool FKey();
+	//Fキー+KeyFlg
+	bool FKeyF();
+	//Xキー
+	bool XKey();
+	//Xキー+KeyFlg
+	bool XKeyF();
+	//Gキー
+	bool GKey();
+	//Gキー+KeyFlg
+	bool GKeyF();
 };
 
 #endif // !KEY_H

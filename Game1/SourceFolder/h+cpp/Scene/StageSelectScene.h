@@ -15,6 +15,7 @@
 #include"../StageParts/CarSelect.h"
 #include"../Player2/PlayerBody.h"
 #include"../StageParts/OkButton.h"
+#include"../StageParts/CarSet.h"
 
 
 class StageSelectScene :public SceneBase {
@@ -53,6 +54,17 @@ public:
 	void ChangeCar(int *No);
 
 protected:
+	//チェンジMode
+	void ChangeMode_Car(void);
+
+	//通常モードアップデート
+	bool Update_Normal(void);
+	//カスタムモードアップデート
+	bool Update_Car(void);
+	//表示３Dの通常モード
+	void Draw3D_Normal(void);
+	//表示２Dの通常モード
+	void Draw2D_Normal(void);
 
 private:
 	StageSky *sky;
@@ -88,5 +100,7 @@ private:
 
 	//OKボタン
 	C_OK *Ok;
+
+	C_CarSet *M_CarSet;
 
 };

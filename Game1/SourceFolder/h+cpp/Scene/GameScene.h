@@ -31,7 +31,7 @@
 #include"../3DDraw/Smoke2.h"
 #include"../Enemy/EnemySky.h"
 #include"../Key/CMouse.h"
-#include"../Key/Key.h"
+#include"../Key/KeyTrue.h"
 #include"../2DDraw/Fade.h"
 #include"../3DDraw/BulletHole3D.h"
 #include"../Player2/PlayerA.h"
@@ -192,7 +192,7 @@ private:
 	//マウス
 	C_Mouse *mouse;
 	//キー
-	Key key;
+	C_KeyTrue key;
 	//フェード
 	Fade *fade;
 	//チェンジシーン用

@@ -39,7 +39,9 @@ StageSelectScene::StageSelectScene()
 
 	//選択モードの初期化の前に初期化
 	Ok = new C_OK(&D3DXVECTOR3(1.1f, 1.1f, 0.0f), &D3DXVECTOR3(1280.0f/2.0f, 720.0f*0.93f, 0.0f), &D3DXVECTOR3(0.25f, 0.11f, 0.0f));
-	
+
+	//車の表示の戻し用セット
+	BodyData_Init = car->GetBody();
 
 	//選択モードの初期化
 	InitStaSel();
@@ -173,6 +175,7 @@ void StageSelectScene::ChangeSceneFade(int ChangeSceneNo)
 
 void StageSelectScene::ChangeSceneFade(int ChangeSceneNo, int NextStageNo)
 {
+
 	ChangeSceneFade(ChangeSceneNo);
 	ChangeStageNo = NextStageNo;
 }
@@ -273,6 +276,12 @@ void StageSelectScene::InitStaSel(void)
 	for (int s = 0; s < 1; s++) {
 		stage.push_back(new StageTex(s + 1, D3DXVECTOR3((float)SCRW / 6.0f*(float)(s + 1), (float)SCRH / 4.0f, 0.0f)));
 	}
+
+	//車の表示戻し
+	car->SetBody(&BodyData_Init);
+
+	//データにセット
+	PlayerBody->SetPData(&car->GetBody());
 }
 
 bool StageSelectScene::CarSelectMode()
@@ -338,6 +347,9 @@ void StageSelectScene::InitCarSel(void)
 	int No = PlayerBody->GetPData().CarBodyNo;
 	CarSel[CarSel.size() - 1]->UpdateNo(&No);
 
+	//車の表示の戻し用セット
+	BodyData_Init = car->GetBody();
+
 }
 
 void StageSelectScene::StartFade(void)
@@ -358,8 +370,9 @@ void StageSelectScene::ChangeCar(int * No)
 	pData.CarBodyNo = *No;
 	//車に反映
 	car->SetBody(&pData);
+
 	//データにセット
-	PlayerBody->SetPData(&pData);
+	PlayerBody->SetPData(&car->GetBody());
 
 }
 

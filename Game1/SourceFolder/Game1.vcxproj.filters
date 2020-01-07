@@ -762,6 +762,9 @@
     <ClInclude Include="h+cpp\StageParts\CarSet.h">
       <Filter>ソース ファイル\StageParts</Filter>
     </ClInclude>
+    <ClInclude Include="h+cpp\Key\KeyTrue.h">
+      <Filter>ソース ファイル\Key</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="h+cpp\2DDraw\BulletHole.cpp">
@@ -1315,6 +1318,9 @@
     </ClCompile>
     <ClCompile Include="h+cpp\StageParts\CarSet.cpp">
       <Filter>ソース ファイル\StageParts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Key\KeyTrue.cpp">
+      <Filter>ソース ファイル\Key</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

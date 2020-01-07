@@ -33,9 +33,9 @@ public:
 	//Dキー+KeyFlg
 	bool DKeyF();
 	//左クリック
-	bool LClick();
+	virtual bool LClick();
 	//左クリック+KeyFlg
-	bool LClickF();
+	virtual bool LClickF();
 	//右クリック
 	bool RClick();
 	//右クリック+KeyFlg

@@ -913,7 +913,7 @@ bool GameScene::Update(void) {
 			sc.CamPos = camera->GetPos();
 			sc.CamLook = camera->GetLook();
 			sc.CamHead = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-			bool KeyFlg = key.LClick();
+			bool KeyFlg = key.LClickF_N();
 			player->UpdateBulPla(&KeyFlg,&BulletBirthFlg,&sc);
 			BulletJudg(&co_PlayerCar,NULL);
 			player->UpdateBulletMove();
@@ -2346,7 +2346,7 @@ void GameScene::CameraWallJudg(void)
 bool GameScene::GetBulletBirthFlg(void)
 {
 	if (EndFlg == true)return false;
-	if ((key.LClick() == true) && (BulletBirthFlg == false))return false;
+	if ((key.LClickF_N() == true) && (BulletBirthFlg == false))return false;
 	return true;
 }
 

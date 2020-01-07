@@ -10,7 +10,7 @@
 #include"../2DDraw/modoru.h"
 #include"../StageParts/StageTex.h"
 #include"../Key/CMouse.h"
-#include"../Key/Key.h"
+#include"../Key/KeyTrue.h"
 #include"../2DDraw/Fade.h"
 #include"../StageParts/CarSelect.h"
 #include"../Player2/PlayerBody.h"
@@ -79,7 +79,7 @@ private:
 	//マウス
 	C_Mouse *mouse;
 	//キー
-	Key key;
+	C_KeyTrue key;
 	//フェード
 	Fade *fade;
 	//チェンジシーン用
@@ -103,4 +103,5 @@ private:
 
 	C_CarSet *M_CarSet;
 
+	BODYDATA BodyData_Init;
 };

@@ -29,6 +29,10 @@ public:
 	bool SetDamageParts(const unsigned int *pNo, const int *Damage);
 	//パーツの生存確認(0で死、１で生、２は判別不能)
 	int PartsDeadFlg(unsigned int *pNo);
+	//車のボディの渡し
+	BODYDATA GetBody(void) {
+		return BodyData;
+	}
 protected:
 	BODYDATA BodyData;
 	//標準パーツ用

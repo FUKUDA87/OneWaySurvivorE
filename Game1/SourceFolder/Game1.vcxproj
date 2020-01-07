@@ -285,6 +285,7 @@
     <ClInclude Include="h+cpp\Gun\Muz\MuzFlaPA.h" />
     <ClInclude Include="h+cpp\Key\CMouse.h" />
     <ClInclude Include="h+cpp\Key\Key.h" />
+    <ClInclude Include="h+cpp\Key\KeyTrue.h" />
     <ClInclude Include="h+cpp\Move\GunMove\GunBulletA.h" />
     <ClInclude Include="h+cpp\Move\GunMove\GunBulletStopA.h" />
     <ClInclude Include="h+cpp\Move\GunMove\GunLockonA.h" />
@@ -472,6 +473,7 @@
     <ClCompile Include="h+cpp\Gun\Muz\MuzFlaPA.cpp" />
     <ClCompile Include="h+cpp\Key\CMouse.cpp" />
     <ClCompile Include="h+cpp\Key\Key.cpp" />
+    <ClCompile Include="h+cpp\Key\KeyTrue.cpp" />
     <ClCompile Include="h+cpp\main.cpp" />
     <ClCompile Include="h+cpp\Move\GunMove\GunBulletA.cpp" />
     <ClCompile Include="h+cpp\Move\GunMove\GunBulletStopA.cpp" />

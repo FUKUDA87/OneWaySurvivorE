@@ -19,6 +19,7 @@
 #include"Sound/BulletEmpty1.h"
 #include"Sound/SoundGun1.h"
 #include"Sound/BombSound1.h"
+#include"Key/KeyTrue.h"
 
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
@@ -94,6 +95,12 @@ C_BombSound *BombSound;
 //------------------------------------------
 
 bool gameFullScreen;	// フルスクリーン（true,false)
+
+void Init(void) {
+	
+
+
+}
 
 
 

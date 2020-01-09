@@ -420,5 +420,24 @@ struct S_TEXPOS {
 	int x;
 	int y;
 };
+struct S_Random {
+	int x, y, z;
+};
+//煙の表示調整用構造体
+struct S_Smog
+{
+	//移動方向ベクトル
+	D3DXVECTOR3 MoveVec;
+	//移動のフレーム数
+	D3DXVECTOR3 Frame;
+	//透明度の変数
+	int Alpha, AStart, AUp;
+	//ポリゴンのサイズ
+	float PolSize,PolBit,PolBitUp;
+	//表示用
+	int Draw_No;
+	//移動量の変化
+	S_Random Random;
+};
 
 //#endif // !Struct_H

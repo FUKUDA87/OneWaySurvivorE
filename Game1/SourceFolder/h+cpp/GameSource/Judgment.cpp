@@ -969,6 +969,15 @@ D3DXVECTOR3 Judg::GetVecVec(const D3DXVECTOR3 * VecA, const D3DXVECTOR3 * VecB)
 	return Vec;
 }
 
+D3DXVECTOR3 Judg::GetVecVec_S(const D3DXVECTOR3 * VecA, const D3DXVECTOR3 * VecB)
+{
+	D3DXVECTOR3 A = *VecA, B = *VecB, Vec;
+	Vec.x = A.x/B.x;
+	Vec.y = A.y/B.y;
+	Vec.z = A.z/B.z;
+	return Vec;
+}
+
 BASE3D Judg::InitGunParts(const Object3DGun * Init)
 {
 	BASE3D Base;
@@ -981,13 +990,13 @@ BASE3D Judg::InitGunParts(const Object3DGun * Init)
 	Base.DrawFlg = Init->DrawFlg;
 
 	Base.AngX = Init->AngX;
-	D3DXMatrixRotationX(&Base.RotX,D3DXToRadian(Base.AngX));
+	D3DXMatrixRotationX(&Base.RotX,D3DXToRadian((float)Base.AngX));
 
 	Base.AngY = Init->AngY;
-	D3DXMatrixRotationY(&Base.RotY, D3DXToRadian(Base.AngY));
+	D3DXMatrixRotationY(&Base.RotY, D3DXToRadian((float)Base.AngY));
 
 	Base.AngZ = Init->AngZ;
-	D3DXMatrixRotationZ(&Base.RotZ, D3DXToRadian(Base.AngZ));
+	D3DXMatrixRotationZ(&Base.RotZ, D3DXToRadian((float)Base.AngZ));
 
 	return Base;
 }
@@ -1012,6 +1021,31 @@ GUNDRAWNOS Judg::GetInitGUNDRAWNOS(const int GunNo, const int BulletNo, const in
 	g.MuzFlaNo = MuzFlaNo;
 	g.LaserNo = LaserNo;
 	return g;
+}
+
+S_Smog Judg::GetInitSmog(const D3DXVECTOR3 *MoveVec, const D3DXVECTOR3 *Frame, const int Alpha, const int AStart, const int AUp, const float PolSize, const float PolBit, const float PolBitUp, const S_Random *Random)
+{
+	S_Smog L_S_Smog;
+	L_S_Smog.MoveVec = *MoveVec;
+	L_S_Smog.Frame = *Frame;
+	L_S_Smog.Alpha = Alpha;
+	L_S_Smog.AStart = AStart;
+	L_S_Smog.AUp = AUp;
+	L_S_Smog.PolSize = PolSize;
+	L_S_Smog.PolBit = PolBit;
+	L_S_Smog.PolBitUp = PolBitUp;
+	L_S_Smog.Random = *Random;
+
+	return L_S_Smog;
+}
+
+S_Random Judg::GetInitRand(const int x, const int y, const int z)
+{
+	S_Random r;
+	r.x = x;
+	r.y = y;
+	r.z = z;
+	return r;
 }
 
 D3DXVECTOR3 Judg::VecPos(D3DXMATRIX MatA, D3DXVECTOR3 VecA)

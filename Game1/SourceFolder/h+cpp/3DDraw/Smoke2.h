@@ -4,7 +4,7 @@
 
 class C_Smoke2 :public C_Smog {
 public:
-	C_Smoke2(const D3DXVECTOR3 *Pos);
+	C_Smoke2(const D3DXMATRIX *Mat);
 	~C_Smoke2();
 	//‰Šú‰»
 	void InitS(void);

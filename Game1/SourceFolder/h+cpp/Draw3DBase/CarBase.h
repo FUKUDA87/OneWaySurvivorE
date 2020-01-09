@@ -158,6 +158,11 @@ public:
 	//矢印作成に必要な情報の取得とアップデート
 	virtual void GetPos2DSet(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport) {};
 
+	//移動ベクトル渡し
+	D3DXVECTOR3 GetMoveVec(void) {
+		return brj.MoveVec;
+	}
+
 protected:
 	//車のモデル入れ
 	void SetMeshCar(int MeshNo);

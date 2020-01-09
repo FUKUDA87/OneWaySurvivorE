@@ -6,10 +6,10 @@ extern LPDIRECT3DDEVICE9	lpD3DDevice;
 
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 
-C_Smoke2::C_Smoke2(const D3DXVECTOR3 * Pos):C_Smog(Pos)
+C_Smoke2::C_Smoke2(const D3DXMATRIX *Mat):C_Smog(Mat)
 {
 	InitS();
-	for (int s = 0; s < SmokeNum; s++) {
+	/*for (int s = 0; s < SmokeNum; s++) {
 		SmokePos[s] = *Pos;
 	}
 	for (int m = 0; m < SmokeNum * 2;m++) {
@@ -20,7 +20,7 @@ C_Smoke2::C_Smoke2(const D3DXVECTOR3 * Pos):C_Smog(Pos)
 			SmokePos[s] = SmokePos[s - 1];
 		}
 		SmokePos[0] = *Pos;
-	}
+	}*/
 }
 
 C_Smoke2::~C_Smoke2()
@@ -50,7 +50,7 @@ bool C_Smoke2::Update(const int * NowHp, const int * MaxHp, const D3DXVECTOR3 * 
 {
 	//ˆÊ’u‚ÌXV
 	for (int s = 0; s < SmokeNum; s++) {
-		SmokePos[s].y += yUp;
+		//SmokePos[s].y += yUp;
 	}
 	for (int s = SmokeNum-1; s >0; s--) {
 		SmokePos[s] = SmokePos[s - 1];

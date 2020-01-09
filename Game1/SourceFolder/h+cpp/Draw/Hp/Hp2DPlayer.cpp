@@ -22,7 +22,7 @@ void C_Hp2D::Draw2DAll(const int * NowHp, const int * MaxHp)
 void C_Hp2D::Draw2D(void)
 {
 	RECT rcAim = { 0,0,m_HpTex[0].Width,m_HpTex[0].Height };
-	D3DXVECTOR3 Pos = GetTexPos(&D3DXVECTOR2(m_HpTex[0].Width, m_HpTex[0].Height), &m_Hp.TraPos, &m_Hp.ScaPos);
+	D3DXVECTOR3 Pos = GetTexPos(&D3DXVECTOR2((float)m_HpTex[0].Width, (float)m_HpTex[0].Height), &m_Hp.TraPos, &m_Hp.ScaPos);
 	D3DXMatrixTranslation(&m_Hp.Mat, Pos.x, Pos.y, NULL);
 	D3DXVECTOR3 ScalPos = m_Hp.ScaPos;
 	judg.ScalingMat(&m_Hp.Scal, &ScalPos);
@@ -32,7 +32,7 @@ void C_Hp2D::Draw2D(void)
 	lpSprite->Draw(m_HpTex[0].Tex, &rcAim, &D3DXVECTOR3(0, 0, 0), NULL, D3DCOLOR_ARGB(20, 255, 255, 255));
 
 	RECT rcAime = { 0,0,m_HpTex[1].Width,m_HpTex[1].Height };
-	Pos = GetTexPos(&D3DXVECTOR2(m_HpTex[1].Width, m_HpTex[1].Height), &m_Hp.TraPos, &m_Hp.ScaPos);
+	Pos = GetTexPos(&D3DXVECTOR2((float)m_HpTex[1].Width, (float)m_HpTex[1].Height), &m_Hp.TraPos, &m_Hp.ScaPos);
 	D3DXMatrixTranslation(&m_Hp.Mat, Pos.x, Pos.y, NULL);
 	ScalPos = m_Hp.ScaPos;
 	ScalPos.x *= Per;

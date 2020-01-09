@@ -765,6 +765,9 @@
     <ClInclude Include="h+cpp\Key\KeyTrue.h">
       <Filter>ソース ファイル\Key</Filter>
     </ClInclude>
+    <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\CarSmogManager.h">
+      <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="h+cpp\2DDraw\BulletHole.cpp">
@@ -1321,6 +1324,9 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Key\KeyTrue.cpp">
       <Filter>ソース ファイル\Key</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\CarSmogManager.cpp">
+      <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

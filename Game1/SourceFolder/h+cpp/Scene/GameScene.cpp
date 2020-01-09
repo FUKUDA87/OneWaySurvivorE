@@ -10,6 +10,7 @@
 #include"../GameSource/InvBi.h"
 #include"../GameSource/Motion.h"
 #include"../Sound/Bgm.h"
+#include"../Draw3DBase/Draw3DManager/CarSmogManager.h"
 
 extern C_Bgm *bgm;
 extern int CountManager;
@@ -318,12 +319,7 @@ GameScene::GameScene(const int stageNum){
 	//bgm初期化
 	bgm->ChangeBgm(2);
 
-	//煙の初期化
-	PlaSmo = new C_Smoke2(&judg.SetPosM(player->GetMatCar()));
-
 	Size = 1.0f;
-
-
 }
 GameScene::~GameScene() {
 	//ステージ情報セーブの確認
@@ -373,7 +369,6 @@ GameScene::~GameScene() {
 			s--;
 		}
 	}
-	delete PlaSmo;
 
 	//火花の削除
 	if (SparkV.size() > 0) {
@@ -457,12 +452,11 @@ void GameScene::Render3D(void) {
 	
 	
 	//スモッグの表示
-	/*if (Smog.size() > 0) {
+	if (Smog.size() > 0) {
 		for (unsigned int s = 0; s < Smog.size(); s++) {
 			Smog[s]->Draw3D(camera->GetPos());
 		}
-	}*/
-	//PlaSmo->Draw3D(&camera->GetPos());
+	}
 }
 void GameScene::Render2D(void) {
 	//////////////////////////////////////////////////
@@ -502,8 +496,8 @@ void GameScene::Render2D(void) {
 	/*debug->Draw();
 	debugT->Draw2DT();
 	debugT->Draw2DTd();*/
-	/*debugT->Draw2DF((float)player->GetBulSize(), 0, 0);
-	debugT->Draw2DF(Size, 0, 50);*/
+	//debugT->Draw2DF((float)Debug_No, 0, 0);
+	//debugT->Draw2DF(Size, 0, 50);*/
 	//debugT->Draw2DF(enemy[0]->GetQuaForMove().AnimeFrame, 0, 50);
 }
 bool GameScene::Update(void) {
@@ -948,21 +942,7 @@ bool GameScene::Update(void) {
 				}
 			}
 
-			//スモッグのアップデート
-			if (player->GetHp() < 50) {
-				Smog.push_back(new C_Smog(&judg.SetPosM(player->GetMatCar())));
-			}
-			if (Smog.size() > 0) {
-				for (unsigned int s = 0; s < Smog.size(); s++) {
-					if (Smog[s]->Update() == false) {
-						delete Smog[s];
-						Smog.erase(Smog.begin() + s);
-						s--;
-					}
-				}
-			}
-			/*int MaxHp=1000,Hp=player->GetHP();
-			PlaSmo->Update(&Hp, &MaxHp, &judg.SetPosM(player->GetMat()));*/
+			Update_Smog_Player();
 
 
 			//弾痕３Dのアップデート
@@ -2646,6 +2626,42 @@ void GameScene::Pos2DUpdate(const D3DXMATRIX * mProj, const D3DXMATRIX * mView, 
 		//矢印計算
 		enemy[e]->GetPos2DSet(mProj, mView, Viewport);
 	}
+}
+
+bool GameScene::Update_Smog_Player(void)
+{
+	//
+	float L_Per = (float)player->GetCharaBase().NowHp / (float)player->GetCharaBase().MaxHp;
+	if ( L_Per< 0.3f) {
+		float L_Num = 30.0f;
+		if (rand() % 100 < 20+ (int)(L_Num*0.3f-L_Num*L_Per)) {
+			D3DXMATRIX TmpMat;
+			C_CarSmogManager L_CarSmogManager;
+			D3DXVECTOR3 Vec = L_CarSmogManager.GetPos(player->GetBody().CarBodyNo);
+			judg.SetTransMat(&TmpMat, &Vec);
+			TmpMat = TmpMat * player->GetMatCar();
+			S_Smog s = L_CarSmogManager.GetSmog(player->GetBody().CarBodyNo);
+			if (L_Per < 0.3f)s.Draw_No = 53;
+			if (L_Per < 0.2f)s.Draw_No = 50;
+			if (L_Per < 0.1f)s.Draw_No = 47;
+			Smog.push_back(new C_Smog(&TmpMat, &s));
+		}
+	}
+
+	if (Smog.size() <= 0) return false;
+
+	//スモッグのアップデート
+	for (unsigned int s = 0; s < Smog.size(); s++) {
+		Smog[s]->PosMoveVec(&player->GetMoveVec());
+
+		if (Smog[s]->Update() == false) {
+			delete Smog[s];
+			Smog.erase(Smog.begin() + s);
+			s--;
+		}
+	}
+
+	return true;
 }
 
 

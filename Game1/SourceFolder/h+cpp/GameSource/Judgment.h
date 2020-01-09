@@ -133,12 +133,18 @@ public:
 	D3DXMATRIX GetMatY(const D3DXMATRIX *MatA, const D3DXMATRIX *MatB);
 	//ベクトルの掛け算
 	D3DXVECTOR3 GetVecVec(const D3DXVECTOR3 *VecA, const D3DXVECTOR3 *VecB);
+	//ベクトルの割り算
+	D3DXVECTOR3 GetVecVec_S(const D3DXVECTOR3 *VecA, const D3DXVECTOR3 *VecB);
 	//位置の初期化(Gunバージョン)
 	BASE3D InitGunParts(const Object3DGun* Init);
 	//位置の初期化(Gunバージョン)
 	Object3DGun InitSetPartsData(const float AngX,const float AngY,const float AngZ,const D3DXVECTOR3 *TransPos, const D3DXVECTOR3 *ScalPos,const bool DrawFlg);
 	//初期化構造体
 	GUNDRAWNOS GetInitGUNDRAWNOS(const int GunNo, const int BulletNo, const int MuzFlaNo, const int LaserNo);
+	//煙の構造体の初期化
+	S_Smog GetInitSmog(const D3DXVECTOR3 *MoveVec,const D3DXVECTOR3 *Frame,const int Alpha, const int AStart, const int AUp,const float PolSize, const float PolBit,const float PolBitUp,const S_Random *Random);
+	//乱数の初期化
+	S_Random GetInitRand(const int x, const int y, const int z);
 };
 
 #endif // !Judgm_H

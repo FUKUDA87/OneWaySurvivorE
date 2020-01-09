@@ -110,6 +110,13 @@ public:
 	void Pos2DUpdate(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport);
 
 protected:
+	/*アップデート*/
+	//煙のアップデート
+	bool Update_Smog_Player(void);
+
+
+	/*弾*/
+
 	//弾判定の情報初期化
 	BULLETJUDGDATA GetInitBJD(const float *InitDis);
 	//弾判定集
@@ -187,7 +194,6 @@ private:
 
 	//smog
 	std::vector<C_Smog *>Smog;
-	C_Smoke2 *PlaSmo;
 
 	//マウス
 	C_Mouse *mouse;
@@ -205,6 +211,7 @@ private:
 
 	//タッチ
 	std::vector<C_NextTouch*>Menu;
+
 
 };
 

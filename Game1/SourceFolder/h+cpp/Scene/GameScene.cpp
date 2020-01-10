@@ -188,6 +188,8 @@ bool GameScene::road(void)
 }
 
 GameScene::GameScene(const int stageNum){
+	AllNew();
+
 	debugT = new DebugT();
 
 	//マウスの初期化
@@ -320,94 +322,13 @@ GameScene::GameScene(const int stageNum){
 	bgm->ChangeBgm(2);
 
 	Size = 1.0f;
+
 }
 GameScene::~GameScene() {
 	//ステージ情報セーブの確認
 	bool SSFlg = pause->GetStaSavFlg();
 
-	delete debugT;
-	//地面の削除
-	for (unsigned int i = 0; i < ground.size(); i++) {
-		delete ground[i];
-		ground.erase(ground.begin() + i); i--;
-	}
-	delete[] CurType;
-	if (GroCou.size() > 0) {
-		for (unsigned int g = 0; g < GroCou.size(); g++) {
-			delete GroCou[g];
-			GroCou.erase(GroCou.begin() + g);
-			g--;
-		}
-	}
-	delete cou;
-	//敵の削除
-	for (unsigned int i = 0; i < enemy.size(); i++) {
-		delete enemy[i];
-		enemy.erase(enemy.begin() + i); i--;
-	}
-	for (unsigned int i = 0; i < explo.size(); i++) {
-		delete explo[i];
-		explo.erase(explo.begin() + i); i--;
-	}
-	delete player;
-	delete sky;
-	delete camera;
-	delete aiming;
-	delete debug;
-	delete GaOv;
-	delete war;
-	delete pause;
-	delete spear;
-	//スコアの削除
-	delete score;
-	
-	//スモッグの削除
-	if (Smog.size() > 0) {
-		for (unsigned int s = 0; s < Smog.size(); s++) {
-			delete Smog[s];
-			Smog.erase(Smog.begin() + s);
-			s--;
-		}
-	}
-
-	//火花の削除
-	if (SparkV.size() > 0) {
-		for (unsigned int s = 0; s < SparkV.size(); s++) {
-			delete SparkV[s];
-			SparkV.erase(SparkV.begin() + s);
-			s--;
-		}
-	}
-
-	//敵の情報を削除
-	for (unsigned int i = 0; i < ePop.size(); i++) {
-		delete ePop[i];
-		ePop.erase(ePop.begin() + i);
-		i--;
-	}
-
-	//マウスの削除
-	delete mouse;
-
-	//フェードの削除
-	delete fade;
-
-	//弾痕３Dの削除
-	if (BHole3D.size() > 0) {
-		for (unsigned int b = 0; b < BHole3D.size(); b++) {
-			delete BHole3D[b];
-			BHole3D.erase(BHole3D.begin() + b);
-			b--;
-		}
-	}
-
-	//プレイヤーの情報削除
-	delete PlayerBody;
-
-	//ライトのカウントダウンの削除
-	if (LightCount != nullptr) {
-		delete LightCount;
-	}
+	AllDelete();
 
 	//メニューの削除
 	DeleteMenu();
@@ -449,14 +370,10 @@ void GameScene::Render3D(void) {
 		}
 	}
 
-	
-	
-	//スモッグの表示
-	if (Smog.size() > 0) {
-		for (unsigned int s = 0; s < Smog.size(); s++) {
-			Smog[s]->Draw3D(camera->GetPos());
-		}
+	if (M_C_SmokeCar != nullptr) {
+		M_C_SmokeCar->Draw3D_CS(&camera->GetPos());
 	}
+
 }
 void GameScene::Render2D(void) {
 	//////////////////////////////////////////////////
@@ -496,481 +413,20 @@ void GameScene::Render2D(void) {
 	/*debug->Draw();
 	debugT->Draw2DT();
 	debugT->Draw2DTd();*/
-	//debugT->Draw2DF((float)Debug_No, 0, 0);
-	//debugT->Draw2DF(Size, 0, 50);*/
-	//debugT->Draw2DF(enemy[0]->GetQuaForMove().AnimeFrame, 0, 50);
+	/*float f=0.0f;
+	debugT->Draw2DF(f, 0, 0);*/
 }
 bool GameScene::Update(void) {
 
-	//bgmのアップデート
-	bool bFlg = true;
-	SoundCamera scB;
-	scB.CamPos = camera->GetPos();
-	scB.CamLook = camera->GetLook();
-	scB.CamHead = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	bgm->Update(&bFlg/*,&scB*/);
+	Update_Bgm();
 
-	if (GetAsyncKeyState('1') & 0x8000) {
-		MaxCount += 1;
-		if (MaxCount > 60)MaxCount = 60;
-	}
-	if (GetAsyncKeyState('2') & 0x8000) {
-		MaxCount -= 1;
-		if (MaxCount <1)MaxCount = 1;
-	}
+	Update_Debug();
 
 	mouse->Update();
 
-	//フェードのアップデート
-	if (fade->Update() == true) {
-		//キーの無力化
+	if (Update_Fade() != true)return false;
 
-	}
-	else {
-		if (fade->GetMoveEndFlg() == true) {
-			if (SceneChangeFlg == true)return SetScene();
-		}
-	}
-
-	if (pause->GetDFlg() == false) {//ポーズ
-		/*if (fade->GetFlg() == true) {
-			sceneManager.changeScene(new StageSelectScene());
-			return false;
-		}
-		if (fade->Update() == true) {
-			return true;
-		}
-		else {
-			GDebug();
-		}*/
-
-		//終わった時
-		if (EndFlg == true) {
-			mouse->ChaDrawFlg(true);
-		}
-		else {
-			//ポーズ
-			if (key.RETURNKeyF() == true) {
-				if (pause->GetDFlg() == false) {
-					pause->SetDFlg(true);
-					mouse->ChaDrawFlg(true);
-					bgm->StopSound();
-					//ロードの許可
-					if ((GetAsyncKeyState('8') & 0x8000) && (GetAsyncKeyState('9') & 0x8000) && (GetAsyncKeyState('0') & 0x8000)) {
-						pause->SetStaSavFlg(true);
-					}
-					SetMenu(true, false, false);
-					return true;
-				}
-			}
-		}
-		//スロー再生
-		if (CountNum >= MaxCount) {
-			CountNum = 1;
-			//================================================================================
-	        //地面
-	        //================================================================================
-			if (ground.size() > 0) {
-				for (unsigned int i = 0; i < ground.size(); i++) {
-					ground[i]->SuperUpdate();
-					//無限の道の削除と作成
-					GroundCreate(&i);
-				}
-			}
-
-			//========================================
-			//プレイヤー
-			//========================================
-			//カメラ-------------------------------------
-			if (EndFlg == false) {
-				if (fade->GetMoveFlg() == false) {
-					camera->UpdateM(true, mouse);
-				}
-				else {
-					mouse->Init();
-				}
-			}
-			//カメラ上限判定
-			camera->RotXJudg(&player->GetMatCar());
-
-			//プレイヤーと地面判定
-			float Dis;
-			unsigned int num;
-			if (NowGroNum(player->GetMatCar(), &num, &Dis) == true) {
-				player->SetGroNum(num);//地面の取得
-				eneFlg = true;//敵の出現開始
-			}
-			//敵
-			UpdateEnemyAI();
-
-			//横判定
-			//===========================================
-			//車線変更
-			//===========================================
-			//左の車線に変更
-			//カーブしたかどうかのFlg
-			bool LRKeyFlg = false;
-			if ((key.AKey() == true)) {
-				D3DXMATRIX Trans;
-				D3DXMatrixTranslation(&Trans, -1.0f*0.08f, 0.0f, 0.0f);
-				Trans = Trans * player->GetTransMatCar();
-				player->SetTransMatCar(&Trans);
-				Trans = player->GetTransMatCar()*player->GetCon().JudgMat;
-				player->SetMatCar(&Trans);
-				//横判定
-				WallJudg(true, true, false, 0);
-				//カーブ
-				player->SetRodAngY(-0.3f, true);
-				LRKeyFlg = true;
-
-
-			}
-			//右の車線に変更
-			if (key.DKey() == true) {
-				D3DXMATRIX Trans;
-				D3DXMatrixTranslation(&Trans, 1.0f*0.08f, 0.0f, 0.0f);
-				Trans = Trans * player->GetTransMatCar();
-				player->SetTransMatCar(&Trans);
-				Trans = player->GetTransMatCar()*player->GetCon().JudgMat;
-				player->SetMatCar(&Trans);
-				//横判定
-				WallJudg(false, true, false, 0);
-				player->SetRodAngY(0.3f, true);
-				LRKeyFlg = true;
-			}
-			if (LRKeyFlg == false)player->SetRodAngY(0.3f, false);
-
-			//前進判定=================================================================
-			if (1) {
-				//移動後の作成--------------------------------------------------------------
-
-				//移動後の変数
-				D3DXMATRIX EndMat;
-				D3DXVECTOR3 EndPos;
-
-				//player
-				//移動後の行列作成
-				EndMat = ForMoveEnd(player->GetCon(), player->GetQuaForMove(), player->GetTransMatCar());
-				player->SetForMoveEndMat(EndMat);
-				//移動ベクトル計算
-				D3DXMATRIX TransMat1, TransMat2,Trans;//両側のレイ発射位置
-				D3DXVECTOR3 ScalPosB = player->GetScalPosCar();
-				TransMat1 = judg.GetTransMatScal(&D3DXVECTOR3(player->GetCon().PosSmall.x, 0.0f, player->GetCon().PosBig.z), &ScalPosB);
-				TransMat2 = judg.GetTransMatScal(&D3DXVECTOR3(player->GetCon().PosBig.x, 0.0f, player->GetCon().PosBig.z), &ScalPosB);
-				Trans = judg.GetTransMatScal(&D3DXVECTOR3(0.0f, 0.0f, player->GetCon().PosBig.z), &ScalPosB);
-				player->SetForMoveVec(judg.MatMatVec(TransMat1*player->GetMatCar(), TransMat1*player->GetForMoveEndMat()), 0);
-				player->SetForMoveVec(judg.MatMatVec(Trans*player->GetMatCar(), Trans*player->GetForMoveEndMat()),1);
-				player->SetForMoveVec(judg.MatMatVec(TransMat2*player->GetMatCar(), TransMat2*player->GetForMoveEndMat()), 2);
-
-				//enemy
-				if (enemy.size() > 0) {//enemyの存在確認
-					//enemyの数
-					for (unsigned int e = 0; e < enemy.size(); e++) {
-						if (enemy[e]->GetFlgCar() == true) {
-							//移動後の行列作成
-							EndMat = ForMoveEnd(enemy[e]->GetCon(), enemy[e]->GetQuaForMove(), enemy[e]->GetTransMatCar());
-							/*EndPos = D3DXVECTOR3(EndMat._41, EndMat._42, EndMat._43);
-							EndMat = enemy[e]->GetMatEn();
-							judg.SetMatP(&EndMat, EndPos);*/
-							enemy[e]->SetForMoveEndMat(EndMat);
-							//移動ベクトル計算
-							D3DXMATRIX TransMat1, TransMat2, Trans;//両側のレイ発射位置
-							ScalPosB = enemy[e]->GetScalPosCar();
-
-							TransMat1 = judg.GetTransMatScal(&D3DXVECTOR3(enemy[e]->GetCon().PosSmall.x, 0.0f, enemy[e]->GetCon().PosBig.z), &ScalPosB);
-							TransMat2 = judg.GetTransMatScal(&D3DXVECTOR3(enemy[e]->GetCon().PosBig.x, 0.0f, enemy[e]->GetCon().PosBig.z), &ScalPosB);
-							Trans = judg.GetTransMatScal(&D3DXVECTOR3(0.0f, 0.0f, enemy[e]->GetCon().PosBig.z), &ScalPosB);
-
-							enemy[e]->SetForMoveVec(judg.MatMatVec(TransMat1*enemy[e]->GetMatCar(), TransMat1*enemy[e]->GetForMoveEndMat()), 0);
-							enemy[e]->SetForMoveVec(judg.MatMatVec(Trans*enemy[e]->GetMatCar(), Trans*enemy[e]->GetForMoveEndMat()), 1);
-							enemy[e]->SetForMoveVec(judg.MatMatVec(TransMat2*enemy[e]->GetMatCar(), TransMat2*enemy[e]->GetForMoveEndMat()), 2);
-						}
-					}
-				}
-
-				//------------------------------------------------------------------------
-
-				//当たり判定--------------------------------------------------------------
-				//移動ベクトルのサイズ
-				float Mul;
-				//当たり判定の回数
-				int MaxJudg = 2;
-				//当たり判定をMaxJudg回繰り返す
-				for (int i = 0; i < MaxJudg; i++) {
-
-					//player
-					//playerのVecサイズ
-					Mul = player->GetCon().SpeedMulJudg;
-					//判定
-					ForMoveJudg(player->GetCon(), player->GetDrawMatCar(), player->GetForMoveEndMat(), true, false, 0, player->GetForMoveVec(0), player->GetForMoveVec(1), player->GetForMoveVec(2), &Mul,&player->GetScalPosCar());
-					//Mulを本体に入れる
-					player->SetQuaVecSize(Mul);
-					//最後の繰り返し以外
-					if (i != MaxJudg - 1) {
-						//新しい移動後を作成
-						EndMat=ForMoveEnd(player->GetCon(), player->GetQuaForMove(), player->GetTransMatCar());
-						/*EndPos = D3DXVECTOR3(EndMat._41, EndMat._42, EndMat._43);
-						EndMat = player->GetMat();
-						judg.SetMatP(&EndMat, EndPos);*/
-						player->SetForMoveEndMat(EndMat);
-						//Mulの初期化
-						player->SetQuaVecSize(1.0f);
-					}
-
-					//enemy
-					if (enemy.size() > 0) {
-						for (unsigned int e = 0; e < enemy.size(); e++) {
-							if ((enemy[e]->GetFlgCar() == true)&&(enemy[e]->GetSkyType()==false)) {
-								//enemyのVecサイズ
-								Mul = enemy[e]->GetCon().SpeedMulJudg;
-								//判定
-								ForMoveJudg(enemy[e]->GetCon(), enemy[e]->GetMatCar(), enemy[e]->GetForMoveEndMat(), false, true, e, enemy[e]->GetForMoveVec(0), enemy[e]->GetForMoveVec(1), enemy[e]->GetForMoveVec(2), &Mul,&enemy[e]->GetScalPosCar());
-								//Mulを本体に入れる
-								enemy[e]->SetQuaVecSize(Mul);
-								//最後の繰り返し以外
-								if (i != MaxJudg - 1) {
-									//新しい移動後を作成
-									EndMat = ForMoveEnd(enemy[e]->GetCon(), enemy[e]->GetQuaForMove(), enemy[e]->GetTransMatCar());
-									/*EndPos = D3DXVECTOR3(EndMat._41, EndMat._42, EndMat._43);
-									EndMat = enemy[e]->GetMatEn();
-									judg.SetMatP(&EndMat, EndPos);*/
-									enemy[e]->SetForMoveEndMat(EndMat);
-									//Mulの初期化
-									enemy[e]->SetQuaVecSize(1.0f);
-								}
-							}
-						}
-					}
-				}
-				//--------------------------------------------------------------
-			}
-			//=========================================================================
-
-
-			//player======================================================================
-			//playerの移動
-			player->UpdateCarFM(ground);
-			//移動ベクトルのサイズの初期化
-			player->SetQuaVecSize(1.0f);
-			//敵の移動
-			UpdateEnemyMove();
-
-			//横判定
-			WallJudg(true, true, false, 0);
-			WallJudg(false, true, false, 0);
-
-			if (enemy.size() > 0) {
-				for (unsigned int e = 0; e < enemy.size(); e++) {
-					if ((enemy[e]->GetFlgCar() == true)&&(enemy[e]->GetSkyType()==false)) {
-						WallJudg(true, false, true, e);
-						WallJudg(false, false, true, e);
-					}
-				}
-			}
-
-			//最終Update
-			//player->SetParts(camera->GetAngX(),camera->GetAngY());
-			if (enemy.size() > 0) {
-				for (unsigned int e = 0; e < enemy.size(); e++) {
-					if (enemy[e]->GetFlgCar() == true) {
-						enemy[e]->SetParts(ground);
-					}
-				}
-			}
-
-			//カメラをplaeyrの前方に振り向かせるクォータニオンの初期化
-			if (EndFlg == false) {
-				//前方に振り向く計算
-				if ((key.RClickF() == true)&&(camera->GetQuaFlg()==false)) {
-					D3DXVECTOR3 cVec, ccVec,pVec,ppVec;
-					D3DXVec3TransformNormal(&cVec, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &camera->GetMat());
-					D3DXVec3TransformNormal(&pVec, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &player->GetMatCar());
-					ccVec = cVec;
-					ppVec = pVec;
-
-					float Dot, Ang,FrameUp;
-
-					//クォータニオンのフレーム数を計算
-					Dot = D3DXVec3Dot(&pVec, &cVec);
-					if (Dot > 1.0f)Dot = 1.0f;
-					if (Dot < -1.0f)Dot = -1.0f;
-					Ang = D3DXToDegree(acos(Dot));
-					FrameUp = 1.0f / Ang*6.0f;
-
-					//RotYの計算
-					D3DXMATRIX CamRotY, CamRotX;
-					ppVec.y = 0;
-					//内積
-					Dot = D3DXVec3Dot(&D3DXVECTOR3(0.0f, 0.0f, 1.0f), &ppVec);
-					if (Dot > 1.0f)Dot = 1.0f;
-					if (Dot < -1.0f)Dot = -1.0f;
-					Ang = D3DXToDegree(acos(Dot));
-					if (ppVec.x < 0.0f)Ang *= -1.0f;
-					D3DXMatrixRotationY(&CamRotY, D3DXToRadian(Ang));
-					//camera->SetRotY(&CamRotY);
-
-
-					//RotXの計算
-					D3DXMATRIX Mat=player->GetMatCar();
-					D3DXMatrixRotationY(&CamRotX, D3DXToRadian(-Ang));
-					Mat = CamRotX * Mat;
-					D3DXVec3TransformNormal(&pVec, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &Mat);
-					//内積
-					Dot = D3DXVec3Dot(&D3DXVECTOR3(0.0f, 0.0f, 1.0f), &pVec);
-					if (Dot > 1.0f)Dot = 1.0f;
-					if (Dot < -1.0f)Dot = -1.0f;
-					Ang = D3DXToDegree(acos(Dot));
-					if (pVec.y > 0.0f)Ang *= -1.0f;
-					D3DXMatrixRotationX(&CamRotX, D3DXToRadian(Ang));
-					//camera->SetRotX(&CamRotX);
-
-					//クォータニオンの初期値をセット
-					camera->SetQuaMat(&CamRotX, &CamRotY, &FrameUp);
-				}
-			}
-			
-			//カメラのクォータニオンのアップデート
-			camera->UpdateQua();
-
-			//カーブの車体の角度を反映
-			player->SetCurRotMat();
-
-			//playerのパーツ移動
-			if (player->UpdateAll(&camera->GetMat()) == false) {
-				//playerが死んだときの処理
-				if (EndFlg == false) {
-					BombInit(&player->GetMatCar());
-					EndFlg = true;
-					GaOv->Update(false, EndFlg);
-					for (unsigned int e = 0; e < enemy.size(); e++) {
-						enemy[e]->SetPlaEnd(true/*, player->GetSpeedCar()*/);
-					}
-					player->SetSpeedCar(player->GetSpeedCar()*0.0f);
-					war->SetFlg(false);
-					//メニューの表示
-					SetMenu(false,false,true);
-				}
-			}
-			//カメラのアップデート
-			camera->Update(player->GetMatGun());
-			//カメラと壁判定
-			CameraWallJudg();
-
-			//プレイヤーと地面判定2
-			if (NowGroNum(player->GetMatCar(), &num, &Dis) == true) {
-				player->SetGroNum(num);//地面の取得
-				eneFlg = true;//敵の出現開始
-			}
-
-			//照準のレイ判定
-			bool Flg = false;
-			BULLETJUDGDATA l_DisD;
-			Dis= 2000.0f;
-			l_DisD = GetInitBJD(&Dis);
-			RAYDATA l_RayR;
-			l_RayR.Mat = judg.SetMatP(camera->GetPos());
-			l_RayR.Ray= camera->GetVec();
-			float Rad = (float)RadJudgF*2.0f;
-			//敵のレイ判定
-			BulletJudgEnemy(&l_DisD, &l_RayR, &Rad);
-			if (l_DisD.Type > 0)Flg = true;
-			//照準の変化
-			if (Flg == true) {
-				aiming->ChaFlg();
-			}
-			else {
-				aiming->ResFlg();
-			}
-			//地面
-			BulletJudgGround(&l_DisD, &l_RayR,NULL, &Rad);
-			if (l_DisD.Type > 0)Flg = true;
-			//建物のレイ判定
-			//バレットの出現処理
-			D3DXVECTOR3 pos;
-			if (Flg == false) {
-				player->SetBPos(pos, Flg);
-			}
-			else {
-				pos = camera->GetPos() + l_RayR.Ray * l_DisD.SamllDis;
-				player->SetBPos(pos, Flg);
-			}
-			
-			//================================================================================
-			//弾
-			//================================================================================
-
-			//弾の誕生決め
-			BulletBirthFlg=GetBulletBirthFlg();
-			//player弾のUpdate
-			//player->GUpdateB(&BulletBirthFlg);
-			SoundCamera sc;
-			sc.CamPos = camera->GetPos();
-			sc.CamLook = camera->GetLook();
-			sc.CamHead = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-			bool KeyFlg = key.LClickF_N();
-			player->UpdateBulPla(&KeyFlg,&BulletBirthFlg,&sc);
-			BulletJudg(&co_PlayerCar,NULL);
-			player->UpdateBulletMove();
-			bool BBFlgB = player->GetBulBirFlgB();
-			SoundGun->Update(&BBFlgB);
-
-			//================================================================================
-			//空
-			//================================================================================
-			sky->Update(player->GetMatCar());
-
-			//爆発アップデート================================================================
-			for (unsigned int i = 0; i < explo.size(); i++) {
-				if (explo[i]->ExplUpdate(&camera->GetMat()) == false) {
-					delete explo[i];
-					explo.erase(explo.begin() + i);
-					i--;
-				}
-			}
-
-			war->Update();
-
-			//火花のアップデート
-			if (SparkV.size() > 0) {
-				for (unsigned int s = 0; s < SparkV.size(); s++) {
-					if (SparkV[s]->UpdateSuper()== false){
-						//削除
-						delete SparkV[s];
-						SparkV.erase(SparkV.begin() + s);
-						s--;
-					}
-				}
-			}
-
-			Update_Smog_Player();
-
-
-			//弾痕３Dのアップデート
-			if (BHole3D.size() > 0) {
-				for (unsigned int b = 0; b < BHole3D.size(); b++) {
-					if (BHole3D[b]->UpdateHol3D() == false) {
-						delete BHole3D[b];
-						BHole3D.erase(BHole3D.begin() + b);
-						b--;
-					}
-				}
-			}
-
-			//================================================================================
-			//敵
-			//================================================================================
-			if (UpdateE() == false) {
-				if (EndFlg == false) {
-					EndFlg = true;
-					GaOv->Update(true, EndFlg);
-					SetMenu(false, true, false);
-				}
-			}
-		}
-		else {
-			CountNum += 1;
-		}
-	}
+	Update_Game();
 
 	//メニューの更新
 	UpdateMenu();
@@ -2628,40 +2084,653 @@ void GameScene::Pos2DUpdate(const D3DXMATRIX * mProj, const D3DXMATRIX * mView, 
 	}
 }
 
-bool GameScene::Update_Smog_Player(void)
+void GameScene::AllNew(void)
 {
-	//
-	float L_Per = (float)player->GetCharaBase().NowHp / (float)player->GetCharaBase().MaxHp;
-	if ( L_Per< 0.3f) {
-		float L_Num = 30.0f;
-		if (rand() % 100 < 20+ (int)(L_Num*0.3f-L_Num*L_Per)) {
-			D3DXMATRIX TmpMat;
-			C_CarSmogManager L_CarSmogManager;
-			D3DXVECTOR3 Vec = L_CarSmogManager.GetPos(player->GetBody().CarBodyNo);
-			judg.SetTransMat(&TmpMat, &Vec);
-			TmpMat = TmpMat * player->GetMatCar();
-			S_Smog s = L_CarSmogManager.GetSmog(player->GetBody().CarBodyNo);
-			if (L_Per < 0.3f)s.Draw_No = 53;
-			if (L_Per < 0.2f)s.Draw_No = 50;
-			if (L_Per < 0.1f)s.Draw_No = 47;
-			Smog.push_back(new C_Smog(&TmpMat, &s));
+	//煙
+	M_C_SmokeCar = new C_SmokeCar();
+}
+
+void GameScene::AllDelete(void)
+{
+	delete debugT;
+	//地面の削除
+	for (unsigned int i = 0; i < ground.size(); i++) {
+		delete ground[i];
+		ground.erase(ground.begin() + i); i--;
+	}
+	delete[] CurType;
+	if (GroCou.size() > 0) {
+		for (unsigned int g = 0; g < GroCou.size(); g++) {
+			delete GroCou[g];
+			GroCou.erase(GroCou.begin() + g);
+			g--;
+		}
+	}
+	delete cou;
+	//敵の削除
+	for (unsigned int i = 0; i < enemy.size(); i++) {
+		delete enemy[i];
+		enemy.erase(enemy.begin() + i); i--;
+	}
+	for (unsigned int i = 0; i < explo.size(); i++) {
+		delete explo[i];
+		explo.erase(explo.begin() + i); i--;
+	}
+	delete player;
+	delete sky;
+	delete camera;
+	delete aiming;
+	delete debug;
+	delete GaOv;
+	delete war;
+	delete pause;
+	delete spear;
+	//スコアの削除
+	delete score;
+
+	//火花の削除
+	if (SparkV.size() > 0) {
+		for (unsigned int s = 0; s < SparkV.size(); s++) {
+			delete SparkV[s];
+			SparkV.erase(SparkV.begin() + s);
+			s--;
 		}
 	}
 
-	if (Smog.size() <= 0) return false;
+	//敵の情報を削除
+	for (unsigned int i = 0; i < ePop.size(); i++) {
+		delete ePop[i];
+		ePop.erase(ePop.begin() + i);
+		i--;
+	}
 
-	//スモッグのアップデート
-	for (unsigned int s = 0; s < Smog.size(); s++) {
-		Smog[s]->PosMoveVec(&player->GetMoveVec());
+	//マウスの削除
+	delete mouse;
 
-		if (Smog[s]->Update() == false) {
-			delete Smog[s];
-			Smog.erase(Smog.begin() + s);
+	//フェードの削除
+	delete fade;
+
+	//弾痕３Dの削除
+	if (BHole3D.size() > 0) {
+		for (unsigned int b = 0; b < BHole3D.size(); b++) {
+			delete BHole3D[b];
+			BHole3D.erase(BHole3D.begin() + b);
+			b--;
+		}
+	}
+
+	//プレイヤーの情報削除
+	delete PlayerBody;
+
+	//ライトのカウントダウンの削除
+	if (LightCount != nullptr) {
+		delete LightCount;
+	}
+	if (M_C_SmokeCar != nullptr) {
+		delete M_C_SmokeCar;
+	}
+}
+
+bool GameScene::Update_Bgm(void)
+{
+	//bgmのアップデート
+	bool bFlg = true;
+	bgm->Update(&bFlg);
+
+	return true;
+}
+
+bool GameScene::Update_Debug(void)
+{
+	//フレーム数の操作
+
+	if (GetAsyncKeyState('1') & 0x8000) {
+		MaxCount += 1;
+		if (MaxCount > 60)MaxCount = 60;
+	}
+	if (GetAsyncKeyState('2') & 0x8000) {
+		MaxCount -= 1;
+		if (MaxCount < 1)MaxCount = 1;
+	}
+
+	if (key.XKeyF() == true)player->SetHP(1);
+
+	return true;
+}
+
+bool GameScene::Update_Fade(void)
+{
+	//フェードのアップデート
+	if (fade->Update() == true) {
+		//キーの無力化
+
+	}
+	else {
+		if (fade->GetMoveEndFlg() == true) {
+			if (SceneChangeFlg == true)return SetScene();
+		}
+	}
+
+	return true;
+}
+
+bool GameScene::Update_Game(void)
+{
+	//ポーズ
+	if (pause->GetDFlg() != false)return true;
+
+	//ポーズ画面に移動の処理
+	if (Update_Game_Pause() != true)return true;
+
+	if (Judg_Game_Frame() != true)return true;
+	
+	Update_Ground();
+
+	//========================================
+	//プレイヤー
+	//========================================
+	//カメラ-------------------------------------
+	if (EndFlg == false) {
+		if (fade->GetMoveFlg() == false) {
+			camera->UpdateM(true, mouse);
+		}
+		else {
+			mouse->Init();
+		}
+	}
+	//カメラ上限判定
+	camera->RotXJudg(&player->GetMatCar());
+
+	//プレイヤーと地面判定
+	float Dis;
+	unsigned int num;
+	if (NowGroNum(player->GetMatCar(), &num, &Dis) == true) {
+		player->SetGroNum(num);//地面の取得
+		eneFlg = true;//敵の出現開始
+	}
+	//敵
+	UpdateEnemyAI();
+
+	//プレイヤーの横移動処理
+	Update_Player_XTrans();
+
+	//前進判定
+	Update_Car_ForMove();
+
+
+	//player======================================================================
+	//playerの移動
+	player->UpdateCarFM(ground);
+	//移動ベクトルのサイズの初期化
+	player->SetQuaVecSize(1.0f);
+	//敵の移動
+	UpdateEnemyMove();
+
+	//横判定
+	Update_Car_SideJudg();
+
+	//最終Update
+	//player->SetParts(camera->GetAngX(),camera->GetAngY());
+	if (enemy.size() > 0) {
+		for (unsigned int e = 0; e < enemy.size(); e++) {
+			if (enemy[e]->GetFlgCar() == true) {
+				enemy[e]->SetParts(ground);
+			}
+		}
+	}
+
+	//カメラの前方に向く処理
+	Update_Camera_Car();
+	//カメラのクォータニオンのアップデート
+	camera->UpdateQua();
+
+	//カーブの車体の角度を反映
+	player->SetCurRotMat();
+
+	//playerのパーツ移動
+	Update_Player();
+
+	//カメラのアップデート
+	camera->Update(player->GetMatGun());
+	//カメラと壁判定
+	CameraWallJudg();
+
+	//プレイヤーと地面判定2
+	if (NowGroNum(player->GetMatCar(), &num, &Dis) == true) {
+		player->SetGroNum(num);//地面の取得
+		eneFlg = true;//敵の出現開始
+	}
+
+	Update_Player_Bullet();
+
+	//空
+	sky->Update(player->GetMatCar());
+
+	Update_Explo();
+
+	war->Update();
+
+	Update_Spark();
+
+	Update_CarSmoke();
+
+	Update_Bullet_Hole();
+
+	//================================================================================
+	//敵
+	//================================================================================
+	if (UpdateE() == false) {
+		if (EndFlg == false) {
+			EndFlg = true;
+			GaOv->Update(true, EndFlg);
+			SetMenu(false, true, false);
+		}
+	}
+
+	return true;
+}
+
+bool GameScene::Update_Game_Pause(void)
+{
+	//終わった時
+	if (EndFlg == true) {
+		mouse->ChaDrawFlg(true);
+	}
+	else {
+		//ポーズ
+		if (key.RETURNKeyF() == true) {
+			if (pause->GetDFlg() == false) {
+				pause->SetDFlg(true);
+				mouse->ChaDrawFlg(true);
+				bgm->StopSound();
+				//ロードの許可
+				if ((GetAsyncKeyState('8') & 0x8000) && (GetAsyncKeyState('9') & 0x8000) && (GetAsyncKeyState('0') & 0x8000)) {
+					pause->SetStaSavFlg(true);
+				}
+				SetMenu(true, false, false);
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
+bool GameScene::Judg_Game_Frame(void)
+{
+	//スロー再生
+	if (CountNum >= MaxCount) {
+		CountNum = 1;
+		return true;
+	}
+	else {
+		CountNum += 1;
+	}
+	return false;
+}
+
+bool GameScene::Update_Ground(void)
+{
+	if (ground.size() < 1) return false;
+
+	for (unsigned int i = 0; i < ground.size(); i++) {
+		ground[i]->SuperUpdate();
+		//無限の道の削除と作成
+		GroundCreate(&i);
+	}
+
+	return true;
+}
+
+bool GameScene::Update_Explo(void)
+{
+	if (explo.size() < 1)return false;
+
+	//爆発
+	for (unsigned int i = 0; i < explo.size(); i++) {
+		if (explo[i]->ExplUpdate(&camera->GetMat()) == false) {
+			delete explo[i];
+			explo.erase(explo.begin() + i);
+			i--;
+		}
+	}
+
+	return true;
+}
+
+bool GameScene::Update_Spark(void)
+{
+	//火花のアップデート
+	if (SparkV.size() < 1) return false;
+
+	for (unsigned int s = 0; s < SparkV.size(); s++) {
+		if (SparkV[s]->UpdateSuper() == false) {
+			//削除
+			delete SparkV[s];
+			SparkV.erase(SparkV.begin() + s);
 			s--;
 		}
 	}
 
 	return true;
+}
+
+bool GameScene::Update_CarSmoke(void)
+{
+	if (M_C_SmokeCar == nullptr) return false;
+
+	int CarNo = player->GetBody().CarBodyNo;
+	M_C_SmokeCar->Update_CS(&player->GetCharaBase(), &CarNo, &player->GetMatCar(), &player->GetMoveVec());
+
+	return true;
+}
+
+bool GameScene::Update_Bullet_Hole(void)
+{
+	//弾痕３Dのアップデート
+	if (BHole3D.size() < 1) return false;
+
+	for (unsigned int b = 0; b < BHole3D.size(); b++) {
+		if (BHole3D[b]->UpdateHol3D() == false) {
+			delete BHole3D[b];
+			BHole3D.erase(BHole3D.begin() + b);
+			b--;
+		}
+	}
+
+	return true;
+}
+
+bool GameScene::Update_Camera_Car(void)
+{
+	//カメラをplaeyrの前方に振り向かせるクォータニオンの初期化
+	if (EndFlg != false) return false;
+	//前方に振り向く計算
+	if ((key.RClickF() != true) || (camera->GetQuaFlg() != false))return false;
+
+	D3DXVECTOR3 cVec, ccVec, pVec, ppVec;
+	D3DXVec3TransformNormal(&cVec, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &camera->GetMat());
+	D3DXVec3TransformNormal(&pVec, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &player->GetMatCar());
+	ccVec = cVec;
+	ppVec = pVec;
+
+	float Dot, Ang, FrameUp;
+
+	//クォータニオンのフレーム数を計算
+	Dot = D3DXVec3Dot(&pVec, &cVec);
+	if (Dot > 1.0f)Dot = 1.0f;
+	if (Dot < -1.0f)Dot = -1.0f;
+	Ang = D3DXToDegree(acos(Dot));
+	FrameUp = 1.0f / Ang * 6.0f;
+
+	//RotYの計算
+	D3DXMATRIX CamRotY, CamRotX;
+	ppVec.y = 0;
+	//内積
+	Dot = D3DXVec3Dot(&D3DXVECTOR3(0.0f, 0.0f, 1.0f), &ppVec);
+	if (Dot > 1.0f)Dot = 1.0f;
+	if (Dot < -1.0f)Dot = -1.0f;
+	Ang = D3DXToDegree(acos(Dot));
+	if (ppVec.x < 0.0f)Ang *= -1.0f;
+	D3DXMatrixRotationY(&CamRotY, D3DXToRadian(Ang));
+	//camera->SetRotY(&CamRotY);
+
+
+	//RotXの計算
+	D3DXMATRIX Mat = player->GetMatCar();
+	D3DXMatrixRotationY(&CamRotX, D3DXToRadian(-Ang));
+	Mat = CamRotX * Mat;
+	D3DXVec3TransformNormal(&pVec, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &Mat);
+	//内積
+	Dot = D3DXVec3Dot(&D3DXVECTOR3(0.0f, 0.0f, 1.0f), &pVec);
+	if (Dot > 1.0f)Dot = 1.0f;
+	if (Dot < -1.0f)Dot = -1.0f;
+	Ang = D3DXToDegree(acos(Dot));
+	if (pVec.y > 0.0f)Ang *= -1.0f;
+	D3DXMatrixRotationX(&CamRotX, D3DXToRadian(Ang));
+	//camera->SetRotX(&CamRotX);
+
+	//クォータニオンの初期値をセット
+	camera->SetQuaMat(&CamRotX, &CamRotY, &FrameUp);
+
+	return true;
+}
+
+bool GameScene::Update_Player_Bullet(void)
+{
+	//照準のレイ判定
+	bool Flg = false;
+	BULLETJUDGDATA l_DisD;
+	float Dis = 2000.0f;
+	l_DisD = GetInitBJD(&Dis);
+	RAYDATA l_RayR;
+	l_RayR.Mat = judg.SetMatP(camera->GetPos());
+	l_RayR.Ray = camera->GetVec();
+	float Rad = (float)RadJudgF*2.0f;
+	//敵のレイ判定
+	BulletJudgEnemy(&l_DisD, &l_RayR, &Rad);
+	if (l_DisD.Type > 0)Flg = true;
+	//照準の変化
+	if (Flg == true) {
+		aiming->ChaFlg();
+	}
+	else {
+		aiming->ResFlg();
+	}
+	//地面
+	BulletJudgGround(&l_DisD, &l_RayR, NULL, &Rad);
+	if (l_DisD.Type > 0)Flg = true;
+	//建物のレイ判定
+	//バレットの出現処理
+	D3DXVECTOR3 pos;
+	if (Flg == false) {
+		player->SetBPos(pos, Flg);
+	}
+	else {
+		pos = camera->GetPos() + l_RayR.Ray * l_DisD.SamllDis;
+		player->SetBPos(pos, Flg);
+	}
+
+	//================================================================================
+	//弾
+	//================================================================================
+
+	//弾の誕生決め
+	BulletBirthFlg = GetBulletBirthFlg();
+	//player弾のUpdate
+	//player->GUpdateB(&BulletBirthFlg);
+	SoundCamera sc;
+	sc.CamPos = camera->GetPos();
+	sc.CamLook = camera->GetLook();
+	sc.CamHead = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	bool KeyFlg = key.LClickF_N();
+	player->UpdateBulPla(&KeyFlg, &BulletBirthFlg, &sc);
+	BulletJudg(&co_PlayerCar, NULL);
+	player->UpdateBulletMove();
+	bool BBFlgB = player->GetBulBirFlgB();
+	SoundGun->Update(&BBFlgB);
+
+	return true;
+}
+
+bool GameScene::Update_Car_ForMove(void)
+{
+	/*移動後の作成*/
+
+	//移動後の変数
+	D3DXMATRIX EndMat;
+	D3DXVECTOR3 EndPos;
+
+	//player
+	//移動後の行列作成
+	EndMat = ForMoveEnd(player->GetCon(), player->GetQuaForMove(), player->GetTransMatCar());
+	player->SetForMoveEndMat(EndMat);
+	//移動ベクトル計算
+	D3DXMATRIX TransMat1, TransMat2, Trans;//両側のレイ発射位置
+	D3DXVECTOR3 ScalPosB = player->GetScalPosCar();
+	TransMat1 = judg.GetTransMatScal(&D3DXVECTOR3(player->GetCon().PosSmall.x, 0.0f, player->GetCon().PosBig.z), &ScalPosB);
+	TransMat2 = judg.GetTransMatScal(&D3DXVECTOR3(player->GetCon().PosBig.x, 0.0f, player->GetCon().PosBig.z), &ScalPosB);
+	Trans = judg.GetTransMatScal(&D3DXVECTOR3(0.0f, 0.0f, player->GetCon().PosBig.z), &ScalPosB);
+	player->SetForMoveVec(judg.MatMatVec(TransMat1*player->GetMatCar(), TransMat1*player->GetForMoveEndMat()), 0);
+	player->SetForMoveVec(judg.MatMatVec(Trans*player->GetMatCar(), Trans*player->GetForMoveEndMat()), 1);
+	player->SetForMoveVec(judg.MatMatVec(TransMat2*player->GetMatCar(), TransMat2*player->GetForMoveEndMat()), 2);
+
+	//enemy
+	if (enemy.size() > 0) {//enemyの存在確認
+		//enemyの数
+		for (unsigned int e = 0; e < enemy.size(); e++) {
+			if (enemy[e]->GetFlgCar() == true) {
+				//移動後の行列作成
+				EndMat = ForMoveEnd(enemy[e]->GetCon(), enemy[e]->GetQuaForMove(), enemy[e]->GetTransMatCar());
+				enemy[e]->SetForMoveEndMat(EndMat);
+				//移動ベクトル計算
+				D3DXMATRIX TransMat1, TransMat2, Trans;//両側のレイ発射位置
+				ScalPosB = enemy[e]->GetScalPosCar();
+
+				TransMat1 = judg.GetTransMatScal(&D3DXVECTOR3(enemy[e]->GetCon().PosSmall.x, 0.0f, enemy[e]->GetCon().PosBig.z), &ScalPosB);
+				TransMat2 = judg.GetTransMatScal(&D3DXVECTOR3(enemy[e]->GetCon().PosBig.x, 0.0f, enemy[e]->GetCon().PosBig.z), &ScalPosB);
+				Trans = judg.GetTransMatScal(&D3DXVECTOR3(0.0f, 0.0f, enemy[e]->GetCon().PosBig.z), &ScalPosB);
+
+				enemy[e]->SetForMoveVec(judg.MatMatVec(TransMat1*enemy[e]->GetMatCar(), TransMat1*enemy[e]->GetForMoveEndMat()), 0);
+				enemy[e]->SetForMoveVec(judg.MatMatVec(Trans*enemy[e]->GetMatCar(), Trans*enemy[e]->GetForMoveEndMat()), 1);
+				enemy[e]->SetForMoveVec(judg.MatMatVec(TransMat2*enemy[e]->GetMatCar(), TransMat2*enemy[e]->GetForMoveEndMat()), 2);
+			}
+		}
+	}
+	/*移動後の作成完了*/
+
+
+	/*当たり判定*/
+
+	//移動ベクトルのサイズ
+	float Mul;
+	//当たり判定の回数
+	int MaxJudg = 2;
+	//当たり判定をMaxJudg回繰り返す
+	for (int i = 0; i < MaxJudg; i++) {
+
+		//player
+		//playerのVecサイズ
+		Mul = player->GetCon().SpeedMulJudg;
+		//判定
+		ForMoveJudg(player->GetCon(), player->GetDrawMatCar(), player->GetForMoveEndMat(), true, false, 0, player->GetForMoveVec(0), player->GetForMoveVec(1), player->GetForMoveVec(2), &Mul, &player->GetScalPosCar());
+		//Mulを本体に入れる
+		player->SetQuaVecSize(Mul);
+		//最後の繰り返し以外
+		if (i != MaxJudg - 1) {
+			//新しい移動後を作成
+			EndMat = ForMoveEnd(player->GetCon(), player->GetQuaForMove(), player->GetTransMatCar());
+			player->SetForMoveEndMat(EndMat);
+			//Mulの初期化
+			player->SetQuaVecSize(1.0f);
+		}
+
+		//enemy
+		if (enemy.size() > 0) {
+			for (unsigned int e = 0; e < enemy.size(); e++) {
+				if ((enemy[e]->GetFlgCar() == true) && (enemy[e]->GetSkyType() == false)) {
+					//enemyのVecサイズ
+					Mul = enemy[e]->GetCon().SpeedMulJudg;
+					//判定
+					ForMoveJudg(enemy[e]->GetCon(), enemy[e]->GetMatCar(), enemy[e]->GetForMoveEndMat(), false, true, e, enemy[e]->GetForMoveVec(0), enemy[e]->GetForMoveVec(1), enemy[e]->GetForMoveVec(2), &Mul, &enemy[e]->GetScalPosCar());
+					//Mulを本体に入れる
+					enemy[e]->SetQuaVecSize(Mul);
+					//最後の繰り返し以外
+					if (i != MaxJudg - 1) {
+						//新しい移動後を作成
+						EndMat = ForMoveEnd(enemy[e]->GetCon(), enemy[e]->GetQuaForMove(), enemy[e]->GetTransMatCar());
+						enemy[e]->SetForMoveEndMat(EndMat);
+						//Mulの初期化
+						enemy[e]->SetQuaVecSize(1.0f);
+					}
+				}
+			}
+		}
+	}
+	/*当たり判定完了*/
+
+	return true;
+}
+
+bool GameScene::Update_Car_SideJudg(void)
+{
+	//横判定
+	WallJudg(true, true, false, 0);
+	WallJudg(false, true, false, 0);
+
+	if (enemy.size() <1) return true;
+
+	for (unsigned int e = 0; e < enemy.size(); e++) {
+		if ((enemy[e]->GetFlgCar() == true) && (enemy[e]->GetSkyType() == false)) {
+			WallJudg(true, false, true, e);
+			WallJudg(false, false, true, e);
+		}
+	}
+
+	return true;
+}
+
+bool GameScene::Update_Player_XTrans(void)
+{
+	//横判定
+	//===========================================
+	//車線変更
+	//===========================================
+	//左の車線に変更
+	//カーブしたかどうかのFlg
+	bool LRKeyFlg = false;
+	if ((key.AKey() == true)) {
+		D3DXMATRIX Trans;
+		D3DXMatrixTranslation(&Trans, -1.0f*0.08f, 0.0f, 0.0f);
+		Trans = Trans * player->GetTransMatCar();
+		player->SetTransMatCar(&Trans);
+		Trans = player->GetTransMatCar()*player->GetCon().JudgMat;
+		player->SetMatCar(&Trans);
+		//横判定
+		WallJudg(true, true, false, 0);
+		//カーブ
+		player->SetRodAngY(-0.3f, true);
+		LRKeyFlg = true;
+
+
+	}
+	//右の車線に変更
+	if (key.DKey() == true) {
+		D3DXMATRIX Trans;
+		D3DXMatrixTranslation(&Trans, 1.0f*0.08f, 0.0f, 0.0f);
+		Trans = Trans * player->GetTransMatCar();
+		player->SetTransMatCar(&Trans);
+		Trans = player->GetTransMatCar()*player->GetCon().JudgMat;
+		player->SetMatCar(&Trans);
+		//横判定
+		WallJudg(false, true, false, 0);
+		player->SetRodAngY(0.3f, true);
+		LRKeyFlg = true;
+	}
+	if (LRKeyFlg == false)player->SetRodAngY(0.3f, false);
+
+	return true;
+}
+
+bool GameScene::Update_Player(void)
+{
+
+	if (player->UpdateAll(&camera->GetMat()) != false)return true;
+	//playerが死んだときの処理
+	if (EndFlg != false) return true;
+
+	BombInit(&player->GetMatCar());
+	EndFlg = true;
+	GaOv->Update(false, EndFlg);
+	for (unsigned int e = 0; e < enemy.size(); e++) {
+		enemy[e]->SetPlaEnd(true/*, player->GetSpeedCar()*/);
+	}
+	player->SetSpeedCar(player->GetSpeedCar()*0.0f);
+	war->SetFlg(false);
+	//メニューの表示
+	SetMenu(false, false, true);
+
+	return false;
 }
 
 

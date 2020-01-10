@@ -1,7 +1,7 @@
 #include "Spark2.h"
-#include"../GameSource/Judgment.h"
-#include"../GameSource/InvBi.h"
-#include"../GameSource/TextureManager.h"
+#include"../../GameSource/Judgment.h"
+#include"../../GameSource/InvBi.h"
+#include"../../GameSource/TextureManager.h"
 
 extern Inv inv;
 

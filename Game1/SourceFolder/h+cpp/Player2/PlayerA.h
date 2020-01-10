@@ -15,9 +15,6 @@ protected:
 	//‰Šú‰»
 	virtual void InitPlayerA(void);
 
-	
-
-
 
 	void SaveCar(void);
 private:

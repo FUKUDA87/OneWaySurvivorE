@@ -404,6 +404,8 @@ struct S_ENEMYGUNDATA {
 	//発射フラグ
 	bool BulletFlg;
 	bool LaserFlg;
+	//ターゲットに照準があって完了した時
+	bool LockonEndFlg;
 };
 struct S_ENEMYPARTSDATA
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include<d3dx9.h>
-#include"../GameSource/Struct.h"
-#include"../GameSource/Countdown.h"
+#include"../../GameSource/Struct.h"
+#include"../../GameSource/Countdown.h"
 
 
 class Explo {

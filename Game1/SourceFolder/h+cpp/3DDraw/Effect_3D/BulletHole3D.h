@@ -1,7 +1,7 @@
 #pragma once
 #include<d3dx9.h>
-#include"../GameSource/Struct.h"
-#include"../GameSource/Judgment.h"
+#include"../../GameSource/Struct.h"
+#include"../../GameSource/Judgment.h"
 
 class C_BulHol3D {
 public:

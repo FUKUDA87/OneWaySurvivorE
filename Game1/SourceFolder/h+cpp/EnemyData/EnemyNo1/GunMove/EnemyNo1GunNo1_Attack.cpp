@@ -22,6 +22,7 @@ C_E_GunMoveBase * C_ENo1_GNo1_Attack::Move(S_ENEMYGUNDATA * s_Data, int * NowPha
 
 	if (Ray(s_Data) != true) {
 		InitRayFlg(s_Data);
+		s_Data->LockonEndFlg = true;
 		return new C_ENo1_GNo1_Shoot();
 	}
 
@@ -57,6 +58,7 @@ S_ENEMYGUNDATA C_ENo1_GNo1_Attack::InitData(void)
 	Data.RayJudgFlg = false;
 	Data.RayDis = 50.0f;
 	Data.RayHitFlg = false;
+	Data.LockonEndFlg = false;
 
 	return Data;
 }

@@ -1,5 +1,5 @@
 #include "BulletHole3D.h"
-#include"../GameSource/TextureManager.h"
+#include"../../GameSource/TextureManager.h"
 
 extern TextureManager textureManager;
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)

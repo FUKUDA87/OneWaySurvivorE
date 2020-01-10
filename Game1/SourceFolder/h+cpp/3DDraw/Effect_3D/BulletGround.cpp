@@ -1,8 +1,8 @@
 #include "BulletGround.h"
-#include"../GameSource/TextureManager.h"
-#include"../GameSource/Judgment.h"
-#include"../GameSource/InvBi.h"
-#include"../GameSource/XfileManager.h"
+#include"../../GameSource/TextureManager.h"
+#include"../../GameSource/Judgment.h"
+#include"../../GameSource/InvBi.h"
+#include"../../GameSource/XfileManager.h"
 
 extern XfileManager xfileManager;
 extern Inv inv;

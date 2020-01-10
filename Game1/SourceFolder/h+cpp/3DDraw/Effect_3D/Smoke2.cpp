@@ -1,5 +1,5 @@
 #include "Smoke2.h"
-#include"../GameSource/Judgment.h"
+#include"../../GameSource/Judgment.h"
 
 extern Judg judg;
 extern LPDIRECT3DDEVICE9	lpD3DDevice;

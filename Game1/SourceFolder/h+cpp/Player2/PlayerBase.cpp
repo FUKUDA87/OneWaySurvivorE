@@ -113,8 +113,8 @@ bool C_PlayerBase::UpdateDeadAll(void)
 
 void C_PlayerBase::Draw3DAll(void)
 {
+	Draw3DCar();
 	if (Car.Base.Flg == true) {
-		Draw3DCar();
 		if (Parts.size() > 0) {
 			for (unsigned int p = 0; p < Parts.size(); p++) {
 				Parts[p]->Draw3DParts();

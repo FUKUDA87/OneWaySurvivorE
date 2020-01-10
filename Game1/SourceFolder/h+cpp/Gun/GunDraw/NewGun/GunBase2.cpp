@@ -55,10 +55,17 @@ bool C_GunBase2::Update_Gun(const D3DXMATRIX *Mat,int *NowPhase)
 	s_Data.StandMat = *Mat;
 	C_E_GunMoveBase* m;
 	s_Data.Hp = GetCharaBase();
-	m = m_Move->Move(&s_Data,NowPhase);
-	if (m != nullptr) {
-		delete m_Move;
-		m_Move = m;
+	while (true)
+	{
+		m = m_Move->Move(&s_Data, NowPhase);
+		if (m != nullptr) {
+			delete m_Move;
+			m_Move = m;
+		}
+
+		//’e‚ğ‘Å‚Â‚ğ‘‚ß‚é
+		if (s_Data.LockonEndFlg == false)break;
+		if (s_Data.LockonEndFlg == true)s_Data.LockonEndFlg = false;
 	}
 	Gun.Base.Mat = s_Data.NowRot.RotXMat*(s_Data.NowRot.RotYMat*(s_Data.TransMat*s_Data.StandMat));
 	SetCharaBase(&s_Data.Hp);

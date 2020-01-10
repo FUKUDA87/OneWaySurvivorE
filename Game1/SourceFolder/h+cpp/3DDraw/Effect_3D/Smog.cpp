@@ -1,7 +1,7 @@
 #include "Smog.h"
-#include"../GameSource/TextureManager.h"
-#include"../GameSource/Judgment.h"
-#include"../GameSource/InvBi.h"
+#include"../../GameSource/TextureManager.h"
+#include"../../GameSource/Judgment.h"
+#include"../../GameSource/InvBi.h"
 
 extern Inv inv;
 

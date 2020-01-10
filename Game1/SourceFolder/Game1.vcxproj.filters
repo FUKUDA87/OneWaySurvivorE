@@ -16,9 +16,6 @@
     <Filter Include="ソース ファイル\2DDraw">
       <UniqueIdentifier>{bfdd5c66-1ca4-45ca-803b-9f518c173593}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\3DDraw">
-      <UniqueIdentifier>{9ec4e648-dcc7-44d1-9102-a5af6e0cf734}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Draw">
       <UniqueIdentifier>{ab0434d2-36a7-4d90-80b6-4b057c3dd93b}</UniqueIdentifier>
     </Filter>
@@ -136,6 +133,18 @@
     <Filter Include="ソース ファイル\TitleParts">
       <UniqueIdentifier>{26c00dbd-2d04-4174-9ad4-71bdd7a0fdb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun0">
+      <UniqueIdentifier>{0f57c47d-c62c-46c7-ba3f-3f7fedcf35ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun1">
+      <UniqueIdentifier>{de058d66-bcc5-4c1f-ad25-093c57bfe05a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw_3D">
+      <UniqueIdentifier>{fe392756-b091-4612-ad5f-41dd373a720e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw_3D\Effect">
+      <UniqueIdentifier>{032e0108-d189-4fd8-94f9-e84b6710a182}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h+cpp\2DDraw\Window.h">
@@ -197,39 +206,6 @@
     </ClInclude>
     <ClInclude Include="h+cpp\2DDraw\Warning.h">
       <Filter>ソース ファイル\2DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Spear.h">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Ball.h">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\BulletGround.h">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\BulletHole3D.h">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Explosion.h">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Light3D.h">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Smog.h">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Smoke2.h">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\SpaekDamage.h">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Spark.h">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Spark2.h">
-      <Filter>ソース ファイル\3DDraw</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Draw\Hp\HpBase.h">
       <Filter>ソース ファイル\Draw\Hp</Filter>
@@ -407,36 +383,6 @@
     </ClInclude>
     <ClInclude Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\ENo101_AiPhase_1.h">
       <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_Stop.h">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_Attack.h">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_MoveBase.h">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_gNo0_NoMove.h">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_Shoot.h">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_Stop.h">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_Attack.h">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_MoveBase.h">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_NoMove.h">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_Shoot.h">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\EnemyData\EnemyNo101\PartsMove\ENo101_StandMove.h">
       <Filter>ソース ファイル\EnemyData\EnemyNo101\PartsMove</Filter>
@@ -768,6 +714,72 @@
     <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\CarSmogManager.h">
       <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
     </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_Attack.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun0</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_MoveBase.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun0</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_gNo0_NoMove.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun0</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_Shoot.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun0</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_Stop.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun0</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_Attack.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun1</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_MoveBase.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun1</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_NoMove.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun1</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_Shoot.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun1</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_Stop.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun1</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\3DDraw\Spear.h">
+      <Filter>ソース ファイル\Draw_3D</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\3DDraw\Ball.h">
+      <Filter>ソース ファイル\Draw_3D</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\3DDraw\Light3D.h">
+      <Filter>ソース ファイル\Draw_3D</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\3DDraw\Effect_3D\Spark2.h">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\3DDraw\Effect_3D\BulletGround.h">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\3DDraw\Effect_3D\BulletHole3D.h">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\3DDraw\Effect_3D\CarSmog.h">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\3DDraw\Effect_3D\Explosion.h">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\3DDraw\Effect_3D\Smog.h">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\3DDraw\Effect_3D\Smoke2.h">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\3DDraw\Effect_3D\SpaekDamage.h">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\3DDraw\Effect_3D\Spark.h">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="h+cpp\2DDraw\BulletHole.cpp">
@@ -829,39 +841,6 @@
     </ClCompile>
     <ClCompile Include="h+cpp\2DDraw\Window.cpp">
       <Filter>ソース ファイル\2DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Ball.cpp">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\BulletGround.cpp">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\BulletHole3D.cpp">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Explosion.cpp">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Light3D.cpp">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Smog.cpp">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Smoke2.cpp">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\SpaekDamage.cpp">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Spark.cpp">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Spark2.cpp">
-      <Filter>ソース ファイル\3DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Spear.cpp">
-      <Filter>ソース ファイル\3DDraw</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Draw\Hp\Hp2DEnemy.cpp">
       <Filter>ソース ファイル\Draw\Hp</Filter>
@@ -1012,36 +991,6 @@
     </ClCompile>
     <ClCompile Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\ENo101_AiPhase_1.cpp">
       <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_Attack.cpp">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_MoveBase.cpp">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_gNo0_NoMove.cpp">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_Shoot.cpp">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_Stop.cpp">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_Attack.cpp">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_MoveBase.cpp">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_NoMove.cpp">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_Shoot.cpp">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_Stop.cpp">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\EnemyData\EnemyNo101\PartsMove\ENo101_DoorMove.cpp">
       <Filter>ソース ファイル\EnemyData\EnemyNo101\PartsMove</Filter>
@@ -1327,6 +1276,72 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\CarSmogManager.cpp">
       <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_Attack.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun0</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_MoveBase.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun0</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_gNo0_NoMove.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun0</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_Shoot.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun0</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo0_Stop.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun0</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_Attack.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun1</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_MoveBase.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun1</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_NoMove.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun1</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_Shoot.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun1</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\GunMove\ENo101_GNo1_Stop.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\GunMove\Gun1</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\3DDraw\Ball.cpp">
+      <Filter>ソース ファイル\Draw_3D</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\3DDraw\Light3D.cpp">
+      <Filter>ソース ファイル\Draw_3D</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\3DDraw\Spear.cpp">
+      <Filter>ソース ファイル\Draw_3D</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\3DDraw\Effect_3D\BulletGround.cpp">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\3DDraw\Effect_3D\BulletHole3D.cpp">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\3DDraw\Effect_3D\CarSmog.cpp">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\3DDraw\Effect_3D\Explosion.cpp">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\3DDraw\Effect_3D\Smog.cpp">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\3DDraw\Effect_3D\Smoke2.cpp">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\3DDraw\Effect_3D\SpaekDamage.cpp">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\3DDraw\Effect_3D\Spark.cpp">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\3DDraw\Effect_3D\Spark2.cpp">
+      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

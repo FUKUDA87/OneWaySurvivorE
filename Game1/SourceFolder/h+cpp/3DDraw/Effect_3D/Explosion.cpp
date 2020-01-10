@@ -1,6 +1,6 @@
 #include"Explosion.h"
-#include"../GameSource/TextureManager.h"
-#include"../Sound/BombSound1.h"
+#include"../../GameSource/TextureManager.h"
+#include"../../Sound/BombSound1.h"
 
 extern C_BombSound *BombSound;
 

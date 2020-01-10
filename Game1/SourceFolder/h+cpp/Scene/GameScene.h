@@ -7,7 +7,7 @@
 #include"../Ground/BillBase.h"
 #include"../Player/Aiming.h"
 #include"../Enemy/MoveE.h"
-#include"../3DDraw/Explosion.h"
+#include"../3DDraw/Effect_3D/Explosion.h"
 #include"../Gun/Bullet/BulletManager.h"
 #include"../Player/Camera.h"
 #include"../GameSource/Countdown.h"
@@ -21,19 +21,19 @@
 #include"../GameSource/Judgment.h"
 #include"../3DDraw/Spear.h"
 #include"../GameSource/Motion.h"
-#include"../3DDraw/Spark2.h"
+#include"../3DDraw/Effect_3D/Smoke2.h"
 #include"../2DDraw/Score.h"
-#include"../3DDraw/SpaekDamage.h"
-#include"../3DDraw/Smog.h"
-#include"../3DDraw/BulletGround.h"
+#include"../3DDraw/Effect_3D/SpaekDamage.h"
+#include"../3DDraw/Effect_3D/Smog.h"
+#include"../3DDraw/Effect_3D/BulletGround.h"
 #include"../Sound/SoundGun1.h"
 #include"GameSceneSoundManager.h"
-#include"../3DDraw/Smoke2.h"
+#include"../3DDraw/Effect_3D/Spark2.h"
 #include"../Enemy/EnemySky.h"
 #include"../Key/CMouse.h"
 #include"../Key/KeyTrue.h"
 #include"../2DDraw/Fade.h"
-#include"../3DDraw/BulletHole3D.h"
+#include"../3DDraw/Effect_3D/BulletHole3D.h"
 #include"../Player2/PlayerA.h"
 #include"../Enemy2/EnemyA.h"
 #include"../Player2/PlayerBody.h"
@@ -42,6 +42,7 @@
 #include"../GameSource/Count.h"
 #include"../Enemy2/EnemySelect.h"
 #include"../EnemyData/Base&Manager/EnemySpeedManager.h"
+#include"../3DDraw/Effect_3D/CarSmog.h"
 
 extern Judg judg;
 extern Motion motion;
@@ -110,11 +111,63 @@ public:
 	void Pos2DUpdate(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport);
 
 protected:
+	//コンストラクタ関数
+	void AllNew(void);
+	//デストラクタ関数
+	void AllDelete(void);
+
 	/*アップデート*/
-	//煙のアップデート
-	bool Update_Smog_Player(void);
 
+	//BGMの更新
+	bool Update_Bgm(void);
 
+	//デバックの更新
+	bool Update_Debug(void);
+
+	//フェードの更新
+	bool Update_Fade(void);
+
+	//ゲーム本編の更新
+	bool Update_Game(void);
+
+	//ゲーム本編時のポーズ画面移動関数
+	bool Update_Game_Pause(void);
+
+	//ゲームのフレーム数の判定
+	bool Judg_Game_Frame(void);
+
+	//地面の更新
+	bool Update_Ground(void);
+
+	//爆発の更新
+	bool Update_Explo(void);
+
+	//火花の更新
+	bool Update_Spark(void);
+
+	//車の煙の更新
+	bool Update_CarSmoke(void);
+
+	//弾痕の更新
+	bool Update_Bullet_Hole(void);
+
+	//車の前方にカメラを向ける処理
+	bool Update_Camera_Car(void);
+
+	//プレイヤーの照準によるレイ判定と弾の撃つと更新
+	bool Update_Player_Bullet(void);
+
+	//今いる車で前進判定
+	bool Update_Car_ForMove(void);
+
+	//今いる車で横判定
+	bool Update_Car_SideJudg(void);
+
+	//プレイヤーの横移動処理
+	bool Update_Player_XTrans(void);
+
+	//プレイヤーの更新
+	bool Update_Player(void);
 	/*弾*/
 
 	//弾判定の情報初期化
@@ -192,9 +245,6 @@ private:
 	//バレットバースFlg
 	bool BulletBirthFlg;
 
-	//smog
-	std::vector<C_Smog *>Smog;
-
 	//マウス
 	C_Mouse *mouse;
 	//キー
@@ -212,7 +262,8 @@ private:
 	//タッチ
 	std::vector<C_NextTouch*>Menu;
 
-
+	//車用の煙エフェクト
+	C_SmokeCar* M_C_SmokeCar;
 };
 
 //#endif // !GameScene_H

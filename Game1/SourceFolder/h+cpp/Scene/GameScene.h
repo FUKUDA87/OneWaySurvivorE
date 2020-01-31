@@ -3,10 +3,8 @@
 #include<vector>
 #include"SceneBase.h"
 #include"../Ground/Sky.h"
-#include"../Player/Gun1.h"
 #include"../Ground/BillBase.h"
 #include"../Player/Aiming.h"
-#include"../Enemy/MoveE.h"
 #include"../3DDraw/Effect_3D/Explosion.h"
 #include"../Gun/Bullet/BulletManager.h"
 #include"../Player/Camera.h"
@@ -29,7 +27,6 @@
 #include"../Sound/SoundGun1.h"
 #include"GameSceneSoundManager.h"
 #include"../3DDraw/Effect_3D/Spark2.h"
-#include"../Enemy/EnemySky.h"
 #include"../Key/CMouse.h"
 #include"../Key/KeyTrue.h"
 #include"../2DDraw/Fade.h"
@@ -43,6 +40,7 @@
 #include"../Enemy2/EnemySelect.h"
 #include"../EnemyData/Base&Manager/EnemySpeedManager.h"
 #include"../3DDraw/Effect_3D/CarSmog.h"
+#include"../Const/Const_Draw_Judg.h"
 
 extern Judg judg;
 extern Motion motion;
@@ -111,6 +109,9 @@ public:
 	void Pos2DUpdate(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport);
 
 protected:
+	//タイトルに戻るキー
+	bool Change_TitleScene(void);
+
 	//コンストラクタ関数
 	void AllNew(void);
 	//デストラクタ関数
@@ -168,6 +169,13 @@ protected:
 
 	//プレイヤーの更新
 	bool Update_Player(void);
+
+	//車の今の位置の更新
+	bool Update_Car_SetMat(void);
+
+	//カメラ行列の取得
+	bool Update_CameraMat(void);
+
 	/*弾*/
 
 	//弾判定の情報初期化
@@ -180,13 +188,12 @@ protected:
 	bool SetBulletDamage(const BULLETJUDGDATA* BJD, const RAYDATA *RD,const int Damage);
 	bool SetBulletDamageGround(const BULLETJUDGDATA* BJD, const RAYDATA *RD);
 	bool SetBulletDamageWall(const BULLETJUDGDATA* BJD, const RAYDATA *RD);
-	bool SetBulletDamagePlaCar(const int *BulletJudgFlg, const int *Damage);
-	bool SetBulletDamagePlaParts(const int *BulletJudgFlg, const unsigned int *HitMesh, const int *Damage);
-	bool SetBulletDamagePlaGun(const int *BulletJudgFlg, const unsigned int *HitMesh, const int *Damage);
-	bool SetBulletDamageEneCar(const int *BulletJudgFlg, const unsigned int *HitBodyNo, const int *Damage);
-	bool SetBulletDamageEneParts(const int *BulletJudgFlg, const unsigned int *HitBodyNo, const unsigned int *HitMesh, const int *Damage);
-	bool SetBulletDamageEneGun(const int *BulletJudgFlg, const unsigned int *HitBodyNo, const unsigned int *HitMesh, const int *Damage);
-	void BulletJudgS(bool PlaBulFlg, unsigned int EnemyNo);
+	bool SetBulletDamagePlaCar(const BULLETJUDGDATA* BJD, const int *Damage);
+	bool SetBulletDamagePlaParts(const BULLETJUDGDATA* BJD, const int *Damage);
+	bool SetBulletDamagePlaGun(const BULLETJUDGDATA* BJD, const int *Damage);
+	bool SetBulletDamageEneCar(const BULLETJUDGDATA* BJD, const int *Damage);
+	bool SetBulletDamageEneParts(const BULLETJUDGDATA* BJD, const int *Damage);
+	bool SetBulletDamageEneGun(const BULLETJUDGDATA* BJD, const int *Damage);
 private:
 	//デバッグ用----------------
 	float Size, RaySize;

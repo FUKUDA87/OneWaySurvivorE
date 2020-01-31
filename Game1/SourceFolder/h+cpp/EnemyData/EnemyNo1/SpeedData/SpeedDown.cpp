@@ -8,7 +8,7 @@ SpeedDown1::SpeedDown1()
 	CountDown = rand() % 10 + 20;
 }
 
-Speed * SpeedDown1::Action(int * NowSpeed, const int *TargetSpeed, const unsigned int * EneGroNo, const unsigned int * TarGroNo, int *NewPhase)
+Speed * SpeedDown1::Action(int * NowSpeed, const int *TargetSpeed, const unsigned int * EneGroNo, const unsigned int * TarGroNo, const int *NewPhase)
 {
 	//if (*EneGroNo > *TarGroNo + 1) return new SpeedDown2();
 	if (CountUpdate() == false) {
@@ -27,7 +27,7 @@ SpeedDown2::SpeedDown2()
 	CountDown = rand() % 20 + 20;
 }
 
-Speed * SpeedDown2::Action(int * NowSpeed, const int *TargetSpeed, const unsigned int * EneGroNo, const unsigned int * TarGroNo, int *NewPhase)
+Speed * SpeedDown2::Action(int * NowSpeed, const int *TargetSpeed, const unsigned int * EneGroNo, const unsigned int * TarGroNo, const int *NewPhase)
 {
 	if (*EneGroNo < *TarGroNo) return new SpeedUp2();
 	if (CountUpdate() == true)return nullptr;

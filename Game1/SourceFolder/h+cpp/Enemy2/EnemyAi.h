@@ -42,7 +42,5 @@ private:
 	int NowCount, MaxCount;
 	//------------------------
 
-	int NowPhase;
-
 	bool DeadFlg;
 };

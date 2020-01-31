@@ -42,4 +42,9 @@ const int co_EnemyGun = 6;
 const int co_Ground = 7;
 const int co_Wall = 8;
 
+const int co_Car = 1;
+const int co_Tire = 2;
+const int co_Stand = 3;
+const int co_Gun = 4;
+
 #endif // !Const_H

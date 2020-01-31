@@ -3,6 +3,7 @@
 #include"Bullet.h"
 #include<vector>
 #include"BulletDraw3DBase.h"
+#include"../../Draw3DBase/GunMoveBaseE2.h"
 
 class EBulletManager{
 public:

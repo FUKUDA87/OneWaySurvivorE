@@ -96,6 +96,14 @@ public:
 	bool GKey();
 	//Gキー+KeyFlg
 	bool GKeyF();
+
+	//エスケープキー
+	bool EscapeKey();
+	bool EscapeKey_S();
+	bool EscapeKey_F();
+
+private:
+	static bool EscapeFlg;
 };
 
 #endif // !KEY_H

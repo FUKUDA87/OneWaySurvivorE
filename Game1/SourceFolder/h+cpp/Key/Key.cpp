@@ -1,5 +1,7 @@
 #include "Key.h"
 
+bool Key::EscapeFlg = false;
+
 //Aキーのセット
 bool Key::AKey(){
 	if (GetAsyncKeyState('A') & 0x8000) {
@@ -458,6 +460,41 @@ bool Key::GKeyF()
 	}
 	else {
 		KeyFlg = false;
+	}
+	return false;
+}
+
+bool Key::EscapeKey()
+{
+	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
+		return true;
+	}
+	return false;
+}
+
+bool Key::EscapeKey_S()
+{
+	if (EscapeKey() == true) {
+		if (EscapeFlg == false) {
+			return true;
+		}
+	}
+	else {
+		EscapeFlg = false;
+	}
+	return false;
+}
+
+bool Key::EscapeKey_F()
+{
+	if (EscapeKey() == true) {
+		if (EscapeFlg == false) {
+			EscapeFlg = true;
+			return true;
+		}
+	}
+	else {
+		EscapeFlg = false;
 	}
 	return false;
 }

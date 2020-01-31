@@ -41,7 +41,7 @@ StageSelectScene::StageSelectScene()
 	Ok = new C_OK(&D3DXVECTOR3(1.1f, 1.1f, 0.0f), &D3DXVECTOR3(1280.0f/2.0f, 720.0f*0.93f, 0.0f), &D3DXVECTOR3(0.25f, 0.11f, 0.0f));
 
 	//車の表示の戻し用セット
-	BodyData_Init = car->GetBody();
+	//BodyData_Init = car->GetBody();
 
 	//選択モードの初期化
 	InitStaSel();
@@ -95,7 +95,7 @@ void StageSelectScene::Render2D(void)
 
 void StageSelectScene::Render3D(void)
 {
-	M_CarSet->Draw3D();
+	M_CarSet->Draw3D(&cam->GetPos());
 
 	//ステージ外
 
@@ -107,6 +107,7 @@ void StageSelectScene::Render3D(void)
 
 bool StageSelectScene::Update(void)
 {
+	if (Change_TitleScene() != true)return false;
 
 	//bgmのアップデート
 	bool bFlg = true;
@@ -281,7 +282,7 @@ void StageSelectScene::InitStaSel(void)
 	car->SetBody(&BodyData_Init);
 
 	//データにセット
-	PlayerBody->SetPData(&car->GetBody());
+	//PlayerBody->SetPData(&car->GetBody());
 }
 
 bool StageSelectScene::CarSelectMode()
@@ -348,7 +349,7 @@ void StageSelectScene::InitCarSel(void)
 	CarSel[CarSel.size() - 1]->UpdateNo(&No);
 
 	//車の表示の戻し用セット
-	BodyData_Init = car->GetBody();
+	//BodyData_Init = car->GetBody();
 
 }
 
@@ -372,7 +373,7 @@ void StageSelectScene::ChangeCar(int * No)
 	car->SetBody(&pData);
 
 	//データにセット
-	PlayerBody->SetPData(&car->GetBody());
+	//PlayerBody->SetPData(&car->GetBody());
 
 }
 
@@ -434,8 +435,10 @@ bool StageSelectScene::Update_Car(void)
 	cam->SetHeight(&y);
 
 	if (key.ZKeyF() == true)M_CarSet->ChangePartsMeshFlg(true);
+	if (key.CKeyF() == true)M_CarSet->ChangePartsMesh(true);
 
 	//パーツ座標変更後
+	if (M_CarSet->Get_Mesh_JudgFlg() != Co_Draw_Mesh)return false;
 	l_Pos = M_CarSet->GetPartsPos();
 	float l_Dis;
 	if (judg.Mesh(l_Pos, D3DXVECTOR3(0.0f, -1.0f, 0.0f), sky->GetDrawSkyMat(), sky->GetSkyMesh(), &l_Dis) == true) {
@@ -443,7 +446,7 @@ bool StageSelectScene::Update_Car(void)
 		
 		D3DXMATRIX Mat;
 		D3DXMatrixTranslation(&Mat, l_Pos.x, l_Pos.y, l_Pos.z);
-		if (judg.Mesh(l_Pos2, D3DXVECTOR3(0.0f, 1.0f, 0.0f), Mat, M_CarSet->GetTire(), &l_Dis) == true) {
+		if (judg.Mesh(l_Pos2, D3DXVECTOR3(0.0f, 1.0f, 0.0f), Mat, M_CarSet->Get_Mesh(), &l_Dis) == true) {
 			l_Pos2 = l_Pos2 + D3DXVECTOR3(0.0f, 1.0f, 0.0f)*l_Dis;
 
 			M_CarSet->GroundSize(&l_Pos2.y);
@@ -458,7 +461,7 @@ void StageSelectScene::Draw3D_Normal(void)
 	if (M_CarSet->GetModeFlg() != false)return;
 
 	//車体
-	car->Draw3DAll();
+	car->Draw3DAll(&cam->GetPos());
 }
 
 void StageSelectScene::Draw2D_Normal(void)
@@ -484,4 +487,14 @@ void StageSelectScene::Draw2D_Normal(void)
 
 	fade->Draw();
 	mouse->Draw2D();
+}
+
+bool StageSelectScene::Change_TitleScene(void)
+{
+	if (key.EscapeKey_F() == true) {
+		sceneManager.changeScene(new TitleScene());
+		return false;
+	}
+
+	return true;
 }

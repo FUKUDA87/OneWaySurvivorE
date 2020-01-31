@@ -37,37 +37,37 @@ bool C_GunMoveBase::UpdateGun(const D3DXMATRIX * CamMat)
 
 bool C_GunMoveBase::UpdateBullet(const BULLETRAYJUDG *BRJ)
 {
-	UpdateBM(BRJ->MoveVec, gunBase->GetBullet(BRJ->RayPos,BRJ->JudgRayFlg), gunBase->GetMuzFla(), &gunBase->GetGMat());
+	//UpdateBM(BRJ->MoveVec, gunBase->GetBullet(BRJ->RayPos,BRJ->JudgRayFlg), gunBase->GetMuzFla(), &gunBase->GetGMat());
 	return true;
 }
 
 bool C_GunMoveBase::UpdateBullet(const BULLETRAYJUDG *BRJ,const bool * BirthFlg)
 {
-	UpdateBM(BirthFlg, BRJ->MoveVec, gunBase->GetBullet(BRJ->RayPos, BRJ->JudgRayFlg), gunBase->GetMuzFla(), &gunBase->GetGMat());
+	//UpdateBM(BirthFlg, BRJ->MoveVec, gunBase->GetBullet(BRJ->RayPos, BRJ->JudgRayFlg), gunBase->GetMuzFla(), &gunBase->GetGMat());
 	return true;
 }
 
 bool C_GunMoveBase::UpdateBullet(const BULLETRAYJUDG *BRJ,const bool * BirthFlg, const SoundCamera * sc)
 {
-	UpdateBM(BirthFlg, BRJ->MoveVec, gunBase->GetBullet(BRJ->RayPos, BRJ->JudgRayFlg), gunBase->GetMuzFla(), &gunBase->GetGMat(), sc);
+	//UpdateBM(BirthFlg, BRJ->MoveVec, gunBase->GetBullet(BRJ->RayPos, BRJ->JudgRayFlg), gunBase->GetMuzFla(), &gunBase->GetGMat(), sc);
 	return true;
 }
 
 bool C_GunMoveBase::UpdateBullet(const BULLETRAYJUDG *BRJ, const bool * KeyFlg, const bool * BirthFlg, const SoundCamera * sc)
 {
-	UpdateBM(KeyFlg, BirthFlg, BRJ->MoveVec, gunBase->GetBullet(BRJ->RayPos, BRJ->JudgRayFlg), gunBase->GetMuzFla(), &gunBase->GetGMat(), sc);
+	//UpdateBM(KeyFlg, BirthFlg, BRJ->MoveVec, gunBase->GetBullet(BRJ->RayPos, BRJ->JudgRayFlg), gunBase->GetMuzFla(), &gunBase->GetGMat(), sc);
 	return true;
 }
 
 bool C_GunMoveBase::UpdateBulletMove(void)
 {
-	UpdateBM();
+	//UpdateBM();
 	return true;
 }
 
 void C_GunMoveBase::Draw3DGun()
 {
-	DrawBM();
+	//DrawBM();
 	gunBase->Draw3D();
 }
 

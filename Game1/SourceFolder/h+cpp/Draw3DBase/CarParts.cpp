@@ -1,169 +1,113 @@
 #include "CarParts.h"
+#include"../Data/MeshData/StandMesh/Stand_Data_Manager.h"
+#include"../Draw/Tire/Car_Tire_No1.h"
+#include"../Draw/Stand/Stand_No1.h"
+#include"../Draw/Tire/Tire_DrawManager.h"
+#include"../Draw/Door/Door_DrawManager.h"
 
 C_CarParts::~C_CarParts()
 {
-	DeleteParts();
+	Delete_ALL_Parts();
 }
 
-void C_CarParts::DeleteParts(void)
+void C_CarParts::Draw_Car_Parts(const D3DXVECTOR3 * CameraPos)
 {
-	
-	if (Parts.size() <= 0) return;
+	if (M_Car_Parts.size() < 1)return;
 
-	//標準パーツの削除
-	for (unsigned int p = 0; p < Parts.size(); p++) {
-		delete Parts[p];
-		Parts.erase(Parts.begin() + p);
+	for (auto && p : M_Car_Parts) {
+		p->Draw_Parts(CameraPos);
+	}
+}
+
+bool C_CarParts::Update_Car_Parts(void)
+{
+	if (M_Car_Parts.size() < 1)return false;
+
+	for (auto && p : M_Car_Parts) {
+		p->UpdateParts(&GetMatCar(), &Car.Con.NowSpeed,&Car.Con.MaxSpeed,&Car.Base.ScaPos);
+	}
+	return true;
+}
+
+void C_CarParts::Delete_Parts(unsigned int * PartsNo)
+{
+	if (M_Car_Parts.size() < 1)return;
+
+	unsigned int i = M_Car_Parts.size();
+	if (judg.Hit_No(PartsNo, &i) != true)return;
+
+	delete M_Car_Parts[*PartsNo];
+	M_Car_Parts.erase(M_Car_Parts.begin() + (*PartsNo));
+	*PartsNo -= 1;
+}
+
+D3DXMATRIX C_CarParts::Get_Camera_Mat(void)
+{
+	D3DXMATRIX Mat = GetMatCar();
+	D3DXMATRIX tMat;
+	D3DXMatrixTranslation(&tMat, 0.0f, 0.2f, 0.0f);
+	Mat = tMat * Mat;
+
+	if (M_Data.size() < 1)return Mat;
+
+	for (unsigned int d = 0; d < M_Data.size(); d++) {
+		if (M_Data[d]->MeshTypeNo == Co_Parts_Gun) {
+			D3DXMATRIX TmpMat;
+			Judg judg_a;
+			judg_a.SetTransMat(&TmpMat, &M_Data[d]->TransPos);
+			Mat = TmpMat * Mat;
+			break;
+		}
+	}
+
+	return Mat;
+}
+
+void C_CarParts::New_CarParts(const BODYDATA * CarData, const bool * SaveFlg)
+{
+	Delete_ALL_Data();
+
+	C_CarDataManager Manager;
+
+	int PartsNum = Manager.GetDrawNum(CarData->CarBodyNo, *SaveFlg);
+
+	for (int i = 0; i < PartsNum; i++) {
+		Set_Data(&Manager.GetDrawSet(CarData->CarBodyNo, &i, SaveFlg));
+	}
+
+	C_Tire_DrawManager Tire_Manager;
+	C_Door_DrawManager Door_Manager;
+
+
+	//部位にパーツのセット
+	/*
+	※jointNoがマイナスの時は動きをリバース
+	*/
+	for (unsigned int d = 0; d < M_Data.size(); d++) {
+		if (M_Data[d]->MeshTypeNo == Co_Parts_Tire)M_Car_Parts.push_back(Tire_Manager.Get_Draw_Tire(&CarData->TireNo,M_Data[d]));
+		if(M_Data[d]->MeshTypeNo == Co_Parts_Gun)M_Car_Parts.push_back(new C_Stand_No1(M_Data[d]));
+		float Ang = 135.0f;
+		if (M_Data[d]->MeshTypeNo == Co_Parts_Door)M_Car_Parts.push_back(Door_Manager.Get_Draw_Door(&CarData->TireNo, M_Data[d],&Ang));
+	}
+
+
+}
+
+void C_CarParts::New_Set_Car_Parts(const BODYDATA * CarData, const bool * SaveFlg, const bool *Data_DeleteFlg)
+{
+	New_CarParts(CarData, SaveFlg);
+
+	if (*Data_DeleteFlg == true)Delete_ALL_Data();
+}
+
+void C_CarParts::Delete_ALL_Parts(void)
+{
+	if (M_Car_Parts.size() < 1)return;
+
+	for (unsigned int p = 0; p < M_Car_Parts.size(); p++) {
+		delete M_Car_Parts[p];
+		M_Car_Parts.erase(M_Car_Parts.begin() + p);
 		p--;
 	}
 }
 
-void C_CarParts::SetCarParts(const BODYDATA * Data,const bool SaveFlg)
-{
-	//SaveFlgはデータの変更Flg
-
-	DeleteParts();
-
-	int PartsNum;
-	//パーツ数の読み込み
-	PartsNum = CarDataManager.GetDrawNum(Data->CarBodyNo, SaveFlg);
-
-	//パーツの初期化
-	PARTSBASE PBase;
-	for (int p = 0; p < PartsNum; p++) {
-		//パーツ情報の読み込み
-		PBase=CarDataManager.GetDrawSet(Data->CarBodyNo, &p, SaveFlg);
-		SetTireParts(Data, &PBase);
-		SetStandParts(Data, &PBase);
-		SetCarParts(Data, &PBase);
-	}
-}
-
-PARTS C_CarParts::GetPartsData(unsigned int * No)
-{
-	if (Parts.size() <= 0)return PARTS();
-
-	unsigned int pNo=*No;
-	if (pNo <= 0)pNo = 0;
-	if (pNo >= Parts.size())pNo = Parts.size() - 1;
-	return Parts[pNo]->GetParts();
-}
-
-D3DXMATRIX C_CarParts::GetPartsMat(unsigned int * No)
-{
-	if (Parts.size() <= 0)return D3DXMATRIX();
-
-	unsigned int pNo = *No;
-	if (pNo <= 0)pNo = 0;
-	if (pNo >= Parts.size())pNo = Parts.size() - 1;
-	return Parts[pNo]->GetDrawMatParts();
-}
-
-bool C_CarParts::SetDamageParts(const unsigned int * pNo, const int * Damage)
-{
-	if (*pNo < 0)return false;
-	if (*pNo > Parts.size() - 1)return false;
-
-	if(Parts[*pNo]->HpDamage(Damage)!=true)return false;
-
-	return true;
-}
-
-int C_CarParts::PartsDeadFlg(unsigned int * pNo)
-{
-	if (*pNo < 0)return 2;
-	if (*pNo > Parts.size() - 1)return 2;
-
-	if (Parts[*pNo]->Dead() == true)return 0;
-
-	return 1;
-}
-
-void C_CarParts::SetCarParts(const BODYDATA * Data, const int * EnemyNo,const int *MaxHp, const bool SaveFlg)
-{
-	//SaveFlgはデータの変更Flg
-
-	DeleteParts();
-
-	int PartsNum;
-	//パーツ数の読み込み
-	PartsNum = CarDataManager.GetDrawNum(Data->CarBodyNo, SaveFlg);
-
-	C_EnemyDataManager l_EDM;
-	C_EnemyDataBase *l_EDB = l_EDM.GetEnemyData(EnemyNo);
-
-	//パーツの初期化
-	PARTSBASE PBase;
-	for (int p = 0; p < PartsNum; p++) {
-		//パーツ情報の読み込み
-		PBase = CarDataManager.GetDrawSet(Data->CarBodyNo, &p, SaveFlg);
-		PARTS P = GetPartsData(&PBase);
-		P.Mesh.DrawMesh = l_EDB->GetPartsMesh(&p);
-		P.HpLinkFlg = false;
-		P.PolFlg = false;
-		Parts.push_back(new C_EnemyParts(&P,l_EDB->GetPartsData(&p),MaxHp));
-	}
-}
-
-void C_CarParts::SetTireParts(const BODYDATA * Data, const PARTSBASE * PBase)
-{
-	if (PBase->MeshNo != MeshTireNo)return;
-
-	PARTS P=GetPartsData(PBase);
-
-	//タイヤの初期化------------------------------------------------------------------------
-	//初期化用変数
-	float AngXMaxUp = 28.0f;
-	P.Mesh.DrawMesh = TireMeshManager.GetMesh(Data->TireNo);
-	//出現させる
-	Parts.push_back(new C_TireParts(&P, &AngXMaxUp));
-
-}
-
-void C_CarParts::SetStandParts(const BODYDATA * Data, const PARTSBASE * PBase)
-{
-
-	if (PBase->MeshNo != MeshStandNo)return;
-
-	PARTS P = GetPartsData(PBase);
-
-	//スタンドの初期化---------------------------------------------------------
-	P.Mesh.DrawMesh = StandMeshManager.GetMesh(Data->StandNo);
-	//出現させる
-	Parts.push_back(new C_PartsBase(&P));
-}
-
-void C_CarParts::SetCarParts(const BODYDATA * Data, const PARTSBASE * PBase)
-{
-	if (PBase->MeshNo != MeshCarPartsNo)return;
-
-	PARTS P = GetPartsData(PBase);
-
-	//初期化---------------------------------------------------------
-	P.Mesh.DrawMesh = PartsMeshManager.GetMesh(PBase->MeshPartsNo);
-	//出現させる
-	Parts.push_back(new C_PartsBase(&P));
-}
-
-PARTS C_CarParts::GetPartsData(const PARTSBASE * PBase)
-{
-	PARTS P;
-
-	P.GunFlg = PBase->GunFlg;
-	P.JudgFlg = PBase->JudgFlg;
-	P.MoveFlg = PBase->MoveFlg;
-	P.MeshDrawFlg = PBase->MeshDrawFlg;
-	P.MeshNo = PBase->MeshNo;
-	//初期位置
-	//左側1の初期化
-	P.Base.AngX = PBase->AngX;
-	P.Base.TraPos = PBase->TransPos;
-	judgCP.SetTransMat(&P.Base.Trans, &P.Base.TraPos);
-	P.Base.AngY = PBase->AngY;
-	D3DXMatrixRotationY(&P.Base.RotY, D3DXToRadian((float)P.Base.AngY));
-	P.Base.AngZ = PBase->AngZ;
-	P.Base.ScaPos = PBase->ScalPos;
-	//出現させる
-
-	return P;
-}

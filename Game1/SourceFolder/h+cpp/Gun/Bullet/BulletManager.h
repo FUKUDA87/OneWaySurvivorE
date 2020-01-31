@@ -5,6 +5,7 @@
 #include<vector>
 #include"Bullet3D.h"
 #include"../../Key/Key.h"
+#include"../../Draw3DBase/GunMoveBase.h"
 
 #ifndef BulletManager_H
 #define BulletManager_H

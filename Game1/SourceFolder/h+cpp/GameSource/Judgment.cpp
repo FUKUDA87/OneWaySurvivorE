@@ -853,6 +853,17 @@ void Judg::ReverseFlg(bool * Flg)
 	}
 }
 
+bool Judg::ReverseFlg2(const bool * Flg)
+{
+	if (*Flg == true) {
+		return false;
+	}
+	else {
+		return true;
+	}
+	return false;
+}
+
 void Judg::ScalingMat(D3DXMATRIX * ScalMat, const D3DXVECTOR3 * Pos)
 {
 	D3DXMatrixScaling(ScalMat, Pos->x, Pos->y, Pos->z);
@@ -921,6 +932,17 @@ D3DXMATRIX Judg::GetDrawMat(const D3DXMATRIX * Mat,D3DXMATRIX * ScalMat, const D
 	ScalingMat(ScalMat, ScalPos);
 	D3DXMATRIX Tmp = *Mat;
 	Tmp = *ScalMat*Tmp;
+	return Tmp;
+}
+
+D3DXMATRIX Judg::GetDrawMat(const D3DXMATRIX * Mat, const D3DXVECTOR3 * ScalPos)
+{
+	D3DXMATRIX Tmp;
+
+	ScalingMat(&Tmp, ScalPos);
+
+	Tmp = Tmp * (*Mat);
+
 	return Tmp;
 }
 
@@ -1013,9 +1035,9 @@ Object3DGun Judg::InitSetPartsData(const float AngX, const float AngY, const flo
 	return o;
 }
 
-GUNDRAWNOS Judg::GetInitGUNDRAWNOS(const int GunNo, const int BulletNo, const int MuzFlaNo, const int LaserNo)
+S_GUN_DRAW_NO Judg::GetInitGUNDRAWNOS(const int GunNo, const int BulletNo, const int MuzFlaNo, const int LaserNo)
 {
-	GUNDRAWNOS g;
+	S_GUN_DRAW_NO g;
 	g.GunNo = GunNo;
 	g.BulletNo = BulletNo;
 	g.MuzFlaNo = MuzFlaNo;
@@ -1046,6 +1068,27 @@ S_Random Judg::GetInitRand(const int x, const int y, const int z)
 	r.y = y;
 	r.z = z;
 	return r;
+}
+
+D3DXMATRIX Judg::Get_IdenMat(void)
+{
+	D3DXMATRIX IdenMat;
+	D3DXMatrixIdentity(&IdenMat);
+	return IdenMat;
+}
+
+D3DXMATRIX Judg::Get_Mat_Init(void)
+{
+	D3DXMATRIX TmpMat;
+	D3DXMatrixTranslation(&TmpMat, 0.0f, 0.0f, 0.0f);
+	return TmpMat;
+}
+
+bool Judg::Hit_No(const unsigned int * No, const unsigned int * NoNum)
+{
+	if (*No < 0)return false;
+	if (*No >= *NoNum)return false;
+	return true;
 }
 
 D3DXVECTOR3 Judg::VecPos(D3DXMATRIX MatA, D3DXVECTOR3 VecA)

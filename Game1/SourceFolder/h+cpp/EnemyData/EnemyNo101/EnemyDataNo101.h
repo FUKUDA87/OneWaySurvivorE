@@ -10,6 +10,7 @@
 
 class C_EnemyDataNo101 :public C_EnemyDataBase {
 public:
+	C_EnemyDataNo101();
 	//Ôî•ñ“n‚µ‚ÆŒŸõ
 	S_ENEMYBODYDATA GetBodyData(void);
 	//•W€ƒp[ƒcî•ñ“n‚µ‚ÆŒŸõ
@@ -22,6 +23,8 @@ public:
 	Speed* GetSpeed(void);
 	//Ai“n‚µ
 	C_E_AiPhaseBase* GetAiPhase(void);
+	//e‚Ì•\¦“n‚µ
+	C_GunLaser*Get_Gun(const int *EnemyGunNo);
 protected:
 
 private:

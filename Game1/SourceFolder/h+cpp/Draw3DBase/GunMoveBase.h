@@ -3,8 +3,9 @@
 #include"../Gun/Bullet/BulletManager.h"
 #include"../Gun/GunDraw/GunBase.h"
 #include"Draw3DManager/GunManager.h"
+#include"CarParts.h"
 
-class C_GunMoveBase :public BulletManager{
+class C_GunMoveBase :public C_CarParts{
 public:
 	C_GunMoveBase();
 	~C_GunMoveBase();

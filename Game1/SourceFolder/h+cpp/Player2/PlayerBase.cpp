@@ -3,6 +3,7 @@
 C_PlayerBase::C_PlayerBase()
 {
 	InitPlayer();
+	Init_Ray_Data();
 }
 
 C_PlayerBase::~C_PlayerBase()
@@ -72,26 +73,14 @@ bool C_PlayerBase::UpdateAll(const D3DXMATRIX * CamMat)
 		//無敵のアップデート
 		UpdateCountM();
 
-		//銃のくっつく行列探し
-		D3DXMATRIX GunMat= GetMatCar();
 		//標準パーツのアップデート
-		if (Parts.size() > 0) {
-			for (unsigned int p = 0; p < Parts.size(); p++) {
-				Parts[p]->SetSpeed(&Car.Con.NowSpeed, &Car.Con.MaxSpeed);
-				Parts[p]->UpdateParts(&GetMatCar());
-				//銃のくっつき判定
-				if (Parts[p]->GetParts().GunFlg >0) {
-					GunMat = Parts[p]->GetParts().Base.Mat;
-				}
-			}
-		}
+		Update_Car_Parts();
 
-		//銃のアップデート
-		D3DXMATRIX Tmp;
-		D3DXMatrixTranslation(&Tmp,0.0f, 0.0f, 0.0f);
-		ConnectGunMat = Tmp * GunMat;
-		UpdateGun(CamMat);
+		Update_Gun();
 	}
+	Update_Effect();
+	Set_MoveVec_Effect(&brj.MoveVec);
+
 	if (Dead()==true) {
 		if (Car.Base.Flg == true) {
 			Car.Base.Flg = false;
@@ -111,17 +100,16 @@ bool C_PlayerBase::UpdateDeadAll(void)
 	return false;
 }
 
-void C_PlayerBase::Draw3DAll(void)
+void C_PlayerBase::Draw3DAll(const D3DXVECTOR3 *CameraPos)
 {
 	Draw3DCar();
 	if (Car.Base.Flg == true) {
-		if (Parts.size() > 0) {
-			for (unsigned int p = 0; p < Parts.size(); p++) {
-				Parts[p]->Draw3DParts();
-			}
-		}
-		Draw3DGun();
+		Draw_Car_Parts(CameraPos);
+
+		Draw_Gun(CameraPos);
 	}
+	Draw_Bullet(CameraPos);
+	Draw_Effect(CameraPos);
 }
 
 void C_PlayerBase::Draw2DAll(void)
@@ -175,6 +163,37 @@ void C_PlayerBase::SetCurRotMat(void)
 bool C_PlayerBase::UpdateBulPla(const bool * KeyFlg, const bool * BirthFlg, const SoundCamera * sc)
 {
 	//弾を撃つと音とKey
-	UpdateBullet(&brj, KeyFlg, BirthFlg, sc);
+	//UpdateBullet(&brj, KeyFlg, BirthFlg, sc);
 	return true;
+}
+
+void C_PlayerBase::Set_CameraMat(const D3DXMATRIX * CameraMat)
+{
+	M_S_Gun_Update_Data.CameraMat = *CameraMat;
+	unsigned int i = 0;
+	Set_GunMove_Player(&i);
+}
+
+void C_PlayerBase::Init_Bullet(void)
+{
+	if (M_Gun.size() < 1)return;
+
+	for (unsigned int g = 0; g < M_Gun.size(); g++) {
+		M_Gun[g]->Init_Departure_Num();
+		for (unsigned int i = 0; i < M_Gun[g]->Get_CategoryNum(); i++) {
+			if (M_Gun[g]->Get_TriggerFlg(&i) == true) {
+				int b = M_Gun[g]->Get_BulletNo();
+				D3DXMATRIX Mat = M_Gun[g]->Get_GunMouth_Mat(&i);
+
+				M_Bullet.push_back(new C_Bullet_Base(&b, &Mat,&Get_Gun_Ray_Data()));
+				M_Gun[g]->Bullet_Shot_Update(&i);
+				M_Effect.push_back(M_Gun[g]->Get_Bullet_Shot_Effect(&i));
+			}
+		}
+	}
+}
+
+void C_PlayerBase::Init_Ray_Data(void)
+{
+	M_Gun_Ray_Data.Flg = false;
 }

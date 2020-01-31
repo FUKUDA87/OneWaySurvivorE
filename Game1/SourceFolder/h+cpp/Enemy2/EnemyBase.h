@@ -1,9 +1,8 @@
 #pragma once
-#include"../Draw3DBase/CarE.h"
+#include"../Draw3DBase/CarBulletManager.h"
 #include"../Enemy/Vector.h"
-#include"../Enemy/HpEne.h"
 
-class C_EnemyBase :public C_CarE {
+class C_EnemyBase :public C_CarBulletManager {
 public:
 	C_EnemyBase();
 	~C_EnemyBase();
@@ -12,7 +11,6 @@ public:
 	//アップデート
 	bool UpdateCar(void);
 	//表示
-	void Draw3DAll(void);
 	void Draw3DAll(const D3DXVECTOR3 *CamPos);
 	void Draw2DAll(void);
 	//矢印作成に必要な情報の取得とアップデート
@@ -31,7 +29,6 @@ protected:
 	Vector *Vect;
 
 	D3DXVECTOR3 Pos2D;
-	D3DXVECTOR3 targetPos;//playerのpos取得用
 
 	int m_EnemyNo;
 private:

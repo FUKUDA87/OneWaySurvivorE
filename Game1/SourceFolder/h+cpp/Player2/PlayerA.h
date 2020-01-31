@@ -19,5 +19,5 @@ protected:
 	void SaveCar(void);
 private:
 	//パーツの初期化ロードした情報を入手してパーツを構成
-	virtual void InitPlayerAB(void);
+	//virtual void InitPlayerAB(void);
 };

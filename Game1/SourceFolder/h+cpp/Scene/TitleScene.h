@@ -3,7 +3,6 @@
 #include"SceneBase.h"
 #include"../TitleParts/TitleTex.h"
 #include"../TitleParts/StartTex.h"
-#include"../TitleParts/TitlePlayer.h"
 #include"../TitleParts/TitelCamera.h"
 #include"../Ground/Bill1.h"
 #include"../Ground/BillBase.h"
@@ -78,4 +77,7 @@ private:
 	//チェンジシーン用
 	int SceneNo;
 	bool SceneChangeFlg;
+
+	//ゲームの終了
+	bool Game_End(void);
 };

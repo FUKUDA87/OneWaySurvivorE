@@ -2,9 +2,10 @@
 #include"GunMoveBaseE.h"
 #include"../Gun/GunDraw/NewGun/GunLaser.h"
 #include"../Gun/GunDraw/NewGun/EnemyGun.h"
+#include"CarParts.h"
 #include<vector>
 
-class C_GunMoveBaseE2 :public EBulletManager {
+class C_GunMoveBaseE2 :public C_CarParts {
 public:
 	~C_GunMoveBaseE2();
 	//‰Šú‰»

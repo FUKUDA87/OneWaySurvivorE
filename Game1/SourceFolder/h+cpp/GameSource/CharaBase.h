@@ -2,6 +2,7 @@
 #include<d3dx9.h>
 #include"Struct.h"
 #include"../Draw/Hp/HpBase.h"
+#include"../Const/Const_Damage.h"
 
 class C_CharaBase {
 public:
@@ -10,7 +11,7 @@ public:
 	//構造体代入
 	void SetCharaBase(const CHARABASE *CharaBaseS);
 	//初期化渡し
-	CHARABASE GetInitAll(const int MaxHp, const bool DFlg);
+	CHARABASE GetInitAll(const int MaxHp, const int DFlg);
 	//MaxHpの初期化
 	virtual void SetHp(const int *MaxHp);
 	//MaxHpの初期化
@@ -22,7 +23,7 @@ public:
 	//ダメージによるHp削り(今のHpが増減したらtrue)
 	bool HpDamage(const int *Damage);
 	//ダメージを受けるFlgのセット
-	void SetDamageFlg(const bool *DamageFlg);
+	void SetDamageFlg(const int *DamageFlg);
 	//ダメージを受ける状態渡し
 	bool GetDamageFlg(void);
 	//構造体初期化
@@ -32,6 +33,8 @@ public:
 	//別の構造体代入
 	void SetCharaBase(const STATUS* S);
 
+	//初期化１
+	void Init_Hp(const int MaxHp, const int *DamageFlg);
 protected:
 	//Hp表示渡し
 	void Hp_Init(C_HpBase* InitHpBase);
@@ -41,8 +44,8 @@ protected:
 	void Hp_Draw2D(void);
 	//Hp3D表示
 	void Hp_Draw3D(const D3DXVECTOR3 *CamPos, const D3DXMATRIX *Mat, const float UpY);
-private: 
-	CHARABASE CharaBase;
 
+	CHARABASE CharaBase;
+private: 
 	C_HpBase *HpBase;
 };

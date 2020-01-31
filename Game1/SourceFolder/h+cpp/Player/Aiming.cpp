@@ -14,7 +14,7 @@ void Aiming::Init()
 	aim.TEX = { NULL,100,100,0,0,0 };
 	aim.TEX.Tex= textureManager.GetTexture
 	("../GameFolder/Material/Texture/Aiming1.png", aim.TEX.Width, aim.TEX.Height
-		, D3DCOLOR_XRGB(aim.TEX.a, aim.TEX.g, aim.TEX.b));
+		, D3DCOLOR_XRGB(aim.TEX.r, aim.TEX.g, aim.TEX.b));
 	//èâä˙âª
 	D3DXMatrixTranslation(&aim.Base.Mat, (float)(SCRW / 2 - aim.TEX.Width / 2), (float)(SCRH / 2 - aim.TEX.Height / 2), NULL);
 	aim.Base.ScaPos = D3DXVECTOR3(0.2f, 0.2f,0.0f);
@@ -26,7 +26,7 @@ void Aiming::Init()
 	aimR.TEX = { NULL,400,400,0,0,0 };
 	aimR.TEX.Tex = textureManager.GetTexture
 	("../GameFolder/Material/Texture/Aiming3.png", aimR.TEX.Width, aimR.TEX.Height
-		, D3DCOLOR_XRGB(aimR.TEX.a, aimR.TEX.g, aimR.TEX.b));
+		, D3DCOLOR_XRGB(aimR.TEX.r, aimR.TEX.g, aimR.TEX.b));
 	//èâä˙âª
 	D3DXMatrixTranslation(&aimR.Base.Mat, (float)(SCRW / 2 - aimR.TEX.Width / 2), (float)(SCRH / 2 - aimR.TEX.Height / 2), NULL);
 	aimR.Base.ScaPos = D3DXVECTOR3(0.2f, 0.2f, 0.0f);

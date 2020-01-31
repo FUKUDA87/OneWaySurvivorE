@@ -10,7 +10,7 @@ XFILE3 C_CarMeshManager::GetMesh(int MeshNo)
 		//検索失敗用
 		sprintf_s(MeshName[0], sizeof(MeshName[0]), "../GameFolder/Material/XFile/car1.x");
 		sprintf_s(MeshName[1], sizeof(MeshName[1]), "../GameFolder/Material/XFile/PlayerCar1CM3.x");
-		sprintf_s(MeshName[2], sizeof(MeshName[2]), "../GameFolder/Material/XFile/car1.x");
+		sprintf_s(MeshName[2], sizeof(MeshName[2]), "../GameFolder/Material/XFile/Car_No1_Dead.x");
 	}
 
 	//メッシュのロード
@@ -40,7 +40,7 @@ bool C_CarMeshManager::GetCar1(int MeshNo)
 	if (MeshNo != CarNo1)return false;
 	sprintf_s(MeshName[0], sizeof(MeshName[0]), "../GameFolder/Material/XFile/car1.x");
 	sprintf_s(MeshName[1], sizeof(MeshName[1]), "../GameFolder/Material/XFile/PlayerCar1CM3.x");
-	sprintf_s(MeshName[2], sizeof(MeshName[2]), "../GameFolder/Material/XFile/car1.x");
+	sprintf_s(MeshName[2], sizeof(MeshName[2]), "../GameFolder/Material/XFile/Car_No1_Dead.x");
 	return true;
 }
 

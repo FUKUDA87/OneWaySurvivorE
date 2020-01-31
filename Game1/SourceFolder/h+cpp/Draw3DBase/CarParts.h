@@ -9,54 +9,44 @@
 #include"Draw3DManager/PartsMeshManager.h"
 #include"EnemyParts.h"
 #include"../EnemyData/Base&Manager/EnemyDataManager.h"
+#include"Car_Parts_Data.h"
+#include"Car_Parts_Joint.h"
+#include"../Const/Const_PartsTypeNo.h"
 
-class C_CarParts {
+class C_CarParts:public C_Car_Parts_Data {
 public:
 	~C_CarParts();
-	//パーツ削除
-	void DeleteParts(void);
-	//パーツの位置情報の読み込みとパーツをセットする
-	void SetCarParts(const BODYDATA * Data, const bool SaveFlg);
-	//パーツ数渡し
-	unsigned int GetPartsNum(void) {
-		return Parts.size();
-	}
-	//パーツの情報渡し
-	PARTS GetPartsData(unsigned int *No);
-	//パーツの表示行列渡し
-	D3DXMATRIX GetPartsMat(unsigned int *No);
-	//パーツのダメージ処理
-	bool SetDamageParts(const unsigned int *pNo, const int *Damage);
-	//パーツの生存確認(0で死、１で生、２は判別不能)
-	int PartsDeadFlg(unsigned int *pNo);
-	//車のボディの渡し
-	BODYDATA GetBody(void) {
-		return BodyData;
-	}
-protected:
-	BODYDATA BodyData;
-	//標準パーツ用
-	std::vector<C_PartsBase*>Parts;
-	//車パーツ用情報マネージャー
-	C_CarDataManager CarDataManager;
-	//タイヤマネージャー
-	C_TireMeshManager TireMeshManager;
-	//スタンドマネージャー
-	C_StandMeshManager StandMeshManager;
-	//パーツマネージャー
-	C_PartsMeshManager PartsMeshManager;
 
-	//パーツの位置情報の読み込みとパーツをセットする
-	void SetCarParts(const BODYDATA * Data,const int *EnemyNo, const int *MaxHp, const bool SaveFlg);
+	//パーツの表示
+	void Draw_Car_Parts(const D3DXVECTOR3* CameraPos);
+	//パーツの更新
+	bool Update_Car_Parts(void);
+	//パーツの情報渡し
+
+	//パーツの削除
+	void Delete_Parts(unsigned int *PartsNo);
+
+	//パーツにダメージ
+
+	//カメラに行列渡し
+	D3DXMATRIX Get_Camera_Mat(void);
+
+protected:
+	//パーツ表示変数
+	std::vector<C_Car_Parts_Joint*>M_Car_Parts;
+
+	BODYDATA BodyData;
+
+	//パーツの初期化
+	virtual void New_Set_Car_Parts(const BODYDATA *CarData, const bool *SaveFlg,const bool *Data_DeleteFlg);
+
+	//パーツの全削除
+	void Delete_ALL_Parts(void);
+
+	//パーツの初期化(プレイヤー)
+	void New_CarParts(const BODYDATA *CarData, const bool *SaveFlg);
+	//パーツの初期化(エネミー)
 
 private:
-	//タイヤのパーツセット
-	void SetTireParts(const BODYDATA * Data, const PARTSBASE *PBase);
-	//スタンドのパーツセット
-	void SetStandParts(const BODYDATA * Data, const PARTSBASE *PBase);
-	//カーパーツのパーツセット
-	void SetCarParts(const BODYDATA * Data, const PARTSBASE *PBase);	//パーツの構造体変換渡し
-	PARTS GetPartsData(const PARTSBASE *PBase);
 
-	Judg judgCP;
 };

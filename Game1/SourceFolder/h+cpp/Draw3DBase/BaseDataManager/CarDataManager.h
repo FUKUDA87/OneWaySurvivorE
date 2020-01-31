@@ -6,7 +6,7 @@ public:
 	//•\¦”‚Ì“Ç‚İ‚İ
 	int GetDrawNum(int CarNo, bool SaveFlg);
 	//•\¦İ’è‚Ì“Ç‚İ‚İ
-	PARTSBASE GetDrawSet(int CarNo, const int *DrawNo, bool SaveFlg);
+	S_CAR_PARTS_DATA GetDrawSet(int CarNo, const int *DrawNo, bool SaveFlg);
 protected:
 private:
 	//ŒŸõ•\¦”

@@ -3,86 +3,122 @@
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 void DrawMesh(XFILE *XFile);
 
-const int DrawMeshNo = 1;
-const int DeadMeshNo = 2;
-
-C_PartsBase::C_PartsBase(const PARTS * InitGetParts)
+C_PartsBase::C_PartsBase()
 {
-	Parts = *InitGetParts;
-	InitParts();
+	Speed.Now = 0;
+	Speed.Max = 0;
+	M_Car_ScalPos = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	M_Base3D.ScaPos= D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 }
 
 C_PartsBase::~C_PartsBase()
 {
-	
+	Draw_AllDelete();
 }
 
-void C_PartsBase::Draw3DParts(void)
+void C_PartsBase::Draw_Parts(const D3DXVECTOR3 *CameraPos)
 {
-	if (Parts.PolFlg == true)return;
-	Draw3DDrawMesh();
-	Draw3DDaedMesh();
+	Draw_Draw(CameraPos);
 }
 
-bool C_PartsBase::UpdateParts(const D3DXMATRIX * Mat)
+void C_PartsBase::Set_ScalPos_Body(const D3DXVECTOR3 * set_Car_ScalPos)
 {
-	InitParts();
-	Parts.Base.Mat = Parts.Base.Trans**Mat;
-	return true;
+	M_Car_ScalPos = *set_Car_ScalPos;
+	Set_Body_ScalPos_Draw();
 }
 
-bool C_PartsBase::UpdateParts(const D3DXMATRIX * Mat, const D3DXVECTOR3 * ScalPos)
+D3DXMATRIX C_PartsBase::Get_Draw_Mat(void)
 {
-	ScalParts(ScalPos);
-	//行列の合成
-	Parts.Base.Mat = Parts.Base.Trans**Mat;
-	return true;
+	Judg judg;
+	if (M_Draw == nullptr)return judg.Get_Mat_Init();
+
+	return M_Draw->Get_Mat();
 }
 
-D3DXMATRIX C_PartsBase::GetDrawMatParts(void)
+D3DXMATRIX C_PartsBase::Get_Draw_DrawMat(void)
 {
-	D3DXVECTOR3 ScalPos;
-	//拡大のベクトルセット
-	ScalPos = judg.GetVecVec(&Parts.Base.ScaPos, &ScalPosBody);
-	//拡大行列の合成
-	D3DXMATRIX Mat=judg.GetDrawMat(&Parts.Base.Mat, &Parts.Base.Scal, &ScalPos);
-	return Mat;
+	Judg judg;
+	if (M_Draw == nullptr)return judg.Get_Mat_Init();
+
+	return M_Draw->Get_DrawMat();
+}
+
+D3DXVECTOR3 C_PartsBase::Get_Draw_ScalPos(void)
+{
+	if (M_Draw == nullptr)return D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+
+	return M_Draw->Get_ScalPos();
+}
+
+void C_PartsBase::Set_All_Draw_Mat(const D3DXMATRIX * Mat)
+{
+	if (M_Draw == nullptr)return;
+
+	M_Draw->Set_Mat(Mat);
+}
+
+void C_PartsBase::Set_Body_ScalPos_Draw(void)
+{
+	if (M_Draw == nullptr)return;
+
+	M_Draw->Set_ScalPos_Update(&M_Car_ScalPos);
+
 }
 
 void C_PartsBase::SetSpeed(const int * GetNowSpeed, const int * GetMaxSpeed)
 {
-	NowSpeed = *GetNowSpeed;
-	MaxSpeed = *GetMaxSpeed;
+	Speed.Now = *GetNowSpeed;
+	Speed.Max = *GetMaxSpeed;
 }
 
-void C_PartsBase::Draw3DDrawMesh(void)
+void C_PartsBase::Draw_New(C_Draw3D_Base2 * set_Draw)
 {
-	if (Parts.MeshDrawFlg != DrawMeshNo)return;
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &GetDrawMatParts());
-	DrawMesh(&Parts.Mesh.DrawMesh);
+	Draw_AllDelete();
+
+	M_Draw = set_Draw;
 }
 
-void C_PartsBase::Draw3DDaedMesh(void)
+int C_PartsBase::Get_Draw_Draw_JudgFlg(void)
 {
-	if (Parts.MeshDrawFlg != DeadMeshNo)return;
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &GetDrawMatParts());
-	DrawMesh(&Parts.Mesh.DeadMesh);
+	if (M_Draw == nullptr)return 0;
+
+	return M_Draw->Get_Draw_JudgFlg();
 }
 
-void C_PartsBase::InitParts(void)
+D3DXVECTOR3 C_PartsBase::Get_Draw_Pol_Pos(const int * PosNo)
 {
-	ScalPosBody = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-	judg.SetTransMat(&Parts.Base.Trans, &Parts.Base.TraPos);
+	if (M_Draw == nullptr)return D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	return M_Draw->Get_Pol_Pos(PosNo);
 }
 
-void C_PartsBase::ScalParts(const D3DXVECTOR3 * ScalPos)
+LPD3DXMESH C_PartsBase::Get_Draw_Mesh(void)
 {
-	D3DXVECTOR3 TransPos,l_ScalPos=*ScalPos;
-	//ベクトル同士の掛け算
-	TransPos = judg.GetVecVec(&Parts.Base.TraPos, &l_ScalPos);
-	//配置行列
-	D3DXMatrixTranslation(&Parts.Base.Trans, TransPos.x, TransPos.y, TransPos.z);
-	//車体の行列のセット
-	if (Parts.PolFlg == true)l_ScalPos.z = 1.0f;
-	ScalPosBody = l_ScalPos;
+	return M_Draw->Get_Mesh();
+}
+
+bool C_PartsBase::Get_Draw_Iden_Flg(void)
+{
+	if (M_Draw == nullptr)return false;
+
+	return M_Draw->Get_IdenFlg();
+}
+
+void C_PartsBase::Draw_AllDelete(void)
+{
+	if (M_Draw==nullptr)return;
+
+	delete M_Draw;
+}
+
+void C_PartsBase::Draw_Draw(const D3DXVECTOR3 * CameraPos)
+{
+	if (M_Draw == nullptr)return;
+
+	M_Draw->Draw3D(CameraPos);
+}
+
+void C_PartsBase::Set_TransPos(const D3DXVECTOR3 * set_Pos)
+{
+	M_Base3D.TraPos = *set_Pos;
 }

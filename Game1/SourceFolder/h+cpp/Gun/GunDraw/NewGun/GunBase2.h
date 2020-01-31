@@ -1,76 +1,125 @@
 #pragma once
 #include<d3dx9.h>
 #include"../../../GameSource/Struct.h"
-#include"../../Bullet/BulletBase.h"
-#include"../../../GameSource/XfileManager.h"
-#include"../../Muz/MuzFlaBase.h"
-#include"../../Laser/LaserBase.h"
-#include"../../../GameSource/Judgment.h"
+#include"../../../Draw/DrawBase/Mesh_Draw/MeshDraw1_1/MeshSet1_1/MeshSetNo_1_1.h"
 #include"../../../GameSource/CharaBase.h"
-#include"../../../EnemyData/Base&Manager/EnemyDataBase.h"
-#include"../../../EnemyData/Base&Manager/EnemyGunMoveBase.h"
-#include"../../../EnemyData/Base&Manager/EnemyDataManager.h"
+#include"../GunMove/GunMoveBase_A.h"
+#include"../GunParts/GunPartsDraw.h"
+#include"../GunParts/Gun_Parts_Category.h"
+#include"../Gun_Trigger/Gun_Trigger_Base.h"
+#include<vector>
 
 class C_GunBase2:public C_CharaBase {
 public:
-	C_GunBase2() {
-		Gun.Base.DrawFlg = true;
-	};
-	C_GunBase2(const GUNINITDATA* GunInitDataS);
+	C_GunBase2();
 	~C_GunBase2();
-	//初期化
-	void Init_Gun(const GUNINITDATA* GunInitDataS);
-	//表示
-	void Draw3D_Gun();
-	////継承アップデート
-	bool Update();
-	////継承表示
-	bool Update_Gun(const D3DXMATRIX *Mat, int *NowPhase);
+	//更新の処理
+	bool Update(S_GUN_UPDATE_DATA* s_Update);
+	//表示の処理
+	virtual void Draw(const D3DXVECTOR3* CameraPos);
 
-	//銃の情報渡し
-	GUNDATA GetGunData(void) {
-		return Gun;
+	//銃の動き渡し
+	S_GUN_DATA Get_S_GUN_DATA(void) {
+		return M_S_GunData;
 	}
 
-	//拡大入れ
-	void SetScalPos(const D3DXVECTOR3 *sPos) {
-		Gun.Base.ScaPos = *sPos;
+	//銃の動きのコンストラクタ
+	void New_GunMove(C_GunMoveBase_A *s_GunMove);
+
+	//銃口数渡し
+	int Get_GunMouth_Num(void);
+
+	//銃口渡し
+	D3DXMATRIX Get_GunMouth_Mat(const unsigned int *MouthNo);
+
+	//引き金の更新
+	bool Update_Trigger(const bool *TriggerFlg);
+
+	//銃口のチェンジ
+	bool Gun_Mouth_Change(void);
+
+	//レイの判定入れ
+	void Set_Ray_Hit_Flg(const bool *Flg) {
+		M_S_GunData.Ray_Hit_Flg = *Flg;
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////
+	//発射数のリセット
+	void Init_Departure_Num(void);
 
-	//表示用行列の渡し
-	D3DXMATRIX GetDrawMatGun(void) {
-		return judg.GetDrawMat(&Gun.Base.Mat, &Gun.Base.Scal, &Gun.Base.ScaPos);
+	//銃の表示のサイズ変更
+	void Set_ScalPos(const D3DXVECTOR3* s_ScalPos);
+
+	/*
+	当たり判定
+	*/
+	//表示パーツ数渡し
+	unsigned int Get_Draw_Parts_Num(void) {
+		return M_GunParts.size();
 	}
 
-	//表示３Dの切り替え
-	void SetMeshGun(int MeshNo);
+	//ポリゴンFlg
+	int Get_Draw_Parts_Draw_JudgFlg(const unsigned int *PartsNo);
 
-	void GetTargetPos(const D3DXVECTOR3* Pos) {
-		s_Data.TargetPos = *Pos;
-	}
+	//ポリゴンの頂点渡し
+	D3DXVECTOR3 Get_Draw_Parts_Pol_Pos(const unsigned int *PartsNo, const int *PolNo);
 
-	bool GetRayJudgFlg(void) {
-		return s_Data.RayJudgFlg;
-	}
-	S_ENEMYGUNDATA GetEnemyGunData(void) {
-		return s_Data;
-	}
-	
-	void SetHitRayFlg(const bool *Flg) {
-		s_Data.RayHitFlg = *Flg;
-	}
-	void SetBulletFlg(const bool *Flg) {
-		s_Data.BulletFlg = *Flg;
-	}
+	//メッシュ渡し
+	LPD3DXMESH Get_Draw_Parts_Mesh(const unsigned int *PartsNo);
+
+	//単位行列の確認
+	bool Get_Draw_Parts_Iden_Flg(const unsigned int *PartsNo);
+
+	//表示の行列渡し
+	D3DXMATRIX Get_Draw_Parts_Draw_Mat(const unsigned int *PartsNo);
 
 protected:
-	GUNDATA Gun;
+	/*変数*/
 
-	S_ENEMYGUNDATA s_Data;
+	//銃の動きの変数
+	C_GunMoveBase_A *M_GunMove;
 
-	C_E_GunMoveBase *m_Move;
+	//銃の情報の変数
+	S_GUN_DATA M_S_GunData;
 
-	Judg judg;
+	//銃の表示パーツ
+	std::vector<C_PartsDraw_Gun*>M_GunParts;
+
+	//銃のカテゴリー
+	std::vector<C_Gun_Parts_Category*>M_Category_Data;
+
+	//引き金
+	C_Gun_Trigger_Base* M_C_Trigger;
+
+	/*関数*/
+
+	//初期化
+	void Init_Gun(const int *GunNo);
+
+	//銃の動きの更新
+	bool Update_GunMove(const S_GUN_UPDATE_DATA* s_Update);
+
+	//銃の動きの削除
+	void Delete_GunMove(void);
+
+	//銃のパーツ削除
+	void Delete_GunParts(void);
+
+	//銃のパーツの表示
+	void Draw_GunParts(const D3DXVECTOR3 *CameraPos);
+
+	//銃のパーツの更新
+	void Update_GunParts(void);
+
+	//カテゴリーの情報の削除
+	void AllDelete_Category(void);
+
+	//カテゴリーの更新
+	bool Update_Category(void);
+
+
+	//引き金の削除
+	void Delete_Trigger(void);
+
+	//レートの確認の関数
+	void Judg_Rate(void);
 };

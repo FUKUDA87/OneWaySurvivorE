@@ -6,10 +6,10 @@ int C_CarDataManager::GetDrawNum(int CarNo, bool SaveFlg)
 	return LoadDN(CarNo);
 }
 
-PARTSBASE C_CarDataManager::GetDrawSet(int CarNo, const int * DrawNo, bool SaveFlg)
+S_CAR_PARTS_DATA C_CarDataManager::GetDrawSet(int CarNo, const int * DrawNo, bool SaveFlg)
 {
-	if (SaveFlg == true)LoadSaveDS(CarNo,DrawNo);
-	return LoadDS(CarNo,DrawNo);
+	if (SaveFlg == true)LoadSave_Car_Parts_Data(CarNo,DrawNo);
+	return Load_Car_Parts_Data(CarNo,DrawNo);
 }
 
 bool C_CarDataManager::DrawNumJudg(int CarNo)

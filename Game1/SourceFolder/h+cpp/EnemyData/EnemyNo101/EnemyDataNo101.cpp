@@ -3,6 +3,14 @@
 #include"PartsMove/ENo101_DoorMove.h"
 #include"PartsMove/ENo101_StandMove.h"
 #include"GunMove/ENo101_GNo1_Attack.h"
+#include"../../Gun/GunDraw/Gun_Type/Gun_Gatling_1.h"
+#include"../../Gun/GunDraw/Gun_Draw_Manager.h"
+#include"../EnemyNo1/GunMove2/Enemy_No1_Gun_1_Lockon.h"
+
+C_EnemyDataNo101::C_EnemyDataNo101()
+{
+	GunNum = 2;
+}
 
 S_ENEMYBODYDATA C_EnemyDataNo101::GetBodyData(void)
 {
@@ -23,8 +31,8 @@ C_PartsMoveBase * C_EnemyDataNo101::GetPartsData(const int * PartsNo)
 	//ŒŸõ
 	if ((*PartsNo > -1) && (*PartsNo < 6))return new C_EnemyNo1_TireMove();
 	if (*PartsNo == 6)return new C_EnemyNo1_StandMove();
-	if (*PartsNo == 7)return new C_ENo101_DoorMove(false);
-	if (*PartsNo == 8)return new C_ENo101_DoorMove(true);
+	if (*PartsNo == 7)return new C_ENo101_DoorMove();
+	if (*PartsNo == 8)return new C_ENo101_DoorMove();
 	if (*PartsNo == 9)return new C_ENo101_Judg1Move();
 	if (*PartsNo == 10)return new C_ENo101_StandMove();
 	//ŒŸõ‚Éˆø‚Á‚©‚©‚ç‚È‚¢ê‡
@@ -65,4 +73,11 @@ Speed * C_EnemyDataNo101::GetSpeed(void)
 C_E_AiPhaseBase * C_EnemyDataNo101::GetAiPhase(void)
 {
 	return new C_E_No101_AiPhase_1();
+}
+
+C_GunLaser * C_EnemyDataNo101::Get_Gun(const int * EnemyGunNo)
+{
+	C_Gun_Darw_Manager Manager;
+	int g = 101;
+	return Manager.Get_Gun(&g,new C_Enemy_No1_Gun_1_Lockon());
 }

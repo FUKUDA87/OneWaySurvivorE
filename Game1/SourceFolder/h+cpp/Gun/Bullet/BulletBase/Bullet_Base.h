@@ -1,0 +1,85 @@
+#pragma once
+#include<d3dx9.h>
+#include"../../../GameSource/Struct.h"
+#include"../../../Draw/DrawBase2/Draw3D_Base2.h"
+#include<vector>
+#include"../../../GameSource/Count.h"
+
+class C_Bullet_Base{
+public:
+	//弾の番号と銃口の行列
+	C_Bullet_Base(const int *BulletNo, const D3DXMATRIX *Mat);
+	//プレイヤーが照準を合わせた時のコンストラクタ
+	C_Bullet_Base(const int *BulletNo, const D3DXMATRIX *Mat, const S_RAY_HIT_JUDG_DATA* RayData);
+	~C_Bullet_Base();
+
+	//表示
+	virtual void Draw(const D3DXVECTOR3 *CameraPos);
+
+	//発砲者の移動Vec加算
+	virtual void MoveVec(const D3DXVECTOR3 *MoveVec);
+
+	//構造体渡し
+	S_BULLET Get_S_BULLET(void) {
+		return M_S_Bullet;
+	}
+
+	//弾の情報の取得
+	void Set_S_BULLET(const int *BulletTypeNo);
+
+	//表示の構造体渡し
+	BASE3D Get_BASE3D(void) {
+		return M_Base;
+	}
+
+	//表示の構造体の代入
+	void Set_BASE3D(const BASE3D *s_Base) {
+		M_Base = *s_Base;
+	}
+
+	//行列入れ
+	void Set_Mat(const D3DXMATRIX *Mat);
+
+	//前進
+	bool Move(void);
+
+	//地面と壁の判定渡し
+	bool Get_GroWal_Judg_Flg(void) {
+		return M_GroWal_Judg_Flg;
+	}
+
+	//地面と壁の判定の入れ
+	void Set_GroWal_Jufg_Flg(const bool *Flg) {
+		M_GroWal_Judg_Flg = *Flg;
+	}
+protected:
+	//カウントダウンの削除
+	void Delete_Count(void);
+private:
+	/*変数*/
+	S_BULLET M_S_Bullet;
+
+	BASE3D M_Base;
+
+	//表示クラス
+	std::vector<C_Draw3D_Base2*>M_Draw;
+
+	void Init_S_Bullet(void);
+
+	//地面と壁を判定するFlg
+	bool M_GroWal_Judg_Flg;
+
+	//表示の全削除
+	void M_Draw_Delete_All(void);
+
+	//弾の表示初期化
+	void Init_Draw(const int *BulletNo);
+
+	//弾を照準の方向に傾ける処理
+	void RayPos_Bullet(const S_RAY_HIT_JUDG_DATA* RayData);
+
+	//初期化
+	void Init(void);
+
+	C_Count *M_Count;
+};

@@ -163,6 +163,16 @@ public:
 		return brj.MoveVec;
 	}
 
+	//前の車の位置のセット
+	void SetCarMoveMat(void) {
+		PlaMovMat = Car.Base.Trans*Car.Con.JudgMat;
+	}
+
+	//カメラの行列のセット
+	virtual void Set_CameraMat(const D3DXMATRIX *CameraMat) {
+		M_S_Gun_Update_Data.CameraMat = *CameraMat;
+	}
+
 protected:
 	//車のモデル入れ
 	void SetMeshCar(int MeshNo);
@@ -185,6 +195,8 @@ protected:
 
 	Judg judg;
 
+	//手動と自動の操作情報を入れるクラス
+	S_GUN_UPDATE_DATA M_S_Gun_Update_Data;
 
 private:
 	C_CarMeshManager carMeshManager;
@@ -196,5 +208,8 @@ private:
 
 	//無敵タイム
 	int CountMNum,CountMStart;
+
+	//操作の構造体の初期化
+	void Init_S_Gun_Update_Data(void);
 
 };

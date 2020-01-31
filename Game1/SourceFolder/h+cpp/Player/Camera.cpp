@@ -178,7 +178,7 @@ void Camera::RotXJudg(const D3DXMATRIX * PlayerMat)
 
 	//ãŒÀ
 	float AngBig,AngSmall;
-	AngBig = 25.0f;
+	AngBig = 21.0f;
 	AngSmall = -30.0f;
 	bool Flg=false;
 	if (Ang >AngBig) {

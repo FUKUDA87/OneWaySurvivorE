@@ -4,8 +4,10 @@
 class C_Count {
 public:
 	C_Count(const int *Start);
-	//カウントダウン
+	//カウントダウン(0になればtrue)
 	bool Update(void);
+	//カウントダウン(0になればfalse)
+	bool Update_Count(void);
 	//間隔の調整用
 	void UpCount(void);
 protected:

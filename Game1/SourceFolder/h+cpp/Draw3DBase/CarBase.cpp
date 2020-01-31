@@ -8,13 +8,13 @@ extern XfileManager xfileManager;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 extern Motion motion;
 
-//void DrawMesh(XFILE *XFile);
 void DrawMesh(XFILE *XFile, bool *Flg);
 
 
 C_CarBase::C_CarBase()
 {
 	InitCar();
+	Init_S_Gun_Update_Data();
 }
 
 C_CarBase::~C_CarBase()
@@ -55,8 +55,7 @@ void C_CarBase::InitCar(void)
 	CountMNum = 0;
 
 	//車判定
-	bool Flg = true;
-	SetDamageFlg(&Flg);
+	SetDamageFlg(&Co_Damage_Yes);
 }
 
 bool C_CarBase::UpdateCar(void)
@@ -67,7 +66,6 @@ bool C_CarBase::UpdateCar(void)
 bool C_CarBase::UpdateCarFM(std::vector<BillBase*> ground)
 {
 	if (Car.Base.Flg == true) {
-		PlaMovMat = Car.Base.Mat;
 		//前進処理
 		CarFM.NowMat = Car.Base.Mat;
 		motion.Formove(Car.Con, &CarFM.NowMat, &CarFM.AnimeFrame, ground, &CarFM.QuaInitFlg, &CarFM.QuaMatInitFlg, &Car.Con.SpeedMul, Car.Con.SpeedMulJudg, &CarFM.StartMat, &CarFM.EndMat, &CarFM.WayVec, &CarFM.CurFlg, &CarFM.CurVec, CarFM.BodyHeight);
@@ -186,4 +184,9 @@ void C_CarBase::SetMeshCar(int MeshNo)
 	Car.Con.ColModMesh = X.Mesh2;
 	Car.Con.DeadMesh = X.Mesh3;
 	Car.Base.BodRad = judg.GetRad(&Car.Con.ColModMesh, &Car.Base.NumVertex, &Car.Con.PosBig, &Car.Con.PosSmall);
+}
+
+void C_CarBase::Init_S_Gun_Update_Data(void)
+{
+	M_S_Gun_Update_Data.NowPhase = 0;
 }

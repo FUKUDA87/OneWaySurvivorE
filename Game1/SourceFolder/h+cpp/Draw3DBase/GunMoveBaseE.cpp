@@ -23,7 +23,7 @@ void C_GunMoveBaseE::InitGun(void)
 	gun.NowBase.AngY = 0.0f;
 	D3DXMatrixRotationX(&gun.NowBase.RotX, D3DXToRadian((float)gun.NowBase.AngX));
 	D3DXMatrixRotationY(&gun.NowBase.RotY, D3DXToRadian((float)gun.NowBase.AngY));
-	gun.BulletFlg = false;
+	gun.RayJudgFlg= false;
 	gun.EndFlg = false;
 	gun.GunMoveFlg = false;
 	gun.NowAnime = 0.0f;

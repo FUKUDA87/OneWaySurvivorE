@@ -9,9 +9,12 @@
 #include"../../Draw3DBase/Draw3DManager/StandMeshManager.h"
 #include"../../Draw3DBase/Draw3DManager/PartsMeshManager.h"
 #include"EnemyAiPhaseBase.h"
+#include"../../Gun/GunDraw/NewGun/GunLaser.h"
 
 class C_EnemyDataBase {
 public:
+	C_EnemyDataBase();
+
 	//Ôî•ñ“n‚µ‚ÆŒŸõ
 	virtual S_ENEMYBODYDATA GetBodyData(void) = 0;
 	//•W€ƒp[ƒcî•ñ“n‚µ‚ÆŒŸõ
@@ -24,8 +27,14 @@ public:
 	virtual Speed* GetSpeed(void) = 0;
 	//Ai“n‚µ
 	virtual C_E_AiPhaseBase* GetAiPhase(void) = 0;
+	//e”
+	int Get_GunNum(void) {
+		return GunNum;
+	}
+	//e‚Ì•\¦“n‚µ
+	virtual C_GunLaser*Get_Gun(const int *EnemyGunNo)=0;
 protected:
-
+	int GunNum;
 private:
 
 };

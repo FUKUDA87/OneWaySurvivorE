@@ -189,6 +189,8 @@ TitleScene::~TitleScene()
 }
 bool TitleScene::Update(void)
 {
+	Game_End();
+
 	//bgmのアップデート
 	bool bFlg = true;
 	SoundCamera scB;
@@ -361,7 +363,7 @@ void TitleScene::Render3D(void)
 	for (unsigned int i = 0; i < ground.size(); i++) {
 		ground[i]->SuperDraw();
 	}
-	player->Draw3DAll();
+	player->Draw3DAll(&camera->GetPos());
 	sky->Draw();
 }
 
@@ -433,6 +435,15 @@ bool TitleScene::SetScene(void)
 {
 	if (SceneNo == StageSelectNo) {
 		sceneManager.changeScene(new StageSelectScene());
+		return false;
+	}
+	return true;
+}
+
+bool TitleScene::Game_End(void)
+{
+	if (key.EscapeKey_F() == true) {
+		PostQuitMessage(0);
 		return false;
 	}
 	return true;

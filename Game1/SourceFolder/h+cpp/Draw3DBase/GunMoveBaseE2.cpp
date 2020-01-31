@@ -21,25 +21,26 @@ void C_GunMoveBaseE2::DeleteGun(void)
 	}
 }
 
-GUNDATA C_GunMoveBaseE2::GetGunData(unsigned int * No)
-{
-	if (m_Gun.size() <= 0)return GUNDATA();
-
-	unsigned int pNo = *No;
-	if (pNo <= 0)pNo = 0;
-	if (pNo >= m_Gun.size())pNo = m_Gun.size() - 1;
-	return m_Gun[pNo]->GetGunData();
-}
-
-D3DXMATRIX C_GunMoveBaseE2::GetGunMat(unsigned int * No)
-{
-	if (m_Gun.size() <= 0)return D3DXMATRIX();
-
-	unsigned int pNo = *No;
-	if (pNo <= 0)pNo = 0;
-	if (pNo >= m_Gun.size())pNo = m_Gun.size() - 1;
-	return m_Gun[pNo]->GetDrawMatGun();
-}
+//GUNDATA C_GunMoveBaseE2::GetGunData(unsigned int * No)
+//{
+//	if (m_Gun.size() <= 0)return GUNDATA();
+//
+//	unsigned int pNo = *No;
+//	if (pNo <= 0)pNo = 0;
+//	if (pNo >= m_Gun.size())pNo = m_Gun.size() - 1;
+//
+//	return m_Gun[pNo]->GetGunData();
+//}
+//
+//D3DXMATRIX C_GunMoveBaseE2::GetGunMat(unsigned int * No)
+//{
+//	if (m_Gun.size() <= 0)return D3DXMATRIX();
+//
+//	unsigned int pNo = *No;
+//	if (pNo <= 0)pNo = 0;
+//	if (pNo >= m_Gun.size())pNo = m_Gun.size() - 1;
+//	return m_Gun[pNo]->GetDrawMatGun();
+//}
 
 bool C_GunMoveBaseE2::SetDamageGun(const unsigned int * gNo, const int * Damage)
 {
@@ -66,23 +67,23 @@ void C_GunMoveBaseE2::GetTargetPos(const D3DXVECTOR3 * Pos)
 	if (m_Gun.size() <= 0)return;
 
 	for (unsigned int g = 0; g < m_Gun.size(); g++) {
-		m_Gun[g]->GetTargetPos(Pos);
+		//m_Gun[g]->GetTargetPos(Pos);
 	}
 }
 
-S_ENEMYGUNDATA C_GunMoveBaseE2::GetEnemyGunData(const unsigned int * gNo)
-{
-	return m_Gun[*gNo]->GetEnemyGunData();
-}
+//S_ENEMYGUNDATA C_GunMoveBaseE2::GetEnemyGunData(const unsigned int * gNo)
+//{
+//	return m_Gun[*gNo]->GetEnemyGunData();
+//}
 
 void C_GunMoveBaseE2::SetHitRayFlg(const unsigned int * gNo, const bool * Flg)
 {
-	m_Gun[*gNo]->SetHitRayFlg(Flg);
+	//m_Gun[*gNo]->SetHitRayFlg(Flg);
 }
 
 bool C_GunMoveBaseE2::UpdateBullet2(const D3DXVECTOR3 *mVec)
 {
-	if (m_Gun.size() > 0) {
+	/*if (m_Gun.size() > 0) {
 		for (unsigned int g = 0; g < m_Gun.size(); g++) {
 			if (m_Gun[g]->GetEnemyGunData().BulletFlg == true) {
 				bool Flg = m_Gun[g]->GetEnemyGunData().BulletFlg;
@@ -91,7 +92,7 @@ bool C_GunMoveBaseE2::UpdateBullet2(const D3DXVECTOR3 *mVec)
 			}
 		}
 	}
-	BulletMoveSet(mVec);
+	BulletMoveSet(mVec);*/
 	return false;
 }
 

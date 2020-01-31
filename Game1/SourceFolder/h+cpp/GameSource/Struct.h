@@ -23,7 +23,7 @@ struct VERTEX
 struct TEXTURE {
 	LPDIRECT3DTEXTURE9 Tex;
 	int Width, Height;
-	int a, g, b;
+	int r, g, b;
 };
 //表示物3Dの構造体
 struct  BASE3D {
@@ -47,7 +47,7 @@ struct  BASE2D {
 //キャラの基本情報
 struct CHARABASE {
 	int MaxHp, NowHp;//Hp
-	bool DamageSetFlg;//ダメージを受けるFlg
+	int DamageSetFlg;//ダメージを受けるFlg
 };
 //ステータスの構造体
 struct STATUS {
@@ -118,6 +118,7 @@ struct Pol {
 	BASE3D Base;
 	//沢山のポリゴン表示用
 	D3DXMATRIX *PolMat;
+	int PolNum;
 };
 //道の情報
 struct Way
@@ -217,41 +218,12 @@ struct XFILE3B {
 	XFILE ColModMesh;//判定用モデル
 	XFILE DeadMesh;//死後用モデル
 };
+
 //パーツ用クラス
-struct PARTS {
-	BASE3D Base;//基礎
-	XFILE3B Mesh;//モデル
-	int MeshDrawFlg;//メッシュの切り替え
-	bool JudgFlg;//レイ判定するかどうか
-	bool MoveFlg;//動くかどうか
-	int GunFlg;//銃とくっつくか
-	SizePos SPos;//判定用のメッシュの広さ
-	int MeshNo;//メッシュの種類
-	bool HpLinkFlg;//カーとHpの共有
-	bool PolFlg;//板ポリゴンFlg
-};
-//パーツ用クラス
-struct PARTSBASE {
-	float AngX, AngY, AngZ;//回転用
-	D3DXVECTOR3 TransPos, ScalPos;//移動、拡大用
-	int MeshNo;//メッシュ種類
-	int MeshDrawFlg;
-	bool JudgFlg;//レイ判定するかどうか
-	bool MoveFlg;//動くかどうか
-	int GunFlg;//銃とくっつくか
-	bool ReverseFlg;//反転
-	int MeshPartsNo;//メッシュパーツの種類
-};
-struct PARTSBASEINT {
-	float AngX, AngY, AngZ;//回転用
-	D3DXVECTOR3 TransPos, ScalPos;//移動、拡大用
-	int MeshNo;//メッシュ種類
-	int MeshDrawFlg;
-	int JudgFlg;//レイ判定するかどうか
-	int MoveFlg;//動くかどうか
-	int GunFlg;//銃とくっつくか
-	int ReverseFlg;//反転
-	int MeshPartsNo;//メッシュパーツの種類
+struct S_CAR_PARTS_DATA {
+	D3DXVECTOR3 TransPos,Ang;//移動、パーツにつなげる用,回転用
+	int MeshTypeNo;//メッシュ種類
+	int MeshJointNo;//メッシュの種類の中の番号
 };
 struct ObjectParts {
 	BASE3D Base;
@@ -335,7 +307,7 @@ struct BODYDATACar {
 	int EnemyNo;
 };
 //銃の表示情報
-struct GUNDRAWNOS {
+struct S_GUN_DRAW_NO {
 	int GunNo;
 	int BulletNo;
 	int MuzFlaNo;
@@ -352,7 +324,7 @@ struct GUNDATA {
 	//レーザーの長さ
 	float LaserSize;
 	//表示の情報保管
-	GUNDRAWNOS DrawNo;
+	S_GUN_DRAW_NO DrawNo;
 };
 struct Object3DGun {
 	float AngX, AngY, AngZ;
@@ -361,7 +333,7 @@ struct Object3DGun {
 };
 //銃の初期化情報
 struct GUNINITDATA {
-	GUNDRAWNOS DrawNo;//表示種類
+	S_GUN_DRAW_NO DrawNo;//表示種類
 	CHARABASE  CharaBase;//hpのセット
 	float LaserSize;//レイの長さ
 	Object3DGun InitGun;
@@ -391,7 +363,7 @@ struct RAYDATA {
 	D3DXVECTOR3 Ray;
 };
 struct S_ENEMYGUNDATA {
-	GUNDRAWNOS DrawNo;
+	S_GUN_DRAW_NO DrawNo;
 	Object3DGun Gun;
 	CHARABASE Hp;
 	D3DXVECTOR3 TargetPos;
@@ -441,5 +413,201 @@ struct S_Smog
 	//移動量の変化
 	S_Random Random;
 };
+//表示の構造体
+struct S_DrawBase {
+	//
+	D3DXMATRIX Mat;
+	D3DXVECTOR3 Pos,TransPos,ScalPos;
+	float AngX, AngY, AngZ;
+};
+//回転行列
+struct S_DrawRotMat {
+	D3DXMATRIX X, Y, Z;
+};
+
+
+//板ポリゴン四角形の構造体
+struct S_Pol {
+	//沢山のポリゴン表示用
+	D3DXMATRIX *PolMat;
+	int PolNum;
+};
+
+//弾のベース構造体
+struct S_BULLET {
+	int Damage;
+	float Speed;
+};
+
+struct S_POL_DATA {
+	//表示ポリゴン数
+	int PolNum;
+	//各頂点
+	D3DXVECTOR3 Pos[4];
+	//横幅
+	float Size;
+};
+
+
+
+//弾の情報
+struct S_BULLET_DATA {
+	int DrawType;
+	S_BULLET BULLET;
+	int TexNo, MeshNo;
+};
+
+struct S_GUN_UPDATE_DATA {
+	//手動
+	D3DXMATRIX CameraMat;
+	/*自動*/
+	D3DXVECTOR3 TargetPos;
+	//キャラ
+	int NowPhase;
+	//スタンド
+	D3DXMATRIX StandMat;
+};
+
+struct S_BULLET_DEPAR {
+	//銃の発射モード
+	int Bullet_Gun_Mode;//1が弾数、２が発射回数、３が秒数。
+	int Count_Departure;//123の回数のセット
+};
+
+struct S_GUN_DATA {
+	//表示処理
+	S_DrawBase DrawBase;
+	S_DrawRotMat RotMat;
+	
+	//ターゲットに照準があって完了した時
+	bool LockonEndFlg;
+	//キャラ
+	float ScalSize;
+
+	/*レーザー*/
+	//レーザーの表示フラグ
+	bool LaserDrawFlg;
+	//レーザーの長さ
+	float RayDis;
+	//レイ判定フラグ
+	bool Ray_Hit_Flg;
+	bool Ray_Judg_Flg;
+
+	/**/
+	//発射フラグ
+	bool BulletFlg;
+
+	//発射した弾数
+	int Departure_Num;
+
+	//プレイヤーが操作するかFlg
+	bool PlayerFlg;
+
+	//今の表示の回転
+	QUAMAT NowRot;
+
+	//動きのFlg
+	bool MoveFlg;
+
+	//銃の自動撃ちの時の構造体
+	S_BULLET_DEPAR Depar;
+
+	//レートの確認
+	bool RateFlg;
+};
+
+struct S_PARTS_DATA {
+	D3DXVECTOR3 JointPos;
+};
+
+struct S_GUN_INIT_DATA {
+
+};
+
+struct S_CategoryNo {
+	//a=Car.Gun,b=GunNo1.GunNo2
+	int a, b;
+};
+
+//表示３Dの
+struct S_DRAW3D_DATA {
+	//表示のタイプ(Pol,Mesh,Pol+Mesh)
+	S_CategoryNo Draw3DType;
+	//Textureのナンバー
+	int TextureNo;
+	//メッシュのナンバー
+	int MeshNo;
+};
+
+//レイ判定の結果の構造体
+struct S_RAY_HIT_JUDG_DATA {
+	//レイが当たった判定
+	bool Flg;
+	//レイが当たった位置
+	D3DXMATRIX Mat;
+};
+
+//弾の初期化の情報渡し
+struct S_BULLET3D_INIT_DATA {
+	/*銃の表示*/
+	S_DRAW3D_DATA Draw3D_Data;
+
+	/*銃の動き*/
+
+	/*プレイヤーの場合*/
+	S_RAY_HIT_JUDG_DATA RayHitData;
+
+	/*敵の場合*/
+
+};
+
+//ポリゴン表示の初期化
+struct S_PolMat_INIT {
+	int PolNum;
+	int TexNo;
+	D3DXMATRIX Mat;
+	float PolSize;
+};
+
+//銃のパーツのデータ
+struct S_Gun_Parts_Data {
+	//弾を撃つことができるFlg
+	bool BulletFlg;
+	//銃の中心から離れたところの座標
+	D3DXVECTOR3 TarnsPos;
+	//銃口
+	D3DXVECTOR3 MouthPos;
+	//レート
+	int Rate;
+	//弾No
+	int BulletNo;
+	//カテゴリー数
+	int CategoryNo;
+	//ブレ度とミリサイズ
+	int Bure, BureSura;
+
+};
+
+//色,渡し
+struct S_COLOR {
+	int r, g, b;
+};
+
+struct S_TEX_POS {
+	int Width, Height;
+};
+
+struct S_TEX_DRAW_DATA
+{
+	S_TEX_POS Pos;
+	S_COLOR Color;
+};
+
+struct S_GAGE {
+	int Now, Max;
+};
+
+
+
 
 //#endif // !Struct_H

@@ -36,29 +36,6 @@ bool C_EnemyBase::UpdateCar(void)
 	return true;
 }
 
-void C_EnemyBase::Draw3DAll(void)
-{
-	//ボス以外なら表示
-	if (BodyData.CarBodyNo < 200) {
-		CHARABASE c = GetCharaBase();
-	}
-
-	Draw3DCar();
-	if (Car.Base.Flg == true) {
-		if (Parts.size() > 0) {
-			for (unsigned int p = 0; p < Parts.size(); p++) {
-				Parts[p]->Draw3DParts();
-			}
-		}
-		if (m_Gun.size() > 0) {
-			for (unsigned int g = 0; g < m_Gun.size(); g++) {
-				m_Gun[g]->Draw3D_Gun();
-			}
-		}
-	}
-		//DrawBM();
-}
-
 void C_EnemyBase::Draw3DAll(const D3DXVECTOR3 * CamPos)
 {
 	//ボス以外なら表示
@@ -69,18 +46,12 @@ void C_EnemyBase::Draw3DAll(const D3DXVECTOR3 * CamPos)
 
 	Draw3DCar();
 	if (Car.Base.Flg == true) {
-		if (Parts.size() > 0) {
-			for (unsigned int p = 0; p < Parts.size(); p++) {
-				Parts[p]->Draw3DParts();
-			}
-		}
-		if (m_Gun.size() > 0) {
-			for (unsigned int g = 0; g < m_Gun.size(); g++) {
-				m_Gun[g]->Draw3D_Gun();
-			}
-		}
+		Draw_Car_Parts(CamPos);
+
+		Draw_Gun(CamPos);
 	}
-	DrawBM(CamPos);
+	Draw_Bullet(CamPos);
+	Draw_Effect(CamPos);
 }
 
 void C_EnemyBase::Draw2DAll(void)
@@ -92,7 +63,7 @@ void C_EnemyBase::Draw2DAll(void)
 void C_EnemyBase::GetPos2DSet(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport)
 {
 	judg.Pos2Dpvv(*mProj, *mView, *Viewport);
-	D3DXMATRIX Pmat = judg.SetMatP(targetPos);
+	D3DXMATRIX Pmat = judg.SetMatP(M_S_Gun_Update_Data.TargetPos);
 	Pos2D = judg.Pos2DPE(Car.Base.Mat, Pmat);//矢印Pos作成
 	Vect->Update(Pos2D, Car.Base.Mat);
 }
@@ -100,7 +71,7 @@ void C_EnemyBase::GetPos2DSet(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, 
 bool C_EnemyBase::GetDeleFlg(void)
 {
 	if (Car.Base.Flg == true)return true;
-	if (BulletE.size() > 0)return true;
+	//if (BulletE.size() > 0)return true;
 	return false;
 }
 

@@ -4,7 +4,6 @@
 
 class C_GunLaser :public C_GunMuzFla {
 public:
-	C_GunLaser();
 	~C_GunLaser();
 	void Draw3D_Laser(const D3DXVECTOR3*CamPos);
 	void GetDis(const float* Dis);

@@ -66,6 +66,9 @@ protected:
 	//表示２Dの通常モード
 	void Draw2D_Normal(void);
 
+	//タイトルシーンに強制移動
+	bool Change_TitleScene(void);
+
 private:
 	StageSky *sky;
 	//プレイヤーの情報

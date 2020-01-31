@@ -1,4 +1,5 @@
 #include "PlayerA.h"
+#include"../Gun/GunDraw/Gun_Type/Gun_Gatling_1.h"
 
 C_PlayerA::C_PlayerA()
 {
@@ -26,15 +27,17 @@ void C_PlayerA::SetBody(const BODYDATA * Data)
 	BodyData = *Data;
 	//パーツのセット
 	InitPlayerA();
+
 }
 
 void C_PlayerA::SaveCar(void)
 {
 	//パーツ情報の読み込み
 	int DrawNum;
-	DrawNum = CarDataManager.GetDrawNum(BodyData.CarBodyNo,true);
+	C_CarDataManager Manager;
+	DrawNum = Manager.GetDrawNum(BodyData.CarBodyNo,true);
 	for (int c = 0; c < DrawNum; c++) {
-		CarDataManager.GetDrawSet(BodyData.CarBodyNo, &c,true);
+		Manager.GetDrawSet(BodyData.CarBodyNo, &c,true);
 	}
 }
 
@@ -44,29 +47,8 @@ void C_PlayerA::InitPlayerA(void)
 	//車初期化
 	SetMeshCar(BodyData.CarBodyNo);
 
-	SetCarParts(&BodyData,true);
+	bool Flg = true,Flg2=false;
+	New_Set_Car_Parts(&BodyData,&Flg,&Flg2);
 
 	
-}
-
-void C_PlayerA::InitPlayerAB(void)
-{
-
-	//パーツの削除
-	DeleteParts();
-
-	//車初期化
-	SetMeshCar(BodyData.CarBodyNo);
-
-	//パーツ情報の読み込み
-	int DrawNum;
-	//表示数の読み込み
-	DrawNum = CarDataManager.GetDrawNum(BodyData.CarBodyNo, true);
-	//表示物の初期化
-	//表示数
-	for (int c = 0; c < DrawNum; c++) {
-		//表示情報の読み込み
-		PARTS P;
-		CarDataManager.GetDrawSet(BodyData.CarBodyNo, &c, true);
-	}
 }

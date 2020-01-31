@@ -113,6 +113,8 @@ public:
 	float GetRad(XFILE *Mesh, DWORD *NumVertex, D3DXVECTOR3 *PosBig, D3DXVECTOR3 *PosSmall,bool a);
 	//リバースFlg
 	void ReverseFlg(bool *Flg);
+	//リバースFlg
+	bool ReverseFlg2(const bool *Flg);
 	//スケイリングMat入れ
 	void ScalingMat(D3DXMATRIX *ScalMat, const D3DXVECTOR3 *Pos);
 	//RotXの初期化
@@ -125,6 +127,7 @@ public:
 	void SetTransMat(D3DXMATRIX *TransMat, const D3DXVECTOR3 *TransPos);
 	//表示用の行列作成
 	D3DXMATRIX GetDrawMat(const D3DXMATRIX *Mat,D3DXMATRIX *ScalMat, const D3DXVECTOR3 *ScalPos);
+	D3DXMATRIX GetDrawMat(const D3DXMATRIX *Mat,const D3DXVECTOR3 *ScalPos);
 	//初期化２
 	BASE3D GetInitBase3D(const D3DXVECTOR3 *InitPos, const D3DXVECTOR3 *TransPos, const D3DXVECTOR3 *ScalPos, const double * AngX, const  double * AngY, const  double * AngZ);
 	//判定用の拡大を含めた移動行列の作成
@@ -140,11 +143,17 @@ public:
 	//位置の初期化(Gunバージョン)
 	Object3DGun InitSetPartsData(const float AngX,const float AngY,const float AngZ,const D3DXVECTOR3 *TransPos, const D3DXVECTOR3 *ScalPos,const bool DrawFlg);
 	//初期化構造体
-	GUNDRAWNOS GetInitGUNDRAWNOS(const int GunNo, const int BulletNo, const int MuzFlaNo, const int LaserNo);
+	S_GUN_DRAW_NO GetInitGUNDRAWNOS(const int GunNo, const int BulletNo, const int MuzFlaNo, const int LaserNo);
 	//煙の構造体の初期化
 	S_Smog GetInitSmog(const D3DXVECTOR3 *MoveVec,const D3DXVECTOR3 *Frame,const int Alpha, const int AStart, const int AUp,const float PolSize, const float PolBit,const float PolBitUp,const S_Random *Random);
 	//乱数の初期化
 	S_Random GetInitRand(const int x, const int y, const int z);
+	//単位行列渡し
+	D3DXMATRIX Get_IdenMat(void);
+	//初期化行列渡し
+	D3DXMATRIX Get_Mat_Init(void);
+	//送られてきた番号の検索
+	bool Hit_No(const unsigned int *No,const unsigned int *NoNum);
 };
 
 #endif // !Judgm_H

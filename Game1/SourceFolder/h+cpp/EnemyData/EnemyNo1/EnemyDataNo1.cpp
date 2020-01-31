@@ -1,6 +1,14 @@
 #include "EnemyDataNo1.h"
 #include"PartsMove/EnemyNo1_TireMove.h"
 #include"PartsMove/EnemyNo1_StandMove.h"
+#include"../../Gun/GunDraw/Gun_Type/Gun_Gatling_1.h"
+#include"GunMove2/Enemy_No1_Gun_1_Lockon.h"
+#include"../../Gun/GunDraw/Gun_Draw_Manager.h"
+
+C_EnemyDataNo1::C_EnemyDataNo1()
+{
+	GunNum = 1;
+}
 
 S_ENEMYBODYDATA C_EnemyDataNo1::GetBodyData(void)
 {
@@ -55,6 +63,13 @@ Speed * C_EnemyDataNo1::GetSpeed(void)
 C_E_AiPhaseBase * C_EnemyDataNo1::GetAiPhase(void)
 {
 	return new C_E_No1_AiPhase();
+}
+
+C_GunLaser * C_EnemyDataNo1::Get_Gun(const int * EnemyGunNo)
+{
+	C_Gun_Darw_Manager Manager;
+	int g = 101;
+	return Manager.Get_Gun(&g, new C_Enemy_No1_Gun_1_Lockon());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -14,8 +14,8 @@
 #include"../Key/Key.h"
 #include"../2DDraw/Fade.h"
 #include"TitleSceneSoundManager.h"
-#include"../Player2/PlayerBody.h"
-#include"../Player2/PlayerA.h"
+#include"../Player/PlayerBody.h"
+#include"../Player/PlayerA.h"
 #include"../GameSource/Count.h"
 
 

@@ -40,11 +40,16 @@ bool C_GunBase2::Update(S_GUN_UPDATE_DATA* s_Update)
 	return true;
 }
 
-void C_GunBase2::Draw(const D3DXVECTOR3 * CameraPos)
+void C_GunBase2::Draw_Gun(const D3DXVECTOR3 * CameraPos)
 {
 	if (Dead() != false)return;
 
 	Draw_GunParts(CameraPos);
+}
+
+void C_GunBase2::Draw(const D3DXVECTOR3 * CameraPos)
+{
+	Draw_Gun(CameraPos);
 }
 
 void C_GunBase2::Init_Gun(const int * GunNo)
@@ -150,6 +155,8 @@ int C_GunBase2::Get_Draw_Parts_Draw_JudgFlg(const unsigned int * PartsNo)
 	if (M_GunParts.size() < 1)return 0;
 
 	if ((*PartsNo < 0) || (*PartsNo >= M_GunParts.size()))return 0;
+
+	if (Dead() == true)return 0;
 
 	return M_GunParts[*PartsNo]->Get_Draw_Draw_JudgFlg();
 }

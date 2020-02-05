@@ -1,5 +1,10 @@
 #include "GunBullet.h"
 
+C_GunBullet::C_GunBullet()
+{
+	BulletNo = 1;
+}
+
 bool C_GunBullet::Get_TriggerFlg(const unsigned int * MouthNo)
 {
 	if (Judg_MouthNo(MouthNo) != true)return false;

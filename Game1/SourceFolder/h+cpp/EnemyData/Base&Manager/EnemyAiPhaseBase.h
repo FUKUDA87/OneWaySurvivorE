@@ -5,6 +5,7 @@
 #include"../../Gun/GunDraw/NewGun/GunLaser.h"
 #include"../../Draw3DBase/Car_Parts_Joint.h"
 #include<vector>
+#include"../../Const/Const_PartsTypeNo.h"
 
 class C_E_AiPhaseBase {
 public:

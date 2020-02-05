@@ -7,8 +7,9 @@
 
 class C_GunBullet :public C_GunBase2 {
 public:
+	C_GunBullet();
 	int Get_BulletNo(void) {
-		return co_Car;
+		return BulletNo;
 	}
 
 	//e‚Ì”“n‚µ
@@ -26,7 +27,8 @@ public:
 
 	void Bullet_Shot_Update(const unsigned int *MouthNo);
 protected:
-	
+	//’e‚Ì•\¦”Ô†
+	int BulletNo;
 private:
 	bool Judg_MouthNo(const unsigned int *MouthNo);
 };

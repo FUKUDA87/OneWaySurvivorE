@@ -12,7 +12,10 @@ C_E_AiPhaseBase * C_E_No1_AiPhase::Action(const CHARABASE *Chara, std::vector<C_
 	if (InitFlg == true) {
 		InitFlg = false;
 
-		M_Gun[0]->Init_Hp(1, &Co_Damage_Yes);
+		//M_Gun[0]->Init_Hp(1, &Co_Damage_Yes);
+		/*for (auto && p : M_Car_Parts) {
+			p->Init_Hp(1, &Co_Damage_Yes);
+		}*/
 	}
 
 	bool Flg = true;

@@ -13,9 +13,10 @@
 #include"../Key/KeyTrue.h"
 #include"../2DDraw/Fade.h"
 #include"../StageParts/CarSelect.h"
-#include"../Player2/PlayerBody.h"
+#include"../Player/PlayerBody.h"
 #include"../StageParts/OkButton.h"
 #include"../StageParts/CarSet.h"
+#include"../StageParts/Stage_Room.h"
 
 
 class StageSelectScene :public SceneBase {
@@ -70,6 +71,11 @@ protected:
 	bool Change_TitleScene(void);
 
 private:
+	//地面に立つ様に調べる
+	void Car_Ground_Vec(void);
+
+	void Init_New(void);
+
 	StageSky *sky;
 	//プレイヤーの情報
 	C_PlayerBody *PlayerBody;
@@ -107,4 +113,7 @@ private:
 	C_CarSet *M_CarSet;
 
 	BODYDATA BodyData_Init;
+
+	//車のスタンド
+	C_Stage_Room_Stand *M_C_Garage_Stand;
 };

@@ -31,16 +31,18 @@
 #include"../Key/KeyTrue.h"
 #include"../2DDraw/Fade.h"
 #include"../3DDraw/Effect_3D/BulletHole3D.h"
-#include"../Player2/PlayerA.h"
-#include"../Enemy2/EnemyA.h"
-#include"../Player2/PlayerBody.h"
+#include"../Player/PlayerA.h"
+#include"../Enemy/EnemyA.h"
+#include"../Player/PlayerBody.h"
 #include"../2DDraw/PauseTouch.h"
 #include"../2DDraw/OverTouch.h"
 #include"../GameSource/Count.h"
-#include"../Enemy2/EnemySelect.h"
+#include"../Enemy/EnemySelect.h"
 #include"../EnemyData/Base&Manager/EnemySpeedManager.h"
 #include"../3DDraw/Effect_3D/CarSmog.h"
 #include"../Const/Const_Draw_Judg.h"
+#include"../Stage_Data/Car_Pop/Car_Pop_New.h"
+#include"../Ground/Stage_Ground/Ground_Pop_New.h"
 
 extern Judg judg;
 extern Motion motion;
@@ -53,10 +55,6 @@ extern Motion motion;
 class GameScene :public SceneBase, public C_GameSSM
 {
 public:
-	void StageSave(const bool *Flg);
-	void NewWaveSave(int StagNo);
-	void NewEnemySave(int StagNo,int WaveNo);
-	bool road(void);
 	GameScene(const int stageNum);
 	~GameScene();
 	void Render3D(void);
@@ -176,6 +174,48 @@ protected:
 	//カメラ行列の取得
 	bool Update_CameraMat(void);
 
+	//地面の出現
+	int Init_Ground_Push(const D3DXMATRIX *Mat1, const D3DXMATRIX *Mat0,const int *Type);
+
+	//ゲーム本編の最後の更新
+	bool Update_Pop_End(void);
+
+	//車の出現確認
+	bool Get_Car_Pop(const int *Car_Type);
+
+	//車の出現の更新の停止命令渡し
+	bool Get_Car_Pop_Update_MoveFlg(void);
+
+	//地面の情報入れ
+	void Set_Ground_Data(void);
+
+	//ゲームオーバー時
+	void Set_Game_Over(void);
+
+	//ゲームクリア時
+	void Set_Game_Clear(void);
+
+	//全ての弾の更新
+	bool Update_Bullet(void);
+
+	//弾のMoveVecの加算の更新
+	bool Update_Bullet_MoveVec(void);
+
+	//弾の出現準備の更新
+	bool Update_Bullet_Enemy_Init(void);
+
+	//弾の出現の更新
+	bool Update_Bullet_Init(void);
+
+	//弾の判定の更新
+	bool Update_Bullet_Judg(void);
+
+	//弾の更新
+	bool Update_Bullet_Move(void);
+
+	//レールの操作
+	int Get_Rail_Num(const int *Way_Rail_Num, const int *Pop_Rail_Num);
+
 	/*弾*/
 
 	//弾判定の情報初期化
@@ -184,6 +224,7 @@ protected:
 	void BulletJudgGround(BULLETJUDGDATA* BJD,const RAYDATA *RD,bool *HitFlg,const float *Rad);
 	void BulletJudgPlayer(BULLETJUDGDATA* BJD, const RAYDATA *RD, const float *Rad);
 	void BulletJudgEnemy(BULLETJUDGDATA* BJD,const RAYDATA *RD, const float *Rad);
+	void BulletJudgEnemy_Ball(BULLETJUDGDATA* BJD, const RAYDATA *RD, const float *Rad);
 	//弾判定によるダメージ計算
 	bool SetBulletDamage(const BULLETJUDGDATA* BJD, const RAYDATA *RD,const int Damage);
 	bool SetBulletDamageGround(const BULLETJUDGDATA* BJD, const RAYDATA *RD);
@@ -211,9 +252,6 @@ private:
 	std::vector<BillBase*>ground;
 	Cou *cou;//bill
 	std::vector<Cou*>GroCou;
-	int GroType, GroKNum, *CurType, NowCur;
-	float AngGro;//カーブ時の角度
-	bool GroLenFlg;//長さの変更
 	//外灯表示用カウントダウン
 	C_Count *LightCount;
 
@@ -230,16 +268,8 @@ private:
 
 	Warning *war;
 
-	//敵の情報を持ってくる変数
-	char FRName[100];//ロード用
-	char FSName[100];//セーブ用
 	int StageNo;
-	std::vector<EnemyPop*>ePop;
-	int MaxWaveNum;//最大ウェーブ数
-	int NowWaveNum;//今のウェーブ数
-	int MaxEnemyNum;//今のウェーブの最大敵の数
-	int NowEnemyNum;//今のウェーブの敵の数
-	int NextEnemyNo;//今のウェーブの敵のナンバー
+	
 
 	Pause *pause;
 
@@ -271,6 +301,12 @@ private:
 
 	//車用の煙エフェクト
 	C_SmokeCar* M_C_SmokeCar;
+
+	/*車の沸き情報*/
+	C_Car_Pop_New *M_C_Car_Pop;
+
+	/*地面の情報*/
+	C_Ground_Pop_New* M_C_Ground_Pop;
 };
 
 //#endif // !GameScene_H

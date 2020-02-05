@@ -121,7 +121,7 @@ void C_CarSet::ChangePartsMesh(const bool Flg)
 		Change_Tire();
 		break;
 	case 1:
-		Change_Draw(new C_Draw_Mesh_Base("../GameFolder/Material/XFile/Vector1.x"));
+		Change_Vector();
 		break;
 	case 2:
 		Change_Pol();
@@ -167,6 +167,11 @@ void C_CarSet::Change_Pol(void)
 	case 2:
 		Change_Draw(new C_Draw_Pol_BASE_A(&D3DXVECTOR3(0.0f, 1.0f, 1.0f), &D3DXVECTOR3(0.0f, 1.0f, -1.0f)
 			, &D3DXVECTOR3(0.0f, -1.0f, -1.0f), &D3DXVECTOR3(0.0f, -1.0f, 1.0f)));
+		ChangeMeshNo = 3;
+		break;
+	case 3:
+		Change_Draw(new C_Draw_Pol_BASE_A(&D3DXVECTOR3(0.5f, 1.0f, 0.0f), &D3DXVECTOR3(-0.5f, 1.0f, 0.0f)
+			, &D3DXVECTOR3(-0.5f, -1.0f, 0.0f), &D3DXVECTOR3(0.5f, -1.0f, 0.0f)));
 		ChangeMeshNo = 1;
 		break;
 	default:
@@ -211,6 +216,24 @@ void C_CarSet::Change_Door(void)
 	default:
 		Change_Draw(new C_Draw_Pol_BASE_A(&D3DXVECTOR3(-0.3f, 0.0f, 0.8f), &D3DXVECTOR3(0.3f, 0.0f, 0.8f)
 			, &D3DXVECTOR3(0.3f, 0.0f, -0.8f), &D3DXVECTOR3(-0.3f, 0.0f, -0.8f)));
+		break;
+	}
+}
+
+void C_CarSet::Change_Vector(void)
+{
+	switch (ChangeMeshNo)
+	{
+	case 1:
+		Change_Draw(new C_Draw_Mesh_Base("../GameFolder/Material/XFile/Vector1.x"));
+		ChangeMeshNo = 2;
+		break;
+	case 2:
+		Change_Draw(new C_Draw_Mesh_Base("../GameFolder/Material/XFile/Car_O_201_Judg_1.x"));
+		ChangeMeshNo = 1;
+		break;
+	default:
+		Change_Draw(new C_Draw_Mesh_Base("../GameFolder/Material/XFile/Vector1.x"));
 		break;
 	}
 }

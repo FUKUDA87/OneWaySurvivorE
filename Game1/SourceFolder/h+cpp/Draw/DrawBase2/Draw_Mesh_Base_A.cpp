@@ -18,9 +18,15 @@ C_Draw_Mesh_Base::C_Draw_Mesh_Base(std::string FileName)
 	Init_Mesh();
 }
 
+C_Draw_Mesh_Base::C_Draw_Mesh_Base(std::string FileName, const D3DXVECTOR3 * ScalPos)
+{
+	M_Mesh = xfileManager.GetXfile(FileName);
+	Init_Mesh();
+	Set_ScalPos_Init(ScalPos);
+}
+
 void C_Draw_Mesh_Base::Draw3D(const D3DXVECTOR3 * CameraPos)
 {
-
 	Mesh_Draw_No1();
 }
 

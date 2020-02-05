@@ -1,7 +1,7 @@
 #pragma once
 #include"../EnemyNo101/SpeedMove/EnemySpeedNo201.h"
 #include"../EnemyNo1/SpeedData/SpeedUp.h"
-#include"../../Enemy2/EnemyNoConst.h"
+#include"../../Enemy/EnemyNoConst.h"
 
 class C_EnemySpeedManager {
 public:

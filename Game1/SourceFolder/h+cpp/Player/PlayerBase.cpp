@@ -1,0 +1,202 @@
+#include "PlayerBase.h"
+#include"../Draw/Bullet/Bullet_DrawManager.h"
+
+C_PlayerBase::C_PlayerBase()
+{
+	InitPlayer();
+	Init_Ray_Data();
+}
+
+C_PlayerBase::~C_PlayerBase()
+{
+	//セーブtxt
+	if (fopen_s(&fp, "../GameFolder/Data/playerDate.txt", "w") == 0) {
+		fprintf_s(fp, "%d", Car.Sta.CharaBase.MaxHp);
+		fclose(fp);
+	}
+}
+
+void C_PlayerBase::InitPlayer(void)
+{
+	//必須初期化-------------------------------------------------------------------------------
+	//HPの初期化
+	//ロードtxt
+	if (fopen_s(&fp, "../GameFolder/Data/playerDate.txt", "r") == 0) {
+		fscanf_s(fp, "%d", &Car.Sta.CharaBase.MaxHp);
+		fclose(fp);
+	}
+	SetHp(&Car.Sta.CharaBase.MaxHp);
+
+	Car.Base.AttRad = 1.0f / 2.0f;
+	//スピードの初期化
+	Car.Con.NowSpeed = 80;
+	Car.Con.MaxSpeed = 150;
+	Car.Con.Speed = D3DXVECTOR3(0.0f, 0.0f, (float)Car.Con.NowSpeed/100.0f);//0.8f
+
+	Car.Con.CurFlg = false;
+	RadField = 1000.0f*0.55f;
+	Car.Con.GroNum = 0;
+	//ball = new Ball(player.Base.BodRad);//(player.Base.rad);
+	hp = new HpD();
+	Car.Con.PEFlg = false;
+
+	/*D3DXMATRIX spS, spE;
+	D3DXMatrixTranslation(&spS, 0.0f, 0.0f, 1.1f);
+	D3DXMatrixTranslation(&spE, 0.0f, 0.0f, -1.1f);*/
+	/*spear = new Spear(spS, spE);
+	vector = new Vector();*/
+
+	//カーブ
+	CurAng = 0.0f;
+
+}
+
+bool C_PlayerBase::UpdatePlayer(void)
+{
+	CHARABASE c = GetCharaBase();
+	hp->UpdateAll(c.MaxHp, c.NowHp, true);
+	return true;
+}
+
+bool C_PlayerBase::UpdateAll(void)
+{
+	return false;
+}
+
+bool C_PlayerBase::UpdateAll(const D3DXMATRIX * CamMat)
+{
+	UpdatePlayer();
+	if (Car.Base.Flg == true) {
+		//移動ベクトル計算
+		judg.MatMatVec(&brj.MoveVec, PlaMovMat, Car.Base.Mat);
+		UpdateCar();
+
+		//無敵のアップデート
+		UpdateCountM();
+
+		//標準パーツのアップデート
+		Update_Car_Parts();
+
+		Update_Gun();
+	}
+	Update_Effect();
+	Set_MoveVec_Effect(&brj.MoveVec);
+
+	if (Dead()==true) {
+		if (Car.Base.Flg == true) {
+			Car.Base.Flg = false;
+		}
+		return false;
+	}
+	return true;
+}
+
+bool C_PlayerBase::UpdateEndAll(void)
+{
+	return false;
+}
+
+bool C_PlayerBase::UpdateDeadAll(void)
+{
+	return false;
+}
+
+void C_PlayerBase::Draw3DAll(const D3DXVECTOR3 *CameraPos)
+{
+	Draw3DCar();
+	if (Car.Base.Flg == true) {
+		Draw_Car_Parts(CameraPos);
+
+		Draw_Gun(CameraPos);
+	}
+	Draw_Bullet(CameraPos);
+	Draw_Effect(CameraPos);
+}
+
+void C_PlayerBase::Draw2DAll(void)
+{
+	hp->DrawAll();
+}
+
+void C_PlayerBase::SetRodAngY(float Inc, bool KeyFlg)
+{
+	float MaxInc, SmallInc;
+	if (Inc < 0.0f) {
+		MaxInc = Inc * -1.0f;
+		SmallInc = Inc;
+	}
+	else {
+		MaxInc = Inc;
+		SmallInc = Inc * -1.0f;
+	}
+	if (KeyFlg == true) {
+		CurAng += Inc;
+		float Over = 10.0f;
+		if (CurAng < -Over)CurAng = -Over;
+		if (CurAng > Over)CurAng = Over;
+	}
+	else {
+		if (CurAng < 0.0f) {
+			if (CurAng < SmallInc) {
+				CurAng += MaxInc;
+			}
+			else {
+				CurAng = 0.0f;
+			}
+		}
+		else {
+			if (CurAng > MaxInc) {
+				CurAng -= MaxInc;
+			}
+			else {
+				CurAng = 0.0f;
+			}
+		}
+	}
+}
+
+void C_PlayerBase::SetCurRotMat(void)
+{
+	D3DXMatrixRotationY(&CurRotMatY, D3DXToRadian(CurAng));
+	Car.Base.Mat = CurRotMatY * Car.Base.Mat;
+}
+
+bool C_PlayerBase::UpdateBulPla(const bool * KeyFlg, const bool * BirthFlg, const SoundCamera * sc)
+{
+	//弾を撃つと音とKey
+	//UpdateBullet(&brj, KeyFlg, BirthFlg, sc);
+	return true;
+}
+
+void C_PlayerBase::Set_CameraMat(const D3DXMATRIX * CameraMat)
+{
+	M_S_Gun_Update_Data.CameraMat = *CameraMat;
+	unsigned int i = 0;
+	Set_GunMove_Player(&i);
+}
+
+void C_PlayerBase::Init_Bullet(void)
+{
+	if (M_Gun.size() < 1)return;
+
+	C_Bullet_DrawManager Bullet_Manager;
+
+	for (unsigned int g = 0; g < M_Gun.size(); g++) {
+		M_Gun[g]->Init_Departure_Num();
+		for (unsigned int i = 0; i < M_Gun[g]->Get_CategoryNum(); i++) {
+			if (M_Gun[g]->Get_TriggerFlg(&i) == true) {
+				int b = M_Gun[g]->Get_BulletNo();
+				D3DXMATRIX Mat = M_Gun[g]->Get_GunMouth_Mat(&i);
+
+				M_Bullet.push_back(Bullet_Manager.Get_Bullet(&b, &Mat,&Get_Gun_Ray_Data()));
+				M_Gun[g]->Bullet_Shot_Update(&i);
+				M_Effect.push_back(M_Gun[g]->Get_Bullet_Shot_Effect(&i));
+			}
+		}
+	}
+}
+
+void C_PlayerBase::Init_Ray_Data(void)
+{
+	M_Gun_Ray_Data.Flg = false;
+}

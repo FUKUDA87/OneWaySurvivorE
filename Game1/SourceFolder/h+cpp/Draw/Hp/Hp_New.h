@@ -1,0 +1,20 @@
+#pragma once
+#include"HpBase.h"
+#include"../../GameSource/CharaBase.h"
+
+
+class C_Hp_Draw_New :public C_CharaBase {
+public:
+	~C_Hp_Draw_New();
+protected:
+	//Hpï\é¶èâä˙âª
+	void Hp_Init(C_HpBase* InitHpBase);
+	//HpçÌèú
+	void Hp_Delete(void);
+	//HpÇQDï\é¶
+	void Hp_Draw2D(void);
+	//Hp3Dï\é¶
+	void Hp_Draw3D(const D3DXVECTOR3 *CamPos, const D3DXMATRIX *Mat, const float UpY);
+private:
+	C_HpBase *HpBase;
+};

@@ -31,12 +31,6 @@
     <Filter Include="ソース ファイル\Draw3DBase\Draw3DManager">
       <UniqueIdentifier>{d1a2fcc6-4fe9-4b6b-836c-566285c4bb2b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Enemy2">
-      <UniqueIdentifier>{dbde3eeb-6903-4f9d-bb22-144ed30e9324}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Enemy2\EnemyAi">
-      <UniqueIdentifier>{380af209-1d11-4af8-a23f-960600edabbc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\EnemyData">
       <UniqueIdentifier>{3af7fe3c-8186-4692-ae00-9af60f3d4165}</UniqueIdentifier>
     </Filter>
@@ -109,9 +103,6 @@
     <Filter Include="ソース ファイル\Move\GunMove">
       <UniqueIdentifier>{4d5418a2-5408-43c9-9b6b-3f9f13f57f51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Player2">
-      <UniqueIdentifier>{50a9395d-a9df-4535-954d-4d0c74dd6c18}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene">
       <UniqueIdentifier>{7627b4db-a503-4664-ae4b-4028f98ba0b6}</UniqueIdentifier>
     </Filter>
@@ -175,15 +166,6 @@
     <Filter Include="ソース ファイル\Gun\GunDraw\GunPartsMove">
       <UniqueIdentifier>{bb70f371-562a-4e42-a3ee-c87020f1adce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Data">
-      <UniqueIdentifier>{cfd3d361-7c2f-462d-be4b-74fd6446c80c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Data\MeshData">
-      <UniqueIdentifier>{026bdfda-5cb9-426b-87c0-dd4215aca1d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Data\MeshData\StandData">
-      <UniqueIdentifier>{db9a92ca-c1ab-4952-8191-a16776da8bc2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\GameSource\StructClass">
       <UniqueIdentifier>{a1e42142-760b-48ee-963c-094aa78636e6}</UniqueIdentifier>
     </Filter>
@@ -216,15 +198,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Gun\Bullet\BulletBase">
       <UniqueIdentifier>{4777e845-e0af-4dc5-be68-64d73a5e5173}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Data\Bullet">
-      <UniqueIdentifier>{7979df1f-b8e7-4f56-9051-b778cfc82b76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Data\Bullet\Bullet_No1">
-      <UniqueIdentifier>{7f366ac5-ace7-4627-973f-b8aaeaff97be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Data\Bullet\Bullet_Data_Base">
-      <UniqueIdentifier>{9164b5ab-298a-411a-b952-850859d32398}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Gun\GunDraw\Gun_Trigger">
       <UniqueIdentifier>{66718f4b-93f2-40c7-8208-feca2076db3f}</UniqueIdentifier>
@@ -259,12 +232,6 @@
     <Filter Include="ソース ファイル\EnemyData\EnemyNo1\GunMove2">
       <UniqueIdentifier>{a3148789-10ac-4c94-b0f8-b15eec3f6744}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Enemy">
-      <UniqueIdentifier>{41626441-b641-4bdd-b4e4-9b2964b3679e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Player">
-      <UniqueIdentifier>{ab127988-c1c6-4e06-8cd1-cf51cbcb6588}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Move\GunMove\Auto">
       <UniqueIdentifier>{cc8894e7-d52d-47ee-94a9-1ec457bd2cc3}</UniqueIdentifier>
     </Filter>
@@ -274,8 +241,47 @@
     <Filter Include="ソース ファイル\Draw\Door">
       <UniqueIdentifier>{21ac145b-d8fb-4f06-b875-fd49403dd556}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Enemy2\Enemy_No">
-      <UniqueIdentifier>{3bfbe6a6-6bee-4ef8-b586-13b0a16cca52}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Draw\Polygon">
+      <UniqueIdentifier>{4f798a02-dfea-4e50-830f-8674d6e3e8f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\Bullet">
+      <UniqueIdentifier>{453026c5-28bc-463a-bebb-409d7f427173}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\Judg">
+      <UniqueIdentifier>{04c6fa9d-f024-4703-ae92-4c5781237ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Enemy">
+      <UniqueIdentifier>{a4a04631-56a1-48a1-b393-e2c41257b8b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{a80c0798-b876-4d7a-8ef0-2768c70b9580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Enemy\No">
+      <UniqueIdentifier>{114aa120-02b4-413d-9bc3-d7d4d706b98e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Enemy\Ai">
+      <UniqueIdentifier>{8416cec5-068b-4ad0-b27d-4eab2ac687b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\DrawBase2\New_Draw">
+      <UniqueIdentifier>{7a33324b-ee0c-4d6b-aefd-0e3b6115c1ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Stage_Data">
+      <UniqueIdentifier>{c83546f5-66b4-4dd3-a723-2fa32537258c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Stage_Data\Stage_1">
+      <UniqueIdentifier>{c4db6b88-bd78-447b-b5cc-6581fb04fd20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Stage_Data\Car_Pop">
+      <UniqueIdentifier>{642cc27d-1a42-43ea-9e8e-e1cf068da63d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Ground\Stage_Ground">
+      <UniqueIdentifier>{12cec447-54b5-4f43-b104-c3a054a280e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Ground\Stage_Ground\Ground_Type">
+      <UniqueIdentifier>{a31c38cb-b7c6-4efe-95e6-728eb7aac446}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound\vector">
+      <UniqueIdentifier>{96aa3988-ace9-4aec-86f3-63e24a863db9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -407,24 +413,6 @@
     </ClInclude>
     <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\StandMeshManager.h">
       <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Enemy2\EnemySelect.h">
-      <Filter>ソース ファイル\Enemy2</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Enemy2\EnemyA.h">
-      <Filter>ソース ファイル\Enemy2</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Enemy2\EnemyAi.h">
-      <Filter>ソース ファイル\Enemy2</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Enemy2\EnemyBase.h">
-      <Filter>ソース ファイル\Enemy2</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Enemy2\EnemyNoConst.h">
-      <Filter>ソース ファイル\Enemy2</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Enemy2\EnemyAI\EnemyDeadSpeed.h">
-      <Filter>ソース ファイル\Enemy2\EnemyAi</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\EnemyData\Base&amp;Manager\EnemyDataManager.h">
       <Filter>ソース ファイル\EnemyData\Base&amp;Manager</Filter>
@@ -603,9 +591,6 @@
     <ClInclude Include="h+cpp\Gun\GunDraw\GunData\GunDataNo0.h">
       <Filter>ソース ファイル\Gun\GunDraw\GunData</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\Gun\GunDraw\NewGun\GunMuzFla.h">
-      <Filter>ソース ファイル\Gun\GunDraw\NewGun</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Gun\GunDraw\NewGun\EnemyGun.h">
       <Filter>ソース ファイル\Gun\GunDraw\NewGun</Filter>
     </ClInclude>
@@ -659,15 +644,6 @@
     </ClInclude>
     <ClInclude Include="h+cpp\Move\GunMove\GunLockonA.h">
       <Filter>ソース ファイル\Move\GunMove</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Player2\PlayerBody.h">
-      <Filter>ソース ファイル\Player2</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Player2\PlayerA.h">
-      <Filter>ソース ファイル\Player2</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Player2\PlayerBase.h">
-      <Filter>ソース ファイル\Player2</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Scene\TitleSceneSoundManager.h">
       <Filter>ソース ファイル\Scene</Filter>
@@ -939,21 +915,6 @@
     <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\MeshManager_Manager.h">
       <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\Data\MeshData\Mesh_Data_Base.h">
-      <Filter>ソース ファイル\Data\MeshData</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Data\MeshData\StandMesh\Stand_Data_No1.h">
-      <Filter>ソース ファイル\Data\MeshData\StandData</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Data\MeshData\StandMesh\Stand_Data_Manager.h">
-      <Filter>ソース ファイル\Data\MeshData\StandData</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Data\MeshData\Mesh_Data_Manager_Base.h">
-      <Filter>ソース ファイル\Data\MeshData</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Data\MeshData\StandMesh\Stand_Data_No0.h">
-      <Filter>ソース ファイル\Data\MeshData\StandData</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Gun\GunDraw\GunMove\GunStopMove_1.h">
       <Filter>ソース ファイル\Gun\GunDraw\GunMove</Filter>
     </ClInclude>
@@ -998,15 +959,6 @@
     </ClInclude>
     <ClInclude Include="h+cpp\Gun\Bullet\BulletBase\Bullet_Base.h">
       <Filter>ソース ファイル\Gun\Bullet\BulletBase</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Data\Bullet\Bullet_No1\BulletData_No1.h">
-      <Filter>ソース ファイル\Data\Bullet\Bullet_No1</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Data\Bullet\Bullet_Data_Base\BulletData_Base.h">
-      <Filter>ソース ファイル\Data\Bullet\Bullet_Data_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Data\Bullet\Bullet_Data_Base\BulletData_Manager.h">
-      <Filter>ソース ファイル\Data\Bullet\Bullet_Data_Base</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Gun\GunDraw\GunParts\Gun_Parts_Category.h">
       <Filter>ソース ファイル\Gun\GunDraw\GunParts</Filter>
@@ -1077,15 +1029,6 @@
     <ClInclude Include="h+cpp\EnemyData\EnemyNo1\GunMove2\Enemy_No1_Gun_1_Shot.h">
       <Filter>ソース ファイル\EnemyData\EnemyNo1\GunMove2</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\Enemy\Vector.h">
-      <Filter>ソース ファイル\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Player\Aiming.h">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Player\Camera.h">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Move\GunMove\Auto\Departure_A.h">
       <Filter>ソース ファイル\Move\GunMove\Auto</Filter>
     </ClInclude>
@@ -1116,14 +1059,8 @@
     <ClInclude Include="h+cpp\Move\Parts\Door_Move_1.h">
       <Filter>ソース ファイル\Move\PartsMove</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\Enemy2\Enemy_No\Enemy_No1.h">
-      <Filter>ソース ファイル\Enemy2\Enemy_No</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\EnemyData\Base&amp;Manager\Enemy_Manager.h">
       <Filter>ソース ファイル\EnemyData\Base&amp;Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Enemy2\Enemy_No\Enemy_No101.h">
-      <Filter>ソース ファイル\Enemy2\Enemy_No</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\E_101_Phase_0.h">
       <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
@@ -1136,6 +1073,189 @@
     </ClInclude>
     <ClInclude Include="h+cpp\EnemyData\EnemyNo1\GunMove2\Ene_1_Gun_1_Stop.h">
       <Filter>ソース ファイル\EnemyData\EnemyNo1\GunMove2</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Ene_101_Pha_2.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Ene_101_Pha_3.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Enemy101_Phase4.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Enemy101_Phase5.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Enemy101_Phase6.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Enemy101_Phase7.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\GameSource\StructClass\Parts_Set_Data.h">
+      <Filter>ソース ファイル\GameSource\StructClass</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Stand\Stand_No0.h">
+      <Filter>ソース ファイル\Draw\Stand</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Stand\Stand_DrawManager.h">
+      <Filter>ソース ファイル\Draw\Stand</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Gun\GunDraw\Gun_Type\Gun_No201.h">
+      <Filter>ソース ファイル\Gun\GunDraw\Gun_Type</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Gun\GunDraw\NewGun\Gun_Init.h">
+      <Filter>ソース ファイル\Gun\GunDraw\NewGun</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Polygon\Polygon_Judg.h">
+      <Filter>ソース ファイル\Draw\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Gun\GunDraw\Gun_Type\Gun_No101.h">
+      <Filter>ソース ファイル\Gun\GunDraw\Gun_Type</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Stand\Stand_No101.h">
+      <Filter>ソース ファイル\Draw\Stand</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\GameSource\StructClass\Parts_Set_Size.h">
+      <Filter>ソース ファイル\GameSource\StructClass</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw3DBase\Car_Parts_Size.h">
+      <Filter>ソース ファイル\Draw3DBase</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Bullet\Bullet_No1.h">
+      <Filter>ソース ファイル\Draw\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Bullet\Bullet_DrawManager.h">
+      <Filter>ソース ファイル\Draw\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Bullet\Bullet_No2.h">
+      <Filter>ソース ファイル\Draw\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Judg\Car_Parts_Judg_Mesh.h">
+      <Filter>ソース ファイル\Draw\Judg</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\DrawBase2\Draw_Ball_A.h">
+      <Filter>ソース ファイル\Draw\DrawBase2</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Judg\Car_Parts_Judg_Ball.h">
+      <Filter>ソース ファイル\Draw\Judg</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Enemy\EnemyA.h">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Enemy\EnemyAi.h">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Enemy\EnemyBase.h">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Enemy\EnemyNoConst.h">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Enemy\EnemySelect.h">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Enemy\Vector.h">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Enemy\Enemy_No\Enemy_No1.h">
+      <Filter>ソース ファイル\Enemy\No</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Enemy\Enemy_No\Enemy_No101.h">
+      <Filter>ソース ファイル\Enemy\No</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Enemy\EnemyAI\EnemyDeadSpeed.h">
+      <Filter>ソース ファイル\Enemy\Ai</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Player\Aiming.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Player\Camera.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Player\PlayerA.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Player\PlayerBase.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Player\PlayerBody.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\StageParts\Stage_Room.h">
+      <Filter>ソース ファイル\StageParts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\DrawBase2\New_Draw\Draw3D_Base2_New.h">
+      <Filter>ソース ファイル\Draw\DrawBase2\New_Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\DrawBase2\New_Draw\Draw3D_Base2_vector.h">
+      <Filter>ソース ファイル\Draw\DrawBase2\New_Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Stage_Data\Stage_1\Stage_No1_1.h">
+      <Filter>ソース ファイル\Stage_Data\Stage_1</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Base.h">
+      <Filter>ソース ファイル\Stage_Data\Car_Pop</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Data.h">
+      <Filter>ソース ファイル\Stage_Data\Car_Pop</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Manager.h">
+      <Filter>ソース ファイル\Stage_Data\Car_Pop</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_New.h">
+      <Filter>ソース ファイル\Stage_Data\Car_Pop</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Stage_Data\Stage_1\Stage_No1_2.h">
+      <Filter>ソース ファイル\Stage_Data\Stage_1</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Ground\Stage_Ground\Ground_Pop_Data.h">
+      <Filter>ソース ファイル\Ground\Stage_Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Ground\Stage_Ground\Ground_Pop_Base.h">
+      <Filter>ソース ファイル\Ground\Stage_Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\GameSource\StructClass\Struct_Init.h">
+      <Filter>ソース ファイル\GameSource\StructClass</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Const\Const_Ground_Type.h">
+      <Filter>ソース ファイル\Const</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Ground\Stage_Ground\Ground_Pop_New.h">
+      <Filter>ソース ファイル\Ground\Stage_Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Ground\Stage_Ground\Ground_Type\Ground_Type_1.h">
+      <Filter>ソース ファイル\Ground\Stage_Ground\Ground_Type</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Update_1.h">
+      <Filter>ソース ファイル\Stage_Data\Car_Pop</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Update_2.h">
+      <Filter>ソース ファイル\Stage_Data\Car_Pop</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Const\Const_Phase_Type.h">
+      <Filter>ソース ファイル\Const</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Ground\Stage_Ground\Ground_Pop_Manager.h">
+      <Filter>ソース ファイル\Ground\Stage_Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Ground\Stage_Ground\Ground_Type\Ground_Type_0.h">
+      <Filter>ソース ファイル\Ground\Stage_Ground\Ground_Type</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Stage_Data\Stage_1\Stage_No1_3.h">
+      <Filter>ソース ファイル\Stage_Data\Stage_1</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Const\Const_Rail_Type.h">
+      <Filter>ソース ファイル\Const</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Hp\Hp_New.h">
+      <Filter>ソース ファイル\Draw\Hp</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\vector\Sound_Data_Base.h">
+      <Filter>ソース ファイル\Sound\vector</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\vector\Sound_Data_Vector.h">
+      <Filter>ソース ファイル\Sound\vector</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1264,21 +1384,6 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\TireMeshManager.cpp">
       <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Enemy2\EnemyA.cpp">
-      <Filter>ソース ファイル\Enemy2</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Enemy2\EnemyAi.cpp">
-      <Filter>ソース ファイル\Enemy2</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Enemy2\EnemyBase.cpp">
-      <Filter>ソース ファイル\Enemy2</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Enemy2\EnemySelect.cpp">
-      <Filter>ソース ファイル\Enemy2</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Enemy2\EnemyAI\EnemyDeadSpeed.cpp">
-      <Filter>ソース ファイル\Enemy2\EnemyAi</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\EnemyData\Base&amp;Manager\EnemyDataManager.cpp">
       <Filter>ソース ファイル\EnemyData\Base&amp;Manager</Filter>
@@ -1459,15 +1564,6 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Move\GunMove\GunLockonA.cpp">
       <Filter>ソース ファイル\Move\GunMove</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Player2\PlayerA.cpp">
-      <Filter>ソース ファイル\Player2</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Player2\PlayerBase.cpp">
-      <Filter>ソース ファイル\Player2</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Player2\PlayerBody.cpp">
-      <Filter>ソース ファイル\Player2</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Scene\GameScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
@@ -1718,15 +1814,6 @@
     <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\MeshManager_Manager.cpp">
       <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\Data\MeshData\StandMesh\Stand_Data_No1.cpp">
-      <Filter>ソース ファイル\Data\MeshData\StandData</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Data\MeshData\StandMesh\Stand_Data_Manager.cpp">
-      <Filter>ソース ファイル\Data\MeshData\StandData</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Data\MeshData\StandMesh\Stand_Data_No0.cpp">
-      <Filter>ソース ファイル\Data\MeshData\StandData</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\Gun\GunDraw\GunMove\GunStopMove_1.cpp">
       <Filter>ソース ファイル\Gun\GunDraw\GunMove</Filter>
     </ClCompile>
@@ -1766,15 +1853,6 @@
     <ClCompile Include="h+cpp\Gun\Bullet\BulletBase\Bullet_Base.cpp">
       <Filter>ソース ファイル\Gun\Bullet\BulletBase</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\Data\Bullet\Bullet_No1\BulletData_No1.cpp">
-      <Filter>ソース ファイル\Data\Bullet\Bullet_No1</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Data\Bullet\Bullet_Data_Base\BulletData_Base.cpp">
-      <Filter>ソース ファイル\Data\Bullet\Bullet_Data_Base</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Data\Bullet\Bullet_Data_Base\BulletData_Manager.cpp">
-      <Filter>ソース ファイル\Data\Bullet\Bullet_Data_Base</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\Gun\GunDraw\GunParts\Gun_Parts_Category.cpp">
       <Filter>ソース ファイル\Gun\GunDraw\GunParts</Filter>
     </ClCompile>
@@ -1786,9 +1864,6 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Gun\GunDraw\Gun_Type\Gun_Gatling_1.cpp">
       <Filter>ソース ファイル\Gun\GunDraw\Gun_Type</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\EnemyData\Base&amp;Manager\EnemyDataBase.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Draw3DBase\Car_Parts_Base.cpp">
       <Filter>ソース ファイル\Draw3DBase</Filter>
@@ -1841,15 +1916,6 @@
     <ClCompile Include="h+cpp\EnemyData\EnemyNo1\GunMove2\Enemy_No1_Gun_1_Shot.cpp">
       <Filter>ソース ファイル\EnemyData\EnemyNo1\GunMove2</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\Enemy\Vector.cpp">
-      <Filter>ソース ファイル\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Player\Aiming.cpp">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Player\Camera.cpp">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\Move\GunMove\Auto\Departure_A.cpp">
       <Filter>ソース ファイル\Move\GunMove\Auto</Filter>
     </ClCompile>
@@ -1883,20 +1949,188 @@
     <ClCompile Include="h+cpp\Move\Parts\Door_Move_1.cpp">
       <Filter>ソース ファイル\Move\PartsMove</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\Enemy2\Enemy_No\Enemy_No1.cpp">
-      <Filter>ソース ファイル\Enemy2\Enemy_No</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\EnemyData\Base&amp;Manager\Enemy_Manager.cpp">
       <Filter>ソース ファイル\EnemyData\Base&amp;Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Enemy2\Enemy_No\Enemy_No101.cpp">
-      <Filter>ソース ファイル\Enemy2\Enemy_No</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\E_101_Phase_0.cpp">
       <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\EnemyData\EnemyNo1\GunMove2\Ene_1_Gun_1_Stop.cpp">
       <Filter>ソース ファイル\EnemyData\EnemyNo1\GunMove2</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Ene_101_Pha_2.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Ene_101_Pha_3.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Enemy101_Phase4.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Enemy101_Phase5.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Enemy101_Phase6.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Enemy101_Phase7.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\GameSource\StructClass\Parts_Set_Data.cpp">
+      <Filter>ソース ファイル\GameSource\StructClass</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Stand\Stand_No0.cpp">
+      <Filter>ソース ファイル\Draw\Stand</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Stand\Stand_DrawManager.cpp">
+      <Filter>ソース ファイル\Draw\Stand</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Gun\GunDraw\Gun_Type\Gun_No201.cpp">
+      <Filter>ソース ファイル\Gun\GunDraw\Gun_Type</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Gun\GunDraw\NewGun\Gun_Init.cpp">
+      <Filter>ソース ファイル\Gun\GunDraw\NewGun</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Polygon\Polygon_Judg.cpp">
+      <Filter>ソース ファイル\Draw\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Gun\GunDraw\Gun_Type\Gun_No101.cpp">
+      <Filter>ソース ファイル\Gun\GunDraw\Gun_Type</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Stand\Stand_No101.cpp">
+      <Filter>ソース ファイル\Draw\Stand</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\GameSource\StructClass\Parts_Set_Size.cpp">
+      <Filter>ソース ファイル\GameSource\StructClass</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw3DBase\Car_Parts_Size.cpp">
+      <Filter>ソース ファイル\Draw3DBase</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Bullet\Bullet_No1.cpp">
+      <Filter>ソース ファイル\Draw\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Bullet\Bullet_DrawManager.cpp">
+      <Filter>ソース ファイル\Draw\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Bullet\Bullet_No2.cpp">
+      <Filter>ソース ファイル\Draw\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Judg\Car_Parts_Judg_Mesh.cpp">
+      <Filter>ソース ファイル\Draw\Judg</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\DrawBase2\Draw_Ball_A.cpp">
+      <Filter>ソース ファイル\Draw\DrawBase2</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Judg\Car_Parts_Judg_Ball.cpp">
+      <Filter>ソース ファイル\Draw\Judg</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Enemy\EnemyA.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Enemy\EnemyAi.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Enemy\EnemyBase.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Enemy\EnemySelect.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Enemy\Vector.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Enemy\Enemy_No\Enemy_No1.cpp">
+      <Filter>ソース ファイル\Enemy\No</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Enemy\Enemy_No\Enemy_No101.cpp">
+      <Filter>ソース ファイル\Enemy\No</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Enemy\EnemyAI\EnemyDeadSpeed.cpp">
+      <Filter>ソース ファイル\Enemy\Ai</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Player\Aiming.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Player\Camera.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Player\PlayerA.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Player\PlayerBase.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Player\PlayerBody.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\StageParts\Stage_Room.cpp">
+      <Filter>ソース ファイル\StageParts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\DrawBase2\New_Draw\Draw3D_Base2_New.cpp">
+      <Filter>ソース ファイル\Draw\DrawBase2\New_Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\DrawBase2\New_Draw\Draw3D_Base2_vector.cpp">
+      <Filter>ソース ファイル\Draw\DrawBase2\New_Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Base.cpp">
+      <Filter>ソース ファイル\Stage_Data\Car_Pop</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Data.cpp">
+      <Filter>ソース ファイル\Stage_Data\Car_Pop</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Manager.cpp">
+      <Filter>ソース ファイル\Stage_Data\Car_Pop</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_New.cpp">
+      <Filter>ソース ファイル\Stage_Data\Car_Pop</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Stage_Data\Stage_1\Stage_No1_1.cpp">
+      <Filter>ソース ファイル\Stage_Data\Stage_1</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Stage_Data\Stage_1\Stage_No1_2.cpp">
+      <Filter>ソース ファイル\Stage_Data\Stage_1</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Ground\Stage_Ground\Ground_Pop_Data.cpp">
+      <Filter>ソース ファイル\Ground\Stage_Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\Base&amp;Manager\EnemyDataBase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Ground\Stage_Ground\Ground_Pop_Base.cpp">
+      <Filter>ソース ファイル\Ground\Stage_Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\GameSource\StructClass\Struct_Init.cpp">
+      <Filter>ソース ファイル\GameSource\StructClass</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Ground\Stage_Ground\Ground_Pop_New.cpp">
+      <Filter>ソース ファイル\Ground\Stage_Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Ground\Stage_Ground\Ground_Type\Ground_Type_1.cpp">
+      <Filter>ソース ファイル\Ground\Stage_Ground\Ground_Type</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Update_1.cpp">
+      <Filter>ソース ファイル\Stage_Data\Car_Pop</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Update_2.cpp">
+      <Filter>ソース ファイル\Stage_Data\Car_Pop</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Ground\Stage_Ground\Ground_Pop_Manager.cpp">
+      <Filter>ソース ファイル\Ground\Stage_Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Ground\Stage_Ground\Ground_Type\Ground_Type_0.cpp">
+      <Filter>ソース ファイル\Ground\Stage_Ground\Ground_Type</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Stage_Data\Stage_1\Stage_No1_3.cpp">
+      <Filter>ソース ファイル\Stage_Data\Stage_1</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Hp\Hp_New.cpp">
+      <Filter>ソース ファイル\Draw\Hp</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\vector\Sound_Data_Base.cpp">
+      <Filter>ソース ファイル\Sound\vector</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\vector\Sound_Data_Vector.cpp">
+      <Filter>ソース ファイル\Sound\vector</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

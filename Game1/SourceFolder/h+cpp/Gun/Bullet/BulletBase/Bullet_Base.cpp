@@ -1,27 +1,21 @@
 #include "Bullet_Base.h"
-#include"../../../Data/Bullet/Bullet_Data_Base/BulletData_Manager.h"
 #include"../../../GameSource/Judgment.h"
 
-C_Bullet_Base::C_Bullet_Base(const int * BulletNo, const D3DXMATRIX *Mat)
+C_Bullet_Base::C_Bullet_Base(const D3DXMATRIX *Mat)
 {
 	//s—ñ‚Ì‰Šú‰»
 	Set_Mat(Mat);
-	//•\¦‚Ì‰Šú‰»
-	Init_Draw(BulletNo);
 
 	Init();
 }
 
-C_Bullet_Base::C_Bullet_Base(const int * BulletNo, const D3DXMATRIX * Mat, const S_RAY_HIT_JUDG_DATA * RayData)
+C_Bullet_Base::C_Bullet_Base(const D3DXMATRIX * Mat, const S_RAY_HIT_JUDG_DATA * RayData)
 {
 	//s—ñ‚Ì‰Šú‰»
 	Set_Mat(Mat);
 
 	//’e‚ğŒX‚¯‚éˆ—
 	RayPos_Bullet(RayData);
-
-	//•\¦‚Ì‰Šú‰»
-	Init_Draw(BulletNo);
 
 	Init();
 }
@@ -88,6 +82,24 @@ void C_Bullet_Base::Delete_Count(void)
 	delete M_Count;
 }
 
+S_PolMat_INIT C_Bullet_Base::Get_Init_S_PolMat_INIT(const D3DXMATRIX * Mat, const int TexNo, const int PolNum, const float PolSize)
+{
+	S_PolMat_INIT Init;
+	Init.Mat = *Mat;
+	Init.PolSize = PolSize;
+	Init.TexNo = TexNo;
+	Init.PolNum = PolNum;
+	return Init;
+}
+
+S_TEX_POS C_Bullet_Base::Get_Tex_Pos(const int W, const int H)
+{
+	S_TEX_POS Pos;
+	Pos.Width = W;
+	Pos.Height = H;
+	return Pos;
+}
+
 void C_Bullet_Base::Init_S_Bullet(void)
 {
 	M_S_Bullet.Damage = 1;
@@ -102,22 +114,6 @@ void C_Bullet_Base::M_Draw_Delete_All(void)
 		delete M_Draw[b];
 		M_Draw.erase(M_Draw.begin() + b);
 		b--;
-	}
-
-}
-
-void C_Bullet_Base::Init_Draw(const int * BulletNo)
-{
-	C_BulletData_Manager Manager;
-	C_BulletData_Base *Data;
-	Data=Manager.Get_Data(BulletNo);
-
-	M_S_Bullet = Data->Get_Data().BULLET;
-
-	if (Data->Get_DrawNum() < 1)return;
-
-	for (int b = 0; b < Data->Get_DrawNum(); b++) {
-		M_Draw.push_back(Data->Get_Draw(&b,&M_Base.Mat));
 	}
 
 }

@@ -34,6 +34,7 @@ protected:
 	//表示のテクスチャ
 	TEXTURE M_Tex;
 	VERTEX v[4];
+	D3DXVECTOR3 v_Pos[4];
 
 	/*便利メンバー関数*/
 

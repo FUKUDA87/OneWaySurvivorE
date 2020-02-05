@@ -48,6 +48,7 @@ struct  BASE2D {
 struct CHARABASE {
 	int MaxHp, NowHp;//Hp
 	int DamageSetFlg;//ダメージを受けるFlg
+	int HitFlg;//ダメージを受けたことの確認Flg
 };
 //ステータスの構造体
 struct STATUS {
@@ -607,7 +608,68 @@ struct S_GAGE {
 	int Now, Max;
 };
 
+//パーツのナンバーを管理
+struct S_PARTS_SET_DATA_No {
+	int MeshTypeNo;//メッシュ種類
+	int MeshJointNo;//メッシュの種類の中の番号
+};
 
+//パーツの情報をセット
+struct S_PARTS_SET_DATA {
+	int MeshTypeNo;//メッシュ種類
+	int MeshJointNo;//メッシュの種類の中の番号
+	int DrawNo;//表示種類
+};
+
+//パーツのサイズをセット
+struct S_PARTS_SET_SIZE {
+	S_PARTS_SET_DATA_No No;
+	D3DXVECTOR3 ScalPos;
+};
+
+//車の初期化情報
+struct S_CAR_INIT_DATA {
+	//出現する車の番号
+	int CarNo;
+	//車線番号
+	int WayNo;
+	//プレイヤーから見た番号
+	unsigned int GroundNo;
+	//車の種類(敵,一般車)
+	int CarType;
+
+};
+
+//地面の初期化情報
+struct S_GROUND_INIT_DATA {
+	int gType;
+	float Ang;
+	float Length;
+	bool LengthAuto;
+};
+
+//ステージの情報
+struct S_STAGE_DATA {
+	int Stage_Num;
+};
+
+//ステージの情報
+struct S_STAGE_PHASE_DATA {
+	int Phase_Type;
+	int Enemy_Alive_Num;
+};
+
+//音の検索と初期化の情報
+struct S_SOUND_DATA {
+	//2Dか3D
+	int SoundType;
+	//種類
+	int CategoryNo;
+	//CategoryNoの中の種類
+	int SoundNo;
+	//音の位置
+	D3DXVECTOR3 Pos;
+};
 
 
 //#endif // !Struct_H

@@ -5,11 +5,6 @@ C_CharaBase::C_CharaBase()
 	SetCharaBase(&GetInitCharaBase());
 }
 
-C_CharaBase::~C_CharaBase()
-{
-	Hp_Delete();
-}
-
 void C_CharaBase::SetCharaBase(const CHARABASE * CharaBaseS)
 {
 	CharaBase = *CharaBaseS;
@@ -60,6 +55,20 @@ bool C_CharaBase::HpDamage(const int * Damage)
 	return false;
 }
 
+bool C_CharaBase::HpDamage(const int * DamageSetFlg, const int * Damage)
+{
+	if (*DamageSetFlg % 2 == 0)return false;
+
+	if (*Damage == 0)return false;
+
+	int Hp = CharaBase.NowHp;
+	CharaBase.NowHp -= *Damage;
+	if (CharaBase.NowHp <= 0)CharaBase.NowHp = 0;
+
+	if ((Hp > CharaBase.NowHp) || (Hp < CharaBase.NowHp))return true;
+	return false;
+}
+
 void C_CharaBase::SetDamageFlg(const int * DamageFlg)
 {
 	CharaBase.DamageSetFlg = *DamageFlg;
@@ -96,30 +105,10 @@ void C_CharaBase::Init_Hp(const int MaxHp, const int *DamageFlg)
 	SetDamageFlg(DamageFlg);
 }
 
-void C_CharaBase::Hp_Init(C_HpBase * InitHpBase)
+int C_CharaBase::Get_Parst_DamageSet_Flg(void)
 {
-	Hp_Delete();
+	if ((CharaBase.DamageSetFlg == Co_Damage_No_Parts) || (CharaBase.DamageSetFlg == Co_Damage_Yes_Parts))return 1;
 
-	HpBase = InitHpBase;
+	return 0;
 }
 
-void C_CharaBase::Hp_Delete(void)
-{
-	if (HpBase != nullptr) {
-		delete HpBase;
-	}
-}
-
-void C_CharaBase::Hp_Draw2D(void)
-{
-	if (HpBase != nullptr) {
-		HpBase->Draw2DAll(&CharaBase.NowHp, &CharaBase.MaxHp);
-	}
-}
-
-void C_CharaBase::Hp_Draw3D(const D3DXVECTOR3 *CamPos, const D3DXMATRIX *Mat, const float UpY)
-{
-	if (HpBase != nullptr) {
-		HpBase->Draw3DAll(&CharaBase.NowHp, &CharaBase.MaxHp, CamPos, Mat, UpY);
-	}
-}

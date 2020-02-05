@@ -13,7 +13,7 @@ D3DXVECTOR3 C_PartsDraw_Gun::Get_Gun_Mouth_Pos(void)
 
 	Judg judg;
 
-	Pos = judg.GetVecVec(&Pos, &M_Draw->Get_ScalPos());
+	Pos = judg.GetVecVec(&Pos, &Get_Draw_ScalPos());
 
 	return Pos;
 }
@@ -39,7 +39,7 @@ D3DXMATRIX C_PartsDraw_Gun::Get_Parts_TransMat(void)
 
 	Judg judg;
 
-	D3DXMATRIX Mat = judg.VecTransMat(judg.GetVecVec(&M_Data.TarnsPos, &M_Draw->Get_ScalPos()));
+	D3DXMATRIX Mat = judg.VecTransMat(judg.GetVecVec(&M_Data.TarnsPos, &Get_Draw_ScalPos()));
 
 	return Mat;
 }

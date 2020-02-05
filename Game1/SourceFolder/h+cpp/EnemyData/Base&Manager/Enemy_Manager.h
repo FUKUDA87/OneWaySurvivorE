@@ -1,5 +1,5 @@
 #pragma once
-#include"../../Enemy2/Enemy_No/Enemy_No1.h"
+#include"../../Enemy/Enemy_No/Enemy_No1.h"
 
 class C_Enemy_Manager {
 public:

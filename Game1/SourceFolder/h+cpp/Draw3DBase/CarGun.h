@@ -23,6 +23,7 @@ public:
 
 	//スタンドとジョイントの行列
 	D3DXMATRIX Get_Joint_Mat(void);
+	D3DXMATRIX Get_Joint_Mat(const int *JointNo);
 
 	//表示の銃の情報渡し
 	S_GUN_DATA Get_Gun_Data(const unsigned int *DarwGunNo);
@@ -61,6 +62,9 @@ public:
 	//銃にレイを飛ばしていいかの確認
 	bool Ray_Judg_Gun_Flg(const unsigned int *M_GunNo);
 
+	//レーザーの長さ入れ
+	void Set_Ray_Dis(const unsigned int *M_GunNo, const float *Dis);
+
 protected:
 	//全ての銃の削除
 	void AllDelete_Gun(void);
@@ -75,9 +79,11 @@ protected:
 
 	//パーツの初期化
 	void New_Set_Car_Parts(const BODYDATA *CarData, const bool *SaveFlg, const bool *Data_DeleteFlg);
+	void New_Set_Car_Parts(const int *CarNo, std::vector<C_Parts_Set_Data*>M_Set_Data, const bool *SaveFlg, const bool *Data_DeleteFlg);
 
 	//銃のくっつけ
 	virtual void New_Car_Parts_Gun(const BODYDATA *CarData);
+	virtual void New_Car_Parts_Gun(std::vector<C_Parts_Set_Data*>M_Set_Data);
 
 private:
 

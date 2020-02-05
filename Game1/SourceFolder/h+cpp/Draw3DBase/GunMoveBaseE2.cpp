@@ -101,7 +101,7 @@ void C_GunMoveBaseE2::Draw3D_Laser(const D3DXVECTOR3 * CamPos)
 	if (m_Gun.size() <= 0)return;
 
 	for (auto && g: m_Gun) {
-		g->Draw3D_Laser(CamPos);
+		//g->Draw3D_Laser(CamPos);
 	}
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 #include"../EnemyNo1/EnemyDataNo1.h"
-#include"../../Enemy2/EnemyNoConst.h"
+#include"../../Enemy/EnemyNoConst.h"
 #include"../EnemyNo101/EnemyDataNo101.h"
 class C_EnemyDataManager {
 public:

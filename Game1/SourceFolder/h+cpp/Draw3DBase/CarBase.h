@@ -5,8 +5,9 @@
 #include"../Ground/BillBase.h"
 #include"../Draw3DBase/Draw3DManager/CarMeshManager.h"
 #include"../GameSource/CharaBase.h"
+#include"../Draw/Hp/Hp_New.h"
 
-class C_CarBase:public C_CharaBase {
+class C_CarBase:public C_Hp_Draw_New {
 public:
 	C_CarBase();
 	~C_CarBase();

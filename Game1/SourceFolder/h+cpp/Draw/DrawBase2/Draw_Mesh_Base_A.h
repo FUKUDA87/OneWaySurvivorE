@@ -9,6 +9,7 @@ class C_Draw_Mesh_Base:public C_Draw3D_Base2 {
 public:
 	C_Draw_Mesh_Base();
 	C_Draw_Mesh_Base(std::string FileName);
+	C_Draw_Mesh_Base(std::string FileName,const D3DXVECTOR3 *ScalPos);
 
 	//ï\é¶ä÷êî
 	virtual void Draw3D(const D3DXVECTOR3 *CameraPos);

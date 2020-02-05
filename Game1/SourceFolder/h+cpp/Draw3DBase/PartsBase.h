@@ -15,16 +15,17 @@ public:
 	~C_PartsBase();
 
 	//表示
-	void Draw_Parts(const D3DXVECTOR3 *CameraPos);
+	virtual void Draw_Parts(const D3DXVECTOR3 *CameraPos);
 
 	//車の拡大行列のセット
 	void Set_ScalPos_Body(const D3DXVECTOR3 *set_Car_ScalPos);
+	void Set_ScalPos_Body(const D3DXVECTOR3 *set_Car_ScalPos, const D3DXVECTOR3 *set_Parts_ScalPos);
 
 	//表示の行列渡し
-	D3DXMATRIX Get_Draw_Mat(void);
+	virtual D3DXMATRIX Get_Draw_Mat(void);
 
 	//表示の表示行列渡し
-	D3DXMATRIX Get_Draw_DrawMat(void);
+	virtual D3DXMATRIX Get_Draw_DrawMat(void);
 
 	//表示の表示サイズ渡し
 	D3DXVECTOR3 Get_Draw_ScalPos(void);
@@ -61,6 +62,9 @@ public:
 	//IdenFlg
 	bool Get_Draw_Iden_Flg(void);
 
+	//表示半径渡し
+	float Get_Draw_Dis(void);
+
 protected:
 	//表示情報
 	BASE3D M_Base3D;
@@ -78,7 +82,7 @@ protected:
 	void Draw_AllDelete(void);
 
 	//表示１
-	void Draw_Draw(const D3DXVECTOR3 *CameraPos);
+	virtual void Draw_Draw(const D3DXVECTOR3 *CameraPos);
 
 	void Set_TransPos(const D3DXVECTOR3 *set_Pos);
 
@@ -87,6 +91,10 @@ protected:
 
 	//表示に車のサイズ入れ
 	void Set_Body_ScalPos_Draw(void);
+	void Set_Body_ScalPos_Draw(const D3DXVECTOR3 *ScalPos);
+
+	//表示と非表示のフラグ
+	bool Draw_Flg;
 private:
 
 };

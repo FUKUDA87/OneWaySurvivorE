@@ -8,9 +8,9 @@
 class C_Bullet_Base{
 public:
 	//弾の番号と銃口の行列
-	C_Bullet_Base(const int *BulletNo, const D3DXMATRIX *Mat);
+	C_Bullet_Base(const D3DXMATRIX *Mat);
 	//プレイヤーが照準を合わせた時のコンストラクタ
-	C_Bullet_Base(const int *BulletNo, const D3DXMATRIX *Mat, const S_RAY_HIT_JUDG_DATA* RayData);
+	C_Bullet_Base(const D3DXMATRIX *Mat, const S_RAY_HIT_JUDG_DATA* RayData);
 	~C_Bullet_Base();
 
 	//表示
@@ -55,14 +55,20 @@ public:
 protected:
 	//カウントダウンの削除
 	void Delete_Count(void);
-private:
+
 	/*変数*/
 	S_BULLET M_S_Bullet;
 
-	BASE3D M_Base;
-
 	//表示クラス
 	std::vector<C_Draw3D_Base2*>M_Draw;
+	//移動行列
+	BASE3D M_Base;
+
+	/*弾の初期化に使用*/
+	S_PolMat_INIT Get_Init_S_PolMat_INIT(const D3DXMATRIX *Mat, const int TexNo, const int PolNum, const float PolSize);
+
+	S_TEX_POS Get_Tex_Pos(const int W, const int H);
+private:
 
 	void Init_S_Bullet(void);
 
@@ -71,9 +77,6 @@ private:
 
 	//表示の全削除
 	void M_Draw_Delete_All(void);
-
-	//弾の表示初期化
-	void Init_Draw(const int *BulletNo);
 
 	//弾を照準の方向に傾ける処理
 	void RayPos_Bullet(const S_RAY_HIT_JUDG_DATA* RayData);

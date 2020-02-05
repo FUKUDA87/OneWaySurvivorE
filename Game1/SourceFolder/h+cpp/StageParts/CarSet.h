@@ -74,4 +74,5 @@ private:
 	void Change_Pol(void);
 	void Change_Tire(void);
 	void Change_Door(void);
+	void Change_Vector(void);
 };

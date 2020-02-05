@@ -27,9 +27,18 @@ void C_CarGun::Update_Gun(void)
 {
 	if (M_Gun.size() < 1)return;
 
+	D3DXVECTOR3 ScalPos;
+	Judg judg_a;
+
 	for (unsigned int g = 0; g < M_Gun.size(); g++) {
-		M_S_Gun_Update_Data.StandMat = Get_Joint_Mat();
-		M_Gun[g]->Set_ScalPos(&Car.Base.ScaPos);
+
+		int JointNo = (int)g + 1;
+		M_S_Gun_Update_Data.StandMat = Get_Joint_Mat(&JointNo);
+
+		ScalPos = judg_a.GetVecVec(&Car.Base.ScaPos,
+			&Get_Car_Parts_Size(&Get_Data_No(Co_Parts_Gun, JointNo)));
+		M_Gun[g]->Set_ScalPos(&ScalPos);
+
 		M_Gun[g]->Update(&M_S_Gun_Update_Data);
 	}
 }
@@ -55,21 +64,52 @@ void C_CarGun::Set_GunMove_Player(const unsigned int * GunNo)
 
 void C_CarGun::New_Set_Car_Parts(const BODYDATA * CarData, const bool * SaveFlg, const bool *Data_DeleteFlg)
 {
-	New_CarParts(CarData, SaveFlg);
+	New_Car_Parts_Data(&CarData->CarBodyNo, SaveFlg);
+
+	New_CarParts(CarData);
 
 	New_Car_Parts_Gun(CarData);
 
 	if(*Data_DeleteFlg==true)Delete_ALL_Data();
 }
 
+void C_CarGun::New_Set_Car_Parts(const int * CarNo, std::vector<C_Parts_Set_Data*> M_Set_Data, const bool * SaveFlg, const bool * Data_DeleteFlg)
+{
+	New_Car_Parts_Data(CarNo, SaveFlg);
+
+	New_CarParts(M_Set_Data);
+
+	New_Car_Parts_Gun(M_Set_Data);
+
+	if (*Data_DeleteFlg == true)Delete_ALL_Data();
+}
+
 void C_CarGun::New_Car_Parts_Gun(const BODYDATA * CarData)
 {
+	AllDelete_Gun();
+
 	if (M_Data.size() < 1)return;
 
 	C_Gun_Darw_Manager Manager;
 
 	for (unsigned int d = 0; d < M_Data.size(); d++) {
 		if (M_Data[d]->MeshTypeNo == Co_Parts_Gun)M_Gun.push_back(Manager.Get_Gun_Stop(&CarData->GunNo));
+	}
+}
+
+void C_CarGun::New_Car_Parts_Gun(std::vector<C_Parts_Set_Data*> M_Set_Data)
+{
+	AllDelete_Gun();
+
+	if ((M_Data.size() < 1) || (M_Set_Data.size() < 1))return;
+
+	C_Gun_Darw_Manager Manager;
+
+	for (unsigned int d = 0; d < M_Data.size(); d++) {
+		for (auto && s : M_Set_Data) {
+			int DrawNo = s->Get_Data().DrawNo;
+			if (M_Data[d]->MeshTypeNo == Co_Parts_Gun)M_Gun.push_back(Manager.Get_Gun_Stop(&DrawNo));
+		}
 	}
 }
 
@@ -132,6 +172,33 @@ D3DXMATRIX C_CarGun::Get_Joint_Mat(void)
 	return Mat;
 }
 
+D3DXMATRIX C_CarGun::Get_Joint_Mat(const int * JointNo)
+{
+	D3DXMATRIX Mat = GetMatCar();
+
+	if (M_Car_Parts.size() < 1)return Mat;
+
+	for (unsigned int p = 0; p < M_Car_Parts.size(); p++) {
+		if ((M_Car_Parts[p]->Get_Parts_Data().MeshTypeNo == Co_Parts_Gun)&&(M_Car_Parts[p]->Get_Parts_Data().MeshJointNo==*JointNo)) {
+			Mat = M_Car_Parts[p]->Get_Draw_Mat();
+			if (M_Car_Parts[p]->Get_Juint_Data_Num() > 0) {
+				for (unsigned int d = 0; d < M_Car_Parts[p]->Get_Juint_Data_Num(); d++) {
+					D3DXMATRIX TmpMat;
+					Judg judg_a;
+					D3DXVECTOR3 Vec = M_Car_Parts[p]->Get_Joint_Data(&d).TransPos;
+					Vec = judg_a.GetVecVec(&M_Car_Parts[p]->Get_Draw_ScalPos(), &Vec);
+					judg_a.SetTransMat(&TmpMat, &Vec);
+					Mat = TmpMat * Mat;
+					return Mat;
+				}
+			}
+			return Mat;
+		}
+	}
+
+	return Mat;
+}
+
 S_GUN_DATA C_CarGun::Get_Gun_Data(const unsigned int * DrawGunNo)
 {
 	return M_Gun[*DrawGunNo]->Get_S_GUN_DATA();
@@ -178,6 +245,11 @@ bool C_CarGun::Ray_Judg_Gun_Flg(const unsigned int * M_GunNo)
 	Judg L_judg;
 	bool Flg = M_Gun[*M_GunNo]->Dead();
 	return L_judg.ReverseFlg2(&Flg);
+}
+
+void C_CarGun::Set_Ray_Dis(const unsigned int * M_GunNo, const float * Dis)
+{
+	M_Gun[*M_GunNo]->GetDis(Dis);
 }
 
 void C_CarGun::AllDelete_Gun(void)

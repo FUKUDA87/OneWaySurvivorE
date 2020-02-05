@@ -37,13 +37,13 @@ public:
 	//•\¦s—ñ‚Ì“n‚µ
 	virtual D3DXMATRIX Get_DrawMat(void);
 
-	//ƒƒbƒVƒ…“n‚µ
-	virtual LPD3DXMESH Get_Mesh(void)=0;
-
 	//ƒƒbƒVƒ…‚Ì”»’è“n‚µ
 	int Get_Draw_JudgFlg(void) {
 		return Draw_JudgFlg;
 	}
+
+	//ƒƒbƒVƒ…“n‚µ
+	virtual LPD3DXMESH Get_Mesh(void)=0;
 	
 	//ƒ|ƒŠƒSƒ“‚Ì’¸“_“n‚µ
 	virtual D3DXVECTOR3 Get_Pol_Pos(const int *PosNo) = 0;
@@ -55,6 +55,11 @@ public:
 
 	bool Get_IdenFlg(void) {
 		return IdenFlg;
+	}
+
+	//‰~‚Ì”¼Œa“n‚µ
+	virtual float Get_Dis(void) {
+		return 0.0f;
 	}
 
 protected:

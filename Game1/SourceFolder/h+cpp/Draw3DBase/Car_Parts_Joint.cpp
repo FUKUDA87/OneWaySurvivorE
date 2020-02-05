@@ -26,3 +26,4 @@ void C_Car_Parts_Joint::New_Joint_Data(const S_CAR_PARTS_DATA * Data)
 	M_Joint_Data.push_back(new S_CAR_PARTS_DATA);
 	*M_Joint_Data[M_Joint_Data.size() - 1] = *Data;
 }
+

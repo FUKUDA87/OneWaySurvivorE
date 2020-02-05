@@ -14,6 +14,8 @@ extern SceneManager sceneManager;
 
 StageSelectScene::StageSelectScene()
 {
+	Init_New();
+
 	mouse = new C_Mouse();
 	mouse->ChaDrawFlg(true);
 	sky = new StageSky();
@@ -41,7 +43,7 @@ StageSelectScene::StageSelectScene()
 	Ok = new C_OK(&D3DXVECTOR3(1.1f, 1.1f, 0.0f), &D3DXVECTOR3(1280.0f/2.0f, 720.0f*0.93f, 0.0f), &D3DXVECTOR3(0.25f, 0.11f, 0.0f));
 
 	//車の表示の戻し用セット
-	//BodyData_Init = car->GetBody();
+	BodyData_Init = car->Get_BODYDATA();
 
 	//選択モードの初期化
 	InitStaSel();
@@ -77,6 +79,10 @@ StageSelectScene::~StageSelectScene()
 		delete M_CarSet;
 	}
 
+	if (M_C_Garage_Stand != nullptr) {
+		delete M_C_Garage_Stand;
+	}
+
 }
 
 void StageSelectScene::Render2D(void)
@@ -101,6 +107,10 @@ void StageSelectScene::Render3D(void)
 
 	//ガレージ
 	sky->Draw();
+
+	if (M_C_Garage_Stand != nullptr) {
+		M_C_Garage_Stand->Draw_Garage_Stand(&cam->GetPos());
+	}
 
 	Draw3D_Normal();
 }
@@ -282,7 +292,7 @@ void StageSelectScene::InitStaSel(void)
 	car->SetBody(&BodyData_Init);
 
 	//データにセット
-	//PlayerBody->SetPData(&car->GetBody());
+	PlayerBody->SetPData(&car->Get_BODYDATA());
 }
 
 bool StageSelectScene::CarSelectMode()
@@ -349,7 +359,7 @@ void StageSelectScene::InitCarSel(void)
 	CarSel[CarSel.size() - 1]->UpdateNo(&No);
 
 	//車の表示の戻し用セット
-	//BodyData_Init = car->GetBody();
+	BodyData_Init = car->Get_BODYDATA();
 
 }
 
@@ -373,7 +383,7 @@ void StageSelectScene::ChangeCar(int * No)
 	car->SetBody(&pData);
 
 	//データにセット
-	//PlayerBody->SetPData(&car->GetBody());
+	PlayerBody->SetPData(&car->Get_BODYDATA());
 
 }
 
@@ -497,4 +507,13 @@ bool StageSelectScene::Change_TitleScene(void)
 	}
 
 	return true;
+}
+
+void StageSelectScene::Car_Ground_Vec(void)
+{
+}
+
+void StageSelectScene::Init_New(void)
+{
+	//M_C_Garage_Stand = new C_Stage_Room_Stand(&D3DXVECTOR3(0.0f, 0.0f, 0.0f), "../GameFolder/Material/XFile/Car_Stand_O_1.x");
 }

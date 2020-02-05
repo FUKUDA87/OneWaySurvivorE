@@ -9,6 +9,10 @@ C_PartsBase::C_PartsBase()
 	Speed.Max = 0;
 	M_Car_ScalPos = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	M_Base3D.ScaPos= D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+
+	Draw_Flg = true;
+
+
 }
 
 C_PartsBase::~C_PartsBase()
@@ -25,6 +29,12 @@ void C_PartsBase::Set_ScalPos_Body(const D3DXVECTOR3 * set_Car_ScalPos)
 {
 	M_Car_ScalPos = *set_Car_ScalPos;
 	Set_Body_ScalPos_Draw();
+}
+
+void C_PartsBase::Set_ScalPos_Body(const D3DXVECTOR3 * set_Car_ScalPos, const D3DXVECTOR3 * set_Parts_ScalPos)
+{
+	M_Car_ScalPos = *set_Car_ScalPos;
+	Set_Body_ScalPos_Draw(set_Parts_ScalPos);
 }
 
 D3DXMATRIX C_PartsBase::Get_Draw_Mat(void)
@@ -65,6 +75,14 @@ void C_PartsBase::Set_Body_ScalPos_Draw(void)
 
 }
 
+void C_PartsBase::Set_Body_ScalPos_Draw(const D3DXVECTOR3 * ScalPos)
+{
+	if (M_Draw == nullptr)return;
+
+	Judg judg;
+	M_Draw->Set_ScalPos_Update(&judg.GetVecVec(&M_Car_ScalPos, ScalPos));
+}
+
 void C_PartsBase::SetSpeed(const int * GetNowSpeed, const int * GetMaxSpeed)
 {
 	Speed.Now = *GetNowSpeed;
@@ -73,6 +91,8 @@ void C_PartsBase::SetSpeed(const int * GetNowSpeed, const int * GetMaxSpeed)
 
 void C_PartsBase::Draw_New(C_Draw3D_Base2 * set_Draw)
 {
+	if (set_Draw == nullptr)return;
+
 	Draw_AllDelete();
 
 	M_Draw = set_Draw;
@@ -81,6 +101,8 @@ void C_PartsBase::Draw_New(C_Draw3D_Base2 * set_Draw)
 int C_PartsBase::Get_Draw_Draw_JudgFlg(void)
 {
 	if (M_Draw == nullptr)return 0;
+
+	if (Dead() == true)return 0;
 
 	return M_Draw->Get_Draw_JudgFlg();
 }
@@ -104,6 +126,13 @@ bool C_PartsBase::Get_Draw_Iden_Flg(void)
 	return M_Draw->Get_IdenFlg();
 }
 
+float C_PartsBase::Get_Draw_Dis(void)
+{
+	if (M_Draw == nullptr)return 0.0f;
+
+	return M_Draw->Get_Dis();
+}
+
 void C_PartsBase::Draw_AllDelete(void)
 {
 	if (M_Draw==nullptr)return;
@@ -113,6 +142,8 @@ void C_PartsBase::Draw_AllDelete(void)
 
 void C_PartsBase::Draw_Draw(const D3DXVECTOR3 * CameraPos)
 {
+	if (Draw_Flg != true)return;
+
 	if (M_Draw == nullptr)return;
 
 	M_Draw->Draw3D(CameraPos);

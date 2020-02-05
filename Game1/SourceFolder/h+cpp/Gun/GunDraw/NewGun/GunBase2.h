@@ -92,6 +92,9 @@ protected:
 
 	/*ŠÖ”*/
 
+	//•\¦‚Ìˆ—
+	virtual void Draw_Gun(const D3DXVECTOR3* CameraPos);
+
 	//‰Šú‰»
 	void Init_Gun(const int *GunNo);
 

@@ -1,4 +1,5 @@
 #include "CarBulletManager.h"
+#include"../Draw/Bullet/Bullet_DrawManager.h"
 
 C_CarBulletManager::C_CarBulletManager()
 {
@@ -66,6 +67,8 @@ void C_CarBulletManager::Init_Bullet(void)
 {
 	if (M_Gun.size() < 1)return;
 
+	C_Bullet_DrawManager Bullet_Manager;
+
 	for (unsigned int g = 0; g < M_Gun.size(); g++) {
 		M_Gun[g]->Init_Departure_Num();
 		for (unsigned int i = 0; i < M_Gun[g]->Get_CategoryNum(); i++) {
@@ -73,7 +76,7 @@ void C_CarBulletManager::Init_Bullet(void)
 				int b = M_Gun[g]->Get_BulletNo();
 				D3DXMATRIX Mat = M_Gun[g]->Get_GunMouth_Mat(&i);
 
-				M_Bullet.push_back(new C_Bullet_Base(&b, &Mat));
+				M_Bullet.push_back(Bullet_Manager.Get_Bullet(&b, &Mat));
 				M_Gun[g]->Bullet_Shot_Update(&i);
 				M_Effect.push_back(M_Gun[g]->Get_Bullet_Shot_Effect(&i));
 			}

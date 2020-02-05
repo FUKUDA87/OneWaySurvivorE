@@ -12,6 +12,13 @@ C_Car_Parts_Base::~C_Car_Parts_Base()
 	Move_Delete();
 }
 
+void C_Car_Parts_Base::Draw_Parts(const D3DXVECTOR3 * CameraPos)
+{
+	if (Dead() != false)return;
+
+	Draw_Draw(CameraPos);
+}
+
 bool C_Car_Parts_Base::UpdateParts(const D3DXMATRIX * Mat)
 {
 	//動きのアップデート
@@ -33,11 +40,12 @@ bool C_Car_Parts_Base::UpdateParts(const D3DXMATRIX * Mat)
 	return true;
 }
 
-bool C_Car_Parts_Base::UpdateParts(const D3DXMATRIX * Mat, const int *GetNowSpeed, const int *GetMaxSpeed, const D3DXVECTOR3* Car_ScalPos)
+bool C_Car_Parts_Base::UpdateParts(const D3DXMATRIX * Mat, const int *GetNowSpeed, const int *GetMaxSpeed
+	, const D3DXVECTOR3* Car_ScalPos, const D3DXVECTOR3* Parts_ScalPos)
 {
 	SetSpeed(GetNowSpeed, GetMaxSpeed);
 
-	Set_ScalPos_Body(Car_ScalPos);
+	Set_ScalPos_Body(Car_ScalPos,Parts_ScalPos);
 
 	UpdateParts(Mat);
 
@@ -75,4 +83,18 @@ void C_Car_Parts_Base::Set_I_MoveFlg(const int Flg)
 	if (i > 2)i = 0;
 
 	M_I_MoveFlg = i;
+}
+
+D3DXMATRIX C_Car_Parts_Base::Get_Draw_Mat(void)
+{
+	if (M_Draw == nullptr)return M_Base3D.Mat;
+
+	return M_Draw->Get_Mat();
+}
+
+D3DXMATRIX C_Car_Parts_Base::Get_Draw_DrawMat(void)
+{
+	if (M_Draw == nullptr)return M_Base3D.Mat;
+
+	return M_Draw->Get_DrawMat();
 }

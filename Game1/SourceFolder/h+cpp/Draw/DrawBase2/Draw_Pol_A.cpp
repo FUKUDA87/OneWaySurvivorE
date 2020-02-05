@@ -1,5 +1,6 @@
 #include "Draw_Pol_A.h"
 #include"../../GameSource/TextureManager.h"
+#include"../../GameSource/Judgment.h"
 
 extern TextureManager textureManager;
 
@@ -14,7 +15,11 @@ C_Draw_Pol_BASE_A::C_Draw_Pol_BASE_A()
 
 C_Draw_Pol_BASE_A::C_Draw_Pol_BASE_A(const D3DXVECTOR3 * Pos_A, const D3DXVECTOR3 * Pos_B, const D3DXVECTOR3 * Pos_C, const D3DXVECTOR3 * Pos_D)
 {
-	Pol_SetPos(Pos_A, Pos_B, Pos_C, Pos_D);
+	v_Pos[0] = *Pos_A;
+	v_Pos[1] = *Pos_B;
+	v_Pos[2] = *Pos_C;
+	v_Pos[3] = *Pos_D;
+	Pol_SetPos(&v_Pos[0], &v_Pos[1], &v_Pos[2], &v_Pos[3]);
 	int alpha = 255;
 	Pol_SetAllColor(&alpha);
 
@@ -106,6 +111,13 @@ void C_Draw_Pol_BASE_A::Init_Pol(void)
 
 void C_Draw_Pol_BASE_A::Draw_Pol_No1(void)
 {
+	Judg judg;
+	D3DXVECTOR3 PosA = judg.GetVecVec(&v_Pos[0], &Get_ScalPos());
+	D3DXVECTOR3 PosB = judg.GetVecVec(&v_Pos[1], &Get_ScalPos());
+	D3DXVECTOR3 PosC = judg.GetVecVec(&v_Pos[2], &Get_ScalPos());
+	D3DXVECTOR3 PosD = judg.GetVecVec(&v_Pos[3], &Get_ScalPos());
+	Pol_SetPos(&PosA, &PosB, &PosC, &PosD);
+
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	lpD3DDevice->SetTexture(0, NULL);
@@ -118,6 +130,13 @@ void C_Draw_Pol_BASE_A::Draw_Pol_No1(void)
 
 void C_Draw_Pol_BASE_A::Draw_Pol_No2(void)
 {
+	/*Judg judg;
+	D3DXVECTOR3 PosA = judg.GetVecVec(&v_Pos[0], &Get_ScalPos());
+	D3DXVECTOR3 PosB = judg.GetVecVec(&v_Pos[1], &Get_ScalPos());
+	D3DXVECTOR3 PosC = judg.GetVecVec(&v_Pos[2], &Get_ScalPos());
+	D3DXVECTOR3 PosD = judg.GetVecVec(&v_Pos[3], &Get_ScalPos());
+	Pol_SetPos(&PosA, &PosB, &PosC, &PosD);*/
+
 	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);

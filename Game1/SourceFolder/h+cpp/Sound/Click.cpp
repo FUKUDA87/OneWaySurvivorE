@@ -20,7 +20,7 @@ void C_ClickSound::InitCli(void)
 	soundCol = new SoundCol[SoundNum];
 	SoundSize = -2000;
 
-	soundManager.GetSound(&soundCol[0].Sound, &soundCol[0].Sound3D, "../GameFolder/Material/wav/decision18.wav");//decision20//f1-pass1C1
+	soundManager.GetSound(&soundCol[0], "../GameFolder/Material/wav/decision18.wav");//decision20//f1-pass1C1
 	/*LPDIRECTSOUNDBUFFER lpSTmp;
 	for (int i = 1; i < SoundNum; i++) {
 		lpDSound->DuplicateSoundBuffer(soundCol[0].Sound, &lpSTmp);

@@ -17,6 +17,7 @@
 #include"../StageParts/OkButton.h"
 #include"../StageParts/CarSet.h"
 #include"../StageParts/Stage_Room.h"
+#include"../Sound/Sound_Manager_Game.h"
 
 
 class StageSelectScene :public SceneBase {
@@ -116,4 +117,12 @@ private:
 
 	//車のスタンド
 	C_Stage_Room_Stand *M_C_Garage_Stand;
+
+	//ゲームシーンでデバッグモードにする
+	bool GameScene_DebugFlg;
+	//デバッグモードに切り替え
+	void Set_GameScene_DebugFlg(void);
+
+	//
+	C_Sound_Manager_Base* M_C_Sound_Manager;
 };

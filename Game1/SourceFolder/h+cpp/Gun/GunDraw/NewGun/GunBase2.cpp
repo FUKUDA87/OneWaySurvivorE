@@ -1,5 +1,4 @@
 #include "GunBase2.h"
-#include"../../../Draw3DBase/Draw3DManager/GunMeshManager.h"
 #include"../../../GameSource/Const.h"
 #include"../../../GameSource/Judgment.h"
 
@@ -208,8 +207,10 @@ void C_GunBase2::Draw_GunParts(const D3DXVECTOR3 *CameraPos)
 	if (M_GunParts.size() < 1)return;
 
 	for (auto && g : M_GunParts) {
-		g->Draw_Parts(CameraPos);
+		g->Draw_Parts(CameraPos,&Body_DamageFlg);
 	}
+
+	Judg_Body_DamageFlg();
 }
 
 void C_GunBase2::Update_GunParts()

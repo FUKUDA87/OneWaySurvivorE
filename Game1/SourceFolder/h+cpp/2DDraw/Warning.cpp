@@ -54,8 +54,12 @@ bool Warning::Update(void)
 			count += 1;
 			k = 1;
 		}
+		//終了確認
 		if (count >= countEnd) {
+			//終了処理
 			warFlg = false;
+			Change_Menu_All();
+			New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_Warning, 1, &Co_Sound_Delete);
 		}
 	}
 	return true;

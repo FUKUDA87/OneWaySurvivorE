@@ -1,7 +1,6 @@
 #pragma once
 #include<d3dx9.h>
 #include"../../GameSource/Struct.h"
-#include"../Bullet/BulletBase.h"
 #include"../../GameSource/TextureManager.h"
 
 extern TextureManager textureManager;

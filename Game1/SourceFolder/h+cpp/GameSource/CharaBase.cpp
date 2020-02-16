@@ -3,11 +3,18 @@
 C_CharaBase::C_CharaBase()
 {
 	SetCharaBase(&GetInitCharaBase());
+
+	Body_DamageFlg = false;
 }
 
 void C_CharaBase::SetCharaBase(const CHARABASE * CharaBaseS)
 {
 	CharaBase = *CharaBaseS;
+}
+
+void C_CharaBase::Judg_Body_DamageFlg(void)
+{
+	Body_DamageFlg = false;
 }
 
 CHARABASE C_CharaBase::GetInitAll(const int MaxHp, const int DFlg)
@@ -49,6 +56,7 @@ bool C_CharaBase::HpDamage(const int * Damage)
 
 	int Hp = CharaBase.NowHp;
 	CharaBase.NowHp -= *Damage;
+	Body_DamageFlg = true;
 	if (CharaBase.NowHp <= 0)CharaBase.NowHp = 0;
 
 	if((Hp> CharaBase.NowHp)||(Hp < CharaBase.NowHp))return true;
@@ -63,6 +71,7 @@ bool C_CharaBase::HpDamage(const int * DamageSetFlg, const int * Damage)
 
 	int Hp = CharaBase.NowHp;
 	CharaBase.NowHp -= *Damage;
+	Body_DamageFlg = true;
 	if (CharaBase.NowHp <= 0)CharaBase.NowHp = 0;
 
 	if ((Hp > CharaBase.NowHp) || (Hp < CharaBase.NowHp))return true;

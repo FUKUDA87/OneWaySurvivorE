@@ -27,9 +27,6 @@ void C_CarBase::InitCar(void)
 	//生存のFlgの初期化
 	Car.Base.Flg = true;
 
-	//ダメージFlgの初期化
-	DamageFlg = false;
-
 	//行列の初期化
 	judg.InitMatPos(&Car.Base.Mat, &Car.Base.TraPos, &Car.Base.ScaPos);
 	judg.SetTransMat(&Car.Base.Trans, &Car.Base.TraPos);
@@ -65,31 +62,39 @@ bool C_CarBase::UpdateCar(void)
 
 bool C_CarBase::UpdateCarFM(std::vector<BillBase*> ground)
 {
-	if (Car.Base.Flg == true) {
-		//前進処理
-		CarFM.NowMat = Car.Base.Mat;
-		motion.Formove(Car.Con, &CarFM.NowMat, &CarFM.AnimeFrame, ground, &CarFM.QuaInitFlg, &CarFM.QuaMatInitFlg, &Car.Con.SpeedMul, Car.Con.SpeedMulJudg, &CarFM.StartMat, &CarFM.EndMat, &CarFM.WayVec, &CarFM.CurFlg, &CarFM.CurVec, CarFM.BodyHeight);
-		//車体の方向を得るためにMatを入れる
-		Car.Con.JudgMat = CarFM.NowMat;
-		Car.Base.Mat = Car.Base.Trans*CarFM.NowMat;
-
-	}
+	//前進処理
+	CarFM.NowMat = Car.Base.Mat;
+	motion.Formove(Car.Con, &CarFM.NowMat, &CarFM.AnimeFrame
+		, ground, &CarFM.QuaInitFlg, &CarFM.QuaMatInitFlg, &Car.Con.SpeedMul
+		, Car.Con.SpeedMulJudg, &CarFM.StartMat, &CarFM.EndMat, &CarFM.WayVec, &CarFM.CurFlg, &CarFM.CurVec, CarFM.BodyHeight);
+	//車体の方向を得るためにMatを入れる
+	Car.Con.JudgMat = CarFM.NowMat;
+	Car.Base.Mat = Car.Base.Trans*CarFM.NowMat;
 	return true;
 }
 
 void C_CarBase::Draw3DCar(void)
 {
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &GetDrawMatCar());
-	if (Car.Base.Flg == true) {
-		DrawMesh(&Car.Mesh, &DamageFlg);
-	}
+		DrawMesh(&Car.Mesh, &Body_DamageFlg);
+	/*}
 	else {
-		DrawMesh(&Car.Con.DeadMesh, &DamageFlg);
-	}
+		DrawMesh(&Car.Con.DeadMesh, &Body_DamageFlg);
+	}*/
 }
 
 void C_CarBase::SetParts(std::vector<BillBase*> ground)
 {
+}
+
+bool C_CarBase::Dead(void)
+{
+	if (CharaBase.NowHp <= 0) {
+		bool Flg = false;
+		SetFlgCar(&Flg);
+		return true;
+	}
+	return false;
 }
 
 bool C_CarBase::SetHP(int Damage)
@@ -100,10 +105,7 @@ bool C_CarBase::SetHP(int Damage)
 
 	if (HpDamage(&Damage) != true)return false;
 
-	if (Dead()==true) {
-		Car.Base.Flg = false;
-	}
-	if (GetHp() < NowHp)DamageFlg = true;
+	if (GetHp() < NowHp)Body_DamageFlg = true;
 	//無敵の初期化
 	CountMNum = CountMStart;
 
@@ -118,11 +120,7 @@ bool C_CarBase::SetHP(int Damage, bool WallFlg)
 	
 	if (HpDamage(&Damage) != true)return false;
 
-	if (Dead() == true) {
-		Car.Base.Flg = false;
-	}
-
-	if (GetHp() < NowHp)DamageFlg = true;
+	if (GetHp() < NowHp)Body_DamageFlg = true;
 
 	if (WallFlg == false)return true;
 	//無敵の初期化

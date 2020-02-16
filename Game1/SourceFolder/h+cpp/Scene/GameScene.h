@@ -6,13 +6,12 @@
 #include"../Ground/BillBase.h"
 #include"../Player/Aiming.h"
 #include"../3DDraw/Effect_3D/Explosion.h"
-#include"../Gun/Bullet/BulletManager.h"
 #include"../Player/Camera.h"
 #include"../GameSource/Countdown.h"
 #include"../Ground/Bill1.h"
 #include"../GameSource/Debug.h"
 #include"../GameSource/Debug2.h"
-#include"../2DDraw/GameOver.h"
+#include"../2DDraw/Game_End/Game_End_Now.h"
 #include"../GameSource/Struct.h"
 #include"../2DDraw/Warning.h"
 #include"../2DDraw/Pause.h"
@@ -24,7 +23,6 @@
 #include"../3DDraw/Effect_3D/SpaekDamage.h"
 #include"../3DDraw/Effect_3D/Smog.h"
 #include"../3DDraw/Effect_3D/BulletGround.h"
-#include"../Sound/SoundGun1.h"
 #include"GameSceneSoundManager.h"
 #include"../3DDraw/Effect_3D/Spark2.h"
 #include"../Key/CMouse.h"
@@ -43,6 +41,9 @@
 #include"../Const/Const_Draw_Judg.h"
 #include"../Stage_Data/Car_Pop/Car_Pop_New.h"
 #include"../Ground/Stage_Ground/Ground_Pop_New.h"
+#include"../Sound/Sound_Manager_Game.h"
+#include"../Draw/Damage_Num/Damage_Move_A.h"
+#include"../Draw/Damage_Num/Damage_Move_B.h"
 
 extern Judg judg;
 extern Motion motion;
@@ -56,6 +57,7 @@ class GameScene :public SceneBase, public C_GameSSM
 {
 public:
 	GameScene(const int stageNum);
+	GameScene(const int stageNum,const bool *DebugFlg);
 	~GameScene();
 	void Render3D(void);
 	void Render2D(void);
@@ -116,9 +118,6 @@ protected:
 	void AllDelete(void);
 
 	/*アップデート*/
-
-	//BGMの更新
-	bool Update_Bgm(void);
 
 	//デバックの更新
 	bool Update_Debug(void);
@@ -216,6 +215,27 @@ protected:
 	//レールの操作
 	int Get_Rail_Num(const int *Way_Rail_Num, const int *Pop_Rail_Num);
 
+	//音の管理
+	bool Update_Sound(void);
+
+	void New_Sound(const int *Type, const int *Category, const int No, const int *Change);
+	void New_Sound(const int *Category, const int No,const D3DXVECTOR3* Pos, const int *Change);
+
+	bool Update_Damage_Num_Draw(void);
+
+	//ゲーム終了Flg
+	bool Get_End_Flg(void);
+
+	//ゲームのモードチェンジ
+	void Geme_End_Change(const int *Mode);
+
+	//車の生存確認
+
+	/*削除*/
+	void Delete_Damage_Num_Draw(unsigned int *vector_No);
+	void New_Damage_Num_Draw(const int *Character_Type, const D3DXMATRIX* Ray_Mat, const D3DXVECTOR3* Ray_Vec
+		,const float *Ray_Dis, const int *Damage, const bool *DamageFlg);
+
 	/*弾*/
 
 	//弾判定の情報初期化
@@ -223,18 +243,18 @@ protected:
 	//弾判定集
 	void BulletJudgGround(BULLETJUDGDATA* BJD,const RAYDATA *RD,bool *HitFlg,const float *Rad);
 	void BulletJudgPlayer(BULLETJUDGDATA* BJD, const RAYDATA *RD, const float *Rad);
-	void BulletJudgEnemy(BULLETJUDGDATA* BJD,const RAYDATA *RD, const float *Rad);
+	void BulletJudgEnemy(BULLETJUDGDATA* BJD,const RAYDATA *RD, const float *Rad,const unsigned int *EnemyNo);
 	void BulletJudgEnemy_Ball(BULLETJUDGDATA* BJD, const RAYDATA *RD, const float *Rad);
 	//弾判定によるダメージ計算
 	bool SetBulletDamage(const BULLETJUDGDATA* BJD, const RAYDATA *RD,const int Damage);
 	bool SetBulletDamageGround(const BULLETJUDGDATA* BJD, const RAYDATA *RD);
 	bool SetBulletDamageWall(const BULLETJUDGDATA* BJD, const RAYDATA *RD);
-	bool SetBulletDamagePlaCar(const BULLETJUDGDATA* BJD, const int *Damage);
-	bool SetBulletDamagePlaParts(const BULLETJUDGDATA* BJD, const int *Damage);
-	bool SetBulletDamagePlaGun(const BULLETJUDGDATA* BJD, const int *Damage);
-	bool SetBulletDamageEneCar(const BULLETJUDGDATA* BJD, const int *Damage);
-	bool SetBulletDamageEneParts(const BULLETJUDGDATA* BJD, const int *Damage);
-	bool SetBulletDamageEneGun(const BULLETJUDGDATA* BJD, const int *Damage);
+	bool SetBulletDamagePlaCar(const BULLETJUDGDATA* BJD, const RAYDATA *RD, const int *Damage);
+	bool SetBulletDamagePlaParts(const BULLETJUDGDATA* BJD, const RAYDATA *RD, const int *Damage);
+	bool SetBulletDamagePlaGun(const BULLETJUDGDATA* BJD, const RAYDATA *RD, const int *Damage);
+	bool SetBulletDamageEneCar(const BULLETJUDGDATA* BJD, const RAYDATA *RD, const int *Damage);
+	bool SetBulletDamageEneParts(const BULLETJUDGDATA* BJD, const RAYDATA *RD, const int *Damage);
+	bool SetBulletDamageEneGun(const BULLETJUDGDATA* BJD, const RAYDATA *RD, const int *Damage);
 private:
 	//デバッグ用----------------
 	float Size, RaySize;
@@ -263,8 +283,8 @@ private:
 	Camera *camera;
 	Debug *debug;
 	DebugT *debugT;
-	GameOver *GaOv;
-	bool EndFlg;//クリアとエンドのFlg
+	
+	C_Game_End_Base* M_C_Game_End;
 
 	Warning *war;
 
@@ -307,6 +327,11 @@ private:
 
 	/*地面の情報*/
 	C_Ground_Pop_New* M_C_Ground_Pop;
+
+	//音の管理
+	C_Sound_Manager_Base* M_C_Sound_Manager;
+
+	std::vector<C_Damage_Num_Base*>M_Damage_Num_Draw;
 };
 
 //#endif // !GameScene_H

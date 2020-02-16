@@ -16,6 +16,7 @@ public:
 
 	//表示
 	virtual void Draw_Parts(const D3DXVECTOR3 *CameraPos);
+	virtual void Draw_Parts(const D3DXVECTOR3 *CameraPos,const bool *H_Body_DamageFlg);
 
 	//車の拡大行列のセット
 	void Set_ScalPos_Body(const D3DXVECTOR3 *set_Car_ScalPos);
@@ -83,6 +84,7 @@ protected:
 
 	//表示１
 	virtual void Draw_Draw(const D3DXVECTOR3 *CameraPos);
+	virtual void Draw_Draw(const D3DXVECTOR3 *CameraPos,const bool *H_Body_DamageFlg);
 
 	void Set_TransPos(const D3DXVECTOR3 *set_Pos);
 

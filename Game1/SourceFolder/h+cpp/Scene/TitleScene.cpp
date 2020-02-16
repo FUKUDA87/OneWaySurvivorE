@@ -4,14 +4,12 @@
 #include"../GameSource/TextureManager.h"
 #include"../GameSource/XfileManager.h"
 #include"StageSelectScene.h"
-#include"../Sound/Bgm.h"
 
 extern TextureManager textureManager;
 extern XfileManager xfileManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
 extern SceneManager sceneManager;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
-extern C_Bgm *bgm;
 
 #define	SCRW		1280	// ウィンドウ幅（Width
 #define	SCRH		720		// ウィンドウ高さ（Height
@@ -116,9 +114,7 @@ TitleScene::TitleScene()
 
 	key.Init();
 
-	//bgm0番
-	int sNo = 0;
-	bgm->ChangeBgm(sNo);
+	M_C_Sound_Manager = new C_Sound_Manager_Game();
 
 	//弾痕の初期化
 	if (false) {
@@ -142,9 +138,15 @@ TitleScene::TitleScene()
 		BulHol.push_back(new C_BulletHole(&D3DXVECTOR3(1100.0f, 100.0f, 0.0f), &AngZ, &D3DXVECTOR3(2.1f, 2.1f, 1.0f), 2));
 	}
 
+	int No = 2;
+	C_Struct_Init C_S_Init;
+	M_C_Sound_Manager->New_Sound_Data(&C_S_Init.Get_S_SOUND_DATA(
+		&Co_Sound_Type_2D, &Co_Sound_Category_BGM, &No, &Co_Sound_Change));
+
 }
 TitleScene::~TitleScene()
 {
+
 	delete player;
 	delete titleTex;
 	delete startTex;
@@ -184,11 +186,24 @@ TitleScene::~TitleScene()
 		delete LightCount;
 	}
 
+	if (M_C_Sound_Manager != nullptr) {
+		M_C_Sound_Manager->Stop_Sound_All();
+		delete M_C_Sound_Manager;
+	}
+
 	//textureManager.AllDelete();
 	//xfileManager.AllDelete();
 }
 bool TitleScene::Update(void)
 {
+
+	if (M_C_Sound_Manager != nullptr) {
+
+		M_C_Sound_Manager->Set_Sound();
+
+		M_C_Sound_Manager->Update_Sound();
+	}
+
 	Game_End();
 
 	//bgmのアップデート
@@ -197,7 +212,6 @@ bool TitleScene::Update(void)
 	scB.CamPos = camera->GetPos();
 	scB.CamLook = camera->GetLook();
 	scB.CamHead = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	bgm->Update(&bFlg/*,&scB*/);
 
 	mouse->Update();
 
@@ -219,8 +233,8 @@ bool TitleScene::Update(void)
 				startTex->SetMoveFlg(true);
 				ChangeSceneFade(StageSelectNo);
 				bool CFlg = true;
-				ClickSound->UpdateCli(&CFlg);
-				bgm->StopSound();
+				M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 1, &Co_Sound_Delete);
+				M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_Click, 1, &Co_Sound_New);
 			}
 		}
 	}

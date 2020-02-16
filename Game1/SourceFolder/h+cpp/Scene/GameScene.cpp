@@ -9,13 +9,13 @@
 #include"../GameSource/XfileManager.h"
 #include"../GameSource/InvBi.h"
 #include"../GameSource/Motion.h"
-#include"../Sound/Bgm.h"
 #include"../Draw3DBase/Draw3DManager/CarSmogManager.h"
 #include"../EnemyData/Base&Manager/Enemy_Manager.h"
 #include"../Const/Const_Phase_Type.h"
 #include"../Const/Const_Rail_Type.h"
+#include"../Const/Const_Stage_Type.h"
+#include"../GameSource/StructClass/Struct_Init.h"
 
-extern C_Bgm *bgm;
 extern int CountManager;
 extern Motion motion;
 extern Inv inv;
@@ -36,126 +36,27 @@ extern float AngD;
 #define GameNo 3
 #define TitleNo 1
 
-GameScene::GameScene(const int stageNum){
+GameScene::GameScene(const int stageNum)
+{
+
+	StageNo = stageNum;
 	AllNew();
 
-	debugT = new DebugT();
-
-	//マウスの初期化
-	mouse = new C_Mouse();
-	mouse->Init();
-	mouse->ChaDrawFlg(false);
-
-	//プレイヤーの初期化前に初期化
-	PlayerBody = new C_PlayerBody();
-
-	player = new C_PlayerA(&PlayerBody->GetPData());
-
-	//地面初期化--------------------------------------------------------
-	//外灯の間隔初期化
-	int CountInit = 4;
-	LightCount = new C_Count(&CountInit);
-
-	cou = new Cou(0, 5, 1, true, false);
-	int i = 0, z;
-	ground.push_back(new BillBase(i));
-	z = (int)ground[0]->GetPosZ() * 2;
-	i = (int)player->GetRadF() / z;
-	delete ground[0];
-	ground.erase(ground.begin() + 0);
-	for (int n = i * (-1); n < i; n++) {
-		if (cou->CouJudge() == false) {
-			cou->SetNum(0);
-		}
-		if (cou->GetNum() == 1) {
-			ground.push_back(new BillBase(n)); //ground.push_back(new BillBase(n));
-		}
-		else {
-			ground.push_back(new Bill(n));
-		}
-		//外灯の初期化
-		if (LightCount->Update() == true) {
-			int wNum = 2;
-			ground[ground.size() - 1]->InitLight(&wNum);
-		}
-		cou->CouUpd();
-	}
-	for (unsigned int i = 0; i < ground.size(); i++) {
-		if (judg.ball(player->GetMatCar(), ground[i]->GetMat(), player->GetRadF()) == false) {
-			delete ground[i];
-			ground.erase(ground.begin() + i);
-			i--;
-		}
-	}
-	int c = 2;
-	/*for (int i = (ground.size() - 1); i >= 0; i--) {
-		if (ground[i]->GetObjFlg() == true) {
-			if (c == 4) c = 1;
-			break;
-		}
-		else {
-			c++;
-		}
-	}*/
-	cou->SetNum(c);
-	//playerの位置調整
-	unsigned int num;
-	float Dis;
-	if (ground.size() > 100) {
-		i = (int)((float)ground.size() *0.9f);
-		D3DXMATRIX gMat, Trans;
-		gMat = ground[i]->GetWay().StartMat;
-		D3DXMatrixTranslation(&Trans, 0.0f, 0.1f, 0.0f);
-		Trans = Trans * gMat;
-		player->SetMatCar(&Trans);
-		player->SetRadF(player->GetRadF() / 2.0f);
-	}
-	if (NowGroNum(player->GetMatCar(), &num, &Dis) == true) {
-		player->SetGroNum(num);//地面の取得
-		eneFlg = true;
-	}
-
-	//---------------------------------------------------------------------
-
-	//スコアの初期化
-	score = new C_Score();
-	sky = new Sky();
-	camera = new Camera(player->GetMatCar());
-	aiming = new Aiming();
-	debug = new Debug();
-	eneFlg = false;//敵の出現OFF
-	GaOv = new GameOver();
-
-	//シーンの切り替え初期化
-	SceneChangeFlg = false;
-	//フェードの初期化
-	fade = new Fade();
-	fade->ChaFlg(false);
-
-	EndFlg = false;
-	key.Init();
-
-	war = new Warning();
-
-	pause = new Pause();
-
-	//BulletBirthFlgを最初は出ないようにする
-	BulletBirthFlg = false;
-
-	//車の出現の初期化
+}
+GameScene::GameScene(const int stageNum, const bool * DebugFlg)
+{
 	StageNo = stageNum;
-	M_C_Car_Pop = new C_Car_Pop_New(&StageNo);
 
-	CountNum = MaxCount = 1;
-	spear = new Spear();
-	D3DXMatrixTranslation(&SpeMat, 0.0f, 0.0f, 0.0f);
+	if (*DebugFlg == true)StageNo = Co_Stage_Type_Debug;
 
+	AllNew();
 
-	//bgm初期化
-	bgm->ChangeBgm(2);
+	if (*DebugFlg != true)return;
 
-	Size = 1.0f;
-
+	if (player != nullptr) {
+		unsigned int i = 0;
+		player->Set_Gun_Bullet_No(&i, &Co_Bullet_No99);
+	}
 }
 GameScene::~GameScene() {
 
@@ -208,17 +109,27 @@ void GameScene::Render2D(void) {
 	//////////////////////////////////////////////////
 	// 描画開始
 	lpSprite->Begin(D3DXSPRITE_ALPHABLEND);
+
+	if (M_Damage_Num_Draw.size() > 0) {
+		for (auto && v : M_Damage_Num_Draw) {
+			v->Draw_2D();
+		}
+	}
+
 	if (enemy.size() > 0) {
 		for (unsigned int i = 0; i < enemy.size(); i++) {
 			enemy[i]->Draw2DAll();
 		}
 	}
+
 	aiming->Draw();
 	player->Draw2DAll();
 	//スコアの表示
 	score->Draw2D();
 	//クリアとオーバーの表示
-	GaOv->Draw2D();
+	if (M_C_Game_End != nullptr) {
+		M_C_Game_End->Draw_2D();
+	}
 	//ボス出現表示
 	war->Draw2D();
 
@@ -240,14 +151,14 @@ void GameScene::Render2D(void) {
 	/*debug->Draw();
 	debugT->Draw2DT();
 	debugT->Draw2DTd();*/
-	/*float f=0.0f;
-	debugT->Draw2DF(f, 0, 0);*/
+	/*float f=0.0f;*/
+	//debugT->Draw2DF(DbgSize, 0, 0);
 }
 bool GameScene::Update(void) {
 
 	if (Change_TitleScene() != true)return false;
 
-	Update_Bgm();
+	Update_Sound();
 
 	Update_Debug();
 
@@ -325,7 +236,7 @@ bool GameScene::UpdateE(void)
 
 		}
 	}
-	if (EndFlg == true) {
+	if (Get_End_Flg() == true) {
 		return true;
 	}
 	//敵全滅の確認
@@ -432,6 +343,7 @@ void GameScene::BulletJudg(const int * TypeCar, const unsigned int * No)
 			//初期化
 			Dis = player->Get_Bullet_MoveDis(&b);
 			Bullet = GetInitBJD(&Dis);
+			Bullet.Character_Type = co_PlayerCar;
 
 			BulletRay.Mat = player->Get_Bullet_Mat(&b);
 			D3DXVec3TransformNormal(&BulletRay.Ray, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &BulletRay.Mat);
@@ -445,7 +357,8 @@ void GameScene::BulletJudg(const int * TypeCar, const unsigned int * No)
 			}
 
 			//敵
-			BulletJudgEnemy(&Bullet, &BulletRay,&Rad);
+			unsigned int EnemyNo = -1;
+			BulletJudgEnemy(&Bullet, &BulletRay,&Rad,&EnemyNo);
 			//敵の球パーツ判定
 			BulletJudgEnemy_Ball(&Bullet, &BulletRay, &Rad);
 			//判定結果と弾の削除
@@ -462,6 +375,7 @@ void GameScene::BulletJudg(const int * TypeCar, const unsigned int * No)
 			//初期化
 			Dis = enemy[*No]->Get_Bullet_MoveDis(&b);
 			Bullet = GetInitBJD(&Dis);
+			Bullet.Character_Type = co_EnemyCar;
 
 			BulletRay.Mat = enemy[*No]->Get_Bullet_Mat(&b);
 			D3DXVec3TransformNormal(&BulletRay.Ray, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &BulletRay.Mat);
@@ -469,7 +383,14 @@ void GameScene::BulletJudg(const int * TypeCar, const unsigned int * No)
 			//プレイヤー
 			BulletJudgPlayer(&Bullet, &BulletRay,&Rad);
 			//地面
-			BulletJudgGround(&Bullet, &BulletRay,NULL,&Rad);
+			if (enemy[*No]->Get_Bullet_GroWal_Judg_Flg(&b) == true) {
+				bool GroWalJudgFlg;
+				BulletJudgGround(&Bullet, &BulletRay, &GroWalJudgFlg, &Rad);
+				//次も壁と地面を判定できるかの代入
+				enemy[*No]->Set_Bullet_GroWal_Judg_Flg(&b, &GroWalJudgFlg);
+			}
+			//敵
+			BulletJudgEnemy(&Bullet, &BulletRay, &Rad,No);
 			//判定結果と弾の削除
 			if (SetBulletDamage(&Bullet, &BulletRay, enemy[*No]->Get_Bullet_Damage(&b)) == true)enemy[*No]->Delete_Bullet(&b);
 		}
@@ -600,7 +521,7 @@ bool GameScene::WallJudg(bool LeftFlg, bool PlayerFlg, bool EnemyFlg, unsigned i
 		//player判定
 		if (CarFlg != 1) {
 			//
-			if (EndFlg == false) {
+			if (Get_End_Flg() == false) {
 				//範囲内判定
 				if (judg.ball(JudgMat[1], player->GetMatCar(), (float)RadJudgF) == true) {
 					for (int i = 0; i < MaxJudgMatNum; i++) {
@@ -874,24 +795,22 @@ bool GameScene::UpdateEnemyAI(void)
 	if (enemy.size() > 0) {
 		//地面判定
 		for (unsigned int e = 0; e < enemy.size(); e++) {
-			if (enemy[e]->GetFlgCar() == true) {
-				//enemyと地面判定
-				unsigned int num;
-				float dis;
-				if (NowGroNum(enemy[e]->GetMatCar(), &num, &dis) == true) {
-					enemy[e]->SetGroNum(num);
-				}
-				else {
-					if (EndFlg == true) {
-						delete enemy[e];
-						enemy.erase(enemy.begin() + e);
-						e--;
-					}
+			//enemyと地面判定
+			unsigned int num;
+			float dis;
+			if (NowGroNum(enemy[e]->GetMatCar(), &num, &dis) == true) {
+				enemy[e]->SetGroNum(num);
+			}
+			else {
+				if (Get_End_Flg() == true) {
+					delete enemy[e];
+					enemy.erase(enemy.begin() + e);
+					e--;
 				}
 			}
 		}
 		//AI
-		if (EndFlg == false) {
+		if (Get_End_Flg() == false) {
 			for (unsigned int i = 0; i < enemy.size(); i++) {
 				CHARAData*Data;
 				int ChaNum = 0;
@@ -910,12 +829,9 @@ bool GameScene::UpdateEnemyMove(void)
 {
 	if (enemy.size() > 0) {
 		for (unsigned int i = 0; i < enemy.size(); i++) {
-			//
-			if (enemy[i]->GetFlgCar() == true) {
-				enemy[i]->UpdateAll(ground);//Update
-				//移動ベクトルのサイズの初期化
-				enemy[i]->SetQuaVecSize(1.0f);
-			}
+			enemy[i]->UpdateAll(ground);//Update
+			//移動ベクトルのサイズの初期化
+			enemy[i]->SetQuaVecSize(1.0f);
 		}
 	}
 	return false;
@@ -930,7 +846,7 @@ bool GameScene::ForMoveJudg(CONSTITUTION Con, D3DXMATRIX StartMat, D3DXMATRIX En
 	}
 	else {
 		if (EnemyFlg == true) {
-			if ((enemy.size() <= 0) || (enemy[No]->GetFlgCar() == false)) {
+			if ((enemy.size() <= 0) /*|| (enemy[No]->GetFlgCar() == false)*/) {
 				return false;
 			}
 			//エネミー
@@ -973,7 +889,7 @@ bool GameScene::ForMoveJudg(CONSTITUTION Con, D3DXMATRIX StartMat, D3DXMATRIX En
 	//player判定
 	if (CarFlg != 1) {
 		//判定する
-		if(EndFlg==false){
+		if(Get_End_Flg() ==false){
 		//絞り込み
 			if (judg.ball(StartMat, player->GetMatCar(), (float)RadJudgF) == true) {
 				D3DXVECTOR3 JudgPos;//レイの始点
@@ -1028,7 +944,7 @@ bool GameScene::ForMoveJudg(CONSTITUTION Con, D3DXMATRIX StartMat, D3DXMATRIX En
 			else {
 				//判定する
 				//生きていいるか
-				if (enemy[e]->GetFlgCar() == true) {
+				//if (enemy[e]->GetFlgCar() == true) {
 					//絞り込み距離判定
 					if (judg.ball(StartMat, enemy[e]->GetMatCar(), (float)RadJudgF) == true) {
 						D3DXVECTOR3 JudgPos;//レイの始点
@@ -1072,7 +988,7 @@ bool GameScene::ForMoveJudg(CONSTITUTION Con, D3DXMATRIX StartMat, D3DXMATRIX En
 							}
 						}
 					}
-				}
+				//}
 			}
 		}
 	}
@@ -1194,18 +1110,15 @@ void GameScene::CameraWallJudg(void)
 
 bool GameScene::GetBulletBirthFlg(void)
 {
-	if (EndFlg == true)return false;
+	if (Get_End_Flg() == true)return false;
 	if ((key.LClickF_N() == true) && (BulletBirthFlg == false))return false;
 	return true;
 }
 
 void GameScene::BombInit(const D3DXMATRIX * Mat)
 {
-	SoundCamera scB;
-	scB.CamPos = camera->GetPos();
-	scB.CamLook = camera->GetLook();
-	scB.CamHead = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	explo.push_back(new Explo(*Mat, &scB));
+	explo.push_back(new Explo(Mat));
+	New_Sound(&Co_Sound_Category_Explosion, 1, &judg.SetPosM(*Mat), &Co_Sound_New);
 	return;
 }
 
@@ -1337,14 +1250,16 @@ bool GameScene::UpdateMenu(void)
 
 	//ポーズ時--------------------------------
 	if (Menu[0]->GetMenuMode() == 1) {
-		//プレイを押しす処理
+		//プレイを押す処理
 		if (Touch == 1) {
 			if (pause->GetDFlg() == true) {
 				pause->SetDFlg(false);
 				mouse->Init();
 				mouse->ChaDrawFlg(false);
-				bgm->StartSound();
 				pause->SetStaSavFlg(false);
+				if (M_C_Sound_Manager != nullptr) {
+					M_C_Sound_Manager->Strat_Sound_All();
+				}
 
 				//メニュー削除
 				DeleteMenu();
@@ -1352,7 +1267,7 @@ bool GameScene::UpdateMenu(void)
 			}
 		}
 
-		//セレクトを押しす処理
+		//セレクトを押す処理
 		if (Touch == 2) {
 			if (pause->GetDFlg() == true) {
 				ChangeSceneFade(StageSelectNo);
@@ -1468,6 +1383,16 @@ bool GameScene::GroundCreate(unsigned int *GNo)
 
 void GameScene::Pos2DUpdate(const D3DXMATRIX * mProj, const D3DXMATRIX * mView, const D3DVIEWPORT9 * Viewport)
 {
+
+	if (M_Damage_Num_Draw.size() > 0) {
+		D3DXVECTOR3 Pos3D;
+		Judg L_judg;
+		for (auto && v : M_Damage_Num_Draw) {
+			Pos3D = v->Get_Pos_3D(&player->GetJudgMatCar());
+			v->Set_Pos_2D(&L_judg.Pos2D(&Pos3D, mProj, mView, Viewport));
+		}
+	}
+
 	if (enemy.size() <= 0)return;
 	for (unsigned int e = 0; e < enemy.size(); e++) {
 		//矢印計算
@@ -1486,10 +1411,128 @@ bool GameScene::Change_TitleScene(void)
 
 void GameScene::AllNew(void)
 {
+
+
+	debugT = new DebugT();
+
+	//マウスの初期化
+	mouse = new C_Mouse();
+	mouse->Init();
+	mouse->ChaDrawFlg(false);
+
+	//プレイヤーの初期化前に初期化
+	PlayerBody = new C_PlayerBody();
+
+	player = new C_PlayerA(&PlayerBody->GetPData());
+
+	//地面初期化--------------------------------------------------------
+	//外灯の間隔初期化
+	int CountInit = 4;
+	LightCount = new C_Count(&CountInit);
+
+	cou = new Cou(0, 5, 1, true, false);
+	int i = 0, z;
+	ground.push_back(new BillBase(i));
+	z = (int)ground[0]->GetPosZ() * 2;
+	i = (int)player->GetRadF() / z;
+	delete ground[0];
+	ground.erase(ground.begin() + 0);
+	for (int n = i * (-1); n < i; n++) {
+		if (cou->CouJudge() == false) {
+			cou->SetNum(0);
+		}
+		if (cou->GetNum() == 1) {
+			ground.push_back(new BillBase(n)); //ground.push_back(new BillBase(n));
+		}
+		else {
+			ground.push_back(new Bill(n));
+		}
+		//外灯の初期化
+		if (LightCount->Update() == true) {
+			int wNum = 2;
+			ground[ground.size() - 1]->InitLight(&wNum);
+		}
+		cou->CouUpd();
+	}
+	for (unsigned int i = 0; i < ground.size(); i++) {
+		if (judg.ball(player->GetMatCar(), ground[i]->GetMat(), player->GetRadF()) == false) {
+			delete ground[i];
+			ground.erase(ground.begin() + i);
+			i--;
+		}
+	}
+	int c = 2;
+	/*for (int i = (ground.size() - 1); i >= 0; i--) {
+		if (ground[i]->GetObjFlg() == true) {
+			if (c == 4) c = 1;
+			break;
+		}
+		else {
+			c++;
+		}
+	}*/
+	cou->SetNum(c);
+	//playerの位置調整
+	unsigned int num;
+	float Dis;
+	if (ground.size() > 100) {
+		i = (int)((float)ground.size() *0.9f);
+		D3DXMATRIX gMat, Trans;
+		gMat = ground[i]->GetWay().StartMat;
+		D3DXMatrixTranslation(&Trans, 0.0f, 0.1f, 0.0f);
+		Trans = Trans * gMat;
+		player->SetMatCar(&Trans);
+		player->SetRadF(player->GetRadF() / 2.0f);
+	}
+	if (NowGroNum(player->GetMatCar(), &num, &Dis) == true) {
+		player->SetGroNum(num);//地面の取得
+		eneFlg = true;
+	}
+
+	//---------------------------------------------------------------------
+
+	//スコアの初期化
+	score = new C_Score();
+	sky = new Sky();
+	camera = new Camera(player->GetMatCar());
+	aiming = new Aiming();
+	debug = new Debug();
+	eneFlg = false;//敵の出現OFF
+	M_C_Game_End = new C_Game_End_Now();
+
+	//シーンの切り替え初期化
+	SceneChangeFlg = false;
+	//フェードの初期化
+	fade = new Fade();
+	fade->ChaFlg(false);
+
+	key.Init();
+
+	war = new Warning();
+
+	pause = new Pause();
+
+	//BulletBirthFlgを最初は出ないようにする
+	BulletBirthFlg = false;
+
+	//車の出現の初期化
+	M_C_Car_Pop = new C_Car_Pop_New(&StageNo);
+
+	CountNum = MaxCount = 1;
+	spear = new Spear();
+	D3DXMatrixTranslation(&SpeMat, 0.0f, 0.0f, 0.0f);
+
+	DbgSize = 0.0f;
+
 	//煙
 	M_C_SmokeCar = new C_SmokeCar();
 
 	M_C_Ground_Pop = new C_Ground_Pop_New(1);
+
+	//
+	M_C_Sound_Manager = new C_Sound_Manager_Game();
+
+	New_Sound(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 1, &Co_Sound_Change);
 }
 
 void GameScene::AllDelete(void)
@@ -1523,7 +1566,11 @@ void GameScene::AllDelete(void)
 	delete camera;
 	delete aiming;
 	delete debug;
-	delete GaOv;
+	
+	if (M_C_Game_End != nullptr) {
+		delete M_C_Game_End;
+	}
+
 	delete war;
 	delete pause;
 	delete spear;
@@ -1574,15 +1621,18 @@ void GameScene::AllDelete(void)
 	if (M_C_Ground_Pop != nullptr) {
 		delete M_C_Ground_Pop;
 	}
-}
 
-bool GameScene::Update_Bgm(void)
-{
-	//bgmのアップデート
-	bool bFlg = true;
-	bgm->Update(&bFlg);
+	//音の管理の削除
+	if (M_C_Sound_Manager != nullptr) {
+		M_C_Sound_Manager->Stop_Sound_All();
+		delete M_C_Sound_Manager;
+	}
 
-	return true;
+	if (M_Damage_Num_Draw.size() > 0) {
+		for (unsigned int v = 0; v < M_Damage_Num_Draw.size(); v++) {
+			Delete_Damage_Num_Draw(&v);
+		}
+	}
 }
 
 bool GameScene::Update_Debug(void)
@@ -1644,7 +1694,7 @@ bool GameScene::Update_Game(void)
 	Update_Car_SetMat();
 
 	//カメラ-------------------------------------
-	if (EndFlg == false) {
+	if (Get_End_Flg() == false) {
 		if (fade->GetMoveFlg() == false) {
 			camera->UpdateM(true, mouse);
 		}
@@ -1730,9 +1780,8 @@ bool GameScene::Update_Game(void)
 	//敵
 	//================================================================================
 	if (UpdateE() == false) {
-		if (EndFlg == false) {
-			EndFlg = true;
-			GaOv->Update(true, EndFlg);
+		if (Get_End_Flg() == false) {
+			Geme_End_Change(&Co_Stage_End_Clear);
 			SetMenu(false, true, false);
 		}
 	}
@@ -1741,6 +1790,8 @@ bool GameScene::Update_Game(void)
 	sky->Update(player->GetMatCar());
 
 	Update_Explo();
+
+	Update_Damage_Num_Draw();
 
 	war->Update();
 
@@ -1758,7 +1809,7 @@ bool GameScene::Update_Game(void)
 bool GameScene::Update_Game_Pause(void)
 {
 	//終わった時
-	if (EndFlg == true) {
+	if (Get_End_Flg() == true) {
 		mouse->ChaDrawFlg(true);
 	}
 	else {
@@ -1767,12 +1818,16 @@ bool GameScene::Update_Game_Pause(void)
 			if (pause->GetDFlg() == false) {
 				pause->SetDFlg(true);
 				mouse->ChaDrawFlg(true);
-				bgm->StopSound();
 				//ロードの許可
 				if ((GetAsyncKeyState('8') & 0x8000) && (GetAsyncKeyState('9') & 0x8000) && (GetAsyncKeyState('0') & 0x8000)) {
 					pause->SetStaSavFlg(true);
 				}
 				SetMenu(true, false, false);
+
+				if (M_C_Sound_Manager != nullptr) {
+					M_C_Sound_Manager->Stop_Sound_2_All();
+				}
+
 				return false;
 			}
 		}
@@ -1869,7 +1924,7 @@ bool GameScene::Update_Bullet_Hole(void)
 bool GameScene::Update_Camera_Car(void)
 {
 	//カメラをplaeyrの前方に振り向かせるクォータニオンの初期化
-	if (EndFlg != false) return false;
+	if (Get_End_Flg() != false) return false;
 	//前方に振り向く計算
 	if ((key.RClickF() != true) || (camera->GetQuaFlg() != false))return false;
 
@@ -1933,9 +1988,10 @@ bool GameScene::Update_Player_Bullet(void)
 	RAYDATA l_RayR;
 	l_RayR.Mat = judg.SetMatP(camera->GetPos());
 	l_RayR.Ray = camera->GetVec();
-	float Rad = (float)RadJudgF*2.0f;
+	float Rad = 400.0f;
 	//敵のレイ判定
-	BulletJudgEnemy(&l_DisD, &l_RayR, &Rad);
+	unsigned int EnemyNo = -1;
+	BulletJudgEnemy(&l_DisD, &l_RayR, &Rad,&EnemyNo);
 	if (l_DisD.Type > 0)Hit_Data.Flg = true;
 	//照準の変化
 	if (Hit_Data.Flg == true) {
@@ -1956,25 +2012,6 @@ bool GameScene::Update_Player_Bullet(void)
 		Hit_Data.Mat = judg.SetMatP(camera->GetPos() + l_RayR.Ray * l_DisD.SamllDis);
 		player->Set_Gun_Ray_Data(&Hit_Data);
 	}
-
-	//================================================================================
-	//弾
-	//================================================================================
-
-	//弾の誕生決め
-	//BulletBirthFlg = GetBulletBirthFlg();
-	////player弾のUpdate
-	////player->GUpdateB(&BulletBirthFlg);
-	//SoundCamera sc;
-	//sc.CamPos = camera->GetPos();
-	//sc.CamLook = camera->GetLook();
-	//sc.CamHead = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	//bool KeyFlg = key.LClickF_N();
-	//player->UpdateBulPla(&KeyFlg, &BulletBirthFlg, &sc);
-	//BulletJudg(&co_PlayerCar, NULL);
-	//player->UpdateBulletMove();
-	//bool BBFlgB = player->GetBulBirFlgB();
-	//SoundGun->Update(&BBFlgB);
 
 	bool T_Flg = false;
 	if (key.LClickF_N() == true) {
@@ -2013,7 +2050,7 @@ bool GameScene::Update_Car_ForMove(void)
 	if (enemy.size() > 0) {//enemyの存在確認
 		//enemyの数
 		for (unsigned int e = 0; e < enemy.size(); e++) {
-			if (enemy[e]->GetFlgCar() == true) {
+			//if (enemy[e]->GetFlgCar() == true) {
 				//移動後の行列作成
 				EndMat = ForMoveEnd(enemy[e]->GetCon(), enemy[e]->GetQuaForMove(), enemy[e]->GetTransMatCar());
 				enemy[e]->SetForMoveEndMat(EndMat);
@@ -2029,7 +2066,7 @@ bool GameScene::Update_Car_ForMove(void)
 				enemy[e]->SetForMoveVec(judg.MatMatVec(Trans*enemy[e]->GetMatCar(), Trans*enemy[e]->GetForMoveEndMat()), 1);
 				enemy[e]->SetForMoveVec(judg.MatMatVec(TransMat2*enemy[e]->GetMatCar(), TransMat2*enemy[e]->GetForMoveEndMat()), 2);
 			}
-		}
+		//}
 	}
 	/*移動後の作成完了*/
 
@@ -2198,7 +2235,7 @@ bool GameScene::Update_Pop_End(void)
 {
 	if (M_C_Car_Pop == nullptr) return false;
 
-	if (EndFlg == true) return false;
+	if (Get_End_Flg() == true) return false;
 
 	//現在の生存している敵数の調査
 	int Num = 0;
@@ -2216,6 +2253,13 @@ bool GameScene::Update_Pop_End(void)
 	if (M_C_Car_Pop->Get_Change_Class_EndFlg() == true) {
 		if (M_C_Car_Pop->Get_Stage_Phase_Data_N().Phase_Type == Co_Phase_Type_Boss) {
 			war->SetFlg(true);
+			New_Sound(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 1, &Co_Sound_Delete);
+			New_Sound(&Co_Sound_Type_2D, &Co_Sound_Category_Warning, 1, &Co_Sound_New);
+			war->New_Sound_Data_Change_No(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 4, &Co_Sound_Change);
+			return true;
+		}
+		if (M_C_Car_Pop->Get_Stage_Phase_Data_N().Phase_Type == Co_Phase_Type_Normal) {
+			New_Sound(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 1, &Co_Sound_Change);
 			return true;
 		}
 	}
@@ -2232,7 +2276,7 @@ bool GameScene::Update_Pop_End(void)
 bool GameScene::Get_Car_Pop(const int * Car_Type)
 {
 	//ゲーム終了Flg
-	if (EndFlg == true)return false;
+	if (Get_End_Flg() == true)return false;
 
 	//プレイヤーが地面Noの取得Flg
 	if (eneFlg != true)return false;
@@ -2250,7 +2294,7 @@ bool GameScene::Get_Car_Pop(const int * Car_Type)
 
 bool GameScene::Get_Car_Pop_Update_MoveFlg(void)
 {
-	if (EndFlg == true)return false;
+	if (Get_End_Flg() == true)return false;
 
 	if (war->GetFlg() == true)return false;
 
@@ -2272,12 +2316,13 @@ void GameScene::Set_Ground_Data(void)
 
 void GameScene::Set_Game_Over(void)
 {
-	if (EndFlg == true)return;
+	if (Get_End_Flg() == true)return;
 
 	//playerが死んだときの処理
 	BombInit(&player->GetMatCar());
-	EndFlg = true;
-	GaOv->Update(false, EndFlg);
+	
+	Geme_End_Change(&Co_Stage_End_Over);
+
 	for (unsigned int e = 0; e < enemy.size(); e++) {
 		enemy[e]->SetPlaEnd(true/*, player->GetSpeedCar()*/);
 	}
@@ -2289,11 +2334,11 @@ void GameScene::Set_Game_Over(void)
 
 void GameScene::Set_Game_Clear(void)
 {
-	if (EndFlg == true)return;
+	if (Get_End_Flg() == true)return;
 
-	EndFlg = true;
-	GaOv->Update(true, EndFlg);
+	Geme_End_Change(&Co_Stage_End_Clear);
 	SetMenu(false, true, false);
+	New_Sound(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 5, &Co_Sound_Change);
 }
 
 bool GameScene::Update_Bullet(void)
@@ -2364,7 +2409,9 @@ bool GameScene::Update_Bullet_Enemy_Init(void)
 bool GameScene::Update_Bullet_Init(void)
 {
 	if (player != nullptr) {
-		player->Init_Bullet();
+		if (Get_End_Flg() != true) {
+			player->Init_Bullet();
+		}
 	}
 
 	if (enemy.size() < 1)return true;
@@ -2419,6 +2466,103 @@ int GameScene::Get_Rail_Num(const int * Way_Rail_Num, const int * Pop_Rail_Num)
 	if (No >= *Way_Rail_Num)No = (*Way_Rail_Num) - 1;
 
 	return No;
+}
+
+bool GameScene::Update_Sound(void)
+{
+	if (M_C_Sound_Manager == nullptr)return false;
+
+	M_C_Sound_Manager->Update_Sound(&camera->GetPos(), &camera->GetLook(),&D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+
+	M_C_Sound_Manager->Set_Sound();
+
+	if (player != nullptr) {
+		for (unsigned int s = 0; s < player->Get_Sound_Data_Num(); s++) {
+			if (M_C_Sound_Manager->Judg_Sound(&player->Get_Sound_Data(&s)) == true) {
+				player->Delete_Sound(&s);
+			}
+		}
+	}
+
+	if (war != nullptr) {
+		for (unsigned int d = 0; d < war->Get_Sound_Data_Num(); d++) {
+			if (M_C_Sound_Manager->Judg_Sound(&war->Get_Sound_Data(&d)) == true) {
+				war->Delete_Sound(&d);
+			}
+		}
+	}
+
+	return true;
+}
+
+
+void GameScene::New_Sound(const int * Type, const int * Category, const int No, const int * Change)
+{
+	if (M_C_Sound_Manager == nullptr)return;
+
+	C_Struct_Init C_S_Init;
+	M_C_Sound_Manager->New_Sound_Data(&C_S_Init.Get_S_SOUND_DATA(Type, Category, &No, Change));
+}
+
+void GameScene::New_Sound(const int * Category, const int No, const D3DXVECTOR3 * Pos, const int * Change)
+{
+	if (M_C_Sound_Manager == nullptr)return;
+
+	M_C_Sound_Manager->New_Sound_Data(Category, No, Pos, Change);
+}
+
+bool GameScene::Update_Damage_Num_Draw(void)
+{
+	if (M_Damage_Num_Draw.size() <1) return false;
+
+	for (unsigned int v = 0; v < M_Damage_Num_Draw.size(); v++) {
+		if (M_Damage_Num_Draw[v]->Update() != true) {
+			Delete_Damage_Num_Draw(&v);
+		}
+	}
+
+	return true;
+}
+
+bool GameScene::Get_End_Flg(void)
+{
+	if (M_C_Game_End == nullptr)return true;
+
+	return M_C_Game_End->Get_EndFlg();
+}
+
+void GameScene::Geme_End_Change(const int * Mode)
+{
+	if (M_C_Game_End == nullptr)return;
+
+	C_Game_End_Base* Game_End;
+
+	Game_End=M_C_Game_End->Change(Mode);
+
+	if (Game_End != nullptr) {
+		delete M_C_Game_End;
+		M_C_Game_End = Game_End;
+	}
+}
+
+void GameScene::Delete_Damage_Num_Draw(unsigned int * vector_No)
+{
+	delete M_Damage_Num_Draw[*vector_No];
+	M_Damage_Num_Draw.erase(M_Damage_Num_Draw.begin() + *vector_No);
+	*vector_No -= 1;
+}
+
+void GameScene::New_Damage_Num_Draw(const int * Character_Type, const D3DXMATRIX * Ray_Mat, const D3DXVECTOR3 * Ray_Vec, const float * Ray_Dis, const int * Damage, const bool * DamageFlg)
+{
+	if (*Character_Type != co_PlayerCar) return;
+
+	Judg L_judg;
+	D3DXVECTOR3 Pos = L_judg.Get_Ray_Pos3D(Ray_Mat, Ray_Vec, Ray_Dis);
+
+	int L_Damage = *Damage;
+	if (*DamageFlg != true)L_Damage = 0;
+
+	M_Damage_Num_Draw.push_back(new C_Damage_Move_B(&Pos, &player->GetJudgMatCar(), &L_Damage));
 }
 
 BULLETJUDGDATA GameScene::GetInitBJD(const float * InitDis)
@@ -2541,7 +2685,7 @@ void GameScene::BulletJudgPlayer(BULLETJUDGDATA * BJD, const RAYDATA * RD, const
 	return;
 }
 
-void GameScene::BulletJudgEnemy(BULLETJUDGDATA * BJD, const RAYDATA * RD, const float *Rad)
+void GameScene::BulletJudgEnemy(BULLETJUDGDATA * BJD, const RAYDATA * RD, const float * Rad, const unsigned int * EnemyNo)
 {
 	if (enemy.size() <= 0)return;
 
@@ -2552,6 +2696,7 @@ void GameScene::BulletJudgEnemy(BULLETJUDGDATA * BJD, const RAYDATA * RD, const 
 
 	//enemyの数
 	for (unsigned int e = 0; e < enemy.size(); e++) {
+		if (e == *EnemyNo)continue;
 		if (judg.ball(RD->Mat, enemy[e]->GetMatCar(), *Rad) == true) {//絞り込み
 			//レイ判定
 			//ボディ
@@ -2657,32 +2802,32 @@ void GameScene::BulletJudgEnemy_Ball(BULLETJUDGDATA * BJD, const RAYDATA * RD, c
 	}
 }
 
-bool GameScene::SetBulletDamage(const BULLETJUDGDATA* BJD, const RAYDATA *RD, const int Damage)
+bool GameScene::SetBulletDamage(const BULLETJUDGDATA * BJD, const RAYDATA * RD, const int Damage)
 {
 	if (BJD->Type < 0)return false;
 
 	//地面///////////////////////////////////////////////////////////////////////////////////
 	//地面
-	if (SetBulletDamageGround(BJD,RD) == true)return true;
+	if (SetBulletDamageGround(BJD, RD) == true)return true;
 	//壁
 	if (SetBulletDamageWall(BJD, RD) == true)return true;
 
 	//プレイヤー/////////////////////////////////////////////////////////////////////////////
 	//車体
-	if (SetBulletDamagePlaCar(BJD,&Damage) == true)return true;
+	if (SetBulletDamagePlaCar(BJD,RD, &Damage) == true)return true;
 	//標準パーツ
-	if (SetBulletDamagePlaParts(BJD, &Damage) == true)return true;
+	if (SetBulletDamagePlaParts(BJD, RD, &Damage) == true)return true;
 	//銃
-	if (SetBulletDamagePlaGun(BJD, &Damage) == true)return true;
+	if (SetBulletDamagePlaGun(BJD, RD, &Damage) == true)return true;
 
 	//エネミー//////////////////////////////////////////////////////////////////////////////
 	//車体
-	if (SetBulletDamageEneCar(BJD,&Damage) == true)return true;
+	if (SetBulletDamageEneCar(BJD, RD, &Damage) == true)return true;
 	//標準パーツ
-	if (SetBulletDamageEneParts(BJD, &Damage) == true)return true;
+	if (SetBulletDamageEneParts(BJD, RD, &Damage) == true)return true;
 	//銃
-	if (SetBulletDamageEneGun(BJD, &Damage) == true)return true;
-	
+	if (SetBulletDamageEneGun(BJD, RD, &Damage) == true)return true;
+
 	//当たっていない
 	return false;
 }
@@ -2720,10 +2865,11 @@ bool GameScene::SetBulletDamageWall(const BULLETJUDGDATA* BJD, const RAYDATA *RD
 	//弾痕３D
 	RayPos = judg.SetPosM(RD->Mat) + RD->Ray * (BJD->SamllDis - 0.01f);
 	BHole3D.push_back(new C_BulHol3D(&ground[BJD->JudgNo1]->GetWaMat(&BulWallFlg, 0), &RayPos, 1));
+
 	return true;
 }
 
-bool GameScene::SetBulletDamagePlaCar(const BULLETJUDGDATA* BJD, const int * Damage)
+bool GameScene::SetBulletDamagePlaCar(const BULLETJUDGDATA* BJD, const RAYDATA * RD, const int * Damage)
 {
 	if (BJD->Type != co_PlayerCar)return false;
 
@@ -2735,7 +2881,7 @@ bool GameScene::SetBulletDamagePlaCar(const BULLETJUDGDATA* BJD, const int * Dam
 	return true;
 }
 
-bool GameScene::SetBulletDamagePlaParts(const BULLETJUDGDATA* BJD, const int * Damage)
+bool GameScene::SetBulletDamagePlaParts(const BULLETJUDGDATA* BJD, const RAYDATA * RD, const int * Damage)
 {
 	if (BJD->Type != co_PlayerParts)return false;
 
@@ -2746,38 +2892,42 @@ bool GameScene::SetBulletDamagePlaParts(const BULLETJUDGDATA* BJD, const int * D
 	return true;
 }
 
-bool GameScene::SetBulletDamagePlaGun(const BULLETJUDGDATA* BJD, const int * Damage)
+bool GameScene::SetBulletDamagePlaGun(const BULLETJUDGDATA* BJD, const RAYDATA * RD, const int * Damage)
 {
 	return false;
 }
 
-bool GameScene::SetBulletDamageEneCar(const BULLETJUDGDATA* BJD, const int * Damage)
+bool GameScene::SetBulletDamageEneCar(const BULLETJUDGDATA* BJD, const RAYDATA * RD, const int * Damage)
 {
 	if (BJD->Type != co_EnemyCar)return false;
 
 	if (enemy[BJD->JudgNo1]->GetFlgCar() == false)return true;
 
-	if (enemy[BJD->JudgNo1]->SetHP(*Damage, false) == true) {
-		EnemyDelete(&BJD->JudgNo1);
-	}
+	bool DamageFlg = enemy[BJD->JudgNo1]->SetHP(*Damage, false);
+
+	New_Damage_Num_Draw(&BJD->Character_Type, &RD->Mat, &RD->Ray, &BJD->SamllDis, Damage, &DamageFlg);
 
 	return true;
 }
 
-bool GameScene::SetBulletDamageEneParts(const BULLETJUDGDATA* BJD, const int * Damage)
+bool GameScene::SetBulletDamageEneParts(const BULLETJUDGDATA* BJD, const RAYDATA * RD, const int * Damage)
 {
 	if (BJD->Type != co_EnemyParts)return false;
 
-	enemy[BJD->JudgNo1]->Damage_CarParts(&BJD->JudgNo2, Damage);
+	bool DamageFlg=enemy[BJD->JudgNo1]->Damage_CarParts(&BJD->JudgNo2, Damage);
+
+	New_Damage_Num_Draw(&BJD->Character_Type, &RD->Mat, &RD->Ray, &BJD->SamllDis, Damage, &DamageFlg);
 
 	return true;
 }
 
-bool GameScene::SetBulletDamageEneGun(const BULLETJUDGDATA* BJD, const int * Damage)
+bool GameScene::SetBulletDamageEneGun(const BULLETJUDGDATA* BJD, const RAYDATA * RD, const int * Damage)
 {
 	if (BJD->Type != co_EnemyGun)return false;
 
-	enemy[BJD->JudgNo1]->Damage_Gun(&BJD->JudgNo2, Damage);
+	bool DamageFlg = enemy[BJD->JudgNo1]->Damage_Gun(&BJD->JudgNo2, Damage);
+
+	New_Damage_Num_Draw(&BJD->Character_Type, &RD->Mat, &RD->Ray, &BJD->SamllDis, Damage, &DamageFlg);
 
 	return true;
 }

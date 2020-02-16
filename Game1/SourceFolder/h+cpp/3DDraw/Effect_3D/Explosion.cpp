@@ -1,8 +1,5 @@
 #include"Explosion.h"
 #include"../../GameSource/TextureManager.h"
-#include"../../Sound/BombSound1.h"
-
-extern C_BombSound *BombSound;
 
 extern LPDIRECT3DDEVICE9		lpD3DDevice;
 extern TextureManager textureManager;
@@ -14,20 +11,11 @@ void Explo::Init()
 	cou = new Cou(0, 63, 1, false, false);
 }
 
-Explo::Explo() {
+Explo::Explo(const D3DXMATRIX *Mat) {
 	Init();
+	expl.Base.Pos = D3DXVECTOR3(Mat->_41, Mat->_42, Mat->_43);
 }
-Explo::Explo(D3DXMATRIX mat) {
-	Init();
-	expl.Base.Pos = D3DXVECTOR3(mat._41, mat._42, mat._43);
-}
-Explo::Explo(D3DXMATRIX mat, const SoundCamera * sc)
-{
-	Init();
-	expl.Base.Pos = D3DXVECTOR3(mat._41, mat._42, mat._43);
 
-	BombSound->Update(&expl.Base.Pos, &sc->CamPos, &sc->CamLook, &sc->CamHead);
-}
 Explo::~Explo() {
 	delete cou;
 }

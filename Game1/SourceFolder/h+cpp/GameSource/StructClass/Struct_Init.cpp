@@ -21,3 +21,20 @@ S_GROUND_INIT_DATA C_Struct_Init::Get_S_GROUND_INIT_DATA(const int gType)
 	
 	return Get_S_GROUND_INIT_DATA(gType, 0.0f, 0.0f, true);
 }
+
+S_SOUND_DATA C_Struct_Init::Get_S_SOUND_DATA(const int * Type, const int * Category, const int *No, const int * Change)
+{
+	S_SOUND_DATA Data;
+	Data.Sound_Type = *Type;
+	Data.Sound_CategoryNo = *Category;
+	Data.Sound_No = *No;
+	Data.Change_Type = *Change;
+	return Data;
+}
+
+S_SOUND_DATA C_Struct_Init::Get_S_SOUND_DATA(const int * Type, const int * Category, const int * No, const D3DXVECTOR3 * Pos, const int * Change)
+{
+	S_SOUND_DATA Data = Get_S_SOUND_DATA(Type, Category, No, Change);
+	Data.Pos = *Pos;
+	return Data;
+}

@@ -11,6 +11,11 @@ public:
 	S_SOUND_DATA Get_Data(void) {
 		return M_S_Data;
 	}
+
+	//ƒƒjƒ…[‚Ì•ÏX
+	void Change_Menu(void) {
+		if (M_S_Data.Change_Type < 0)M_S_Data.Change_Type *= -1;
+	}
 protected:
 
 private:

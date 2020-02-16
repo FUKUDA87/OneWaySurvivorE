@@ -25,6 +25,11 @@ void C_PartsBase::Draw_Parts(const D3DXVECTOR3 *CameraPos)
 	Draw_Draw(CameraPos);
 }
 
+void C_PartsBase::Draw_Parts(const D3DXVECTOR3 * CameraPos, const bool * H_Body_DamageFlg)
+{
+	Draw_Draw(CameraPos, H_Body_DamageFlg);
+}
+
 void C_PartsBase::Set_ScalPos_Body(const D3DXVECTOR3 * set_Car_ScalPos)
 {
 	M_Car_ScalPos = *set_Car_ScalPos;
@@ -146,7 +151,18 @@ void C_PartsBase::Draw_Draw(const D3DXVECTOR3 * CameraPos)
 
 	if (M_Draw == nullptr)return;
 
-	M_Draw->Draw3D(CameraPos);
+	M_Draw->Draw3D(CameraPos,&Body_DamageFlg);
+}
+
+void C_PartsBase::Draw_Draw(const D3DXVECTOR3 * CameraPos, const bool * H_Body_DamageFlg)
+{
+	if (Draw_Flg != true)return;
+
+	if (M_Draw == nullptr)return;
+
+	bool Flg = *H_Body_DamageFlg;
+
+	M_Draw->Draw3D(CameraPos, &Flg);
 }
 
 void C_PartsBase::Set_TransPos(const D3DXVECTOR3 * set_Pos)

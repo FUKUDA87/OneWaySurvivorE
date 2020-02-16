@@ -88,9 +88,6 @@
     <Filter Include="ソース ファイル\Gun\Muz">
       <UniqueIdentifier>{2db0759a-7829-4766-8617-145ecb1fe5eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gun\GunDraw\GunData">
-      <UniqueIdentifier>{3cbfe4b9-8825-4a36-acce-8bfc8663596b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Gun\GunDraw\NewGun">
       <UniqueIdentifier>{7144ff6a-8c0d-470b-b044-591041e7100c}</UniqueIdentifier>
     </Filter>
@@ -154,17 +151,11 @@
     <Filter Include="ソース ファイル\Draw\DrawBase\Mesh_Draw\Mesh_1_1\MeshSet1_1">
       <UniqueIdentifier>{dd4aadf8-1536-4ed5-bf19-9a0c73131fc3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Gun\Bullet\Bullet_Dead">
-      <UniqueIdentifier>{86689398-16b7-49a9-bdd5-7fd75edf9c4f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Gun\GunDraw\GunMove">
       <UniqueIdentifier>{e78a55f4-463e-4de9-b343-8e4d9fdc83d6}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Draw\DrawBase\Mesh_Draw\Mesh_1_1\MeshSet2-1">
       <UniqueIdentifier>{acb8beac-1b82-4c2a-a3f3-e652349d8245}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Gun\GunDraw\GunPartsMove">
-      <UniqueIdentifier>{bb70f371-562a-4e42-a3ee-c87020f1adce}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\GameSource\StructClass">
       <UniqueIdentifier>{a1e42142-760b-48ee-963c-094aa78636e6}</UniqueIdentifier>
@@ -207,9 +198,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Draw\Tire">
       <UniqueIdentifier>{e47e547b-e906-4e58-97d8-4b8898af11b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Gun\GunDraw\Gun_Stand">
-      <UniqueIdentifier>{c56fcb7c-a3ca-426e-9e4e-b8ed84bac4fc}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Draw\Stand">
       <UniqueIdentifier>{31d483fc-d774-4373-8b31-e6a73f7f0f07}</UniqueIdentifier>
@@ -283,6 +271,36 @@
     <Filter Include="ソース ファイル\Sound\vector">
       <UniqueIdentifier>{96aa3988-ace9-4aec-86f3-63e24a863db9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Sound\BGM">
+      <UniqueIdentifier>{3013a070-e83f-4554-a41f-c20068cb0b9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound\SE">
+      <UniqueIdentifier>{fe5dbd8a-dfd7-48dc-81a8-345280b6d8bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound\Base">
+      <UniqueIdentifier>{f64051ce-7f9f-4249-be86-f9870a816817}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Stage_Data\Stage_D1">
+      <UniqueIdentifier>{e0ed984d-61e5-49be-8434-d2f96991ff74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound\SE\Warning">
+      <UniqueIdentifier>{7f7fcbb5-a4ab-4add-a005-3022a6602ee5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound\SE\Click">
+      <UniqueIdentifier>{c418f1a8-5cfa-4d82-ab92-403fd39c3593}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound\SE\Manager">
+      <UniqueIdentifier>{d77e1015-1f95-4278-94b6-d0a97c805322}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\Damage_Num">
+      <UniqueIdentifier>{ea38ded2-c827-496f-aa3e-0ad287235a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Move\Speed">
+      <UniqueIdentifier>{0fbc2076-f4e7-4212-b5e0-1e9a3a68fb5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\2DDraw\Game_End">
+      <UniqueIdentifier>{3797d626-410c-4000-90f5-59fcbd0d0aa2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h+cpp\2DDraw\Window.h">
@@ -304,9 +322,6 @@
       <Filter>ソース ファイル\2DDraw</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\2DDraw\FadeOut.h">
-      <Filter>ソース ファイル\2DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\2DDraw\GameOver.h">
       <Filter>ソース ファイル\2DDraw</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\2DDraw\Hp.h">
@@ -369,15 +384,6 @@
     <ClInclude Include="h+cpp\Draw3DBase\EnemyParts.h">
       <Filter>ソース ファイル\Draw3DBase</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\Draw3DBase\GunMoveBase.h">
-      <Filter>ソース ファイル\Draw3DBase</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Draw3DBase\GunMoveBaseE.h">
-      <Filter>ソース ファイル\Draw3DBase</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Draw3DBase\GunMoveBaseE2.h">
-      <Filter>ソース ファイル\Draw3DBase</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Draw3DBase\PartsBase.h">
       <Filter>ソース ファイル\Draw3DBase</Filter>
     </ClInclude>
@@ -397,12 +403,6 @@
       <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\CarMeshManager.h">
-      <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\GunManager.h">
-      <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\GunMeshManager.h">
       <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\MeshManager.h">
@@ -573,24 +573,6 @@
     <ClInclude Include="h+cpp\Ground\Sky.h">
       <Filter>ソース ファイル\Ground</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\Gun\GunDraw\GunPA.h">
-      <Filter>ソース ファイル\Gun\GunDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\GunDraw\GunBase.h">
-      <Filter>ソース ファイル\Gun\GunDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\GunDraw\GunEA.h">
-      <Filter>ソース ファイル\Gun\GunDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\GunDraw\GunData\GunDataNo2.h">
-      <Filter>ソース ファイル\Gun\GunDraw\GunData</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\GunDraw\GunData\GunDataBase.h">
-      <Filter>ソース ファイル\Gun\GunDraw\GunData</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\GunDraw\GunData\GunDataNo0.h">
-      <Filter>ソース ファイル\Gun\GunDraw\GunData</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Gun\GunDraw\NewGun\EnemyGun.h">
       <Filter>ソース ファイル\Gun\GunDraw\NewGun</Filter>
     </ClInclude>
@@ -645,9 +627,6 @@
     <ClInclude Include="h+cpp\Move\GunMove\GunLockonA.h">
       <Filter>ソース ファイル\Move\GunMove</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\Scene\TitleSceneSoundManager.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Scene\GameScene.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
@@ -673,9 +652,6 @@
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Sound\SoundGun1.h">
-      <Filter>ソース ファイル\Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Sound\Bgm.h">
       <Filter>ソース ファイル\Sound</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Sound\BombSound1.h">
@@ -843,51 +819,6 @@
     <ClInclude Include="h+cpp\Draw\DrawBase\Mesh_Draw\MeshDraw1_1\MeshSet1_1\MeshSetNo_1_1.h">
       <Filter>ソース ファイル\Draw\DrawBase\Mesh_Draw\Mesh_1_1\MeshSet1_1</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\Bullet.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\Bullet3D.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\BulletBase.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\BulletConst.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\BulletDraw3DBase.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\BulletDraw3DManager.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\bulletE.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\BulletEA.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\BulletManager.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\BulletMesh.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\BulletMeshManager.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\BulletPA.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\BulletPol.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\BulletTexManager.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\Bullet\EBulletManager.h">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Draw3DBase\CarBulletManager.h">
       <Filter>ソース ファイル\Draw3DBase</Filter>
     </ClInclude>
@@ -900,20 +831,8 @@
     <ClInclude Include="h+cpp\Draw\DrawBase\Mesh_Draw\MeshDraw1_1\MeshSet2_1\MeshSet2_1.h">
       <Filter>ソース ファイル\Draw\DrawBase\Mesh_Draw\Mesh_1_1\MeshSet2-1</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\Gun\GunDraw\GunPartsMove\GunPM_1_1.h">
-      <Filter>ソース ファイル\Gun\GunDraw\GunPartsMove</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Draw\DrawBase\Mesh_Draw\MeshDraw_1_Manager.h">
       <Filter>ソース ファイル\Draw\DrawBase\Mesh_Draw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\GunDraw\GunPartsMove\PartsBase_1.h">
-      <Filter>ソース ファイル\Gun\GunDraw\GunPartsMove</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Gun\GunDraw\GunPartsMove\PartsMeshDraw_1.h">
-      <Filter>ソース ファイル\Gun\GunDraw\GunPartsMove</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Draw3DBase\Draw3DManager\MeshManager_Manager.h">
-      <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Gun\GunDraw\GunMove\GunStopMove_1.h">
       <Filter>ソース ファイル\Gun\GunDraw\GunMove</Filter>
@@ -1257,6 +1176,90 @@
     <ClInclude Include="h+cpp\Sound\vector\Sound_Data_Vector.h">
       <Filter>ソース ファイル\Sound\vector</Filter>
     </ClInclude>
+    <ClInclude Include="h+cpp\Gun\Bullet\Const_Bullet_No.h">
+      <Filter>ソース ファイル\Gun\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\Sound_Manager_Base.h">
+      <Filter>ソース ファイル\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\Sound_Manager_Game.h">
+      <Filter>ソース ファイル\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Const\Const_Sound_Type.h">
+      <Filter>ソース ファイル\Const</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\SE\Sound_2D_Gun_1.h">
+      <Filter>ソース ファイル\Sound\SE</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\Base\Sound_Base_2D.h">
+      <Filter>ソース ファイル\Sound\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Bullet\Bullet_No99.h">
+      <Filter>ソース ファイル\Draw\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\BGM\Sound_BGM_Base.h">
+      <Filter>ソース ファイル\Sound\BGM</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\BGM\Sound_BGM_Manager.h">
+      <Filter>ソース ファイル\Sound\BGM</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Stage_Data\Stage_D1\Stage_D1_1.h">
+      <Filter>ソース ファイル\Stage_Data\Stage_D1</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Stage_Data\Stage_D1\Stage_D1_2.h">
+      <Filter>ソース ファイル\Stage_Data\Stage_D1</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Const\Const_Stage_Type.h">
+      <Filter>ソース ファイル\Const</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\GameSource\Flg_No1.h">
+      <Filter>ソース ファイル\GameSource</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\GameSource\Flg_vector.h">
+      <Filter>ソース ファイル\GameSource</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\SE\Warning\Sound_Warning_Base.h">
+      <Filter>ソース ファイル\Sound\SE\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\SE\Warning\Sound_Warning_Manager.h">
+      <Filter>ソース ファイル\Sound\SE\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\SE\Click\Sound_Click_Base.h">
+      <Filter>ソース ファイル\Sound\SE\Click</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\SE\Click\Sound_Click_Manager.h">
+      <Filter>ソース ファイル\Sound\SE\Click</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\Base\Sound_Base_3D.h">
+      <Filter>ソース ファイル\Sound\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\SE\SE_Manager\Sound_Explosion_Manager.h">
+      <Filter>ソース ファイル\Sound\SE\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Damage_Num\Damage_Num_Base.h">
+      <Filter>ソース ファイル\Draw\Damage_Num</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Damage_Num\Damage_Move_A.h">
+      <Filter>ソース ファイル\Draw\Damage_Num</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Damage_Num\Damage_Move_B.h">
+      <Filter>ソース ファイル\Draw\Damage_Num</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Move\Speed\Speed_Dead_A.h">
+      <Filter>ソース ファイル\Move\Speed</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\2DDraw\Game_End\Game_End_Base.h">
+      <Filter>ソース ファイル\2DDraw\Game_End</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\2DDraw\Game_End\Game_End_Now.h">
+      <Filter>ソース ファイル\2DDraw\Game_End</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\2DDraw\Game_End\GameOver.h">
+      <Filter>ソース ファイル\2DDraw\Game_End</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\2DDraw\Game_End\Game_Clear.h">
+      <Filter>ソース ファイル\2DDraw\Game_End</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="h+cpp\2DDraw\BulletHole.cpp">
@@ -1275,9 +1278,6 @@
       <Filter>ソース ファイル\2DDraw</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\2DDraw\FadeOut.cpp">
-      <Filter>ソース ファイル\2DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\2DDraw\GameOver.cpp">
       <Filter>ソース ファイル\2DDraw</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\2DDraw\Hp.cpp">
@@ -1340,15 +1340,6 @@
     <ClCompile Include="h+cpp\Draw3DBase\EnemyParts.cpp">
       <Filter>ソース ファイル\Draw3DBase</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\Draw3DBase\GunMoveBase.cpp">
-      <Filter>ソース ファイル\Draw3DBase</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Draw3DBase\GunMoveBaseE.cpp">
-      <Filter>ソース ファイル\Draw3DBase</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Draw3DBase\GunMoveBaseE2.cpp">
-      <Filter>ソース ファイル\Draw3DBase</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\Draw3DBase\PartsBase.cpp">
       <Filter>ソース ファイル\Draw3DBase</Filter>
     </ClCompile>
@@ -1368,12 +1359,6 @@
       <Filter>ソース ファイル\Draw3DBase\BaseDataManager</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\CarMeshManager.cpp">
-      <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\GunManager.cpp">
-      <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\GunMeshManager.cpp">
       <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\PartsMeshManager.cpp">
@@ -1502,24 +1487,6 @@
     <ClCompile Include="h+cpp\Ground\Wall.cpp">
       <Filter>ソース ファイル\Ground</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\Gun\GunDraw\GunBase.cpp">
-      <Filter>ソース ファイル\Gun\GunDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\GunDraw\GunEA.cpp">
-      <Filter>ソース ファイル\Gun\GunDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\GunDraw\GunPA.cpp">
-      <Filter>ソース ファイル\Gun\GunDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\GunDraw\GunData\GunDataBase.cpp">
-      <Filter>ソース ファイル\Gun\GunDraw\GunData</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\GunDraw\GunData\GunDataNo0.cpp">
-      <Filter>ソース ファイル\Gun\GunDraw\GunData</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\GunDraw\GunData\GunDataNo2.cpp">
-      <Filter>ソース ファイル\Gun\GunDraw\GunData</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\Gun\GunDraw\NewGun\EnemyGun.cpp">
       <Filter>ソース ファイル\Gun\GunDraw\NewGun</Filter>
     </ClCompile>
@@ -1585,12 +1552,6 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Scene\TitleScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Scene\TitleSceneSoundManager.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Sound\Bgm.cpp">
-      <Filter>ソース ファイル\Sound</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Sound\BombSound1.cpp">
       <Filter>ソース ファイル\Sound</Filter>
@@ -1751,42 +1712,6 @@
     <ClCompile Include="h+cpp\Draw\DrawBase\Mesh_Draw\MeshDraw1_1\MeshSet1_1\MeshSetNo_1_1.cpp">
       <Filter>ソース ファイル\Draw\DrawBase\Mesh_Draw\Mesh_1_1\MeshSet1_1</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\Gun\Bullet\Bullet.cpp">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\Bullet\Bullet3D.cpp">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\Bullet\BulletBase.cpp">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\Bullet\BulletDraw3DBase.cpp">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\Bullet\BulletDraw3DManager.cpp">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\Bullet\BulletEA.cpp">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\Bullet\BulletManager.cpp">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\Bullet\BulletMesh.cpp">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\Bullet\BulletPA.cpp">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\Bullet\BulletPol.cpp">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\Bullet\BulletTexManager.cpp">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\Bullet\EBulletManager.cpp">
-      <Filter>ソース ファイル\Gun\Bullet\Bullet_Dead</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\Draw3DBase\CarBulletManager.cpp">
       <Filter>ソース ファイル\Draw3DBase</Filter>
     </ClCompile>
@@ -1799,20 +1724,8 @@
     <ClCompile Include="h+cpp\Draw\DrawBase\Mesh_Draw\MeshDraw1_1\MeshSet2_1\MeshSet2_1.cpp">
       <Filter>ソース ファイル\Draw\DrawBase\Mesh_Draw\Mesh_1_1\MeshSet2-1</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\Gun\GunDraw\GunPartsMove\GunPM_1_1.cpp">
-      <Filter>ソース ファイル\Gun\GunDraw\GunPartsMove</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\Draw\DrawBase\Mesh_Draw\MeshDraw_1_Manager.cpp">
       <Filter>ソース ファイル\Draw\DrawBase\Mesh_Draw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\GunDraw\GunPartsMove\PartsBase_1.cpp">
-      <Filter>ソース ファイル\Gun\GunDraw\GunPartsMove</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Gun\GunDraw\GunPartsMove\PartsMeshDraw_1.cpp">
-      <Filter>ソース ファイル\Gun\GunDraw\GunPartsMove</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Draw3DBase\Draw3DManager\MeshManager_Manager.cpp">
-      <Filter>ソース ファイル\Draw3DBase\Draw3DManager</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Gun\GunDraw\GunMove\GunStopMove_1.cpp">
       <Filter>ソース ファイル\Gun\GunDraw\GunMove</Filter>
@@ -2131,6 +2044,81 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Sound\vector\Sound_Data_Vector.cpp">
       <Filter>ソース ファイル\Sound\vector</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\Sound_Manager_Game.cpp">
+      <Filter>ソース ファイル\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\Sound_Manager_Base.cpp">
+      <Filter>ソース ファイル\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\SE\Sound_2D_Gun_1.cpp">
+      <Filter>ソース ファイル\Sound\SE</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\Base\Sound_Base_2D.cpp">
+      <Filter>ソース ファイル\Sound\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Bullet\Bullet_No99.cpp">
+      <Filter>ソース ファイル\Draw\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\BGM\Sound_BGM_Base.cpp">
+      <Filter>ソース ファイル\Sound\BGM</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\BGM\Sound_BGM_Manager.cpp">
+      <Filter>ソース ファイル\Sound\BGM</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Stage_Data\Stage_D1\Stage_D1_1.cpp">
+      <Filter>ソース ファイル\Stage_Data\Stage_D1</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Stage_Data\Stage_D1\Stage_D1_2.cpp">
+      <Filter>ソース ファイル\Stage_Data\Stage_D1</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\GameSource\Flg_vector.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\GameSource\Flg_No1.cpp">
+      <Filter>ソース ファイル\GameSource</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\SE\Warning\Sound_Warning_Base.cpp">
+      <Filter>ソース ファイル\Sound\SE\Warning</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\SE\Warning\Sound_Warning_Manager.cpp">
+      <Filter>ソース ファイル\Sound\SE\Warning</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\SE\Click\Sound_Click_Base.cpp">
+      <Filter>ソース ファイル\Sound\SE\Click</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\SE\Click\Sound_Click_Manager.cpp">
+      <Filter>ソース ファイル\Sound\SE\Click</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\Base\Sound_Base_3D.cpp">
+      <Filter>ソース ファイル\Sound\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\SE\SE_Manager\Sound_Explosion_Manager.cpp">
+      <Filter>ソース ファイル\Sound\SE\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Damage_Num\Damage_Num_Base.cpp">
+      <Filter>ソース ファイル\Draw\Damage_Num</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Damage_Num\Damage_Move_A.cpp">
+      <Filter>ソース ファイル\Draw\Damage_Num</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Damage_Num\Damage_Move_B.cpp">
+      <Filter>ソース ファイル\Draw\Damage_Num</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Move\Speed\Speed_Dead_A.cpp">
+      <Filter>ソース ファイル\Move\Speed</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\2DDraw\Game_End\Game_End_Base.cpp">
+      <Filter>ソース ファイル\2DDraw\Game_End</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\2DDraw\Game_End\Game_End_Now.cpp">
+      <Filter>ソース ファイル\2DDraw\Game_End</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\2DDraw\Game_End\GameOver.cpp">
+      <Filter>ソース ファイル\2DDraw\Game_End</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\2DDraw\Game_End\Game_Clear.cpp">
+      <Filter>ソース ファイル\2DDraw\Game_End</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

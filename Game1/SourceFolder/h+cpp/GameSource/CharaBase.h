@@ -10,7 +10,7 @@ public:
 	C_CharaBase();
 	
 	//死亡確認(trueで死)
-	bool Dead(void);
+	virtual bool Dead(void);
 	//ダメージによるHp削り(今のHpが増減したらtrue)
 	bool HpDamage(const int *Damage);
 	//ダメージによるHp削り(今のHpが増減したらtrue)
@@ -39,6 +39,12 @@ protected:
 	virtual void SetHp(const int *MaxHp);
 
 	CHARABASE CharaBase;
+
+	//ダメージを受けた時のFlg
+	bool Body_DamageFlg;
+
+	//ダメージを受けた時のFlgの判定
+	void Judg_Body_DamageFlg(void);
 private: 
 	//初期化渡し
 	CHARABASE GetInitAll(const int MaxHp, const int DFlg);

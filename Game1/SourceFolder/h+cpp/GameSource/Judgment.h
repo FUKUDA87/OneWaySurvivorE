@@ -37,6 +37,7 @@ public:
 	bool RayPolM(D3DXMATRIX Mat, D3DXVECTOR3 v0, D3DXVECTOR3 v1, D3DXVECTOR3 v2, D3DXVECTOR3 v3, D3DXVECTOR3 ray, float * Dis);
 	//3Dから2Dの座標取得
 	D3DXVECTOR3 Pos2D(D3DXVECTOR3 pos3D);
+	D3DXVECTOR3 Pos2D(const D3DXVECTOR3 *Pos3D,const D3DXMATRIX *mProj,const D3DXMATRIX *mView,const D3DVIEWPORT9 *Viewport);
 	///3Dから2Dのため
 	void Pos2Dpvv(D3DXMATRIX mProj, D3DXMATRIX mView, D3DVIEWPORT9 Viewport);
 	//3Dから2Dの座標取得+playerとenemyの逆位置作成
@@ -56,6 +57,8 @@ public:
 	bool TarRotY(D3DXMATRIX mat,D3DXMATRIX *rotY,  D3DXVECTOR3 targetPos, D3DXVECTOR3 FrontVec);
 	//tragetEndMat作成
 	bool TarEndMat(D3DXMATRIX *mat,D3DXMATRIX TransMat, D3DXMATRIX * RotXMat, D3DXMATRIX *RotYMat, D3DXVECTOR3 TargetPos, D3DXVECTOR3 FrontVec);
+	//行列を座標変換
+	D3DXVECTOR3 Get_MatPos(const D3DXMATRIX* Mat);
 	//Pos<-Mat
 	D3DXVECTOR3 SetPosM(D3DXMATRIX Mat);
 	bool SetPosM(D3DXVECTOR3 *Pos,D3DXMATRIX Mat);
@@ -117,6 +120,7 @@ public:
 	bool ReverseFlg2(const bool *Flg);
 	//スケイリングMat入れ
 	void ScalingMat(D3DXMATRIX *ScalMat, const D3DXVECTOR3 *Pos);
+	D3DXMATRIX Get_ScalingMat(const D3DXVECTOR3 *Pos);
 	//RotXの初期化
 	void InitRotX(const D3DXMATRIX * Mat,D3DXMATRIX*RotX);
 	//クォータニオン構造体の初期化関数
@@ -125,6 +129,7 @@ public:
 	void InitMatPos(D3DXMATRIX *Mat, D3DXVECTOR3 *TransPos, D3DXVECTOR3 *ScalPos);
 	//移動行列のセット
 	void SetTransMat(D3DXMATRIX *TransMat, const D3DXVECTOR3 *TransPos);
+	D3DXMATRIX Set_TransMat(const D3DXVECTOR3 *TransPos);
 	//表示用の行列作成
 	D3DXMATRIX GetDrawMat(const D3DXMATRIX *Mat,D3DXMATRIX *ScalMat, const D3DXVECTOR3 *ScalPos);
 	D3DXMATRIX GetDrawMat(const D3DXMATRIX *Mat,const D3DXVECTOR3 *ScalPos);
@@ -154,6 +159,17 @@ public:
 	D3DXMATRIX Get_Mat_Init(void);
 	//送られてきた番号の検索
 	bool Hit_No(const unsigned int *No,const unsigned int *NoNum);
+	//２D行列にVec3をたす
+	D3DXMATRIX Set_2DMat(const D3DXVECTOR3 *Pos);
+	//サイズをベクトル変換
+	D3DXVECTOR3 Get_Size3D(const float *Size);
+	D3DXVECTOR3 Get_Size2D(const float *Size);
+
+	//レイの位置を求める
+	D3DXVECTOR3 Get_Ray_Pos3D(const D3DXMATRIX *Ray_Mat, const D3DXVECTOR3* Ray_Vec, const float *Ray_Dis);
+
+	//Vec3にVec2を足す
+	void Set_Vec3_Vec2(D3DXVECTOR3 *Vec3, const D3DXVECTOR2 *Vec2);
 };
 
 #endif // !Judgm_H

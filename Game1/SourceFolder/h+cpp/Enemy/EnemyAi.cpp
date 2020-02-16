@@ -59,77 +59,44 @@ bool C_EnemyAi::UpdateAi(CHARAData cd[], unsigned int NUM, std::vector<BillBase*
 
 		unsigned int GNo = cd[0].NowGround - 5;
 		bool Flg=StartAi(&GNo);
-
-		//スピード管理
-		Speed *NextSpeed;
-		NextSpeed = speed->Action(&Car.Con.NowSpeed,&cd[0].Speed, &Car.Con.GroNum, &cd[0].NowGround,&M_S_Gun_Update_Data.NowPhase);
-		if (NextSpeed != nullptr) {
-			delete speed;
-			speed = NextSpeed;
-		}
-		Car.Con.Speed = D3DXVECTOR3(0.0f, 0.0f, (float)Car.Con.NowSpeed / 100.0f);
 		
 	}
+
+	M_S_Gun_Update_Data.Car_Alive_Flg = GetFlgCar();
+
+	//スピード管理
+	Speed *NextSpeed;
+	bool CarFlg = GetFlgCar();
+	NextSpeed = speed->Action(&CarFlg,&Car.Con.NowSpeed, &cd[0].Speed, &Car.Con.GroNum, &cd[0].NowGround, &M_S_Gun_Update_Data.NowPhase);
+	if (NextSpeed != nullptr) {
+		delete speed;
+		speed = NextSpeed;
+	}
+	Car.Con.Speed = D3DXVECTOR3(0.0f, 0.0f, (float)Car.Con.NowSpeed / 100.0f);
 
 	return true;
 }
 
 bool C_EnemyAi::UpdateAll(std::vector<BillBase*> ground)
 {
-	if (Car.Base.Flg == true) {
-		UpdateCarFM(ground);
-		//標準パーツのアップデート
-		/*if (Parts.size() > 0) {
-			for (unsigned int p = 0; p < Parts.size(); p++) {
-				Parts[p]->SetSpeed(&Car.Con.NowSpeed, &Car.Con.MaxSpeed);
-				Parts[p]->UpdateParts(&GetMatCar(), &Car.Base.ScaPos);
-			}
-		}*/
-	}
+	UpdateCarFM(ground);
+
 	return true;
 }
 
 void C_EnemyAi::SetParts(std::vector<BillBase*> ground)
 {
-	if (Car.Base.Flg == true) {
 		judg.MatMatVec(&brj.MoveVec, PlaMovMat, Car.Base.Mat);//MoveVec作成
 		UpdateCar();
+		//標準パーツのアップデート
+		Update_Car_Parts();
 
+		Update_Gun();
+	if (Car.Base.Flg == true) {
 		//無敵のアップデート
 		UpdateCountM();
 		
-		//標準パーツのアップデート
-		Update_Car_Parts();
-		/*if (Parts.size() > 0) {
-			bool l_Flg=false;
-			for (unsigned int p = 0; p < Parts.size(); p++) {
-				Parts[p]->SetSpeed(&Car.Con.NowSpeed, &Car.Con.MaxSpeed);
-				Parts[p]->UpdateParts(&GetMatCar(),&Car.Base.ScaPos,&NowPhase);
-				if ((Parts[p]->GetParts().HpLinkFlg == true) && (l_Flg == false)) {
-					int l_Hp = Parts[p]->GetHp();
-					SetNowHp(&l_Hp);
-					l_Flg = true;
-				}
-			}
-		}*/
-
-		Update_Gun();
-
-		/*SetGunMatT(&GunMat);*/
-		//if (m_Gun.size() > 0) {
-		//	for (unsigned int g = 0; g < m_Gun.size(); g++) {
-		//		//銃のくっつく行列探し
-		//		GunMat = GetMatCar();
-		//		//スタンドの検索
-		//		for (unsigned int p = 0; p < Parts.size(); p++) {
-		//			if((unsigned int)Parts[p]->GetParts().GunFlg-1 ==g)GunMat = Parts[p]->GetParts().Base.Mat;
-		//		}
-		//		m_Gun[g]->Update_Gun(&GunMat,&NowPhase);
-		//	}
-		//}
-
-		//UpdateBullet2(&brj.MoveVec);
-		//UpdateBullet();
+		
 	}
 
 	Update_Effect();

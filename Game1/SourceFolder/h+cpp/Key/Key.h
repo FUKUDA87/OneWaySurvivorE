@@ -102,6 +102,17 @@ public:
 	bool EscapeKey_S();
 	bool EscapeKey_F();
 
+	/*
+	Num
+	*/
+
+	//7
+	bool Num7Key();
+	//8
+	bool Num8Key();
+	//9
+	bool Num9Key();
+
 private:
 	static bool EscapeFlg;
 };

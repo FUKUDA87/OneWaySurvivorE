@@ -25,6 +25,11 @@ struct TEXTURE {
 	int Width, Height;
 	int r, g, b;
 };
+struct S_TEXTURE_DATA {
+	LPDIRECT3DTEXTURE9 Tex;
+	int Width, Height;
+};
+
 //表示物3Dの構造体
 struct  BASE3D {
 	D3DXMATRIX Mat, Trans,Rot, RotX, RotY, RotZ, Scal,DrawMat;
@@ -352,6 +357,7 @@ struct GETGUNDATA {
 };
 //弾判定用
 struct BULLETJUDGDATA {
+	int Character_Type;
 	int Type;
 	unsigned int JudgNo1;
 	unsigned int JudgNo2;
@@ -467,6 +473,8 @@ struct S_GUN_UPDATE_DATA {
 	int NowPhase;
 	//スタンド
 	D3DXMATRIX StandMat;
+	//本体の状態
+	bool Car_Alive_Flg;
 };
 
 struct S_BULLET_DEPAR {
@@ -662,13 +670,25 @@ struct S_STAGE_PHASE_DATA {
 //音の検索と初期化の情報
 struct S_SOUND_DATA {
 	//2Dか3D
-	int SoundType;
+	int Sound_Type;
 	//種類
-	int CategoryNo;
+	int Sound_CategoryNo;
 	//CategoryNoの中の種類
-	int SoundNo;
+	int Sound_No;
 	//音の位置
 	D3DXVECTOR3 Pos;
+	//音の変更の情報
+	int Change_Type;
+};
+
+//モード変更
+struct S_MODE_CHANGE {
+	int Now, Change;
+};
+
+//カメラの情報
+struct S_CAMERA_POS {
+	D3DXVECTOR3 Pos, Look, Head;
 };
 
 

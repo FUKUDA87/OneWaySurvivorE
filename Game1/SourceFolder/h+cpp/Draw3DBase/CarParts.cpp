@@ -5,6 +5,11 @@
 #include"../Draw/Door/Door_DrawManager.h"
 #include"../Draw/Stand/Stand_DrawManager.h"
 
+C_CarParts::C_CarParts()
+{
+	M_Parts_Save_Flg = true;
+}
+
 C_CarParts::~C_CarParts()
 {
 	Delete_ALL_Parts();
@@ -97,14 +102,18 @@ D3DXMATRIX C_CarParts::Get_Parts_Draw_DrawMat(const unsigned int * M_Car_PartsNo
 	return M_Car_Parts[*M_Car_PartsNo]->Get_Draw_DrawMat();
 }
 
-void C_CarParts::Damage_CarParts(const unsigned int * M_CarPartsNo, const int * Damage)
+bool C_CarParts::Damage_CarParts(const unsigned int * M_CarPartsNo, const int * Damage)
 {
-	M_Car_Parts[*M_CarPartsNo]->HpDamage(Damage);
+	bool DamageFlg;
+
+	DamageFlg = M_Car_Parts[*M_CarPartsNo]->HpDamage(Damage);
 
 	int Flg = M_Car_Parts[*M_CarPartsNo]->Get_Parst_DamageSet_Flg();
-	if (Flg <= 0)return;
+	if (Flg <= 0)return DamageFlg;
 
-	HpDamage(&Flg, Damage);
+	if (HpDamage(&Flg, Damage) == true) DamageFlg = true;
+
+	return DamageFlg;
 }
 
 float C_CarParts::Get_Parts_Draw_Dis(const unsigned int * M_Car_PartsNo)
@@ -199,35 +208,35 @@ S_CAR_PARTS_DATA* C_CarParts::Get_Data_CarParts(const int * TypeNo, const int Jo
 	return nullptr;
 }
 
-void C_CarParts::New_Car_Parts_Data(const int * CarNo, const bool * SaveFlg)
+void C_CarParts::New_Car_Parts_Data(const int * CarNo)
 {
 	Delete_ALL_Data();
 
 	C_CarDataManager Manager;
 
-	int PartsNum = Manager.GetDrawNum(*CarNo, *SaveFlg);
+	int PartsNum = Manager.GetDrawNum(*CarNo, M_Parts_Save_Flg);
 
 	for (int i = 0; i < PartsNum; i++) {
-		Set_Data(&Manager.GetDrawSet(*CarNo, &i, SaveFlg));
+		Set_Data(&Manager.GetDrawSet(*CarNo, &i, &M_Parts_Save_Flg));
 	}
 }
 
-void C_CarParts::New_Set_Car_Parts(const BODYDATA * CarData, const bool * SaveFlg, const bool *Data_DeleteFlg)
+void C_CarParts::New_Set_Car_Parts(const BODYDATA * CarData)
 {
-	New_Car_Parts_Data(&CarData->CarBodyNo, SaveFlg);
+	New_Car_Parts_Data(&CarData->CarBodyNo);
 
 	New_CarParts(CarData);
 
-	if (*Data_DeleteFlg == true)Delete_ALL_Data();
+	if (M_DriverNo!=co_PlayerCar)Delete_ALL_Data();
 }
 
-void C_CarParts::New_Set_Car_Parts(const int * CarNo, std::vector<C_Parts_Set_Data*> M_Set_Data, const bool * SaveFlg, const bool * Data_DeleteFlg)
+void C_CarParts::New_Set_Car_Parts(const int * CarNo, std::vector<C_Parts_Set_Data*> M_Set_Data)
 {
-	New_Car_Parts_Data(CarNo, SaveFlg);
+	New_Car_Parts_Data(CarNo);
 
 	New_CarParts(M_Set_Data);
 
-	if (*Data_DeleteFlg == true)Delete_ALL_Data();
+	if (M_DriverNo != co_PlayerCar)Delete_ALL_Data();
 }
 
 void C_CarParts::Delete_ALL_Parts(void)

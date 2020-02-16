@@ -1,6 +1,5 @@
 #pragma once
 #include"Draw3D_Base2.h"
-#include"../../Draw3DBase/Draw3DManager/MeshManager_Manager.h"
 
 #include<string>
 
@@ -13,6 +12,7 @@ public:
 
 	//表示関数
 	virtual void Draw3D(const D3DXVECTOR3 *CameraPos);
+	virtual void Draw3D(const D3DXVECTOR3 *CameraPos, bool *Body_DamageFlg);
 
 	//移動量のセット
 	virtual void Set_MoveVec(const D3DXVECTOR3 *MoveVec);

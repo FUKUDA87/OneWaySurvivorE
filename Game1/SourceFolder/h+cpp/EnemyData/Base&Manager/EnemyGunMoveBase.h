@@ -4,7 +4,8 @@
 #include"../../GameSource/Judgment.h"
 #include"../../GameSource/Const.h"
 #include"../EnemyConst/PhaseConst.h"
-#include"../../Gun/Bullet/BulletConst.h"
+#include"../../Gun/Bullet/Const_Bullet_No.h"
+
 class C_E_GunMoveBase {
 public:
 	virtual C_E_GunMoveBase* Move(S_ENEMYGUNDATA* s_Data, int *NowPhase)=0;

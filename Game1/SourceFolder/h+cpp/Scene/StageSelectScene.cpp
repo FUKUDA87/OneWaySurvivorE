@@ -2,9 +2,7 @@
 #include"GameScene.h"
 #include"TitleScene.h"
 #include"SceneManager.h"
-#include"../Sound/Bgm.h"
 
-extern C_Bgm *bgm;
 extern SceneManager sceneManager;
 
 #define	SCRW		1280	// ウィンドウ幅（Width
@@ -35,8 +33,7 @@ StageSelectScene::StageSelectScene()
 
 	key.Init();
 
-	//bgmのコンストラクタ
-	bgm->ChangeBgm(1);
+	M_C_Sound_Manager = new C_Sound_Manager_Game();
 
 
 	//選択モードの初期化の前に初期化
@@ -50,10 +47,22 @@ StageSelectScene::StageSelectScene()
 
 	M_CarSet = new C_CarSet();
 
+	GameScene_DebugFlg = false;
+
+	int No = 3;
+	C_Struct_Init C_S_Init;
+	M_C_Sound_Manager->New_Sound_Data(&C_S_Init.Get_S_SOUND_DATA(
+		&Co_Sound_Type_2D, &Co_Sound_Category_BGM, &No, &Co_Sound_Change));
+
 }
 
 StageSelectScene::~StageSelectScene()
 {
+	if (M_C_Sound_Manager != nullptr) {
+		M_C_Sound_Manager->Stop_Sound_All();
+		delete M_C_Sound_Manager;
+	}
+
 	delete sky;
 	delete car;
 	delete cam;
@@ -119,13 +128,11 @@ bool StageSelectScene::Update(void)
 {
 	if (Change_TitleScene() != true)return false;
 
-	//bgmのアップデート
-	bool bFlg = true;
-	SoundCamera scB;
-	scB.CamPos = cam->GetPos();
-	scB.CamLook = cam->GetLook();
-	scB.CamHead = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	bgm->Update(&bFlg/*,&scB*/);
+	if (M_C_Sound_Manager != nullptr) {
+		M_C_Sound_Manager->Update_Sound();
+
+		M_C_Sound_Manager->Set_Sound();
+	}
 
 	mouse->Update();
 
@@ -198,7 +205,7 @@ bool  StageSelectScene::SetScene(void)
 		return false;
 	}
 	if (SceneNo = GameNo) {
-		sceneManager.changeScene(new GameScene(ChangeStageNo));
+		sceneManager.changeScene(new GameScene(ChangeStageNo,&GameScene_DebugFlg));
 		return false;
 	}
 	return true;
@@ -333,6 +340,7 @@ bool StageSelectScene::CarSelectMode()
 	//Okボタン
 	if (KeyFlg == true) {
 		if (Ok->Touch() == true) {
+			Set_GameScene_DebugFlg();
 			StartFade();
 			return true;
 		}
@@ -516,4 +524,15 @@ void StageSelectScene::Car_Ground_Vec(void)
 void StageSelectScene::Init_New(void)
 {
 	//M_C_Garage_Stand = new C_Stage_Room_Stand(&D3DXVECTOR3(0.0f, 0.0f, 0.0f), "../GameFolder/Material/XFile/Car_Stand_O_1.x");
+}
+
+void StageSelectScene::Set_GameScene_DebugFlg(void)
+{
+	if (key.Num7Key() != true)return;
+
+	if (key.Num8Key() != true)return;
+
+	if (key.Num9Key() != true)return;
+
+	GameScene_DebugFlg = true;
 }

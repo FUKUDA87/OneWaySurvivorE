@@ -2,11 +2,12 @@
 #include"../GameSource/Struct.h"
 #include<d3dx9.h>
 #include"../GameSource/TextureManager.h"
+#include"../Sound/vector/Sound_Data_Vector.h"
 
 extern TextureManager textureManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
 
-class Warning {
+class Warning:public C_Sound_Data_Vector {
 public:
 	Warning();
 	~Warning() {};

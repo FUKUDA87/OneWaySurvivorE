@@ -48,7 +48,7 @@ S_ENEMYGUNDATA C_ENo1_GNo1_Attack::InitData(void)
 {
 	S_ENEMYGUNDATA Data;
 
-	Data.DrawNo = judg.GetInitGUNDRAWNOS(GunNo2, BulletNo01, 1, 0);
+	Data.DrawNo = judg.GetInitGUNDRAWNOS(GunNo2, Co_Bullet_No1, 1, 0);
 	Data.Gun = judg.InitSetPartsData(0.0f, 0.0f, 0.0f, &D3DXVECTOR3(0.0f, 0.1f, 0.0f), &D3DXVECTOR3(1.0f, 1.0f, 1.0f), true);
 	Data.Hp.NowHp = Data.Hp.MaxHp = 20;
 	Data.Hp.DamageSetFlg = false;

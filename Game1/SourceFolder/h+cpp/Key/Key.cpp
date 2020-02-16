@@ -466,9 +466,7 @@ bool Key::GKeyF()
 
 bool Key::EscapeKey()
 {
-	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
-		return true;
-	}
+	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)return true;
 	return false;
 }
 
@@ -496,6 +494,24 @@ bool Key::EscapeKey_F()
 	else {
 		EscapeFlg = false;
 	}
+	return false;
+}
+
+bool Key::Num7Key()
+{
+	if (GetAsyncKeyState('7') & 0x8000)return true;
+	return false;
+}
+
+bool Key::Num8Key()
+{
+	if (GetAsyncKeyState('8') & 0x8000)return true;
+	return false;
+}
+
+bool Key::Num9Key()
+{
+	if (GetAsyncKeyState('9') & 0x8000)return true;
 	return false;
 }
 

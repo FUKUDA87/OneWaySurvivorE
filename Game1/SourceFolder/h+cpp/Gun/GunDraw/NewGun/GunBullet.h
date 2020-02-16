@@ -1,7 +1,5 @@
 #pragma once
 #include"GunBase2.h"
-#include"../../Bullet/BulletMesh.h"
-#include"../../Bullet/BulletDraw3DManager.h"
 #include"../../../Effect/Effect_Base.h"
 #include"../../../Effect/Gun/No1/Shot/Gun_No1_Shot_Effect.h"
 
@@ -26,6 +24,11 @@ public:
 	bool Get_TriggerFlg(const unsigned int *MouthNo);
 
 	void Bullet_Shot_Update(const unsigned int *MouthNo);
+
+	//íeÇÃïœçX
+	void Set_Bullet_No(const int *No) {
+		BulletNo = *No;
+	}
 protected:
 	//íeÇÃï\é¶î‘çÜ
 	int BulletNo;

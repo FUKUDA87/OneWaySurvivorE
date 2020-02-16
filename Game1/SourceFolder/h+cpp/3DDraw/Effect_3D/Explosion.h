@@ -7,9 +7,7 @@
 class Explo {
 public:
 	void Init();
-	Explo();
-	Explo(D3DXMATRIX mat);
-	Explo(D3DXMATRIX mat,const SoundCamera *sc);
+	Explo(const D3DXMATRIX *Mat);
 	~Explo();
 	bool ExplUpdate(float AngX, float AngY);
 	bool ExplUpdate(const D3DXMATRIX *CamMat);

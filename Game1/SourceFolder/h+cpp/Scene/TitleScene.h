@@ -13,11 +13,10 @@
 #include"../Key/CMouse.h"
 #include"../Key/Key.h"
 #include"../2DDraw/Fade.h"
-#include"TitleSceneSoundManager.h"
 #include"../Player/PlayerBody.h"
 #include"../Player/PlayerA.h"
 #include"../GameSource/Count.h"
-
+#include"../Sound/Sound_Manager_Base.h"
 
 template<class T>
 inline void SafeRelease(T& lpAdd)
@@ -27,7 +26,7 @@ inline void SafeRelease(T& lpAdd)
 		lpAdd = nullptr;
 	}
 }
-class TitleScene :public SceneBase,public C_TitleSSM
+class TitleScene :public SceneBase
 {
 
 public:
@@ -80,4 +79,6 @@ private:
 
 	//ÉQÅ[ÉÄÇÃèIóπ
 	bool Game_End(void);
+
+	C_Sound_Manager_Base* M_C_Sound_Manager;
 };

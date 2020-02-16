@@ -76,7 +76,7 @@ void C_ENo101_GNo1_Attack::InitRot(S_ENEMYGUNDATA * s_Data)
 S_ENEMYGUNDATA C_ENo101_GNo1_Attack::InitData(void)
 {
 	S_ENEMYGUNDATA Data;
-	Data.DrawNo = judg.GetInitGUNDRAWNOS(GunNo2, BulletNo101, 1, 1);
+	Data.DrawNo = judg.GetInitGUNDRAWNOS(GunNo2, Co_Bullet_No101, 1, 1);
 	Data.Gun = judg.InitSetPartsData(0.0f, 180.0f, 0.0f, &D3DXVECTOR3(0.0f, 0.1f, 0.0f), &D3DXVECTOR3(1.0f, 1.0f, 1.0f), true);
 	Data.Gun.TransPos = judg.GetVecVec(&Data.Gun.TransPos, &Data.Gun.ScalPos);
 	Data.Hp.NowHp = Data.Hp.MaxHp = 0;

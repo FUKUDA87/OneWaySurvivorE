@@ -28,7 +28,6 @@ C_Enemy_No101::C_Enemy_No101(D3DXMATRIX GroundMat, float * TransX):C_EnemyA(Grou
 	int l_MaxHp = GetCharaBase().MaxHp;
 
 	//パーツのセット
-	bool Flg = true, Flg2 = true;
 
 	M_Parts_Set_Data.push_back(new C_Parts_Set_Data(Co_Parts_Tire, 1, TireNo201));
 	M_Parts_Set_Data.push_back(new C_Parts_Set_Data(Co_Parts_Gun, 1, 101));
@@ -36,7 +35,7 @@ C_Enemy_No101::C_Enemy_No101(D3DXMATRIX GroundMat, float * TransX):C_EnemyA(Grou
 	M_Parts_Set_Data.push_back(new C_Parts_Set_Data(Co_Parts_Door, 1, 1));
 
 	//New_Set_Car_Parts(&BodyData.CarBodyNo, M_Parts_Set_Data, &Flg, &Flg2);
-	New_Car_Parts_Data(&BodyData.CarBodyNo, &Flg);
+	New_Car_Parts_Data(&BodyData.CarBodyNo);
 
 	New_CarParts(M_Parts_Set_Data);
 
@@ -49,7 +48,7 @@ C_Enemy_No101::C_Enemy_No101(D3DXMATRIX GroundMat, float * TransX):C_EnemyA(Grou
 
 	New_Car_Parts_Gun(M_Parts_Set_Data);
 
-	if (Flg2 == true)Delete_ALL_Data();
+	if (M_DriverNo!=co_PlayerCar)Delete_ALL_Data();
 
 	//Aiの初期化
 	m_Ai = new C_E_No101_AiPhase_1();

@@ -1,5 +1,7 @@
 #include "MuzFlaPA.h"
 
+#define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
+
 void MuzFlaPA::Init()
 {
 	mf.Base.Flg = true;

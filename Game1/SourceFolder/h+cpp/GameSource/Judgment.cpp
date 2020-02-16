@@ -150,6 +150,15 @@ D3DXVECTOR3 Judg::Pos2D(D3DXVECTOR3 pos3D)
 	return pos2D;
 }
 
+D3DXVECTOR3 Judg::Pos2D(const D3DXVECTOR3 * Pos3D, const D3DXMATRIX * mProj, const D3DXMATRIX * mView, const D3DVIEWPORT9 * Viewport)
+{
+	D3DXMATRIX IdenMat;
+	D3DXMatrixIdentity(&IdenMat);
+	D3DXVECTOR3 pos2D;
+	D3DXVec3Project(&pos2D, Pos3D, Viewport, mProj, mView, &IdenMat);
+	return pos2D;
+}
+
 void Judg::Pos2Dpvv(D3DXMATRIX mProj, D3DXMATRIX mView, D3DVIEWPORT9 Viewport)
 {
 	SmProj = mProj;
@@ -400,6 +409,12 @@ bool Judg::TarEndMat(D3DXMATRIX * mat, D3DXMATRIX TransMat, D3DXMATRIX * RotXMat
 	Mat = (*RotXMat)*Mat;
 	*mat = Mat;
 	return true;
+}
+
+D3DXVECTOR3 Judg::Get_MatPos(const D3DXMATRIX * Mat)
+{
+	D3DXVECTOR3 Pos = D3DXVECTOR3(Mat->_41, Mat->_42, Mat->_43);
+	return Pos;
 }
 
 
@@ -870,6 +885,13 @@ void Judg::ScalingMat(D3DXMATRIX * ScalMat, const D3DXVECTOR3 * Pos)
 	return;
 }
 
+D3DXMATRIX Judg::Get_ScalingMat(const D3DXVECTOR3 * Pos)
+{
+	D3DXMATRIX Mat;
+	D3DXMatrixScaling(&Mat, Pos->x, Pos->y, Pos->z);
+	return Mat;
+}
+
 void Judg::InitRotX(const D3DXMATRIX * Mat,D3DXMATRIX * RotX)
 {
 	//¡‚Ìs—ñ
@@ -925,6 +947,13 @@ void Judg::InitMatPos(D3DXMATRIX * Mat, D3DXVECTOR3 * TransPos, D3DXVECTOR3 * Sc
 void Judg::SetTransMat(D3DXMATRIX * TransMat, const D3DXVECTOR3 * TransPos)
 {
 	D3DXMatrixTranslation(TransMat, TransPos->x, TransPos->y, TransPos->z);
+}
+
+D3DXMATRIX Judg::Set_TransMat(const D3DXVECTOR3 * TransPos)
+{
+	D3DXMATRIX Mat;
+	SetTransMat(&Mat, TransPos);
+	return Mat;
 }
 
 D3DXMATRIX Judg::GetDrawMat(const D3DXMATRIX * Mat,D3DXMATRIX * ScalMat, const D3DXVECTOR3 * ScalPos)
@@ -1089,6 +1118,38 @@ bool Judg::Hit_No(const unsigned int * No, const unsigned int * NoNum)
 	if (*No < 0)return false;
 	if (*No >= *NoNum)return false;
 	return true;
+}
+
+D3DXMATRIX Judg::Set_2DMat(const D3DXVECTOR3 * Pos)
+{
+	D3DXMATRIX Mat;
+	D3DXMatrixTranslation(&Mat, Pos->x, Pos->y, NULL);
+	return Mat;
+}
+
+D3DXVECTOR3 Judg::Get_Size3D(const float * Size)
+{
+	D3DXVECTOR3 Scal = D3DXVECTOR3(*Size, *Size, *Size);
+	return Scal;
+}
+
+D3DXVECTOR3 Judg::Get_Size2D(const float * Size)
+{
+	D3DXVECTOR3 Scal = D3DXVECTOR3(*Size, *Size, 0.0f);
+	return Scal;
+}
+
+D3DXVECTOR3 Judg::Get_Ray_Pos3D(const D3DXMATRIX * Ray_Mat, const D3DXVECTOR3 * Ray_Vec, const float * Ray_Dis)
+{
+	D3DXVECTOR3 Pos;
+	Pos = Get_MatPos(Ray_Mat) + (*Ray_Vec)*(*Ray_Dis);
+	return Pos;
+}
+
+void Judg::Set_Vec3_Vec2(D3DXVECTOR3 * Vec3, const D3DXVECTOR2 * Vec2)
+{
+	Vec3->x += Vec2->x;
+	Vec3->y += Vec2->y;
 }
 
 D3DXVECTOR3 Judg::VecPos(D3DXMATRIX MatA, D3DXVECTOR3 VecA)

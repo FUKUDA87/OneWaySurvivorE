@@ -83,3 +83,7 @@ C_Draw3D_Base2::C_Draw3D_Base2()
 {
 	Init();
 }
+
+void C_Draw3D_Base2::Draw3D(const D3DXVECTOR3 * CameraPos, bool * Body_DamageFlg)
+{
+}

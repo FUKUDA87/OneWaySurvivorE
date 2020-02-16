@@ -62,26 +62,26 @@ void C_CarGun::Set_GunMove_Player(const unsigned int * GunNo)
 
 }
 
-void C_CarGun::New_Set_Car_Parts(const BODYDATA * CarData, const bool * SaveFlg, const bool *Data_DeleteFlg)
+void C_CarGun::New_Set_Car_Parts(const BODYDATA * CarData)
 {
-	New_Car_Parts_Data(&CarData->CarBodyNo, SaveFlg);
+	New_Car_Parts_Data(&CarData->CarBodyNo);
 
 	New_CarParts(CarData);
 
 	New_Car_Parts_Gun(CarData);
 
-	if(*Data_DeleteFlg==true)Delete_ALL_Data();
+	if (M_DriverNo != co_PlayerCar)Delete_ALL_Data();
 }
 
-void C_CarGun::New_Set_Car_Parts(const int * CarNo, std::vector<C_Parts_Set_Data*> M_Set_Data, const bool * SaveFlg, const bool * Data_DeleteFlg)
+void C_CarGun::New_Set_Car_Parts(const int * CarNo, std::vector<C_Parts_Set_Data*> M_Set_Data)
 {
-	New_Car_Parts_Data(CarNo, SaveFlg);
+	New_Car_Parts_Data(CarNo);
 
 	New_CarParts(M_Set_Data);
 
 	New_Car_Parts_Gun(M_Set_Data);
 
-	if (*Data_DeleteFlg == true)Delete_ALL_Data();
+	if (M_DriverNo != co_PlayerCar)Delete_ALL_Data();
 }
 
 void C_CarGun::New_Car_Parts_Gun(const BODYDATA * CarData)
@@ -234,9 +234,9 @@ D3DXMATRIX C_CarGun::Get_Gun_Draw_Parts_Draw_Mat(const unsigned int * M_GunNo, c
 	return M_Gun[*M_GunNo]->Get_Draw_Parts_Draw_Mat(PartsNo);
 }
 
-void C_CarGun::Damage_Gun(const unsigned int * M_GunNo, const int * Damage)
+bool C_CarGun::Damage_Gun(const unsigned int * M_GunNo, const int * Damage)
 {
-	M_Gun[*M_GunNo]->HpDamage(Damage);
+	return M_Gun[*M_GunNo]->HpDamage(Damage);
 }
 
 bool C_CarGun::Ray_Judg_Gun_Flg(const unsigned int * M_GunNo)
@@ -250,6 +250,13 @@ bool C_CarGun::Ray_Judg_Gun_Flg(const unsigned int * M_GunNo)
 void C_CarGun::Set_Ray_Dis(const unsigned int * M_GunNo, const float * Dis)
 {
 	M_Gun[*M_GunNo]->GetDis(Dis);
+}
+
+void C_CarGun::Set_Gun_Bullet_No(const unsigned int * M_GunNo, const int * BulletNo)
+{
+	if (*M_GunNo >= M_Gun.size())return;
+
+	M_Gun[*M_GunNo]->Set_Bullet_No(BulletNo);
 }
 
 void C_CarGun::AllDelete_Gun(void)

@@ -8,36 +8,30 @@ SoundManager::~SoundManager()
 	AllDelete();
 }
 
- void SoundManager::GetSound(LPDIRECTSOUNDBUFFER8 *pDSDataT, LPDIRECTSOUND3DBUFFER8 *pDSData3DT, std::string FileName)
+ void SoundManager::GetSound(SoundCol *Sound, std::string FileName)
 {
-	 if ((SoundList.find(FileName)==SoundList.end())|| (Sound3DList.find(FileName)==Sound3DList.end())) {
+	 if ((SoundList.find(FileName)==SoundList.end())) {
 		 LPDIRECTSOUNDBUFFER8 pDSDataTZ;
 		 LPDIRECTSOUND3DBUFFER8 pDSData3DTZ;
 		 LoadWAVE3D(pDSDataTZ, pDSData3DTZ, &FileName[0]);
-		 SoundList[FileName]= pDSDataTZ;
-		 Sound3DList[FileName]= pDSData3DTZ;
+		 SoundList[FileName].Sound= pDSDataTZ;
+		 SoundList[FileName].Sound3D= pDSData3DTZ;
 	 }
-	// else {
-		 *pDSDataT = SoundList[FileName];
-		 *pDSData3DT = Sound3DList[FileName];
-	// }
+	 //else {
+		 Sound->Sound = SoundList[FileName].Sound;
+		 Sound->Sound3D = SoundList[FileName].Sound3D;
+	 //}
 	 return;
 }
 
 void SoundManager::AllDelete(void)
 {
 	for (auto itr = SoundList.begin(); itr != SoundList.end(); itr++) {
-		if (itr->second != nullptr) {
-			//*itr->second->Release()
+		if (itr->second.Sound != nullptr) {
+			/*itr->second.Sound->Release();
+			itr->second.Sound3D->Release();*/
 		}
 	}
 	SoundList.clear();
-	for (auto itr = Sound3DList.begin(); itr != Sound3DList.end(); itr++) {
-		if (itr->second != nullptr) {
-			//itr->second->Release();
-		}
-		//delete itr->second;
-	}
-	Sound3DList.clear();
 
 }

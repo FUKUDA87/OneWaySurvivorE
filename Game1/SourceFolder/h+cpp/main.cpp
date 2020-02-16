@@ -15,7 +15,6 @@
 #include"GameSource/InvBi.h"
 #include"GameSource/Motion.h"
 #include"GameSource/SoundManager.h"
-#include"Sound/Bgm.h"
 #include"Sound/BulletEmpty1.h"
 #include"Sound/SoundGun1.h"
 #include"Sound/BombSound1.h"
@@ -86,12 +85,6 @@ D3DXVECTOR3 CamPosG;
 Motion motion;
 //Manager数
 int CountManager;
-//サウンド変数------------------------------
-C_Bgm *bgm;
-//空弾
-C_BulEmp *bulEmp;
-//爆発
-C_BombSound *BombSound;
 //------------------------------------------
 
 bool gameFullScreen;	// フルスクリーン（true,false)
@@ -603,13 +596,6 @@ D3DLIGHT_SPOT
 	lpSPrimary->QueryInterface(IID_IDirectSound3DListener8, (LPVOID*)&lpSListenerE);
 	lpSListenerE->SetRolloffFactor(0.05f, DS3D_IMMEDIATE);
 
-	//Bgmのコンストラクタ
-	bgm = new C_Bgm();
-	//空弾
-	bulEmp = new C_BulEmp();
-	//爆発
-	BombSound = new C_BombSound();
-
 	sceneManager.changeScene(new TitleScene());
 	FlgD = false;
 	D3DXMatrixTranslation(&MatD, 0.0f, 0.0f, 0.0f);
@@ -648,10 +634,8 @@ D3DLIGHT_SPOT
 	lpSPrimary->Release();
 	lpDSound->Release();
 
-	//bgmの削除
-	delete bgm;
-	delete bulEmp;
-	delete BombSound;
+	/*if(lpSListener!=nullptr)lpSListener->Release();
+	if (lpSListenerE != nullptr)lpSListenerE->Release();*/
 
 	CoUninitialize();
 	

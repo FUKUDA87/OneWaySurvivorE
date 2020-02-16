@@ -57,13 +57,16 @@ public:
 	D3DXMATRIX Get_Gun_Draw_Parts_Draw_Mat(const unsigned int *M_GunNo, const unsigned int *PartsNo);
 
 	//銃のHpを減らす処理
-	void Damage_Gun(const unsigned int *M_GunNo, const int *Damage);
+	bool Damage_Gun(const unsigned int *M_GunNo, const int *Damage);
 
 	//銃にレイを飛ばしていいかの確認
 	bool Ray_Judg_Gun_Flg(const unsigned int *M_GunNo);
 
 	//レーザーの長さ入れ
 	void Set_Ray_Dis(const unsigned int *M_GunNo, const float *Dis);
+
+	//銃が発射する弾の変更
+	void Set_Gun_Bullet_No(const unsigned int *M_GunNo, const int *BulletNo);
 
 protected:
 	//全ての銃の削除
@@ -78,8 +81,8 @@ protected:
 	std::vector<C_GunLaser*>M_Gun;
 
 	//パーツの初期化
-	void New_Set_Car_Parts(const BODYDATA *CarData, const bool *SaveFlg, const bool *Data_DeleteFlg);
-	void New_Set_Car_Parts(const int *CarNo, std::vector<C_Parts_Set_Data*>M_Set_Data, const bool *SaveFlg, const bool *Data_DeleteFlg);
+	void New_Set_Car_Parts(const BODYDATA *CarData);
+	void New_Set_Car_Parts(const int *CarNo, std::vector<C_Parts_Set_Data*>M_Set_Data);
 
 	//銃のくっつけ
 	virtual void New_Car_Parts_Gun(const BODYDATA *CarData);

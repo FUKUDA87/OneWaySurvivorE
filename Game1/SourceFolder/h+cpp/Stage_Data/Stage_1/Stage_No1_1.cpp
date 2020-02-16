@@ -6,11 +6,11 @@ C_Stage_No1_1::C_Stage_No1_1()
 	int Time = 0
 		,Up=180;
 
-	int Start = -10;
+	int Start = -1;
 
 	for (int i = 0; i < 5; i++) {
 
-		New_Car_Data(co_EnemyCar, 1, Time, Start, i);
+		New_Car_Data(co_EnemyCar, 1, Time, Start, 0);
 		Time += Up;
 		if (Time > Up)Time = Up;
 	}

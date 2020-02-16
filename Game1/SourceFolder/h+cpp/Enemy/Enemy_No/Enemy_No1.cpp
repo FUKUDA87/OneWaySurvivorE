@@ -11,7 +11,7 @@ C_Enemy_No1::C_Enemy_No1(D3DXMATRIX GroundMat, float * TransX):C_EnemyA(GroundMa
 
 	S_ENEMYBODYDATA l_EBD;
 	l_EBD.Body.CarBodyNo = CarNo101;
-	l_EBD.CharaBase.NowHp = l_EBD.CharaBase.MaxHp = 10;
+	l_EBD.CharaBase.NowHp = l_EBD.CharaBase.MaxHp = 20;
 	l_EBD.CharaBase.DamageSetFlg = Co_Damage_Yes;
 	l_EBD.ScalPos = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	l_EBD.GroundHeight = 0.75f;
@@ -27,12 +27,11 @@ C_Enemy_No1::C_Enemy_No1(D3DXMATRIX GroundMat, float * TransX):C_EnemyA(GroundMa
 	int l_MaxHp = GetCharaBase().MaxHp;
 
 	//パーツのセット
-	bool Flg = false, Flg2 = true;
 
 	M_Parts_Set_Data.push_back(new C_Parts_Set_Data(Co_Parts_Tire, 1, TireNo101));
 	M_Parts_Set_Data.push_back(new C_Parts_Set_Data(Co_Parts_Gun, 1, 101));
 
-	New_Set_Car_Parts(&BodyData.CarBodyNo, M_Parts_Set_Data, &Flg, &Flg2);
+	New_Set_Car_Parts(&BodyData.CarBodyNo, M_Parts_Set_Data);
 
 	//Aiの初期化
 	m_Ai = new C_E_No1_Phase0();

@@ -1,5 +1,6 @@
 #include "SpeedUp.h"
 #include"SpeedDown.h"
+#include"../../../Move/Speed/Speed_Dead_A.h"
 
 SpeedUp1::SpeedUp1()
 {
@@ -8,8 +9,10 @@ SpeedUp1::SpeedUp1()
 	CountDown = rand() % 10 + 20;
 }
 
-Speed * SpeedUp1::Action(int * NowSpeed, const int *TargetSpeed, const unsigned int * EneGroNo, const unsigned int * TarGroNo, const int *NewPhase)
+Speed * SpeedUp1::Action(const bool *Car_Flg, int * NowSpeed, const int *TargetSpeed, const unsigned int * EneGroNo, const unsigned int * TarGroNo, const int *NewPhase)
 {
+	if (*Car_Flg != true)return new Speed_Dead_A();
+
 	if (*EneGroNo > *TarGroNo - 1) return new SpeedDown1();
 	if (CountUpdate() == true) return nullptr;
 	*NowSpeed += SpeedUpNum;
@@ -26,8 +29,10 @@ SpeedUp2::SpeedUp2()
 	CountDown = rand() % 20 + 20;
 }
 
-Speed * SpeedUp2::Action(int * NowSpeed, const int *TargetSpeed, const unsigned int * EneGroNo, const unsigned int * TarGroNo, const int *NewPhase)
+Speed * SpeedUp2::Action(const bool *Car_Flg, int * NowSpeed, const int *TargetSpeed, const unsigned int * EneGroNo, const unsigned int * TarGroNo, const int *NewPhase)
 {
+	if (*Car_Flg != true)return new Speed_Dead_A();
+
 	if (*EneGroNo > *TarGroNo ) return new SpeedDown2();
 	
 	if (CountUpdate() == true) return nullptr;

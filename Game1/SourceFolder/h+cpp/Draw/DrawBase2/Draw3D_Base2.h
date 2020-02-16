@@ -9,6 +9,7 @@ public:
 
 	//表示関数
 	virtual void Draw3D(const D3DXVECTOR3 *CameraPos)=0;
+	virtual void Draw3D(const D3DXVECTOR3 *CameraPos,bool *Body_DamageFlg);
 
 	//移動量のセット
 	virtual void Set_MoveVec(const D3DXVECTOR3 *MoveVec) = 0;

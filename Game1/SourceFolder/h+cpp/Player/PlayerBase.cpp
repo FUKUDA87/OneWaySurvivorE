@@ -49,6 +49,8 @@ void C_PlayerBase::InitPlayer(void)
 	//カーブ
 	CurAng = 0.0f;
 
+
+	M_DriverNo = co_PlayerCar;
 }
 
 bool C_PlayerBase::UpdatePlayer(void)
@@ -66,11 +68,10 @@ bool C_PlayerBase::UpdateAll(void)
 bool C_PlayerBase::UpdateAll(const D3DXMATRIX * CamMat)
 {
 	UpdatePlayer();
-	if (Car.Base.Flg == true) {
 		//移動ベクトル計算
 		judg.MatMatVec(&brj.MoveVec, PlaMovMat, Car.Base.Mat);
 		UpdateCar();
-
+	if (Car.Base.Flg == true) {
 		//無敵のアップデート
 		UpdateCountM();
 
@@ -187,10 +188,15 @@ void C_PlayerBase::Init_Bullet(void)
 			if (M_Gun[g]->Get_TriggerFlg(&i) == true) {
 				int b = M_Gun[g]->Get_BulletNo();
 				D3DXMATRIX Mat = M_Gun[g]->Get_GunMouth_Mat(&i);
-
 				M_Bullet.push_back(Bullet_Manager.Get_Bullet(&b, &Mat,&Get_Gun_Ray_Data()));
 				M_Gun[g]->Bullet_Shot_Update(&i);
 				M_Effect.push_back(M_Gun[g]->Get_Bullet_Shot_Effect(&i));
+				S_SOUND_DATA Data;
+				Data.Sound_Type = Co_Sound_Type_2D;
+				Data.Sound_CategoryNo = Co_Sound_Category_Bullet;
+				Data.Sound_No = 1;
+				Data.Change_Type = Co_Sound_New;
+				New_Sound_Data(&Data);
 			}
 		}
 	}

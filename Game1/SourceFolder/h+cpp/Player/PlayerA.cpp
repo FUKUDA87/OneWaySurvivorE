@@ -47,8 +47,7 @@ void C_PlayerA::InitPlayerA(void)
 	//Ô‰Šú‰»
 	SetMeshCar(BodyData.CarBodyNo);
 
-	bool Flg = true,Flg2=false;
-	New_Set_Car_Parts(&BodyData,&Flg,&Flg2);
+	New_Set_Car_Parts(&BodyData);
 
 	
 }

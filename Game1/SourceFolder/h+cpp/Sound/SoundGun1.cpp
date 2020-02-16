@@ -25,18 +25,13 @@ void C_SoundGun::Init(void)
 {
 	
 
-	SoundNum = 1;
+	SoundNum = 10;
 	soundCol = new SoundCol[SoundNum];
 	SoundSize = -2000;
 
-	soundManager.GetSound(&soundCol[0].Sound, &soundCol[0].Sound3D, "../GameFolder/Material/wav/Gun4.wav");
+	soundManager.GetSound(&soundCol[0], "../GameFolder/Material/wav/Gun4.wav");
 	LPDIRECTSOUNDBUFFER lpSTmp;
 	for (int i = 1; i < SoundNum; i++) {
-		/*lpDSound->DuplicateSoundBuffer(Sound[0], &lpSTmp);
-		lpSTmp->QueryInterface(IID_IDirectSoundBuffer8, (LPVOID*)&Sound[i]);
-		Sound[i]->QueryInterface(IID_IDirectSound3DBuffer8, (LPVOID*)&Sound3D[i]);
-		Sound3D[i]->SetMode(DS3DMODE_NORMAL, DS3D_IMMEDIATE);
-		lpSTmp->Release();*/
 		lpDSound->DuplicateSoundBuffer(soundCol[0].Sound, &lpSTmp);
 		lpSTmp->QueryInterface(IID_IDirectSoundBuffer8, (LPVOID*)&soundCol[i].Sound);
 		soundCol[i].Sound->QueryInterface(IID_IDirectSound3DBuffer8, (LPVOID*)&soundCol[i].Sound3D);

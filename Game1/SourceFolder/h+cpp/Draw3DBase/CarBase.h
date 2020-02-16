@@ -6,6 +6,7 @@
 #include"../Draw3DBase/Draw3DManager/CarMeshManager.h"
 #include"../GameSource/CharaBase.h"
 #include"../Draw/Hp/Hp_New.h"
+#include"../GameSource/Const.h"
 
 class C_CarBase:public C_Hp_Draw_New {
 public:
@@ -49,10 +50,10 @@ public:
 	unsigned int GetGroNum(void) {
 		return Car.Con.GroNum; 
 	};
-	////今のHp渡し
-	//int GetHP(void) {
-	//	return Car.Sta.NowHp; 
-	//};
+	
+	//死亡確認(trueで死)
+	bool Dead(void);
+
 	//今のHp入れ
 	virtual bool SetHP(int Damage);
 
@@ -68,7 +69,7 @@ public:
 		return Car.Base.Flg;
 	}
 	//車の存在Flg入れ
-	void SetFlgCar(bool *Flg) {
+	void SetFlgCar(const bool *Flg) {
 		Car.Base.Flg=*Flg;
 	}
 	//当たり判定の半径渡し
@@ -181,9 +182,6 @@ protected:
 	//車の情報
 	CHARA3D Car;
 
-	//ダメージフラグ
-	bool DamageFlg;
-
 	QuaForMove CarFM;
 
 	//空中の敵か判定用Flg
@@ -198,6 +196,9 @@ protected:
 
 	//手動と自動の操作情報を入れるクラス
 	S_GUN_UPDATE_DATA M_S_Gun_Update_Data;
+
+	//車の操作者
+	int M_DriverNo;
 
 private:
 	C_CarMeshManager carMeshManager;

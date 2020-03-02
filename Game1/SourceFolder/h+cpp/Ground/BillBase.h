@@ -9,15 +9,13 @@ protected:
 	bool obj;
 public:
 	void InitBB();
-	BillBase();
-	BillBase(int i) :Wall(i) { InitBB(); };
-	BillBase(D3DXMATRIX Mat3, D3DXMATRIX Mat4, int gType, float Ang, float Length, bool LengthAuto) :Wall(Mat3, Mat4,gType, Ang, Length, LengthAuto) { InitBB(); };
-	~BillBase();
+	BillBase(const int *i) :Wall(i) { InitBB(); };
+	BillBase(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUND_INIT_DATA * Init_Data_Ground) :Wall(Mat3, Mat4,Init_Data_Ground) { InitBB(); };
+	
 	virtual bool UpdateBil();
 	virtual void DrawBil();
 	void SuperUpdate() {
 		Update();
-		WaUpdate();
 		UpdateBil();
 	}
 	void SuperDraw() {

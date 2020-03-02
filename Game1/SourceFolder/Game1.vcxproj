@@ -200,6 +200,8 @@
     <ClInclude Include="h+cpp\Draw\DrawBase2\Draw_Mesh_Base_A.h" />
     <ClInclude Include="h+cpp\Draw\DrawBase2\New_Draw\Draw3D_Base2_New.h" />
     <ClInclude Include="h+cpp\Draw\DrawBase2\New_Draw\Draw3D_Base2_vector.h" />
+    <ClInclude Include="h+cpp\Draw\DrawBase3\Draw_3D_Base.h" />
+    <ClInclude Include="h+cpp\Draw\DrawBase3\Mesh\Draw_3D_Mesh_1.h" />
     <ClInclude Include="h+cpp\Draw\DrawBase\DrawBase.h" />
     <ClInclude Include="h+cpp\Draw\DrawBase\DrawBase_Mat.h" />
     <ClInclude Include="h+cpp\Draw\DrawBase\MeshBase.h" />
@@ -221,6 +223,7 @@
     <ClInclude Include="h+cpp\Draw\Judg\Car_Parts_Judg_Ball.h" />
     <ClInclude Include="h+cpp\Draw\Judg\Car_Parts_Judg_Mesh.h" />
     <ClInclude Include="h+cpp\Draw\Polygon\Polygon_Judg.h" />
+    <ClInclude Include="h+cpp\Draw\Screen_2D\Screen_2D.h" />
     <ClInclude Include="h+cpp\Draw\Stand\Stand_DrawManager.h" />
     <ClInclude Include="h+cpp\Draw\Stand\Stand_No0.h" />
     <ClInclude Include="h+cpp\Draw\Stand\Stand_No1.h" />
@@ -323,9 +326,14 @@
     <ClInclude Include="h+cpp\GameSource\wavread.h" />
     <ClInclude Include="h+cpp\GameSource\XDraw.h" />
     <ClInclude Include="h+cpp\GameSource\XfileManager.h" />
-    <ClInclude Include="h+cpp\Ground\Bill1.h" />
+    <ClInclude Include="h+cpp\GameSource\XfileManager2.h" />
     <ClInclude Include="h+cpp\Ground\BillBase.h" />
     <ClInclude Include="h+cpp\Ground\ground.h" />
+    <ClInclude Include="h+cpp\Ground\Ground_Object.h" />
+    <ClInclude Include="h+cpp\Ground\Ground_Object_Parts\Bill_Object_1.h" />
+    <ClInclude Include="h+cpp\Ground\Ground_Object_Parts\Light_Object_1.h" />
+    <ClInclude Include="h+cpp\Ground\Ground_Object_Parts\Light_Object_1_R.h" />
+    <ClInclude Include="h+cpp\Ground\Ground_Object_Parts\Object_Base.h" />
     <ClInclude Include="h+cpp\Ground\Sky.h" />
     <ClInclude Include="h+cpp\Ground\Stage_Ground\Ground_Pop_Data.h" />
     <ClInclude Include="h+cpp\Ground\Stage_Ground\Ground_Pop_Base.h" />
@@ -511,6 +519,8 @@
     <ClCompile Include="h+cpp\Draw\DrawBase2\Draw_Pol_A.cpp" />
     <ClCompile Include="h+cpp\Draw\DrawBase2\New_Draw\Draw3D_Base2_New.cpp" />
     <ClCompile Include="h+cpp\Draw\DrawBase2\New_Draw\Draw3D_Base2_vector.cpp" />
+    <ClCompile Include="h+cpp\Draw\DrawBase3\Draw_3D_Base.cpp" />
+    <ClCompile Include="h+cpp\Draw\DrawBase3\Mesh\Draw_3D_Mesh_1.cpp" />
     <ClCompile Include="h+cpp\Draw\DrawBase\DrawBase.cpp" />
     <ClCompile Include="h+cpp\Draw\DrawBase\Mesh_Draw\MeshDraw_1_Manager.cpp" />
     <ClCompile Include="h+cpp\Draw\DrawBase\Mesh_Draw\MeshDraw1_1\MeshDraw1_1.cpp" />
@@ -616,9 +626,14 @@
     <ClCompile Include="h+cpp\GameSource\TextureManager.cpp" />
     <ClCompile Include="h+cpp\GameSource\wavread.cpp" />
     <ClCompile Include="h+cpp\GameSource\XfileManager.cpp" />
-    <ClCompile Include="h+cpp\Ground\Bill1.cpp" />
+    <ClCompile Include="h+cpp\GameSource\XfileManager2.cpp" />
     <ClCompile Include="h+cpp\Ground\BillBase.cpp" />
     <ClCompile Include="h+cpp\Ground\ground.cpp" />
+    <ClCompile Include="h+cpp\Ground\Ground_Object.cpp" />
+    <ClCompile Include="h+cpp\Ground\Ground_Object_Parts\Bill_Object_1.cpp" />
+    <ClCompile Include="h+cpp\Ground\Ground_Object_Parts\Light_Object_1.cpp" />
+    <ClCompile Include="h+cpp\Ground\Ground_Object_Parts\Light_Object_1_R.cpp" />
+    <ClCompile Include="h+cpp\Ground\Ground_Object_Parts\Object_Base.cpp" />
     <ClCompile Include="h+cpp\Ground\Sky.cpp" />
     <ClCompile Include="h+cpp\Ground\Stage_Ground\Ground_Pop_Base.cpp" />
     <ClCompile Include="h+cpp\Ground\Stage_Ground\Ground_Pop_Data.cpp" />

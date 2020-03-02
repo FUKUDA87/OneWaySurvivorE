@@ -20,7 +20,7 @@ public:
 	bool GetDeleFlg(void);
 
 	//パーツの位置調整
-	void SetParts(std::vector<BillBase*>ground);
+	void SetParts(std::vector<C_Ground_Object*>ground);
 
 	void UpdateBullet(void);
 

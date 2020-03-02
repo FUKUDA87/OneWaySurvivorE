@@ -4,7 +4,6 @@
 #include"../TitleParts/TitleTex.h"
 #include"../TitleParts/StartTex.h"
 #include"../TitleParts/TitelCamera.h"
-#include"../Ground/Bill1.h"
 #include"../Ground/BillBase.h"
 #include"../Ground/Sky.h"
 #include"../GameSource/Countdown.h"
@@ -17,6 +16,7 @@
 #include"../Player/PlayerA.h"
 #include"../GameSource/Count.h"
 #include"../Sound/Sound_Manager_Base.h"
+#include"../Ground/Ground_Object.h"
 
 template<class T>
 inline void SafeRelease(T& lpAdd)
@@ -44,7 +44,7 @@ public:
 
 private:
 	//<’n–Ê
-	std::vector<BillBase*>ground;
+	std::vector<C_Ground_Object*>ground;
 	Cou *cou;//bill
 	std::vector<Cou*>GroCou;
 	int GroType, GroKNum, *CurType, NowCur;

@@ -60,7 +60,7 @@ bool C_CarBase::UpdateCar(void)
 	return false;
 }
 
-bool C_CarBase::UpdateCarFM(std::vector<BillBase*> ground)
+bool C_CarBase::UpdateCarFM(std::vector<C_Ground_Object*> ground)
 {
 	//‘Oiˆ—
 	CarFM.NowMat = Car.Base.Mat;
@@ -83,7 +83,7 @@ void C_CarBase::Draw3DCar(void)
 	}*/
 }
 
-void C_CarBase::SetParts(std::vector<BillBase*> ground)
+void C_CarBase::SetParts(std::vector<C_Ground_Object*> ground)
 {
 }
 

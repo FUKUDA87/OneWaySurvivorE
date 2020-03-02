@@ -214,7 +214,7 @@ D3DXVECTOR3 Motion::CurvePos(D3DXMATRIX MatS, D3DXVECTOR3 PosV, D3DXMATRIX MatE,
 //	return true;
 //}
 
-bool Motion::Formove(CONSTITUTION Con, D3DXMATRIX * Mat, float * Anime, std::vector<BillBase*> ground, bool * QuaInitFlg, bool * QuaMatInitFlg ,float *SpeedMul, float SpeedMul2 , D3DXMATRIX * StartMat, D3DXMATRIX * EndMat, D3DXVECTOR3 * WayVec,bool *CurFlg,D3DXVECTOR3 *CurVec, float BodyHeight)
+bool Motion::Formove(CONSTITUTION Con, D3DXMATRIX * Mat, float * Anime, std::vector<C_Ground_Object*> ground, bool * QuaInitFlg, bool * QuaMatInitFlg ,float *SpeedMul, float SpeedMul2 , D3DXMATRIX * StartMat, D3DXMATRIX * EndMat, D3DXVECTOR3 * WayVec,bool *CurFlg,D3DXVECTOR3 *CurVec, float BodyHeight)
 {
 	bool OverFlg = false;//クォータニオンの1.0fを超えたときのFlg
 	bool EndFlg = false;//クォータニオン終了Flg

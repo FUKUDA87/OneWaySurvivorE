@@ -9,9 +9,9 @@ void DrawMesh(XFILE *XFile);
 
 void Sky::Init()
 {
-	xfileManager.GetXfile(&sky.Mesh, "../GameFolder/Material/XFile/Sky9-7.x");
+	xfileManager.GetXfile(&sky.Mesh, "../GameFolder/Material/XFile/Sky_1_1.x");
 	D3DXMatrixTranslation(&sky.Base.Trans, 0, 0, 0);//ˆÊ’u
-	D3DXVECTOR3 Pos(500, 100, 500);
+	D3DXVECTOR3 Pos(500.0f, 210.0f, 500.0f);
 	D3DXMatrixScaling(&sky.Base.Scal, Pos.x, Pos.y, Pos.z);
 	D3DXMatrixRotationY(&sky.Base.RotY, D3DXToRadian(180));//‰ñ“]
 }

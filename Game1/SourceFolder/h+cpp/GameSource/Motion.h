@@ -1,7 +1,7 @@
 #pragma once
 #include<d3dx9.h>
 #include"Struct.h"
-#include"../Ground/BillBase.h"
+#include"../Ground/Ground_Object.h"
 #include<vector>
 #include"Judgment.h"
 #include"../Key/Key.h"
@@ -22,7 +22,7 @@ public:
 	//敵ベジェ曲線
 	//bool Formove(CONSTITUTION Con, D3DXMATRIX *Mat, float *Anime, std::vector<BillBase*>ground, bool *qGFlg, bool *qFlg, float *SpeB, D3DXMATRIX *StartMat, D3DXMATRIX *EndMat, D3DXVECTOR3 *WayVec, float *NowSpeed, D3DXVECTOR3 *CurVec, bool *CurFlg,float Y);
 	//自分ベジェ曲線
-	bool Formove(CONSTITUTION Con, D3DXMATRIX *Mat, float *Anime, std::vector<BillBase*>ground, bool *QuaInitFlg, bool *QuaMatInitFlg, float *SpeedMul,float SpeedMul2, D3DXMATRIX *StartMat, D3DXMATRIX *EndMat, D3DXVECTOR3 *WayVec, bool *CurFlg, D3DXVECTOR3 *CurVec,float BodyHeight);
+	bool Formove(CONSTITUTION Con, D3DXMATRIX *Mat, float *Anime, std::vector<C_Ground_Object*>ground, bool *QuaInitFlg, bool *QuaMatInitFlg, float *SpeedMul,float SpeedMul2, D3DXMATRIX *StartMat, D3DXMATRIX *EndMat, D3DXVECTOR3 *WayVec, bool *CurFlg, D3DXVECTOR3 *CurVec,float BodyHeight);
 	//カーブMove
 	bool CurveMove(D3DXMATRIX *TransMat, D3DXMATRIX StartMat, D3DXMATRIX EndMat, float *AnimeFarme, float Up);
 	//playerを傾かせる

@@ -181,9 +181,6 @@
     <Filter Include="ソース ファイル\Manager\DrawTextureManager\BulletManager">
       <UniqueIdentifier>{bed88f96-5dd7-4316-b541-b493a55d267b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Const">
-      <UniqueIdentifier>{d878ee3d-eba3-43aa-8204-e946a1c83d7a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Gun\GunDraw\GunParts">
       <UniqueIdentifier>{0ff7c205-1fa3-44ae-b9a9-d5e9c2609b99}</UniqueIdentifier>
     </Filter>
@@ -300,6 +297,21 @@
     </Filter>
     <Filter Include="ソース ファイル\2DDraw\Game_End">
       <UniqueIdentifier>{3797d626-410c-4000-90f5-59fcbd0d0aa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\Screen_2D">
+      <UniqueIdentifier>{e9229508-fb7b-40a4-aa34-f3702141c6b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\Const">
+      <UniqueIdentifier>{d878ee3d-eba3-43aa-8204-e946a1c83d7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\DrawBase3">
+      <UniqueIdentifier>{197aa699-f134-452c-ba7b-30ae252b03ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\DrawBase3\Mesh">
+      <UniqueIdentifier>{5a9671d7-ff0d-4295-bc12-3b091ac7d40d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Ground\Ground_Object_Parts">
+      <UniqueIdentifier>{e1384319-c7a4-4e1d-93c3-6f40c205203e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -559,9 +571,6 @@
       <Filter>ソース ファイル\GameSource</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Ground\Wall.h">
-      <Filter>ソース ファイル\Ground</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Ground\Bill1.h">
       <Filter>ソース ファイル\Ground</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Ground\BillBase.h">
@@ -868,7 +877,7 @@
       <Filter>ソース ファイル\Manager\DrawTextureManager\BulletManager</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Const\DrawMeshNo.h">
-      <Filter>ソース ファイル\Const</Filter>
+      <Filter>ソース ファイル\Draw\Const</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Gun\GunDraw\GunParts\PartsDraw.h">
       <Filter>ソース ファイル\Gun\GunDraw\GunParts</Filter>
@@ -904,7 +913,7 @@
       <Filter>ソース ファイル\Draw\Tire</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Const\Const_PartsTypeNo.h">
-      <Filter>ソース ファイル\Const</Filter>
+      <Filter>ソース ファイル\Draw\Const</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Draw\Stand\Stand_No1.h">
       <Filter>ソース ファイル\Draw\Stand</Filter>
@@ -985,10 +994,10 @@
       <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Const\Const_Damage.h">
-      <Filter>ソース ファイル\Const</Filter>
+      <Filter>ソース ファイル\Draw\Const</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Const\Const_Draw_Judg.h">
-      <Filter>ソース ファイル\Const</Filter>
+      <Filter>ソース ファイル\Draw\Const</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\EnemyData\EnemyNo1\GunMove2\Ene_1_Gun_1_Stop.h">
       <Filter>ソース ファイル\EnemyData\EnemyNo1\GunMove2</Filter>
@@ -1138,7 +1147,7 @@
       <Filter>ソース ファイル\GameSource\StructClass</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Const\Const_Ground_Type.h">
-      <Filter>ソース ファイル\Const</Filter>
+      <Filter>ソース ファイル\Draw\Const</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Ground\Stage_Ground\Ground_Pop_New.h">
       <Filter>ソース ファイル\Ground\Stage_Ground</Filter>
@@ -1153,7 +1162,7 @@
       <Filter>ソース ファイル\Stage_Data\Car_Pop</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Const\Const_Phase_Type.h">
-      <Filter>ソース ファイル\Const</Filter>
+      <Filter>ソース ファイル\Draw\Const</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Ground\Stage_Ground\Ground_Pop_Manager.h">
       <Filter>ソース ファイル\Ground\Stage_Ground</Filter>
@@ -1165,7 +1174,7 @@
       <Filter>ソース ファイル\Stage_Data\Stage_1</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Const\Const_Rail_Type.h">
-      <Filter>ソース ファイル\Const</Filter>
+      <Filter>ソース ファイル\Draw\Const</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Draw\Hp\Hp_New.h">
       <Filter>ソース ファイル\Draw\Hp</Filter>
@@ -1186,7 +1195,7 @@
       <Filter>ソース ファイル\Sound</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Const\Const_Sound_Type.h">
-      <Filter>ソース ファイル\Const</Filter>
+      <Filter>ソース ファイル\Draw\Const</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Sound\SE\Sound_2D_Gun_1.h">
       <Filter>ソース ファイル\Sound\SE</Filter>
@@ -1210,7 +1219,7 @@
       <Filter>ソース ファイル\Stage_Data\Stage_D1</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Const\Const_Stage_Type.h">
-      <Filter>ソース ファイル\Const</Filter>
+      <Filter>ソース ファイル\Draw\Const</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\GameSource\Flg_No1.h">
       <Filter>ソース ファイル\GameSource</Filter>
@@ -1259,6 +1268,33 @@
     </ClInclude>
     <ClInclude Include="h+cpp\2DDraw\Game_End\Game_Clear.h">
       <Filter>ソース ファイル\2DDraw\Game_End</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Screen_2D\Screen_2D.h">
+      <Filter>ソース ファイル\Draw\Screen_2D</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Ground\Ground_Object.h">
+      <Filter>ソース ファイル\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\DrawBase3\Draw_3D_Base.h">
+      <Filter>ソース ファイル\Draw\DrawBase3</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\DrawBase3\Mesh\Draw_3D_Mesh_1.h">
+      <Filter>ソース ファイル\Draw\DrawBase3\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Ground\Ground_Object_Parts\Object_Base.h">
+      <Filter>ソース ファイル\Ground\Ground_Object_Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\GameSource\XfileManager2.h">
+      <Filter>ソース ファイル\GameSource</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Ground\Ground_Object_Parts\Bill_Object_1.h">
+      <Filter>ソース ファイル\Ground\Ground_Object_Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Ground\Ground_Object_Parts\Light_Object_1.h">
+      <Filter>ソース ファイル\Ground\Ground_Object_Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Ground\Ground_Object_Parts\Light_Object_1_R.h">
+      <Filter>ソース ファイル\Ground\Ground_Object_Parts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1471,9 +1507,6 @@
     </ClCompile>
     <ClCompile Include="h+cpp\GameSource\XfileManager.cpp">
       <Filter>ソース ファイル\GameSource</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Ground\Bill1.cpp">
-      <Filter>ソース ファイル\Ground</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Ground\BillBase.cpp">
       <Filter>ソース ファイル\Ground</Filter>
@@ -2119,6 +2152,30 @@
     </ClCompile>
     <ClCompile Include="h+cpp\2DDraw\Game_End\Game_Clear.cpp">
       <Filter>ソース ファイル\2DDraw\Game_End</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Ground\Ground_Object.cpp">
+      <Filter>ソース ファイル\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\DrawBase3\Draw_3D_Base.cpp">
+      <Filter>ソース ファイル\Draw\DrawBase3</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\DrawBase3\Mesh\Draw_3D_Mesh_1.cpp">
+      <Filter>ソース ファイル\Draw\DrawBase3\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Ground\Ground_Object_Parts\Object_Base.cpp">
+      <Filter>ソース ファイル\Ground\Ground_Object_Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\GameSource\XfileManager2.cpp">
+      <Filter>ソース ファイル\GameSource</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Ground\Ground_Object_Parts\Bill_Object_1.cpp">
+      <Filter>ソース ファイル\Ground\Ground_Object_Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Ground\Ground_Object_Parts\Light_Object_1.cpp">
+      <Filter>ソース ファイル\Ground\Ground_Object_Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Ground\Ground_Object_Parts\Light_Object_1_R.cpp">
+      <Filter>ソース ファイル\Ground\Ground_Object_Parts</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -2,61 +2,58 @@
 #include<d3dx9.h>
 #include"ground.h"
 #include"../GameSource/Struct.h"
-#include"../3DDraw/Light3D.h"
 #include<vector>
 
 const int WNum = 2;
 class Wall :public C_Ground {
 public:
-	void InitW() ;
-	Wall() ;
-	Wall(int i);
-	Wall(D3DXMATRIX Mat3, D3DXMATRIX Mat4, int gType, float Ang, float Length, bool LengthAuto);
-	~Wall();
-	bool WaUpdate();
-	void WaDraw();
-	//Lightの初期化
-	void InitLight(const int *wNum);
-	//左が０、右が１
-	D3DXMATRIX GetWaMat(int i) {
-		return Wall3D[i].Base.Mat;
+	Wall(const int *i);
+	Wall(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUND_INIT_DATA * Init_Data_Ground);
+
+	//壁の数
+	int Get_Wall_Num(void) {
+		return 2;
 	}
 
-	//表示のポリゴンを弱くする入れ
-	void SetDoawRadFlg(const bool *Flg) {
-		DrawRadFlg=*Flg;
-	}
-
-	void SuperUpdate();
 	void SuperDraw();
-	//壁のコリジョンモデル渡し
-	LPD3DXMESH GetColModWall(const bool *LeftFlg);
-	//壁3Dの行列渡し
-	D3DXMATRIX GetWaMat(const bool *LeftFlg);
-	//壁3Dの行列渡し(拡大抜き)
-	D3DXMATRIX GetWaMat(const bool *LeftFlg,int i);
 
-	//外灯の表示数渡し
-	unsigned int GetLightNum(void) {
-		return light.size();
+	//壁のコリジョンモデル渡し
+	LPD3DXMESH GetColModWall(void) {
+		return M_Wall.ColModMesh.lpMesh;
 	}
+	//壁3Dの表示行列渡し
+	D3DXMATRIX Get_DrawMat_Wall(const int *Wall_Num);
+	//壁3Dの行列渡し
+	D3DXMATRIX Get_Mat_Wall(const int *Wall_Num);
+
+	//壁の情報渡し
+	S_Base3D_2 Get_Data_Wall(const int *Wall_Num);
+
+	//表示の変更
+	void Set_Draw_Flg_Wall(const int *Wall_Num, const bool *DrawFlg);
 
 protected:
 
+	void WaDraw();
+
 private:
-	//表示用のFlg
-	bool WallDrawFlg;
 	//壁3D用
-	Object3D2 Wall3D[2];
-	//外灯3D用
-	std::vector<C_Light *>light;
+	S_Object3D_Data M_Wall;
 
-	XFILE Wall3DS;
-	bool DrawRadFlg;
+	S_Base3D_2 Wall3D[2];
 
-	//ライト---------------------------------
-	//片方だけ表示
-	void InitLightOne(const int *wNum);
-	//サイド出現
-	void InitLightW(const int *wNum);
+	//壁のサイズの初期化後の初期化
+	void Init_Wall3D_All(void);
+
+	//壁の初期化
+	void Init_Wall();
+
+	//地面の行列が単位行列じゃない場合の初期化
+	void Init_Wall_Mat(void);
+
+	//地面の表示行列に単位行列が使用されている場合の初期化
+	void Init_Wall_Iden(void);
+
+	//壁のサイズの初期化
+	void Init_Wall_SizeZ(const D3DXVECTOR3 * Ground_Vec, const int *Wall_No);
 };

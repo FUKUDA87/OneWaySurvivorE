@@ -2,7 +2,7 @@
 #include<d3dx9.h>
 #include"../GameSource/Struct.h"
 #include<vector>
-#include"../Ground/BillBase.h"
+#include"../Ground/Ground_Object.h"
 #include"../Draw3DBase/Draw3DManager/CarMeshManager.h"
 #include"../GameSource/CharaBase.h"
 #include"../Draw/Hp/Hp_New.h"
@@ -19,13 +19,13 @@ public:
 	//アップデート
 	virtual bool UpdateCar(void);
 	//前進アップデート
-	virtual bool UpdateCarFM(std::vector<BillBase*>ground);
+	virtual bool UpdateCarFM(std::vector<C_Ground_Object*>ground);
 
 	//3D表示
 	virtual void Draw3DCar(void);
 
 	//パーツの位置調整
-	virtual void SetParts(std::vector<BillBase*>ground);
+	virtual void SetParts(std::vector<C_Ground_Object*>ground);
 
 	//==========================================
 	//Get・Set

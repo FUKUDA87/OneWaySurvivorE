@@ -7,138 +7,18 @@ extern XfileManager xfileManager;
 extern LPDIRECT3DDEVICE9 lpD3DDevice;
 extern TextureManager textureManager;
 
-void Wall::InitW()
+Wall::Wall(const int * i) : C_Ground(i)
 {
-	//壁の表示Flg初期化
-	WallDrawFlg = true;
-
-	//=============================================================================================
-	//壁3Dの初期化
-	//壁のロード
-	xfileManager.GetXfile(&Wall3D[0].Mesh, "../GameFolder/Material/Xfile/Wall3-3.x");
-	xfileManager.GetXfile(&Wall3DS, "../GameFolder/Material/Xfile/Wall1-3.x");
-	DrawRadFlg = false;
-	//壁のコリジョンモデルのロード
-	xfileManager.GetXfile(&Wall3D[0].ColModMesh, "../GameFolder/Material/Xfile/Wall2CM1.x");
-	//一回だけ計算
-	static bool GetRadFlg = true;
-	static DWORD NumVertex;
-	static D3DXVECTOR3 PosSmall;
-	static D3DXVECTOR3 PosBig;
-	if (GetRadFlg == true) {
-		judg.GetRad(&Wall3D[0].Mesh, &Wall3D[0].Base.NumVertex, &Wall3D[0].PosBig, &Wall3D[0].PosSmall);
-		NumVertex = Wall3D[0].Base.NumVertex;
-		PosSmall = Wall3D[0].PosSmall;
-		PosBig = Wall3D[0].PosBig;
-		GetRadFlg = false;
-	}
-	else {
-		Wall3D[0].Base.NumVertex= NumVertex;
-		Wall3D[0].PosSmall= PosSmall;
-		Wall3D[0].PosBig= PosBig;
-	}
-	//サイズ調整
-	Wall3D[0].Base.ScaPos = D3DXVECTOR3(1.0f*0.5f, 3.0f, 1.0f);
-	//壁の幅計算
-	D3DXVECTOR3 Vec= D3DXVECTOR3(0.0f, 0.0f, Wall3D[0].PosSmall.z) - D3DXVECTOR3(0.0f, 0.0f, Wall3D[0].PosBig.z);
-	Wall3D[0].Base.ScaPos.z = D3DXVec3Length(&Vec);
-	if (Wall3D[0].Base.ScaPos.z < 0)Wall3D[0].Base.ScaPos.z *= -1.0f;
-
-	Wall3D[0].Base.Mat = ground.Base.Mat;
-	Wall3D[1] = Wall3D[0];
-	for (int wNum=0; wNum < 2; wNum++) {
-		//左
-		Wall3D[wNum].Base.TraPos = D3DXVECTOR3(ground.v[wNum].Pos.x, Wall3D[wNum].PosSmall.y*-1.0f, 0.0f);
-		//幅の調整
-		if (wNum == 0) {
-			//左
-			Vec = ground.v[0].Pos - ground.v[3].Pos;
-		}
-		else {
-			//右
-			Vec = ground.v[1].Pos - ground.v[2].Pos;
-		}
-		Wall3D[wNum].Base.ScaPos.z = D3DXVec3Length(&Vec) / Wall3D[wNum].Base.ScaPos.z + 0.02f;
-		if (Wall3D[wNum].Base.ScaPos.z < 0)Wall3D[wNum].Base.ScaPos.z *= -1.0f;
-		judg.ScalingMat(&Wall3D[wNum].Base.Scal, &Wall3D[wNum].Base.ScaPos);
-		Wall3D[wNum].Base.TraPos.y *= Wall3D[wNum].Base.ScaPos.y;
-		//反映
-		judg.SetTransMat(&Wall3D[wNum].Base.Trans, &Wall3D[wNum].Base.TraPos);
-		//回転
-		float AngY;
-		if (wNum == 0) {
-			AngY = 0.0f;
-		}
-		else {
-			AngY = 180.0f;
-		}
-		D3DXMatrixRotationY(&Wall3D[wNum].Base.RotY, D3DXToRadian(AngY));
-	}
-	//============================================================================================
-
+	Init_Wall();
 }
-Wall::Wall()
+
+Wall::Wall(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUND_INIT_DATA * Init_Data_Ground)
+	: C_Ground(Mat3,Mat4,Init_Data_Ground)
 {
-	InitW();
-}
-Wall::Wall(int i) :C_Ground(i)
-{
-	InitW();
-}
-
-Wall::Wall(D3DXMATRIX Mat3, D3DXMATRIX Mat4, int gType, float Ang, float Length, bool LengthAuto) : C_Ground(Mat3,Mat4,gType, Ang, Length, LengthAuto)
-{
-	InitW();
-
-	//=======================================================
-	//壁3Dの初期
-		if (IdenFlg == true) {
-			for (int wNum=0; wNum < 2; wNum++) {
-				//位置の初期化
-				D3DXMatrixTranslation(&Wall3D[wNum].Base.Mat, 0.0f, 0.0f, 0.0f);
-				//大きさの初期化
-				//向き
-				int s, e;
-				if (wNum == 0) {
-					s = 3;
-					e = 0;
-				}
-				else {
-					s = 2;
-					e = 1;
-				}
-				D3DXVECTOR3 wVec = ground.v[e].Pos - ground.v[s].Pos, FrontVec = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
-				//位置の代入
-				D3DXVECTOR3 Pos = ground.v[s].Pos + wVec / 2.0f;
-				judg.SetMatP(&Wall3D[wNum].Base.Mat, Pos);
-				//回転
-				D3DXMATRIX RotX, RotY;
-				judg.TarEndMat(&Wall3D[wNum].Base.Mat, Wall3D[wNum].Base.Mat, &RotX, &RotY, ground.v[e].Pos, FrontVec);
-				//ｙ方向に移動させるTransMatの作成
-				Pos.y = Wall3D[wNum].PosSmall.y*Wall3D[wNum].Base.ScaPos.y;
-				if (Pos.y < 0.0f)Pos.y *= -1.0f;
-				D3DXMatrixTranslation(&Wall3D[wNum].Base.Trans, 0.0f,Pos.y , 0.0f);
-
-			}
-		}
-	//=======================================================
+	Init_Wall();
 
 }
-Wall::~Wall()
-{
-	//外灯の削除
-	if (light.size()>0) {
-		for (unsigned int l = 0; l < light.size(); l++) {
-			delete light[l];
-			light.erase(light.begin() + l);
-			l++;
-		}
-	}
-}
-bool Wall::WaUpdate(void) {
-	
-	return true;
-}
+
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 void DrawMesh(XFILE *XFile);
 void Wall::WaDraw(void) {
@@ -146,83 +26,172 @@ void Wall::WaDraw(void) {
 
 	//壁3D表示
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	bool LeftFlg;
 	for (int w = 0; w < 2; w++) {
-		if (w == 0) {
-			LeftFlg = true;
+		if (Wall3D[w].Base.DrawFlg == true) {
+
+			lpD3DDevice->SetTransform(D3DTS_WORLD, &Get_DrawMat_Wall(&w));
+			DrawMesh(&M_Wall.Mesh);
 		}
-		else {
-			LeftFlg = false;
-		}
-		lpD3DDevice->SetTransform(D3DTS_WORLD, &GetWaMat(&LeftFlg));
-		DrawMesh(&Wall3D[w].Mesh);
 	}
 	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+}
 
+void Wall::Init_Wall3D_All(void)
+{
+	for (int w = 0; w < Get_Wall_Num(); w++) {
 
-	//外灯の表示
-	if (light.size() > 0) {
-		for (unsigned int l = 0; l < light.size(); l++) {
-			if (l > 1)return;
-			if (l == 0) {
-				LeftFlg = true;
-			}
-			else {
-				LeftFlg = false;
-			}
-			light[l]->Draw3D(&GetWaMat(&LeftFlg,0));
-		}
+		/*回転行列の初期化*/
 
+		float AngY = 0.0f;
+
+		if (w > 0)AngY = 180.0f;
+
+		D3DXMatrixRotationY(&Wall3D[w].Base.RotY, D3DXToRadian(AngY));
+
+		/*バウンディングスフィアの初期化*/
+
+		judg.Get_Draw_Radius(&Wall3D[w].CullingRad,&M_Wall.PosBig, &M_Wall.PosSmall,&Wall3D[w].Base.ScaPos);
 	}
 }
 
-void Wall::InitLightOne(const int * wNum)
+void Wall::Init_Wall()
 {
-	if (*wNum < 0) return;
-	if(*wNum > 1) return;
+	//壁3Dの初期化
+	//壁のロード
+	xfileManager.GetXfile(&M_Wall.Mesh, "../GameFolder/Material/Xfile/Wall3-3.x");
 
-	//外灯の表示初期化
-	//D3DXMATRIX InvMat, Mat;
-	//D3DXMatrixInverse(&InvMat, NULL, &Wall3D[*wNum].Base.Scal);
-	//if (*wNum == 1) {
-	//	Mat = Wall3D[*wNum].Base.Scal*Wall3D[*wNum].Base.Mat;
-	//}
-	//else {
-	//	Mat = Wall3D[*wNum].Base.Scal*Wall3D[*wNum].Base.Mat;
-	//}
-	//light.push_back(new C_Light(&(InvMat*Mat)));
+	//壁のコリジョンモデルのロード
+	xfileManager.GetXfile(&M_Wall.ColModMesh, "../GameFolder/Material/Xfile/Wall2CM1.x");
+
+	//壁のサイズ計算
+	static bool GetRadFlg = true;
+	static DWORD NumVertex;
+	static D3DXVECTOR3 PosSmall;
+	static D3DXVECTOR3 PosBig;
+	if (GetRadFlg == true) {
+		judg.GetRad(&M_Wall.Mesh, &Wall3D[0].Base.NumVertex, &M_Wall.PosBig, &M_Wall.PosSmall);
+		NumVertex = Wall3D[0].Base.NumVertex;
+		PosSmall = M_Wall.PosSmall;
+		PosBig = M_Wall.PosBig;
+		GetRadFlg = false;
+	}
+	else {
+		Wall3D[0].Base.NumVertex = NumVertex;
+		M_Wall.PosSmall = PosSmall;
+		M_Wall.PosBig = PosBig;
+	}
+
+	//サイズ調整
+	Wall3D[0].Base.ScaPos = D3DXVECTOR3(1.0f*0.5f, 3.0f, M_Wall.PosSmall.z - M_Wall.PosBig.z);
+	if (Wall3D[0].Base.ScaPos.z < 0.0f)Wall3D[0].Base.ScaPos.z *= -1.0f;
+
+	//表示のFlgの初期化
+	Wall3D[0].Base.DrawFlg = true;
+
+	Wall3D[1] = Wall3D[0];
+
+	Init_Wall_Mat();
+
+	Init_Wall_Iden();
+
+	Init_Wall3D_All();
 }
 
-void Wall::InitLightW(const int * wNum)
+void Wall::Init_Wall_Mat(void)
 {
-	if (*wNum < 2) return;
-	//壁に表示
-	bool LeftFlg;
+	if (IdenFlg == true)return;
+
+	//2枚の壁の初期化
 	for (int w = 0; w < 2; w++) {
+
+		//行列の初期化
+		Wall3D[w].Base.Mat = ground.Base.Mat;
+
+		Wall3D[w].Base.TraPos = D3DXVECTOR3(ground.v[w].Pos.x, M_Wall.PosSmall.y*-1.0f, 0.0f);
+		//幅の調整
+		D3DXVECTOR3 Vec;
 		if (w == 0) {
-			LeftFlg = true;
+			//左
+			Vec = ground.v[0].Pos - ground.v[3].Pos;
 		}
 		else {
-			LeftFlg = false;
+			//右
+			Vec = ground.v[1].Pos - ground.v[2].Pos;
 		}
-		//外灯初期化
-		light.push_back(new C_Light(&GetWaMat(&LeftFlg, 0)));
+
+		Init_Wall_SizeZ(&Vec, &w);
+
+		Wall3D[w].Base.TraPos.y *= Wall3D[w].Base.ScaPos.y;
+		//反映
+		judg.SetTransMat(&Wall3D[w].Base.Trans, &Wall3D[w].Base.TraPos);
+		//回転
+		float AngY;
+		if (w == 0) {
+			AngY = 0.0f;
+		}
+		else {
+			AngY = 180.0f;
+		}
+		D3DXMatrixRotationY(&Wall3D[w].Base.RotY, D3DXToRadian(AngY));
 	}
-
 }
 
-void Wall::InitLight(const int *wNum)
+void Wall::Init_Wall_Iden(void)
 {
+	if (IdenFlg != true)return;
 
-	InitLightOne(wNum);
-	InitLightW(wNum);
-	
+	for (int w = 0; w < 2; w++) {
+		//大きさの初期化
+		//向き
+		int s, e;
+		if (w == 0) {
+			s = 3;
+			e = 0;
+		}
+		else {
+			s = 2;
+			e = 1;
+		}
+		D3DXVECTOR3 wVec = ground.v[e].Pos - ground.v[s].Pos
+			, FrontVec = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+
+		Init_Wall_SizeZ(&wVec, &w);
+
+		//位置の代入
+		D3DXVECTOR3 Pos = ground.v[s].Pos + wVec / 2.0f;
+		judg.SetTransMat(&Wall3D[w].Base.Mat, &Pos);
+		//回転
+		D3DXMATRIX RotX, RotY;
+		judg.TarEndMat(&Wall3D[w].Base.Mat, Wall3D[w].Base.Mat, &RotX, &RotY, ground.v[e].Pos, FrontVec);
+		//ｙ方向に移動させるTransMatの作成
+		Pos.y = M_Wall.PosSmall.y*Wall3D[w].Base.ScaPos.y;
+		if (Pos.y < 0.0f)Pos.y *= -1.0f;
+		D3DXMatrixTranslation(&Wall3D[w].Base.Trans, 0.0f, Pos.y, 0.0f);
+
+		//回転
+		float AngY;
+		if (w == 0) {
+			AngY = 0.0f;
+		}
+		else {
+			AngY = 180.0f;
+		}
+		D3DXMatrixRotationY(&Wall3D[w].Base.RotY, D3DXToRadian(AngY));
+
+	}
 }
 
-void Wall::SuperUpdate()
+void Wall::Init_Wall_SizeZ(const D3DXVECTOR3 * Ground_Vec, const int * Wall_No)
 {
-	Update();
-	WaUpdate();
+	if ((*Wall_No < 0) || (*Wall_No >= Get_Wall_Num()))return;
+
+	int w = *Wall_No;
+
+	Wall3D[w].Base.ScaPos.z = D3DXVec3Length(Ground_Vec) / Wall3D[w].Base.ScaPos.z;
+	if (Wall3D[w].Base.ScaPos.z < 0.0f)Wall3D[w].Base.ScaPos.z *= -1.0f;
+	Wall3D[w].Base.ScaPos.z += 0.02f;
+
+	judg.ScalingMat(&Wall3D[w].Base.Scal, &Wall3D[w].Base.ScaPos);
 }
 
 void Wall::SuperDraw()
@@ -231,43 +200,38 @@ void Wall::SuperDraw()
 	WaDraw();
 }
 
-
-LPD3DXMESH Wall::GetColModWall(const bool * LeftFlg)
+D3DXMATRIX Wall::Get_DrawMat_Wall(const int * Wall_Num)
 {
-	int w;
-	if (*LeftFlg == true) {
-		w = 0;
-	}
-	else {
-		w = 1;
-	}
-	return Wall3D[w].ColModMesh.lpMesh;
-}
+	int w = Get_Wall_Num();
+	w = judg.Judg_Data_Num2(Wall_Num, &w);
 
-D3DXMATRIX Wall::GetWaMat(const bool * LeftFlg)
-{
-	int w;
-	if (*LeftFlg == true) {
-		w = 0;
-	}
-	else {
-		w = 1;
-	}
-	D3DXMATRIX TmpMat;
-	TmpMat = Wall3D[w].Base.Scal*GetWaMat(LeftFlg,0);
+	D3DXMATRIX TmpMat= Get_Mat_Wall(&w);
+	TmpMat = Wall3D[w].Base.Scal*TmpMat;
 	return TmpMat;
 }
 
-D3DXMATRIX Wall::GetWaMat(const bool * LeftFlg, int i)
+D3DXMATRIX Wall::Get_Mat_Wall(const int * Wall_Num)
 {
-	int w;
-	if (*LeftFlg == true) {
-		w = 0;
-	}
-	else {
-		w = 1;
-	}
+	int w = Get_Wall_Num();
+	w = judg.Judg_Data_Num2(Wall_Num, &w);
+
 	D3DXMATRIX TmpMat;
-	TmpMat=Wall3D[w].Base.RotY*Wall3D[w].Base.Trans*Wall3D[w].Base.Mat;
+	TmpMat = Wall3D[w].Base.RotY*Wall3D[w].Base.Trans*Wall3D[w].Base.Mat;
 	return TmpMat;
+}
+
+S_Base3D_2 Wall::Get_Data_Wall(const int * Wall_Num)
+{
+	int w = Get_Wall_Num();
+	w = judg.Judg_Data_Num2(Wall_Num, &w);
+
+	return Wall3D[w];
+}
+
+void Wall::Set_Draw_Flg_Wall(const int * Wall_Num, const bool * DrawFlg)
+{
+	int w = Get_Wall_Num();
+	w = judg.Judg_Data_Num2(Wall_Num, &w);
+
+	Wall3D[w].Base.DrawFlg = *DrawFlg;
 }

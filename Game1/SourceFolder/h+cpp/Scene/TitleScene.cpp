@@ -37,7 +37,7 @@ TitleScene::TitleScene()
 
 	cou = new Cou(0, 5, 1, true, false);
 	int i = 0, z;
-	ground.push_back(new BillBase(i));
+	ground.push_back(new C_Ground_Object(&i));
 	z = (int)ground[0]->GetPosZ() * 2;
 	i = (int)player->GetRadF() / z;
 	delete ground[0];
@@ -47,16 +47,14 @@ TitleScene::TitleScene()
 			cou->SetNum(0);
 		}
 		if (cou->GetNum() == 1) {
-			ground.push_back(new Bill(n)); //ground.push_back(new BillBase(n));
+			ground.push_back(new C_Ground_Object(&n)); //ground.push_back(new BillBase(n));
 		}
 		else {
-			ground.push_back(new Bill(n));
+			ground.push_back(new C_Ground_Object(&n));
 		}
 		//ŠO“”‚Ì‰Šú‰»
-		if (LightCount->Update() == true) {
-			int wNum = 2;
-			ground[ground.size() - 1]->InitLight(&wNum);
-		}
+		if (LightCount->Update() == true)ground[ground.size() - 1]->Init_Light();
+
 		cou->CouUpd();
 	}
 	for (unsigned int i = 0; i < ground.size(); i++) {
@@ -229,12 +227,16 @@ bool TitleScene::Update(void)
 	if (startTex->UpdateSu() == false) {
 		mouse->SetTouchFlg();
 		if (startTex->GetMoveFlg() == false) {
-			if (key.LClickF() == true) {
-				startTex->SetMoveFlg(true);
-				ChangeSceneFade(StageSelectNo);
-				bool CFlg = true;
-				M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 1, &Co_Sound_Delete);
-				M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_Click, 1, &Co_Sound_New);
+			static bool Flg = false;
+			if (Flg == false) {
+				if (key.LClickF() == true) {
+					startTex->SetMoveFlg(true);
+					ChangeSceneFade(StageSelectNo);
+					bool CFlg = true;
+					M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 1, &Co_Sound_Delete);
+					M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_Click, 1, &Co_Sound_New);
+					Flg = true;
+				}
 			}
 		}
 	}
@@ -284,18 +286,20 @@ bool TitleScene::Update(void)
 							if (cou->CouJudge() == false) {
 								cou->SetNum(0);
 							}
+							S_GROUND_INIT_DATA Init_Data;
+							Init_Data.gType = GroType;
+							Init_Data.Ang = AngGro;
+							Init_Data.Length = 5.0f;
+							Init_Data.LengthAuto = GroLenFlg;
 							if ((cou->GetNum() == 1) && (GroType == 0)) {
-								ground.push_back(new Bill(Mat[1], Mat[0], GroType, AngGro, 5.0f, GroLenFlg)); //ground.push_back(new BillBase(Mat[1], Mat[0], GroType, AngGro, 5.0f, GroLenFlg));
+								ground.push_back(new C_Ground_Object(&Mat[1], &Mat[0],&Init_Data)); 
 							}
 							else {
-								ground.push_back(new Bill(Mat[1], Mat[0], GroType, AngGro, 5.0f, GroLenFlg));
+								ground.push_back(new C_Ground_Object(&Mat[1], &Mat[0], &Init_Data));
 							}
 
 							//ŠO“”‚Ì‰Šú‰»
-							if (LightCount->Update() == true) {
-								int wNum = 2;
-								ground[ground.size() - 1]->InitLight(&wNum);
-							}
+							if (LightCount->Update() == true)ground[ground.size() - 1]->Init_Light();
 
 							if (GroCou.size() > 0) {
 								for (unsigned int g = 0; g < GroCou.size(); g++) {

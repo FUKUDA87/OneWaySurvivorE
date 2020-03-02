@@ -23,15 +23,9 @@ void BillBase::InitBB()
 	/*ground.Base.DrawFlg = WallDrawFlg = bill.Base.DrawFlg = true;*/
 }
 
-BillBase::BillBase() {
-	InitBB();
-}
-BillBase::~BillBase() {
-
-}
 bool BillBase::UpdateBil(void) {
-	bool LeftFlg=true;
-	bill.Base.Mat = bill.Base.Trans*GetWaMat(&LeftFlg,0);
+	int wNo = 0;
+	bill.Base.Mat = bill.Base.Trans*Get_Mat_Wall(&wNo);
 	return true;
 }
 void BillBase::DrawBil(void) {

@@ -24,7 +24,7 @@ C_EnemyAi::~C_EnemyAi()
 	}
 }
 
-bool C_EnemyAi::UpdateAi(CHARAData cd[], unsigned int NUM, std::vector<BillBase*> ground)
+bool C_EnemyAi::UpdateAi(CHARAData cd[], unsigned int NUM, std::vector<C_Ground_Object*> ground)
 {
 	if (NUM <= 0) {
 		return false;
@@ -77,14 +77,14 @@ bool C_EnemyAi::UpdateAi(CHARAData cd[], unsigned int NUM, std::vector<BillBase*
 	return true;
 }
 
-bool C_EnemyAi::UpdateAll(std::vector<BillBase*> ground)
+bool C_EnemyAi::UpdateAll(std::vector<C_Ground_Object*> ground)
 {
 	UpdateCarFM(ground);
 
 	return true;
 }
 
-void C_EnemyAi::SetParts(std::vector<BillBase*> ground)
+void C_EnemyAi::SetParts(std::vector<C_Ground_Object*> ground)
 {
 		judg.MatMatVec(&brj.MoveVec, PlaMovMat, Car.Base.Mat);//MoveVecçÏê¨
 		UpdateCar();

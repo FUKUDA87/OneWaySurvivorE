@@ -9,18 +9,13 @@ extern LPDIRECT3DDEVICE9 lpD3DDevice;
 
 
 class Judg {
-private:
-	//pos2D用
-	D3DXMATRIX SmProj;
-	D3DXMATRIX SmView;
-	D3DVIEWPORT9 SViewport;
-	bool D2Flg;
 public:
 	void Init(){ D2Flg = false; }
 	Judg() { Init(); };
 	//距離判定
 	bool ball(D3DXMATRIX mat1, D3DXMATRIX mat2,float rad);
 	bool ball(D3DXVECTOR3 PosA, D3DXMATRIX MatB, float Rad);
+	bool Ball(const D3DXVECTOR3 *PosA, const D3DXVECTOR3 *PosB,const float *Radius);
 	//距離判定+球と球
 	bool ball(D3DXMATRIX mat1, D3DXMATRIX mat2, float rad, D3DXMATRIX *Trans1, D3DXMATRIX *Trans2);
 	//距離判定+距離取得
@@ -38,6 +33,7 @@ public:
 	//3Dから2Dの座標取得
 	D3DXVECTOR3 Pos2D(D3DXVECTOR3 pos3D);
 	D3DXVECTOR3 Pos2D(const D3DXVECTOR3 *Pos3D,const D3DXMATRIX *mProj,const D3DXMATRIX *mView,const D3DVIEWPORT9 *Viewport);
+	void CC(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport);
 	///3Dから2Dのため
 	void Pos2Dpvv(D3DXMATRIX mProj, D3DXMATRIX mView, D3DVIEWPORT9 Viewport);
 	//3Dから2Dの座標取得+playerとenemyの逆位置作成
@@ -61,7 +57,9 @@ public:
 	D3DXVECTOR3 Get_MatPos(const D3DXMATRIX* Mat);
 	//Pos<-Mat
 	D3DXVECTOR3 SetPosM(D3DXMATRIX Mat);
+	D3DXVECTOR3 SetPosM(const D3DXMATRIX *Mat);
 	bool SetPosM(D3DXVECTOR3 *Pos,D3DXMATRIX Mat);
+	void SetPosM(D3DXVECTOR3 *Pos, const D3DXMATRIX *Mat);
 	//Mat<-Pos
 	D3DXMATRIX SetMatP(D3DXVECTOR3 Pos);
 	bool SetMatP(D3DXMATRIX *Mat, D3DXVECTOR3 Pos);
@@ -163,6 +161,7 @@ public:
 	D3DXMATRIX Set_2DMat(const D3DXVECTOR3 *Pos);
 	//サイズをベクトル変換
 	D3DXVECTOR3 Get_Size3D(const float *Size);
+	void Get_Size3D(D3DXVECTOR3 *Pos,const float *Size);
 	D3DXVECTOR3 Get_Size2D(const float *Size);
 
 	//レイの位置を求める
@@ -170,11 +169,49 @@ public:
 
 	//Vec3にVec2を足す
 	void Set_Vec3_Vec2(D3DXVECTOR3 *Vec3, const D3DXVECTOR2 *Vec2);
+
+	//マイナスをプラスに変換
+	void Change_Plus(float *f);
+	void Change_Plus(D3DXVECTOR3 *Vec);
+
+	//大きさ判定
+	void Judg_BigNum(float *f_A, const float *f_B);
+	void Judg_BigNum(D3DXVECTOR3 *Vec_A, const D3DXVECTOR3 *Vec_B);
+
+	//半径のベクトルを求める処理
+	D3DXVECTOR3 Get_RadiusVec(const D3DXVECTOR3 *Vec_A, const D3DXVECTOR3 *Vec_B);
+	//半径のベクトルを求めた際に半径を計算する
+	void Get_Draw_Radius(float *Radius,const D3DXVECTOR3 *Vec_Big, const D3DXVECTOR3 *Vec_Small, const D3DXVECTOR3 *Scal_Pos);
+
+	//ゼロより上のならtureを返す
+	bool Judg_PlusNum(const float *Num);
+
+	//番号の判定
+	void Judg_Data_Num(int *Now_Num, const int *Max_Num);
+	int Judg_Data_Num2(const int *Now_Num, const int *Max_Num);
+
+	//視錐台の法線ベクトルの計算
+	void Get_Frustum_NormalVec(S_Frustum_Vec *Data, const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport);
+	//視錐台カリングの判定(視錐台の中にある場合、true)
+	void Judg_Frustum(bool *DrawFlg,const S_Frustum_Vec *Data,const D3DXVECTOR3 *Pos, const float *Radius);
+
+	//
+	void Pos_Big_Judg(D3DXVECTOR3 *Pos_Big, const D3DXVECTOR3 *Pos);
+	void Pos_Small_Judg(D3DXVECTOR3 *Pos_Small, const D3DXVECTOR3 *Pos);
+private:
+	//pos2D用
+	D3DXMATRIX SmProj;
+	D3DXMATRIX SmView;
+	D3DVIEWPORT9 SViewport;
+	bool D2Flg;
+
+	//平面と半径の判定
+	bool Judg_Plane_Rad(const D3DXVECTOR3 *Vec, const D3DXVECTOR3 *Pos, const float *Radius);
 };
 
 #endif // !Judgm_H
 
-/*
+/*plus
 #include"Judgment.h"
 
 extern Judg *judg;

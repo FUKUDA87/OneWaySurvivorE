@@ -19,6 +19,7 @@
 #include"Sound/SoundGun1.h"
 #include"Sound/BombSound1.h"
 #include"Key/KeyTrue.h"
+#include"GameSource/XfileManager2.h"
 
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
@@ -66,6 +67,7 @@ LPDIRECTSOUND3DLISTENER8 lpSListenerE;
 SceneManager sceneManager;
 TextureManager textureManager;
 XfileManager xfileManager;
+XfileManager2 xfileManager2;
 D3DLIGHT9 Light;
 LPD3DXFONT lpFontS;
 HWND Hwnd;

@@ -94,7 +94,23 @@ struct Object3D2 {
 	XFILE ColModMesh;//コリジョンモデル
 	D3DXVECTOR3 PosBig;//メッシュのプラスの遠い座標+方向
 	D3DXVECTOR3 PosSmall;//メッシュのプラスの遠い座標-方向
+	float CullingRad;//カリング用半径
 };
+
+//３Dメッシュの構造体+alpha
+struct S_Object3D_Data {
+	XFILE Mesh;
+	XFILE ColModMesh;//コリジョンモデル
+	D3DXVECTOR3 PosBig;//メッシュのプラスの遠い座標+方向
+	D3DXVECTOR3 PosSmall;//メッシュのプラスの遠い座標-方向
+};
+
+//表示
+struct S_Base3D_2 {
+	BASE3D Base;
+	float CullingRad;//カリング用半径
+};
+
 //キャラクター3Dの構造体
 struct CHARA3D {
 	XFILE Mesh;
@@ -689,6 +705,33 @@ struct S_MODE_CHANGE {
 //カメラの情報
 struct S_CAMERA_POS {
 	D3DXVECTOR3 Pos, Look, Head;
+};
+
+//スクリーンの表示の構造体
+struct S_SCREEN_2D {
+	LPDIRECT3DSURFACE9 lpBackBuffer;//バックバッファ
+	LPDIRECT3DSURFACE9 lpZBuffer;//Zバッファ
+	LPDIRECT3DSURFACE9 lpTmpBackBuffer;//裏バックバッファ
+	LPDIRECT3DSURFACE9 lpTmpZBuffer;//裏Zバックバッファ
+	LPDIRECT3DTEXTURE9 lpTmpTex;//裏バックバッファのテクスチャ形式
+	bool DrawFlg;//表示するかどうかのFlg
+};
+
+struct S_Mesh_Data
+{
+	D3DXVECTOR3 Pos_Big, Pos_Small;//
+	DWORD NumVertex;//頂点数
+};
+
+//XFILE2
+struct XFILE_B {
+	XFILE Mesh;
+	S_Mesh_Data Data;
+};
+
+//視錐台の法線の構造体
+struct S_Frustum_Vec {
+	D3DXVECTOR3 nt, nb, nl, nr;
 };
 
 

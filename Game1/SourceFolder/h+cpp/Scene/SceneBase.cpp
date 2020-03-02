@@ -27,6 +27,8 @@ void SceneBase::Frame(void)
 	SetCamera();
 	Render3D();
 
+	Render3D_Screen();
+
 	// 2D描画
 	Render2D();
 
@@ -41,6 +43,9 @@ void SceneBase::Frame(void)
 void SceneBase::Render3D(void)
 {
 	/*派生クラス側でオーバーライドしなかったときに空っぽの関数を作っておく*/
+}
+void SceneBase::Render3D_Screen(void)
+{
 }
 void SceneBase::Render2D(void)
 {

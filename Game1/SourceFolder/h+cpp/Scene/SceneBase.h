@@ -12,6 +12,7 @@ public:
 	virtual bool road(void) { return true; };
 	virtual bool Update(void);
 	virtual void Render3D(void);
+	virtual void Render3D_Screen(void);
 	virtual void Render2D(void);
 	virtual void SetCamera(void);
 

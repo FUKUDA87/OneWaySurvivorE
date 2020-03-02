@@ -6,12 +6,10 @@
 class C_Ground {
 public:
 	void Init();
-	C_Ground();
-	C_Ground(int i);
-	C_Ground(D3DXMATRIX Mat3, D3DXMATRIX Mat4,int gType,float Ang,float Length,bool LengthAuto);
+	C_Ground(const int *i);
+	C_Ground(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4,const S_GROUND_INIT_DATA* Init_Data_Ground);
 	~C_Ground();
-	void Update();
-	void Draw();
+	
 	virtual void SuperUpdate() {
 		Update();
 	};
@@ -36,7 +34,6 @@ public:
 	bool GetIdenFlg(void) {
 		return IdenFlg;
 	}
-private:
 protected:
 	Pol ground;
 	Way way;
@@ -45,4 +42,9 @@ protected:
 	bool IdenFlg;
 
 	Judg judg;
+
+	void Update();
+	void Draw();
+private:
+
 };

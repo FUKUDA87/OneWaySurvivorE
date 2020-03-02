@@ -9,11 +9,11 @@ public:
 	C_EnemyAi();
 	~C_EnemyAi();
 	//思考
-	bool UpdateAi(CHARAData cd[], unsigned int NUM, std::vector<BillBase*>ground);
+	bool UpdateAi(CHARAData cd[], unsigned int NUM, std::vector<C_Ground_Object*>ground);
 	//アップデート
-	bool UpdateAll(std::vector<BillBase*>ground);
+	bool UpdateAll(std::vector<C_Ground_Object*>ground);
 
-	void SetParts(std::vector<BillBase*>ground);
+	void SetParts(std::vector<C_Ground_Object*>ground);
 
 	void SetPlaEnd(bool Flg);
 	//Aiの起動

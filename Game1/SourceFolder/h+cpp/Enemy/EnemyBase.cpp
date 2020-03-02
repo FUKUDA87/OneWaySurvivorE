@@ -77,7 +77,7 @@ bool C_EnemyBase::GetDeleFlg(void)
 	return false;
 }
 
-void C_EnemyBase::SetParts(std::vector<BillBase*> ground)
+void C_EnemyBase::SetParts(std::vector<C_Ground_Object*> ground)
 {
 	
 }

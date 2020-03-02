@@ -24,6 +24,15 @@ bool Judg::ball(D3DXVECTOR3 PosA, D3DXMATRIX MatB, float Rad)
 	return Flg;
 }
 
+bool Judg::Ball(const D3DXVECTOR3 * PosA, const D3DXVECTOR3 * PosB, const float * Radius)
+{
+	D3DXVECTOR3 targetPos;
+	targetPos = (*PosB) - (*PosA);
+	float length = D3DXVec3Length(&targetPos);
+	if (length < *Radius) return true;
+	return false;
+}
+
 bool Judg::ball(D3DXMATRIX mat1, D3DXMATRIX mat2, float rad,D3DXMATRIX *Trans1,D3DXMATRIX *Trans2)
 {
 	D3DXVECTOR3 pos1, pos2, targetPos;
@@ -157,6 +166,82 @@ D3DXVECTOR3 Judg::Pos2D(const D3DXVECTOR3 * Pos3D, const D3DXMATRIX * mProj, con
 	D3DXVECTOR3 pos2D;
 	D3DXVec3Project(&pos2D, Pos3D, Viewport, mProj, mView, &IdenMat);
 	return pos2D;
+}
+
+void Judg::CC(const D3DXMATRIX * mProj, const D3DXMATRIX * mView, const D3DVIEWPORT9 * Viewport)
+{
+	// 視錐台の平面の法線ベクトル計算
+	float x1 = (float)Viewport->X;
+	float y1 = (float)Viewport->Y;
+	float x2 = (float)Viewport->X + (float)Viewport->Width;
+	float y2 = (float)Viewport->Y + (float)Viewport->Height;
+	D3DXVECTOR3 Near[4];
+	D3DXVECTOR3 Far[4];
+	Near[0] = D3DXVECTOR3(x1, y1, 0);
+	Near[1] = D3DXVECTOR3(x2, y1, 0);
+	Near[2] = D3DXVECTOR3(x1, y2, 0);
+	Near[3] = D3DXVECTOR3(x2, y2, 0);
+	Far[0] = D3DXVECTOR3(x1, y1, 1);
+	Far[1] = D3DXVECTOR3(x2, y1, 1);
+	Far[2] = D3DXVECTOR3(x1, y2, 1);
+	Far[3] = D3DXVECTOR3(x2, y2, 1);
+
+	// 視錐台の８点の計算
+	D3DXMATRIX world;
+	D3DXMatrixIdentity(&world);
+	for (int i = 0; i < 4; ++i)
+	{
+		D3DXVec3Unproject(&Near[i], &Near[i], Viewport, mProj, mView,
+			&world);
+		D3DXVec3Unproject(&Far[i], &Far[i], Viewport, mProj, mView,
+			&world);
+	}
+
+	// 平面の3点から法線の計算
+	D3DXVECTOR3 nt, nb, nl, nr;
+	D3DXVECTOR3 tmp1, tmp2;
+
+	// 左
+	tmp1 = Near[2] - Near[0];
+	tmp2 = Far[0] - Near[0];
+	D3DXVec3Cross(&nl, &tmp1, &tmp2);
+	D3DXVec3Normalize(&nl, &nl);
+
+	// 右
+	tmp1 = Near[3] - Near[1];
+	tmp2 = Far[1] - Near[1];
+	D3DXVec3Cross(&nr, &tmp1, &tmp2);
+	D3DXVec3Normalize(&nr, &nr);
+
+	// 上
+	tmp1 = Near[3] - Near[2];
+	tmp2 = Far[2] - Near[2];
+	D3DXVec3Cross(&nt, &tmp1, &tmp2);
+	D3DXVec3Normalize(&nt, &nt);
+
+	// 下
+	tmp1 = Far[0] - Near[0];
+	tmp2 = Near[1] - Near[0];
+	D3DXVec3Cross(&nb, &tmp1, &tmp2);
+	D3DXVec3Normalize(&nb, &nb);
+
+	//for (SphereIterator it = mSphere.begin(); it != mSphere.end(); ++it)
+	//{
+	//	D3DXVECTOR3 pos = (*it).position;
+
+	//	// 上下左右との比較(Near,Farは省略) normal ・ center > radius
+	//	if ((nt.x * pos.x + nt.y * pos.y + nt.z * pos.z > (*it).radius
+	//		|| nb.x * pos.x + nb.y * pos.y + nb.z * pos.z > (*it).radius
+	//		|| nl.x * pos.x + nl.y * pos.y + nl.z * pos.z > (*it).radius
+	//		|| nr.x * pos.x + nr.y * pos.y + nr.z * pos.z > (*it).radius))
+	//	{
+	//		(*it).is_visible = false;
+	//		continue;
+	//	}
+
+	//	// 合格
+	//	(*it).is_visible = true;
+	//}
 }
 
 void Judg::Pos2Dpvv(D3DXMATRIX mProj, D3DXMATRIX mView, D3DVIEWPORT9 Viewport)
@@ -424,10 +509,20 @@ D3DXVECTOR3 Judg::SetPosM(D3DXMATRIX Mat)
 	return D3DXVECTOR3(Mat._41, Mat._42, Mat._43);
 }
 
+D3DXVECTOR3 Judg::SetPosM(const D3DXMATRIX * Mat)
+{
+	return D3DXVECTOR3(Mat->_41, Mat->_42, Mat->_43);
+}
+
 bool Judg::SetPosM(D3DXVECTOR3 *Pos, D3DXMATRIX Mat)
 {
 	*Pos = D3DXVECTOR3(Mat._41, Mat._42, Mat._43);
 	return true;
+}
+
+void Judg::SetPosM(D3DXVECTOR3 * Pos, const D3DXMATRIX * Mat)
+{
+	*Pos = D3DXVECTOR3(Mat->_41, Mat->_42, Mat->_43);
 }
 
 D3DXMATRIX Judg::SetMatP(D3DXVECTOR3 Pos)
@@ -1133,6 +1228,11 @@ D3DXVECTOR3 Judg::Get_Size3D(const float * Size)
 	return Scal;
 }
 
+void Judg::Get_Size3D(D3DXVECTOR3 * Pos, const float * Size)
+{
+	*Pos = D3DXVECTOR3(*Size, *Size, *Size);
+}
+
 D3DXVECTOR3 Judg::Get_Size2D(const float * Size)
 {
 	D3DXVECTOR3 Scal = D3DXVECTOR3(*Size, *Size, 0.0f);
@@ -1150,6 +1250,173 @@ void Judg::Set_Vec3_Vec2(D3DXVECTOR3 * Vec3, const D3DXVECTOR2 * Vec2)
 {
 	Vec3->x += Vec2->x;
 	Vec3->y += Vec2->y;
+}
+
+void Judg::Change_Plus(float * f)
+{
+	if (*f < 0.0f)*f *= -1.0f;
+}
+
+void Judg::Change_Plus(D3DXVECTOR3 * Vec)
+{
+	Change_Plus(&Vec->x);
+	Change_Plus(&Vec->y);
+	Change_Plus(&Vec->z);
+}
+
+void Judg::Judg_BigNum(float * f_A, const float * f_B)
+{
+	if (*f_A < *f_B)*f_A = *f_B;
+}
+
+void Judg::Judg_BigNum(D3DXVECTOR3 * Vec_A, const D3DXVECTOR3 * Vec_B)
+{
+	Judg_BigNum(&Vec_A->x, &Vec_B->x);
+	Judg_BigNum(&Vec_A->y, &Vec_B->y);
+	Judg_BigNum(&Vec_A->z, &Vec_B->z);
+}
+
+D3DXVECTOR3 Judg::Get_RadiusVec(const D3DXVECTOR3 * Vec_A, const D3DXVECTOR3 * Vec_B)
+{
+	D3DXVECTOR3 v[] = { *Vec_A,*Vec_B };
+
+	//マイナスをプラスに変換
+	for (int i = 0; i < 2; i++) {
+		Change_Plus(&v[i]);
+	}
+
+	//大きさ判定
+	Judg_BigNum(&v[0], &v[1]);
+
+	return v[0];
+}
+
+void Judg::Get_Draw_Radius(float * Radius, const D3DXVECTOR3 * Vec_Big, const D3DXVECTOR3 * Vec_Small, const D3DXVECTOR3 * Scal_Pos)
+{
+	D3DXVECTOR3 Vec_A = GetVecVec(Vec_Big, Scal_Pos),
+		Vec_B = GetVecVec(Vec_Small, Scal_Pos);
+
+	D3DXVECTOR3 Vec = Get_RadiusVec(&Vec_A, &Vec_B);
+
+	//半径の取得
+	*Radius = D3DXVec3Length(&Vec);
+
+	//半径をプラスに変換
+	Change_Plus(Radius);
+
+	return;
+}
+
+bool Judg::Judg_PlusNum(const float * Num)
+{
+	if (*Num > 0.0f)return true;
+
+	return false;
+}
+
+void Judg::Judg_Data_Num(int * Now_Num, const int * Max_Num)
+{
+	if (*Now_Num < 0)*Now_Num = 0;
+	if (*Now_Num >= *Max_Num)*Now_Num = *Max_Num - 1;
+}
+
+int Judg::Judg_Data_Num2(const int * Now_Num, const int * Max_Num)
+{
+	if (*Now_Num < 0)return 0;
+
+	if (*Now_Num >= *Max_Num)return *Max_Num - 1;
+
+	return *Now_Num;
+}
+
+void Judg::Get_Frustum_NormalVec(S_Frustum_Vec *Data, const D3DXMATRIX * mProj, const D3DXMATRIX * mView, const D3DVIEWPORT9 * Viewport)
+{
+	// 視錐台の平面の法線ベクトル計算
+	float x1 = (float)Viewport->X;
+	float y1 = (float)Viewport->Y;
+	float x2 = (float)Viewport->X + (float)Viewport->Width;
+	float y2 = (float)Viewport->Y + (float)Viewport->Height;
+	D3DXVECTOR3 Near[4];
+	D3DXVECTOR3 Far[4];
+	Near[0] = D3DXVECTOR3(x1, y1, 0);
+	Near[1] = D3DXVECTOR3(x2, y1, 0);
+	Near[2] = D3DXVECTOR3(x1, y2, 0);
+	Near[3] = D3DXVECTOR3(x2, y2, 0);
+	Far[0] = D3DXVECTOR3(x1, y1, 1);
+	Far[1] = D3DXVECTOR3(x2, y1, 1);
+	Far[2] = D3DXVECTOR3(x1, y2, 1);
+	Far[3] = D3DXVECTOR3(x2, y2, 1);
+
+	// 視錐台の８点の計算
+	D3DXMATRIX world;
+	D3DXMatrixIdentity(&world);
+	for (int i = 0; i < 4; ++i)
+	{
+		D3DXVec3Unproject(&Near[i], &Near[i], Viewport, mProj, mView,
+			&world);
+		D3DXVec3Unproject(&Far[i], &Far[i], Viewport, mProj, mView,
+			&world);
+	}
+
+	// 平面の3点から法線の計算
+	D3DXVECTOR3 tmp1, tmp2;
+
+	// 左
+	tmp1 = Near[2] - Near[0];
+	tmp2 = Far[0] - Near[0];
+	D3DXVec3Cross(&Data->nl, &tmp1, &tmp2);
+	D3DXVec3Normalize(&Data->nl, &Data->nl);
+
+	// 右
+	tmp1 = Near[3] - Near[1];
+	tmp2 = Far[1] - Near[1];
+	D3DXVec3Cross(&Data->nr, &tmp1, &tmp2);
+	D3DXVec3Normalize(&Data->nr, &Data->nr);
+	Data->nr *= -1.0f;
+
+	// 上
+	tmp1 = Near[3] - Near[2];
+	tmp2 = Far[2] - Near[2];
+	D3DXVec3Cross(&Data->nt, &tmp1, &tmp2);
+	D3DXVec3Normalize(&Data->nt, &Data->nt);
+
+	// 下
+	tmp1 = Far[0] - Near[0];
+	tmp2 = Near[1] - Near[0];
+	D3DXVec3Cross(&Data->nb, &tmp1, &tmp2);
+	D3DXVec3Normalize(&Data->nb, &Data->nb);
+}
+
+void Judg::Judg_Frustum(bool * DrawFlg, const S_Frustum_Vec * Data, const D3DXVECTOR3 * Pos, const float * Radius)
+{
+	// 上下左右との比較(Near,Farは省略) normal ・ center > radius
+	if ((Judg_Plane_Rad(&Data->nt, Pos, Radius)) || (Judg_Plane_Rad(&Data->nb, Pos, Radius))
+		|| (Judg_Plane_Rad(&Data->nl, Pos, Radius)) || (Judg_Plane_Rad(&Data->nr, Pos, Radius))) {
+		*DrawFlg = false;
+	}
+	else {
+		*DrawFlg = true;
+	}
+}
+
+void Judg::Pos_Big_Judg(D3DXVECTOR3 * Pos_Big, const D3DXVECTOR3 * Pos)
+{
+	if (Pos_Big->x < Pos->x)Pos_Big->x = Pos->x;
+	if (Pos_Big->y < Pos->y)Pos_Big->y = Pos->y;
+	if (Pos_Big->z < Pos->z)Pos_Big->z = Pos->z;
+}
+
+void Judg::Pos_Small_Judg(D3DXVECTOR3 * Pos_Small, const D3DXVECTOR3 * Pos)
+{
+	if (Pos_Small->x > Pos->x)Pos_Small->x = Pos->x;
+	if (Pos_Small->y > Pos->y)Pos_Small->y = Pos->y;
+	if (Pos_Small->z > Pos->z)Pos_Small->z = Pos->z;
+}
+
+bool Judg::Judg_Plane_Rad(const D3DXVECTOR3 * Vec, const D3DXVECTOR3* Pos, const float * Radius)
+{
+	if (Vec->x*Pos->x + Vec->y*Pos->y + Vec->z*Pos->z > * Radius)return true;
+	return false;
 }
 
 D3DXVECTOR3 Judg::VecPos(D3DXMATRIX MatA, D3DXVECTOR3 VecA)

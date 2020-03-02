@@ -8,7 +8,6 @@
 #include"../3DDraw/Effect_3D/Explosion.h"
 #include"../Player/Camera.h"
 #include"../GameSource/Countdown.h"
-#include"../Ground/Bill1.h"
 #include"../GameSource/Debug.h"
 #include"../GameSource/Debug2.h"
 #include"../2DDraw/Game_End/Game_End_Now.h"
@@ -44,6 +43,7 @@
 #include"../Sound/Sound_Manager_Game.h"
 #include"../Draw/Damage_Num/Damage_Move_A.h"
 #include"../Draw/Damage_Num/Damage_Move_B.h"
+#include"../Ground/Ground_Object.h"
 
 extern Judg judg;
 extern Motion motion;
@@ -60,6 +60,7 @@ public:
 	GameScene(const int stageNum,const bool *DebugFlg);
 	~GameScene();
 	void Render3D(void);
+	void Render3D_Screen(void);
 	void Render2D(void);
 	void SetCamera(void);
 	bool Update(void);
@@ -229,6 +230,15 @@ protected:
 	//ゲームのモードチェンジ
 	void Geme_End_Change(const int *Mode);
 
+	//敵の出現
+	void Pop_Enemy(void);
+
+	//車の出現可能調査(出現可能ならtrue)
+	bool Judg_Car_Pop(const D3DXMATRIX *GroundMat, const float *TransX);
+
+	//車の出現可能判定
+	bool Judg_Car_Pop(const D3DXVECTOR3 *Pop_Pos, const D3DXMATRIX *Car_Mat, const float *Radius);
+
 	//車の生存確認
 
 	/*削除*/
@@ -269,7 +279,7 @@ private:
 	C_PlayerBase *player;//
 
 	//地面のメンバ
-	std::vector<BillBase*>ground;
+	std::vector<C_Ground_Object*>ground;
 	Cou *cou;//bill
 	std::vector<Cou*>GroCou;
 	//外灯表示用カウントダウン
@@ -332,6 +342,28 @@ private:
 	C_Sound_Manager_Base* M_C_Sound_Manager;
 
 	std::vector<C_Damage_Num_Base*>M_Damage_Num_Draw;
+
+	//ミニ画面の表示
+	S_SCREEN_2D M_S_Screen;
+
+	//ミニ画面の初期化
+	void Debug_Screen_Init(void);
+	//ミニ画面の終了処理
+	void Debug_Screen_End(void);
+	//ミニ画面の表示
+	void Debug_Screen_Draw(void);
+
+	//視錐台カリング
+	void FrustumCulling(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport);
+
+	//地面の視錐台カリング
+	void FrustumCulling_Ground(const S_Frustum_Vec *FV_Data);
+
+	//地面の壁の視錐台カリング
+	void FrustumCulling_Ground_Wall(const unsigned int *gNo, const S_Frustum_Vec *FV_Data);
+
+	//地面の表示物の視錐台カリング
+	void FrustumCulling_Ground_Object(const unsigned int *gNo, const S_Frustum_Vec *FV_Data);
 };
 
 //#endif // !GameScene_H

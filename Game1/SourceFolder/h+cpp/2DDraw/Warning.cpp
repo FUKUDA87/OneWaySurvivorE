@@ -1,8 +1,6 @@
 #include "Warning.h"
 #include"../GameSource/Judgment.h"
 
-extern Judg judg;
-
 Warning::Warning()
 {
 	//Waningï∂éö
@@ -13,6 +11,7 @@ Warning::Warning()
 	war.Base.ScaPos = D3DXVECTOR3(9.0f*50.0f / (float)war.TEX.Width, 50.0f / (float)war.TEX.Height, 1.0f);
 	war.Base.ScaPos *= 2.9f;
 	war.Base.ScaPos.y *= 1.5f;
+	Judg judg;
 	judg.ScalingMat(&war.Base.Scal, &war.Base.ScaPos);
 	//ê‘çï
 	//ÉçÅ[Éh

@@ -18,9 +18,9 @@ public:
 	//ŒÀ®
 	bool CountUpdate(void);
 	//•\¦
-	virtual void Draw3D(void);
+	virtual void Draw3D(const D3DXVECTOR3 *CameraPos);
 	//Œp³‚ğŠÜ‚ß‚½Draw3D
-	virtual void Draw3DSuper(void);
+	virtual void Draw3DSuper(const D3DXVECTOR3 *CameraPos);
 protected:
 	//Å‰‚ÉVec‚ğ‘«‚³‚È‚¢Flg
 	bool CarMoveFlg;

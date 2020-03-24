@@ -1,11 +1,17 @@
 #include "Enemy_Manager.h"
 #include"../../Enemy/Enemy_No/Enemy_No101.h"
 
-C_EnemyAi * C_Enemy_Manager::Get_Enemy(const int * EnemyNo, D3DXMATRIX GroundMat, float * TransX)
+C_EnemyAi * C_Enemy_Manager::Get_Enemy(const int * EnemyNo,const D3DXMATRIX *GroundMat,const float * TransX)
 {
-	if (*EnemyNo == 1)return new C_Enemy_No1(GroundMat, TransX);
-	if (*EnemyNo == 101)return new C_Enemy_No101(GroundMat, TransX);
-
+	switch (*EnemyNo)
+	{
+	case 1:
+		return new C_Enemy_No1(GroundMat, TransX);
+		break;
+	case 101:
+		return new C_Enemy_No101(GroundMat, TransX);
+		break;
+	}
 
 	return new C_Enemy_No1(GroundMat,TransX);
 }

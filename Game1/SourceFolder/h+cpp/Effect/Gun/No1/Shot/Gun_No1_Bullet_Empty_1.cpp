@@ -38,7 +38,7 @@ bool C_Gun_No1_Bullet_Enpty::Update(void)
 
 	Judg judg;
 
-	judg.SetTransMat(&TmpMat, &M_MoveVec);
+	judg.Set_TransMat(&TmpMat, &M_MoveVec);
 
 	TmpMat = TmpMat * Get_Mat();
 

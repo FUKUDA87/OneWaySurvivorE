@@ -4,7 +4,6 @@
 #include"../TitleParts/TitleTex.h"
 #include"../TitleParts/StartTex.h"
 #include"../TitleParts/TitelCamera.h"
-#include"../Ground/BillBase.h"
 #include"../Ground/Sky.h"
 #include"../GameSource/Countdown.h"
 #include"../Ground/Wall.h"
@@ -43,6 +42,9 @@ public:
 	bool SetScene(void);
 
 private:
+	//判定用の関数のクラス
+	Judg judg;
+
 	//<地面
 	std::vector<C_Ground_Object*>ground;
 	Cou *cou;//bill
@@ -81,4 +83,7 @@ private:
 	bool Game_End(void);
 
 	C_Sound_Manager_Base* M_C_Sound_Manager;
+
+	//ステージ選択シーンへの移動
+	void Next_StageScene_Switch(void);
 };

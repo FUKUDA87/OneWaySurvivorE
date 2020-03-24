@@ -2,7 +2,6 @@
 #include"../Key/Key.h"
 #include"../GameSource/Judgment.h"
 
-extern Judg judg;
 extern Key key;
 
 void Camera::Init()
@@ -29,7 +28,8 @@ Camera::Camera(D3DXMATRIX PlayerMat)
 {
 	Init();
 	CamMat = PlayerMat;
-	judg.SetMatP(&CamMat, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	Judg judg;
+	judg.SetMatP(&CamMat, &D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	D3DXMatrixRotationX(&CamRotX, D3DXToRadian(0.0f));
 	D3DXMatrixRotationY(&CamRotY, D3DXToRadian(0.0f));
 	//âÒì]ÇÃèâä˙âª
@@ -201,6 +201,7 @@ bool Camera::UpdateQua(void)
 			Anime = 1.0f;
 			QuaFlg = false;
 		}
+		Judg judg;
 		judg.AnimeProc(&CamRotX, StartRotXMat, EndRotXMat, Anime);
 		judg.AnimeProc(&CamRotY, StartRotYMat, EndRotYMat, Anime);
 	}

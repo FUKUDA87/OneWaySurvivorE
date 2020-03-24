@@ -9,15 +9,11 @@
 #include"GameSource/TextureManager.h"
 #include"GameSource/XfileManager.h"
 #include"GameSource/option.h"
-#include"GameSource/Judgment.h"
 #include"GameSource/Debug.h"
 #include"GameSource/Struct.h"
-#include"GameSource/InvBi.h"
 #include"GameSource/Motion.h"
 #include"GameSource/SoundManager.h"
 #include"Sound/BulletEmpty1.h"
-#include"Sound/SoundGun1.h"
-#include"Sound/BombSound1.h"
 #include"Key/KeyTrue.h"
 #include"GameSource/XfileManager2.h"
 
@@ -75,15 +71,7 @@ HWND Hwnd;
 SoundManager soundManager;
 
 Option option;
-Judg judg;
-Inv inv;
 
-float AngD;
-unsigned int NumD;
-bool FlgD;
-D3DXMATRIX MatD;
-
-D3DXVECTOR3 CamPosG;
 Motion motion;
 //Manager”
 int CountManager;
@@ -599,8 +587,6 @@ D3DLIGHT_SPOT
 	lpSListenerE->SetRolloffFactor(0.05f, DS3D_IMMEDIATE);
 
 	sceneManager.changeScene(new TitleScene());
-	FlgD = false;
-	D3DXMatrixTranslation(&MatD, 0.0f, 0.0f, 0.0f);
 
 	lpD3DDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
 	lpD3DDevice->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_XRGB(255, 255, 255));

@@ -26,7 +26,9 @@ D3DXMATRIX C_MatBase::Set_TransMat(const D3DXVECTOR3 * Pos)
 {
 	Judg judg;
 	D3DXMATRIX Mat;
-	judg.SetTransMat(&Mat, Pos);
+
+	judg.Set_TransMat(&Mat, Pos);
+
 	return Mat;
 
 }

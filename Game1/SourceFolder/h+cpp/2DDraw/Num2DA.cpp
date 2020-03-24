@@ -33,7 +33,7 @@ void C_Num2DA::Draw2DNB(const int * TmpNum)
 	for (i = 0; cScore[i] != '\0'; i++);
 
 	//位置のセット
-	judg.SetTransMat(&Num.Base.Mat, &Num.Base.Pos);
+	judg.Set_TransMat(&Num.Base.Mat, &Num.Base.Pos);
 
 	//数の表示
 	int s = i;
@@ -52,7 +52,7 @@ void C_Num2DA::Draw2DNB(const int * TmpNum)
 		else {
 			TransPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		}
-		judg.SetTransMat(&TransMat, &TransPos);
+		judg.Set_TransMat(&TransMat, &TransPos);
 		TransMat = TransMat * Num.Base.Mat;
 
 		lpSprite->SetTransform(&GetDrawMatNDB(&TransMat));

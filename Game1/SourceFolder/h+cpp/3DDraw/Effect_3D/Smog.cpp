@@ -1,11 +1,7 @@
 #include "Smog.h"
 #include"../../GameSource/TextureManager.h"
 #include"../../GameSource/Judgment.h"
-#include"../../GameSource/InvBi.h"
 
-extern Inv inv;
-
-extern Judg judg;
 extern LPDIRECT3DDEVICE9	lpD3DDevice;
 extern TextureManager textureManager;
 
@@ -50,7 +46,8 @@ void C_Smog::Init()
 bool C_Smog::Update(void)
 {
 	//移動
-	judg.SetTransMat(&smog.Base.Trans, &smog.Base.TraPos);
+	Judg judg;
+	judg.Set_TransMat(&smog.Base.Trans, &smog.Base.TraPos);
 	smog.Base.Mat = smog.Base.Trans*smog.Base.Mat;
 
 	return CountUpdate();
@@ -85,14 +82,15 @@ void C_Smog::Draw3D(D3DXVECTOR3 CamPos)
 	D3DXMatrixIdentity(&IdenMat);
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &IdenMat);
 
-	smog.Base.Pos = judg.SetPosM(smog.Base.Mat);
+	Judg judg;
+	judg.SetPosM(&smog.Base.Pos, &smog.Base.Mat);
 
 	//ビルボード
 	D3DXVECTOR3 vec, oPos, nPos;
 	vec = D3DXVECTOR3(0.0f, GetPolSize(), 0.0f);
 	nPos = smog.Base.Pos + vec;
 	oPos = smog.Base.Pos - vec;
-	vec = judg.Billboard(oPos, nPos, CamPos, vec.y);
+	vec = judg.Billboard(&oPos, &nPos, &CamPos, &vec.y);
 	smog.v[0].Pos = nPos - vec;
 	smog.v[1].Pos = nPos + vec;
 	smog.v[2].Pos = oPos + vec;
@@ -138,6 +136,7 @@ void C_Smog::Init_Mat(void)
 	MoveVecFlg = false;
 
 	//移動ベクトルの初期化
+	Judg judg;
 	smog.Base.TraPos =judg.GetVecVec_S(&M_S_Smog.MoveVec,&M_S_Smog.Frame);
 	
 	//移動で分散させる
@@ -181,6 +180,7 @@ void C_Smog::PosMoveVec(const D3DXVECTOR3 * MoveVec)
 {
 	if (MoveVecJudg() != true)return;
 
+	Judg judg;
 	judg.VecMatIn(&smog.Base.Mat, *MoveVec);
 
 	return;

@@ -34,7 +34,7 @@ void C_LaserDraw1::Draw3D_1(const D3DXVECTOR3 * StartPos, const D3DXVECTOR3 * Hi
 	v[2].Tex = D3DXVECTOR2(1.0f, 1.0f);
 	v[3].Tex = D3DXVECTOR2(0.0f, 1.0f);
 
-	D3DXVECTOR3 Vec= judg.Billboard(*StartPos, *HitPos, *CamPos, *PolSize);
+	D3DXVECTOR3 Vec= judg.Billboard(StartPos, HitPos, CamPos, PolSize);
 	v[0].Pos = *StartPos + Vec;
 	v[1].Pos = *StartPos - Vec;
 	v[2].Pos = *HitPos - Vec;

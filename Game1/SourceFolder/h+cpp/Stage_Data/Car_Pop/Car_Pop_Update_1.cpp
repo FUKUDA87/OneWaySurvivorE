@@ -18,11 +18,6 @@ C_Car_Pop_Base * C_Car_Pop_Update_1::Update(const bool * Update_MoveFlg)
 	return nullptr;
 }
 
-int C_Car_Pop_Update_1::Get_GroundNo(void)
-{
-	return 0;
-}
-
 C_Car_Pop_Base * C_Car_Pop_Update_1::Next_Pop(void)
 {
 	return nullptr;

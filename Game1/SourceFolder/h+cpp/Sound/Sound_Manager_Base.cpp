@@ -4,6 +4,7 @@
 #include"SE/Warning/Sound_Warning_Manager.h"
 #include"SE/Click/Sound_Click_Manager.h"
 #include"SE/SE_Manager/Sound_Explosion_Manager.h"
+#include"SE/Bullet_Hit/Sound_Bullet_Hit_Manager.h"
 
 C_Sound_Manager_Base::~C_Sound_Manager_Base()
 {
@@ -31,30 +32,29 @@ bool C_Sound_Manager_Base::Update_Sound(void)
 
 bool C_Sound_Manager_Base::Set_Sound(const S_SOUND_DATA * Data)
 {
-	if (Data->Sound_Type == Co_Sound_Type_2D) {
-
-		if (Data->Sound_CategoryNo == Co_Sound_Category_Bullet)return Judg_Bullet(Data);
-
-		if (Data->Sound_CategoryNo == Co_Sound_Category_BGM)return Judg_BGM(Data);
-
-		if (Data->Sound_CategoryNo == Co_Sound_Category_Warning)return Judg_Warning(Data);
-
-		if (Data->Sound_CategoryNo == Co_Sound_Category_Click)return Judg_Click(Data);
-		return false;
+	//サウンドの種類
+	switch (Data->Sound_CategoryNo)
+	{
+	case Co_Sound_Category_Bullet:
+		return Judg_Bullet(Data);
+		break;
+	case Co_Sound_Category_BGM:
+		return Judg_BGM(Data);
+		break;
+	case Co_Sound_Category_Warning:
+		return Judg_Warning(Data);
+		break;
+	case Co_Sound_Category_Click:
+		return Judg_Click(Data);
+		break;
+	case Co_Sound_Category_Explosion:
+		return Judg_Explosion_3D(Data);
+		break;
+	case Co_Sound_Category_Bullet_Hit:
+		return true;
+		break;
 	}
 
-	if (Data->Sound_Type == Co_Sound_Type_3D) {
-
-		switch (Data->Sound_CategoryNo)
-		{
-		case Co_Sound_Category_Explosion:
-			return Judg_Explosion_3D(Data);
-			break;
-		default:
-			break;
-		}
-		return false;
-	}
 	return false;
 }
 
@@ -95,6 +95,15 @@ bool C_Sound_Manager_Base::Judg_Explosion_3D(const S_SOUND_DATA * Data)
 	M_Sound_2D_Manager[M_Sound_2D_Manager.size() - 1]->Update(&M_CamPos, &Flg);
 
 	return true;
+}
+
+void C_Sound_Manager_Base::New_Sound_Play(void)
+{
+	//音声を流すFlg
+	bool PlayFlg = true;
+
+	//音声を流す処理
+	M_Sound_2D_Manager[M_Sound_2D_Manager.size() - 1]->Update(&M_CamPos, &PlayFlg);
 }
 
 void C_Sound_Manager_Base::Set_Sound(void)
@@ -146,6 +155,73 @@ void C_Sound_Manager_Base::Strat_Sound_All(void)
 	for (auto&& s : M_Sound_2D_Manager) {
 		s->Start_Sound();
 	}
+}
+
+void C_Sound_Manager_Base::Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos)
+{
+	S_SOUND_DATA Data;
+
+	//位置の初期化
+	Data.Pos = *Sound_Pos;
+
+	//音の種類の初期化
+	Data.Sound_CategoryNo = Co_Sound_Category_Bullet_Hit;
+
+	//被弾した種類の検索
+	switch (*BulletHit_Type)
+	{
+	case Hit_Type_Player://プレイヤーに被弾
+		Data.Sound_Type = Co_Sound_Type_2D;
+		Data.Sound_No = 1;
+		break;
+	case Hit_Type_Enemy://敵に被弾
+		Data.Sound_Type = Co_Sound_Type_3D;
+		Data.Sound_No = 1;
+		break;
+	case Hit_Type_Player*-1://ダメージ無効の時に被弾
+		Data.Sound_Type = Co_Sound_Type_2D;
+		Data.Sound_No = 1;
+		break;
+	case Hit_Type_Enemy*-1://ダメージ無効の時に被弾
+		Data.Sound_Type = Co_Sound_Type_3D;
+		Data.Sound_No = 1;
+		break;
+	case Hit_Type_Wall://壁に被弾
+		Data.Sound_Type = Co_Sound_Type_3D;
+		Data.Sound_No = 1;
+		break;
+	case Hit_Type_Ground://地面に被弾
+		Data.Sound_Type = Co_Sound_Type_3D;
+		Data.Sound_No = 1;
+		break;
+	default://検索にひっかからない場合
+		Data.Sound_Type = Co_Sound_Type_2D;
+		Data.Sound_No = 1;
+		break;
+	}
+
+	//被弾音の管理クラス
+	C_Sound_Bullet_Hit_Manager Sound_Hit_Manager;
+
+	//インスタンス化
+	M_Sound_2D_Manager.push_back(Sound_Hit_Manager.Get_Sound(&Data));
+
+	//インスタンス化した音声を流す処理
+	New_Sound_Play();
+
+	return;
+}
+
+void C_Sound_Manager_Base::Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos, const bool * DamageFlg)
+{
+	//被弾音の種類
+	int Type = *BulletHit_Type;
+
+	//ダメージを受けた確認
+	if (*DamageFlg != true) Type *= -1;
+
+	//被弾音を流す処理
+	Set_Bullet_Hit_Sound(&Type, Sound_Pos);
 }
 
 bool C_Sound_Manager_Base::Set_Sound_2D(const S_SOUND_DATA * Data)

@@ -58,11 +58,15 @@ TitleScene::TitleScene()
 		cou->CouUpd();
 	}
 	for (unsigned int i = 0; i < ground.size(); i++) {
-		if (judg.ball(player->GetMatCar(), ground[i]->GetMat(), player->GetRadF()) == false) {
-			delete ground[i];
-			ground.erase(ground.begin() + i);
-			i--;
-		}
+
+		float L_Radius = player->GetRadF();
+
+		if (judg.BallJudg(&judg.SetPosM(&player->GetMatCar()), &judg.SetPosM(&ground[i]->GetMat()), &L_Radius) != false) continue;
+
+		delete ground[i];
+		ground.erase(ground.begin() + i);
+		i--;
+
 	}
 	int c = 2;
 	/*for (int i = (ground.size() - 1); i >= 0; i--) {
@@ -112,7 +116,8 @@ TitleScene::TitleScene()
 
 	key.Init();
 
-	M_C_Sound_Manager = new C_Sound_Manager_Game();
+	//サウンドの初期化
+	if (M_C_Sound_Manager == nullptr)M_C_Sound_Manager = new C_Sound_Manager_Base();
 
 	//弾痕の初期化
 	if (false) {
@@ -224,22 +229,8 @@ bool TitleScene::Update(void)
 		}
 	}
 
-	if (startTex->UpdateSu() == false) {
-		mouse->SetTouchFlg();
-		if (startTex->GetMoveFlg() == false) {
-			static bool Flg = false;
-			if (Flg == false) {
-				if (key.LClickF() == true) {
-					startTex->SetMoveFlg(true);
-					ChangeSceneFade(StageSelectNo);
-					bool CFlg = true;
-					M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 1, &Co_Sound_Delete);
-					M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_Click, 1, &Co_Sound_New);
-					Flg = true;
-				}
-			}
-		}
-	}
+	//ステージ選択シーンへ移動
+	Next_StageScene_Switch();
 
 	//================================================================================
 	//地面
@@ -249,7 +240,10 @@ bool TitleScene::Update(void)
 			ground[i]->SuperUpdate();
 			//無限の道の削除と作成
 			if (player->GetGroNum() > i) {
-				if (judg.ball(player->GetMatCar(), ground[i]->GetMat(), player->GetRadF()) == false) {
+
+				float L_Radius = player->GetRadF();
+
+				if (judg.BallJudg(&judg.SetPosM(&player->GetMatCar()), &judg.SetPosM(&ground[i]->GetMat()), &L_Radius) == false) {
 					if (ground[i]->GetFlg() == true) {
 						delete ground[i];
 						ground.erase(ground.begin() + i);
@@ -339,10 +333,10 @@ bool TitleScene::Update(void)
 	}
 	player->UpdateCarFM(ground);
 	D3DXMATRIX Mat = player->GetMatCar();
-	judg.SetMatP(&Mat, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	judg.SetMatP(&Mat, &D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	player->UpdateAll(&Mat);
 	camera->Update(player->GetMatCar());
-	sky->Update(player->GetMatCar());
+	sky->Update(&player->GetMatCar());
 
 	
 	return true;
@@ -410,43 +404,45 @@ bool TitleScene::NowGroNum(D3DXMATRIX Mat, unsigned int *Num, float *Dis)
 	float size;
 	//地面レイ判定
 	for (unsigned int g = 0; g < ground.size(); g++) {
-		if (judg.ball(Mat, ground[g]->GetMat(), 40.0f) == true) {//自分の周囲の地面だけを判定
-			D3DXVECTOR3 v[4];
-			for (int i = 0; i < 4; i++) {
-				v[i] = ground[g]->GetVer(i);
-			}
-			if (ground[g]->GetIdenFlg() == false) {//地面がIdentityMatで出来ているかの判定
-				if (judg.RayPolM(Mat, v[0], v[1], v[2], v[3], ground[g]->GetMat(), D3DXVECTOR3(0.0f, -1.0f, 0.0f), &size) == true)//ポリゴンとレイ判定
-				{
-					*Num = g;
-					*Dis = size;
-					return true;
-				}
-			}
-			else {
-				if (judg.RayPolM(Mat, v[0], v[1], v[2], v[3], D3DXVECTOR3(0.0f, -1.0f, 0.0f), &size) == true)//ポリゴンとレイ判定
-				{
-					*Num = g;
-					*Dis = size;
-					return true;
-				}
-			}
+
+		float L_Radius = 40.0f;
+
+		//自分の周囲の地面だけを判定
+		if (judg.BallJudg(&judg.SetPosM(&Mat), &judg.SetPosM(&ground[g]->GetMat()), &L_Radius) != true) continue;
+		
+		D3DXVECTOR3 v[4];
+		for (int i = 0; i < 4; i++) {
+			v[i] = ground[g]->GetVer(i);
 		}
+
+		bool L_IdenFlg = ground[g]->GetIdenFlg();
+
+		//レイ判定
+		if (judg.RayJudg_Polygon(&judg.SetPosM(&Mat), &D3DXVECTOR3(0.0f, -1.0f, 0.0f), &ground[g]->GetMat(),
+			&v[0], &v[1], &v[2], &v[3], &size, &L_IdenFlg) != true) continue;
+
+		//レイが当たった時の処理
+
+		*Num = g;
+		*Dis = size;
+
+		return true;
+			
 	}
 	return false;
 }
 
 void TitleScene::ChangeSceneFade(int ChangeSceneNo)
 {
-	if (fade->GetMoveFlg() == false) {
-		if (SceneChangeFlg == false) {
-			SceneNo = ChangeSceneNo;
-			SceneChangeFlg = true;
-			bool BlackFlg = true;
-			//if (ChangeSceneNo == GameNo)BlackFlg = false;
-			fade->SetIn(BlackFlg);
-		}
-	}
+	if (fade->GetMoveFlg() != false) return;
+	if (SceneChangeFlg != false) return;
+
+	SceneNo = ChangeSceneNo;
+	SceneChangeFlg = true;
+	bool BlackFlg = true;
+	//if (ChangeSceneNo == GameNo)BlackFlg = false;
+	fade->SetIn(BlackFlg);
+		
 }
 
 bool TitleScene::SetScene(void)
@@ -465,4 +461,34 @@ bool TitleScene::Game_End(void)
 		return false;
 	}
 	return true;
+}
+
+void TitleScene::Next_StageScene_Switch(void)
+{
+	//スイッチの更新と動作の確認
+	if (startTex->UpdateSu() != false) return;
+
+	//マウスカーソルを手にする処理
+	mouse->SetTouchFlg();
+
+	//スイッチが動作中かの確認
+	if (startTex->GetMoveFlg() != false)return;
+
+	//シーン切り替え状態であるかの確認
+	if (SceneChangeFlg != false) return;
+
+	//クリックしたかの確認
+	if (key.LClickF() != true) return;
+
+	//スイッチの動作開始
+	startTex->SetMoveFlg(true);
+
+	//シーン切り替えの開始
+	ChangeSceneFade(StageSelectNo);
+
+	//BGMの削除
+	M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 1, &Co_Sound_Delete);
+
+	//クリック音
+	M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_Click, 1, &Co_Sound_New);
 }

@@ -44,9 +44,10 @@ void C_Bullet_PolMat::DrawBase(const D3DXVECTOR3 *CameraPos)
 		D3DXVECTOR3 vec, oPos, nPos;
 		Judg judg;
 
-		judg.SetPosM(&nPos, M_Polygon.PolMat[i]);
-		judg.SetPosM(&oPos, M_Polygon.PolMat[i + 1]);
-		vec = judg.Billboard(oPos, nPos, *CameraPos, M_PolSize->Get());
+		judg.SetPosM(&nPos, &M_Polygon.PolMat[i]);
+		judg.SetPosM(&oPos, &M_Polygon.PolMat[i + 1]);
+		float L_Size = M_PolSize->Get();
+		vec = judg.Billboard(&oPos, &nPos, CameraPos, &L_Size);
 		
 		v[0].Pos = nPos - vec;
 		v[1].Pos = nPos + vec;

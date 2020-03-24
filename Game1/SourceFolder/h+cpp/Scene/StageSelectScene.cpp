@@ -33,7 +33,8 @@ StageSelectScene::StageSelectScene()
 
 	key.Init();
 
-	M_C_Sound_Manager = new C_Sound_Manager_Game();
+	//サウンドの初期化
+	if (M_C_Sound_Manager == nullptr)M_C_Sound_Manager = new C_Sound_Manager_Base();
 
 
 	//選択モードの初期化の前に初期化
@@ -158,7 +159,7 @@ bool StageSelectScene::Update(void)
 
 	D3DXMATRIX tmp;
 	D3DXMatrixTranslation(&tmp, 0.0f, 2.0f, 0.0f);
-	sky->Update(tmp);
+	sky->Update(&tmp);
 	return true;
 }
 
@@ -459,6 +460,7 @@ bool StageSelectScene::Update_Car(void)
 	if (M_CarSet->Get_Mesh_JudgFlg() != Co_Draw_Mesh)return false;
 	l_Pos = M_CarSet->GetPartsPos();
 	float l_Dis;
+	Judg judg;
 	if (judg.Mesh(l_Pos, D3DXVECTOR3(0.0f, -1.0f, 0.0f), sky->GetDrawSkyMat(), sky->GetSkyMesh(), &l_Dis) == true) {
 		D3DXVECTOR3 l_Pos2 = l_Pos + D3DXVECTOR3(0.0f, -1.0f, 0.0f)*l_Dis;
 		

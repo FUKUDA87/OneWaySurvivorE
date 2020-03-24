@@ -1,10 +1,8 @@
 #pragma once
 #include"../Player/Camera.h"
 #include<d3dx9.h>
-#include"../GameSource/Judgment.h"
 #include"../Key/CMouse.h"
 
-extern Judg judg;
 
 class StageCam :public Camera {
 public:

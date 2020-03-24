@@ -28,8 +28,6 @@ bool C_CarParts::Update_Car_Parts(void)
 {
 	if (M_Car_Parts.size() < 1)return false;
 
-	Judg judg_a;
-
 	D3DXVECTOR3 ScalPos;
 	for (auto && p : M_Car_Parts) {
 
@@ -65,7 +63,7 @@ D3DXMATRIX C_CarParts::Get_Camera_Mat(void)
 		if (M_Data[d]->MeshTypeNo == Co_Parts_Gun) {
 			D3DXMATRIX TmpMat;
 			Judg judg_a;
-			judg_a.SetTransMat(&TmpMat, &M_Data[d]->TransPos);
+			judg_a.Set_TransMat(&TmpMat, &M_Data[d]->TransPos);
 			Mat = TmpMat * Mat;
 			break;
 		}
@@ -221,13 +219,19 @@ void C_CarParts::New_Car_Parts_Data(const int * CarNo)
 	}
 }
 
+void C_CarParts::New_Car_Judg_Parts(void)
+{
+}
+
 void C_CarParts::New_Set_Car_Parts(const BODYDATA * CarData)
 {
 	New_Car_Parts_Data(&CarData->CarBodyNo);
 
 	New_CarParts(CarData);
 
-	if (M_DriverNo!=co_PlayerCar)Delete_ALL_Data();
+	New_Car_Judg_Parts();
+
+	if (M_Driver!=Hit_Type_Player)Delete_ALL_Data();
 }
 
 void C_CarParts::New_Set_Car_Parts(const int * CarNo, std::vector<C_Parts_Set_Data*> M_Set_Data)
@@ -236,7 +240,9 @@ void C_CarParts::New_Set_Car_Parts(const int * CarNo, std::vector<C_Parts_Set_Da
 
 	New_CarParts(M_Set_Data);
 
-	if (M_DriverNo != co_PlayerCar)Delete_ALL_Data();
+	New_Car_Judg_Parts();
+
+	if (M_Driver != Hit_Type_Player)Delete_ALL_Data();
 }
 
 void C_CarParts::Delete_ALL_Parts(void)

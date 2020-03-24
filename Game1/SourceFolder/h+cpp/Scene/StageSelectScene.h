@@ -17,7 +17,7 @@
 #include"../StageParts/OkButton.h"
 #include"../StageParts/CarSet.h"
 #include"../StageParts/Stage_Room.h"
-#include"../Sound/Sound_Manager_Game.h"
+#include"../Sound/Sound_Manager_Base.h"
 
 
 class StageSelectScene :public SceneBase {

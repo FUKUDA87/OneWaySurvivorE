@@ -46,7 +46,7 @@ void C_Stage_Room_Stand::Set_Mat_Garage_Stand(void)
 
 	Judg judg;
 
-	M_Garage_Stand->Set_Mat(&judg.VecTransMat(M_Stand_Pos));
+	M_Garage_Stand->Set_Mat(&judg.Get_TransMat(&M_Stand_Pos));
 }
 
 void C_Stage_Room_Stand::New_Garage_Stand(std::string FileName)

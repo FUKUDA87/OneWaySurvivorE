@@ -18,15 +18,15 @@ C_GunMoveBase_A * C_Enemy_No1_Gun_1_Shot::Update(S_GUN_DATA * s_Data, const S_GU
 {
 	Init(s_Data,s_Update);
 
-	if (Chara->NowHp <= 0)return Get_Move(s_Data, &s_Update->StandMat, new C_Ene_1_Gun_1_Stop());
+	if (GunStop_Flg(s_Update, Chara))return Get_Move(s_Data, &s_Update->StandMat, &Chara->NowHp, new C_Ene_1_Gun_1_Stop());
 
 	bool Flg = M_Move->Get_BulletFlg(&s_Data->Departure_Num);
 
 	s_Data->BulletFlg = Flg;
 	
-	if (Flg != true)return Get_Move(s_Data, &s_Update->StandMat,new C_Enemy_No1_Gun_1_Re());
+	if (Flg != true)return Get_Move(s_Data, &s_Update->StandMat, &Chara->NowHp,new C_Enemy_No1_Gun_1_Re());
 
-	return Get_Move(s_Data,&s_Update->StandMat);
+	return Get_Move(s_Data,&s_Update->StandMat, &Chara->NowHp);
 }
 
 void C_Enemy_No1_Gun_1_Shot::Init(S_GUN_DATA * s_Data, const S_GUN_UPDATE_DATA * s_Update)

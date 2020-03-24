@@ -73,7 +73,7 @@ void C_PauseTouch::Draw2DPause(void)
 {
 	//位置のセット
 	D3DXMatrixTranslation(&Pause.Base.Mat, Pause.Base.Pos.x, Pause.Base.Pos.y, NULL);
-	judg.SetTransMat(&Pause.Base.Trans, &Pause.Base.TraPos);
+	judg.Set_TransMat(&Pause.Base.Trans, &Pause.Base.TraPos);
 	D3DXMatrixScaling(&Pause.Base.Scal, Pause.Base.ScaPos.x, Pause.Base.ScaPos.y, Pause.Base.ScaPos.z);
 	D3DXMATRIX tmp;
 	tmp = Pause.Base.Trans*Pause.Base.Mat;
@@ -93,7 +93,7 @@ void C_PauseTouch::Draw2DPause(void)
 
 bool C_PauseTouch::UpdatePause(void)
 {
-	return judg.PlaneCri(judg.SetMatP(Pause.Base.Pos+ Pause.Base.TraPos), Pause.Base.ScaPos, Pause.TEX.Width, Pause.TEX.Height);
+	return judg.PlaneCri(judg.SetMatP(&(Pause.Base.Pos+ Pause.Base.TraPos)), Pause.Base.ScaPos, Pause.TEX.Width, Pause.TEX.Height);
 }
 
 void C_PauseTouch::InitStage(void)
@@ -116,7 +116,7 @@ void C_PauseTouch::Draw2DStage(void)
 {
 	//位置のセット
 	D3DXMatrixTranslation(&Stage.Base.Mat, Stage.Base.Pos.x, Stage.Base.Pos.y, NULL);
-	judg.SetTransMat(&Stage.Base.Trans, &Stage.Base.TraPos);
+	judg.Set_TransMat(&Stage.Base.Trans, &Stage.Base.TraPos);
 	D3DXMatrixScaling(&Stage.Base.Scal, Stage.Base.ScaPos.x, Stage.Base.ScaPos.y, Stage.Base.ScaPos.z);
 	D3DXMATRIX tmp;
 	tmp = Stage.Base.Scal*Stage.Base.Trans*Stage.Base.Mat;
@@ -153,5 +153,5 @@ int C_PauseTouch::TouchNow2(void)
 
 bool C_PauseTouch::UpdateStage(void)
 {
-	return judg.PlaneCri(judg.SetMatP(Stage.Base.Pos+ Stage.Base.TraPos), Stage.Base.ScaPos, Stage.TEX.Width, Stage.TEX.Height);
+	return judg.PlaneCri(judg.SetMatP(&(Stage.Base.Pos+ Stage.Base.TraPos)), Stage.Base.ScaPos, Stage.TEX.Width, Stage.TEX.Height);
 }

@@ -39,7 +39,7 @@ D3DXMATRIX C_PartsDraw_Gun::Get_Parts_TransMat(void)
 
 	Judg judg;
 
-	D3DXMATRIX Mat = judg.VecTransMat(judg.GetVecVec(&M_Data.TarnsPos, &Get_Draw_ScalPos()));
+	D3DXMATRIX Mat = judg.Get_TransMat(&judg.GetVecVec(&M_Data.TarnsPos, &Get_Draw_ScalPos()));
 
 	return Mat;
 }

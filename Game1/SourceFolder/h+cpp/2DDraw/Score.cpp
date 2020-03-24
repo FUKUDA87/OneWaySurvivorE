@@ -2,7 +2,6 @@
 #include"../GameSource/TextureManager.h"
 #include"../GameSource/Judgment.h"
 
-extern Judg judg;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;
 extern TextureManager textureManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
@@ -37,6 +36,8 @@ void C_Score::Init(void)
 	snum.Base.ScaPos *= 0.9f;
 	sPoint.Base.ScaPos *= 0.9f;
 	//拡大行列
+	Judg judg;
+
 	judg.ScalingMat(&score.Base.Scal, &score.Base.ScaPos);
 	judg.ScalingMat(&snum.Base.Scal, &snum.Base.ScaPos);
 	judg.ScalingMat(&sPoint.Base.Scal, &sPoint.Base.ScaPos);
@@ -75,6 +76,8 @@ bool C_Score::Update(void)
 	//下がり値のアニメーション
 	if (sPoint.Base.DrawFlg == true) {
 		//アニメーション
+		Judg judg;
+
 		if (judg.Quaternion(&sPoint.Base.Mat, StartMat, EndMat, &Anime, AnimeFrame, true) == false) {
 			DrawCount -= 1;
 			if (DrawCount <= 0) {

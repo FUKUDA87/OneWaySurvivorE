@@ -5,6 +5,9 @@ C_Car_Pop_Base::C_Car_Pop_Base():Car_PopNo(0)
 	M_Car_Pop_EndFlg = false;
 	M_Car_Pop_Flg=false;
 
+	//¶¬‚³‚ê‚é’n–Ê‚Ì‰Šú‰»
+	M_Ground_Type = 0;
+
 	Init_Stage_Data();
 }
 

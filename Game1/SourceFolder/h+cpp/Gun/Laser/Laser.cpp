@@ -2,7 +2,6 @@
 #include"../../GameSource/TextureManager.h"
 #include"../../GameSource/Judgment.h"
 
-extern Judg judg;
 extern TextureManager textureManager;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
@@ -85,7 +84,7 @@ bool LaserA::UpdateL(float Dis, bool Flg)
 	return true;
 }
 
-void LaserA::Draw3D()
+void LaserA::Draw3D(const D3DXVECTOR3 *CameraPos)
 {
 	if (lasFlg == true) {
 		if (lasS.Base.Flg == true) {
@@ -113,9 +112,11 @@ void LaserA::Draw3D()
 			lpD3DDevice->SetFVF(FVF_VERTEX);//バグ
 			//ビルボード
 			D3DXVECTOR3 vec, LPos, EPos;
-			judg.SetPosM(&LPos, Las.Base.Mat);
-			judg.SetPosM(&EPos, lasE.Base.Mat);
-			vec = judg.Billboard(LPos, EPos, inv.GetcaPos(), 0.01f);
+			Judg judg;
+			judg.SetPosM(&LPos, &Las.Base.Mat);
+			judg.SetPosM(&EPos, &lasE.Base.Mat);
+			float L_Size = 0.01f;
+			vec = judg.Billboard(&LPos, &EPos, CameraPos,&L_Size);
 			Las.v[0].Pos = LPos + vec;
 			Las.v[1].Pos = LPos - vec;
 			Las.v[2].Pos = EPos - vec;

@@ -10,9 +10,9 @@ C_GunMoveBase_A * C_GunManual_1_1::Update(S_GUN_DATA * s_Data, const S_GUN_UPDAT
 {
 	D3DXMATRIX TmpMat;
 	Judg judg;
-	D3DXVECTOR3 Vec = judg.SetPosM(s_Update->StandMat);
+	D3DXVECTOR3 Vec = judg.SetPosM(&s_Update->StandMat);
 	Vec += s_Data->DrawBase.TransPos;
-	judg.SetTransMat(&TmpMat, &Vec);
+	judg.Set_TransMat(&TmpMat, &Vec);
 	s_Data->DrawBase.Mat = s_Update->CameraMat*RotXMat*TmpMat;
 
 	bool Flg = true;

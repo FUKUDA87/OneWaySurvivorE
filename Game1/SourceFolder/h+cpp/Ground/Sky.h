@@ -11,8 +11,7 @@ protected:
 public:
 	void Init();
 	Sky();
-	~Sky();
-	bool Update(D3DXMATRIX PM);
+	bool Update(const D3DXMATRIX *PM);
 	void Draw();
 
 	LPD3DXMESH GetSkyMesh(void) {

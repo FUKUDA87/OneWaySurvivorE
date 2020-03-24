@@ -1,11 +1,7 @@
 #include "Spark.h"
 #include"../../GameSource/TextureManager.h"
 #include"../../GameSource/Judgment.h"
-#include"../../GameSource/InvBi.h"
 
-extern Inv inv;
-
-extern Judg judg;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;
 extern TextureManager textureManager;
 
@@ -28,7 +24,8 @@ C_Spark::C_Spark(const D3DXMATRIX * Mat, const D3DXVECTOR3 * Pos)
 	//ずらす
 	D3DXMatrixTranslation(&Trans, 0.0f, 0.0f, 0.15f);
 	//位置の初期化
-	judg.SetMatP(&spark.Base.Mat, *Pos);
+	Judg judg;
+	judg.SetMatP(&spark.Base.Mat, Pos);
 	spark.Base.Mat = Rot * Trans * spark.Base.Mat;
 	//他の行列を初期化
 	for (int p = 0; p < PNum; p++) {
@@ -135,7 +132,7 @@ bool C_Spark::CountUpdate(void)
 	return true;
 }
 
-void C_Spark::Draw3D(void)
+void C_Spark::Draw3D(const D3DXVECTOR3 *CameraPos)
 {
 	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
@@ -150,9 +147,10 @@ void C_Spark::Draw3D(void)
 	for (int i = 0; i < (PNum - 1); i++) {
 		//ビルボード
 		D3DXVECTOR3 vec, oPos, nPos;
-		judg.SetPosM(&nPos, spark.PolMat[i]);
-		judg.SetPosM(&oPos, spark.PolMat[i + 1]);
-		vec = judg.Billboard(oPos, nPos, inv.GetcaPos(), PolSize);
+		Judg judg;
+		judg.SetPosM(&nPos, &spark.PolMat[i]);
+		judg.SetPosM(&oPos, &spark.PolMat[i + 1]);
+		vec = judg.Billboard(&oPos, &nPos, CameraPos, &PolSize);
 		spark.v[0].Pos = nPos - vec;
 		spark.v[1].Pos = nPos + vec;
 		spark.v[2].Pos = oPos + vec;
@@ -168,7 +166,7 @@ void C_Spark::Draw3D(void)
 	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
-void C_Spark::Draw3DSuper(void)
+void C_Spark::Draw3DSuper(const D3DXVECTOR3 *CameraPos)
 {
-	Draw3D();
+	Draw3D(CameraPos);
 }

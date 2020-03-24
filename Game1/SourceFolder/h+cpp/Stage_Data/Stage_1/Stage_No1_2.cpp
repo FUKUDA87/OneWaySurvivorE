@@ -7,12 +7,11 @@ C_Stage_No1_2::C_Stage_No1_2()
 	New_Car_Data(co_EnemyCar, 1, 180, -10);
 	New_Car_Data(co_EnemyCar, 1, 360, -10);
 	New_Car_Data(co_EnemyCar, 1, 100, -10);
+
+	//¶¬‚³‚ê‚é’n–Ê‚Ì‰Šú‰»
+	M_Ground_Type = 1;
 }
 
-int C_Stage_No1_2::Get_GroundNo(void)
-{
-	return 1;
-}
 
 C_Car_Pop_Base * C_Stage_No1_2::Next_Pop(void)
 {

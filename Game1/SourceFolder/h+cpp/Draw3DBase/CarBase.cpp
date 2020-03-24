@@ -1,9 +1,7 @@
 #include "CarBase.h"
 #include"../GameSource/XfileManager.h"
-#include"../GameSource/Judgment.h"
 #include"../GameSource/Motion.h"
 
-extern Judg judg;
 extern XfileManager xfileManager;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 extern Motion motion;
@@ -29,7 +27,7 @@ void C_CarBase::InitCar(void)
 
 	//行列の初期化
 	judg.InitMatPos(&Car.Base.Mat, &Car.Base.TraPos, &Car.Base.ScaPos);
-	judg.SetTransMat(&Car.Base.Trans, &Car.Base.TraPos);
+	judg.Set_TransMat(&Car.Base.Trans, &Car.Base.TraPos);
 	//メッシュの初期化
 	SetMeshCar(1);
 	//車の判定用
@@ -53,6 +51,9 @@ void C_CarBase::InitCar(void)
 
 	//車判定
 	SetDamageFlg(&Co_Damage_Yes);
+
+	//時間の初期化
+	MMove_Stop_Time = 0;
 }
 
 bool C_CarBase::UpdateCar(void)
@@ -64,7 +65,7 @@ bool C_CarBase::UpdateCarFM(std::vector<C_Ground_Object*> ground)
 {
 	//前進処理
 	CarFM.NowMat = Car.Base.Mat;
-	motion.Formove(Car.Con, &CarFM.NowMat, &CarFM.AnimeFrame
+	motion.Formove(&Car.Con, &CarFM.NowMat, &CarFM.AnimeFrame
 		, ground, &CarFM.QuaInitFlg, &CarFM.QuaMatInitFlg, &Car.Con.SpeedMul
 		, Car.Con.SpeedMulJudg, &CarFM.StartMat, &CarFM.EndMat, &CarFM.WayVec, &CarFM.CurFlg, &CarFM.CurVec, CarFM.BodyHeight);
 	//車体の方向を得るためにMatを入れる
@@ -175,6 +176,15 @@ bool C_CarBase::UpdateCountM(void)
 	return true;
 }
 
+void C_CarBase::Set_Move_Stop_Time(const int * Time)
+{
+	if (MMove_Stop_Time <= 0)return;
+
+	MMove_Stop_Time += *Time;
+
+	if (MMove_Stop_Time < 0)MMove_Stop_Time *= -1;
+}
+
 void C_CarBase::SetMeshCar(int MeshNo)
 {
 	XFILE3 X= carMeshManager.GetMesh(MeshNo);
@@ -184,7 +194,31 @@ void C_CarBase::SetMeshCar(int MeshNo)
 	Car.Base.BodRad = judg.GetRad(&Car.Con.ColModMesh, &Car.Base.NumVertex, &Car.Con.PosBig, &Car.Con.PosSmall);
 }
 
+void C_CarBase::Update_Gun_Data(void)
+{
+	//銃の動きのDataの更新
+	M_S_Gun_Update_Data.Gun_Stop_Flg = Judg_Gun_Move_Data();
+}
+
+void C_CarBase::Update_Move_Stop_Time(void)
+{
+	if (MMove_Stop_Time == 0)return;
+
+	MMove_Stop_Time--;
+
+	if (MMove_Stop_Time < 0)MMove_Stop_Time = 0;
+}
+
 void C_CarBase::Init_S_Gun_Update_Data(void)
 {
 	M_S_Gun_Update_Data.NowPhase = 0;
+}
+
+bool C_CarBase::Judg_Gun_Move_Data(void)
+{
+	if (Dead() == true)return true;
+
+	if (Get_Move_Stop_Time() > 0)return true;
+
+	return false;
 }

@@ -19,18 +19,16 @@ void Sky::Init()
 Sky::Sky(){
 	Init();
 }
-Sky::~Sky() {
 
-}
-bool Sky::Update(D3DXMATRIX PM) {
-	D3DXMatrixTranslation(&sky.Base.Trans, PM._41, PM._42, PM._43);//ˆÊ’u
+bool Sky::Update(const D3DXMATRIX *PM) {
+	D3DXMatrixTranslation(&sky.Base.Trans, PM->_41, PM->_42, PM->_43);//ˆÊ’u
 	sky.Base.Mat = sky.Base.RotY *sky.Base.Trans;
 	return true;
 }
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 void Sky::Draw(void) {
 	lpD3DDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
-	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	D3DXMATRIX TmpMat;
 	TmpMat = sky.Base.Scal * sky.Base.Mat;

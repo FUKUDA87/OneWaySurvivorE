@@ -1,8 +1,6 @@
 #include"ground.h"
 #include"../GameSource/TextureManager.h"
-//#include"../GameSource/Judgment.h"
-//
-//extern Judg judg;
+
 extern LPDIRECT3DDEVICE9 lpD3DDevice;
 extern TextureManager textureManager;
 
@@ -75,8 +73,8 @@ C_Ground::C_Ground(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUN
 		D3DXMatrixTranslation(&Trans, 0.0f, 0.0f, L_Init_Data.Length);
 		Mat2 = Trans * (*Mat3);
 		Mat1 = Trans * (*Mat4);
-		judg.SetPosM(&Pos[0], Mat1);
-		judg.SetPosM(&Pos[1], Mat2);
+		judg.SetPosM(&Pos[0], &Mat1);
+		judg.SetPosM(&Pos[1], &Mat2);
 		judg.SetPosM(&Pos[2], Mat3);
 		judg.SetPosM(&Pos[3], Mat4);
 		ground.Base.Mat = *Mat4;
@@ -89,7 +87,7 @@ C_Ground::C_Ground(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUN
 		gVec = Pos[1] - Pos[2];
 		gVec /= 2.0f;
 		gPos += gVec;
-		judg.SetMatP(&ground.Base.Mat, gPos);
+		judg.SetMatP(&ground.Base.Mat, &gPos);
 		qFlg = false;
 	}
 	else {
@@ -100,7 +98,7 @@ C_Ground::C_Ground(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUN
 			Mat2 = Trans * (*Mat3);
 			Mat2 = RotY * Mat2;
 			ground.Base.RotY = RotY;
-			judg.SetPosM(&Pos[1], Mat2);
+			judg.SetPosM(&Pos[1], &Mat2);
 			judg.SetPosM(&Pos[2], Mat3);
 			judg.SetPosM(&Pos[3], Mat4);
 			D3DXVec3TransformNormal(&Vec, &D3DXVECTOR3(-1.0f, 0.0f, 0.0f), &Mat2);
@@ -115,7 +113,7 @@ C_Ground::C_Ground(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUN
 			gVec = Pos[1] - Pos[2];
 			gVec /= 2.0f;
 			gPos += gVec;
-			judg.SetMatP(&ground.Base.Mat, gPos);
+			judg.SetMatP(&ground.Base.Mat, &gPos);
 			ground.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/syadou10-1.png", ground.TEX.Width, ground.TEX.Height, NULL);
 		}
 		else {
@@ -126,7 +124,7 @@ C_Ground::C_Ground(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUN
 				Mat1 = Trans * (*Mat4);
 				Mat1 = RotY * Mat1;
 				ground.Base.RotY = RotY;
-				judg.SetPosM(&Pos[0], Mat1);
+				judg.SetPosM(&Pos[0], &Mat1);
 				judg.SetPosM(&Pos[2], Mat3);
 				judg.SetPosM(&Pos[3], Mat4);
 				D3DXVec3TransformNormal(&Vec, &D3DXVECTOR3(1.0f, 0.0f, 0.0f), &Mat1);
@@ -141,7 +139,7 @@ C_Ground::C_Ground(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUN
 				gVec = Pos[0] - Pos[3];
 				gVec /= 2.0f;
 				gPos += gVec;
-				judg.SetMatP(&ground.Base.Mat, gPos);
+				judg.SetMatP(&ground.Base.Mat, &gPos);
 				bc = false;
 				//ground.TEX.Tex = textureManager.GetTexture("Texture/syadou8.png", ground.TEX.Width, ground.TEX.Height, NULL);
 			}
@@ -169,7 +167,7 @@ C_Ground::C_Ground(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUN
 	}
 	NowPos += MoveVec / 2.0f;
 	way.StartMat = *Mat4;
-	judg.SetMatP(&way.StartMat, NowPos);
+	judg.SetMatP(&way.StartMat, &NowPos);
 
 	//â°ÇÃèâä˙âª
 	way.CurTransX = new float[way.RailNum];
@@ -231,14 +229,14 @@ D3DXMATRIX C_Ground::GetMat0()
 	//êVÇΩÇ»ìπóp
 	D3DXMATRIX Trans;
 	if (IdenFlg == false) {
-		Trans = judg.VecTransMat(ground.v[0].Pos);
+		judg.Set_TransMat(&Trans, &ground.v[0].Pos);
 		Trans = Trans * ground.Base.Mat;
 	}
 	else {
 		Trans = ground.Base.Mat;
 		D3DXVECTOR3 gPos;
 		gPos = ground.v[0].Pos;
-		judg.SetMatP(&Trans, gPos);
+		judg.SetMatP(&Trans, &gPos);
 		Trans = ground.Base.RotY*Trans;
 	}
 	return Trans;
@@ -248,14 +246,14 @@ D3DXMATRIX C_Ground::GetMat1()
 {
 	D3DXMATRIX Trans;
 	if (IdenFlg == false) {
-		Trans = judg.VecTransMat(ground.v[1].Pos);
+		judg.Set_TransMat(&Trans, &ground.v[1].Pos);
 		Trans = Trans * ground.Base.Mat;
 	}
 	else {
 		Trans = ground.Base.Mat;
 		D3DXVECTOR3 gPos;
 		gPos = ground.v[1].Pos;
-		judg.SetMatP(&Trans, gPos);
+		judg.SetMatP(&Trans, &gPos);
 		Trans = ground.Base.RotY*Trans;
 	}
 	return Trans;

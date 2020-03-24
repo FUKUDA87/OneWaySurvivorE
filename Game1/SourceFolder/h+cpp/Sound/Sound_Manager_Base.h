@@ -4,9 +4,10 @@
 #include"../Const/Const_Sound_Type.h"
 #include"Base/Sound_Base_2D.h"
 #include"vector/Sound_Data_Vector.h"
+#include"../Const/Const_Damage.h"
 #include<vector>
 
-
+//サウンドの流すクラス
 class C_Sound_Manager_Base:public C_Sound_Data_Vector {
 public:
 	
@@ -30,6 +31,12 @@ public:
 	void Stop_Sound_2_All(const int CategoryNo);
 
 	void Strat_Sound_All(void);
+
+	//被弾音を流す処理
+	void Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos);
+
+	//被弾した物体が無敵状態の判定と音を流す処理
+	void Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos,const bool *DamageFlg);
 protected:
 	//2Dの検索
 	bool Set_Sound_2D(const S_SOUND_DATA* Data);
@@ -63,12 +70,17 @@ private:
 	//音を外部からNew
 	bool Set_Sound(const S_SOUND_DATA* Data);
 
+	//警告音を流す処理
 	bool Judg_Warning(const S_SOUND_DATA* Data);
 
+	//クリック音を流す処理
 	bool Judg_Click(const S_SOUND_DATA* Data);
 
 	//爆発の判定
 	bool Judg_Explosion_3D(const S_SOUND_DATA* Data);
+
+	//最新の音声を流す処理
+	void New_Sound_Play(void);
 
 
 };

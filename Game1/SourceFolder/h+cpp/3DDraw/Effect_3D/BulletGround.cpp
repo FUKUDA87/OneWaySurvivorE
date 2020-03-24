@@ -1,13 +1,10 @@
 #include "BulletGround.h"
 #include"../../GameSource/TextureManager.h"
-#include"../../GameSource/Judgment.h"
-#include"../../GameSource/InvBi.h"
 #include"../../GameSource/XfileManager.h"
+#include"../../GameSource/Judgment.h"
 
 extern XfileManager xfileManager;
-extern Inv inv;
 
-extern Judg judg;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;
 extern TextureManager textureManager;
 
@@ -74,6 +71,7 @@ void C_BulGro::InitBG(void)
 
 		//ägëÂçsóÒÇÃèâä˙âª
 		AspMat[a].ScaPos = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
+		Judg judg;
 		judg.ScalingMat(&AspMat[a].Scal, &AspMat[a].ScaPos);
 	}
 	
@@ -91,7 +89,7 @@ bool C_BulGro::Update(void)
 	return CountUpdate();
 }
 
-void C_BulGro::Draw3D(void)
+void C_BulGro::Draw3D(const D3DXVECTOR3 *CameraPos)
 {
 	//âåÇQÇÃÇΩÇﬂÇÃâ°ïùVec
 	D3DXVECTOR3 sVec;
@@ -110,7 +108,9 @@ void C_BulGro::Draw3D(void)
 		D3DXVECTOR3 vec, oPos, nPos;
 		oPos = Smoke.Base.Pos;
 		nPos = Smoke.Base.Pos + Smoke.Base.TraPos*SmoUpY;
-		vec = judg.Billboard(oPos, nPos, inv.GetcaPos(), 0.3f);
+		float L_Size = 0.3f;
+		Judg judg;
+		vec = judg.Billboard(&oPos, &nPos, CameraPos, &L_Size);
 		sVec = vec;
 		Smoke.v[0].Pos = nPos - vec;
 		Smoke.v[1].Pos = nPos + vec;

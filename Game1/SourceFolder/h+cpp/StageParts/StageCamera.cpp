@@ -1,4 +1,5 @@
 #include "StageCamera.h"
+#include"../GameSource/Judgment.h"
 
 void StageCam::Init_Car(void)
 {
@@ -30,7 +31,8 @@ bool StageCam::Update(D3DXMATRIX mat, D3DXMATRIX tmp, bool MouFlg)
 
 	D3DXMATRIX cMat;
 	cMat = tmp * mat;
-	judg.SetPosM(&camLook, cMat);
+	Judg judg;
+	judg.SetPosM(&camLook, &cMat);
 	D3DXMATRIX RotMat;
 	if (MouFlg == true) {
 		camAngY += upY;

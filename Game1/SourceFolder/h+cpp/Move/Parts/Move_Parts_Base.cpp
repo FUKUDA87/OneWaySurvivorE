@@ -11,7 +11,7 @@ D3DXMATRIX C_Move_Parts_Base::Get_PartsMat(const S_CAR_PARTS_DATA * s_Data, cons
 
 	Judg judg;
 
-	judg.SetTransMat(&Trans, &judg.GetVecVec(&s_Data->TransPos, ScalPos_Car));
+	judg.Set_TransMat(&Trans, &judg.GetVecVec(&s_Data->TransPos, ScalPos_Car));
 
 	D3DXMATRIX Mat;
 

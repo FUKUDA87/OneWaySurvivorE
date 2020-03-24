@@ -16,7 +16,9 @@ public:
 	virtual C_Car_Pop_Base *Update(const bool *Update_MoveFlg)=0;
 
 	//地面情報 
-	virtual int Get_GroundNo(void) = 0;
+	virtual int Get_GroundNo(void) {
+		return M_Ground_Type;
+	}
 
 	//車の出現の情報渡し
 	S_CAR_INIT_DATA Get_Next_Car_Data(void);
@@ -62,6 +64,9 @@ protected:
 
 	//車の出現可能
 	bool M_Car_Pop_Flg;
+
+	//生成される地面のタイプ
+	int M_Ground_Type;
 
 private:
 	//全削除

@@ -9,7 +9,7 @@ C_BulHol3D::C_BulHol3D(const D3DXMATRIX * Mat, const D3DXVECTOR3 * Pos, int Type
 	InitHol3D();
 
 	Hole.Base.Mat = *Mat;
-	judg.SetMatP(&Hole.Base.Mat, *Pos);
+	judg.SetMatP(&Hole.Base.Mat, Pos);
 
 	InitWall(TypeNo);
 	InitGround(TypeNo);

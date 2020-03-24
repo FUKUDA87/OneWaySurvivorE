@@ -43,7 +43,7 @@ void C_OverTouch::Draw2DRetry(void)
 {
 	//位置のセット
 	D3DXMatrixTranslation(&Retry.Base.Mat, Retry.Base.Pos.x, Retry.Base.Pos.y, NULL);
-	judg.SetTransMat(&Retry.Base.Trans, &Retry.Base.TraPos);
+	judg.Set_TransMat(&Retry.Base.Trans, &Retry.Base.TraPos);
 	D3DXMatrixScaling(&Retry.Base.Scal, Retry.Base.ScaPos.x, Retry.Base.ScaPos.y, Retry.Base.ScaPos.z);
 	D3DXMATRIX tmp;
 	tmp = Retry.Base.Scal*Retry.Base.Trans*Retry.Base.Mat;
@@ -100,5 +100,5 @@ void C_OverTouch::InitRetry(void)
 
 bool C_OverTouch::UpdateRetry(void)
 {
-	return judg.PlaneCri(judg.SetMatP(Retry.Base.Pos + Retry.Base.TraPos), Retry.Base.ScaPos, Retry.TEX.Width, Retry.TEX.Height);
+	return judg.PlaneCri(judg.SetMatP(&(Retry.Base.Pos + Retry.Base.TraPos)), Retry.Base.ScaPos, Retry.TEX.Width, Retry.TEX.Height);
 }

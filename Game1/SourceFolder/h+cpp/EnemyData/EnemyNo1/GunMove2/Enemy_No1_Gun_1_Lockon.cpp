@@ -13,9 +13,9 @@ C_GunMoveBase_A * C_Enemy_No1_Gun_1_Lockon::Update(S_GUN_DATA * s_Data, const S_
 {
 	s_Data->BulletFlg = false;
 
-	if (s_Update->NowPhase <= Phase0)return Get_Move(s_Data, &s_Update->StandMat);
+	if (s_Update->NowPhase <= Phase0)return Get_Move(s_Data, &s_Update->StandMat,&Chara->NowHp);
 
-	if(Chara->NowHp<=0)return Get_Move(s_Data, &s_Update->StandMat,new C_Ene_1_Gun_1_Stop());
+	if(GunStop_Flg(s_Update,Chara))return Get_Move(s_Data, &s_Update->StandMat, &Chara->NowHp,new C_Ene_1_Gun_1_Stop());
 
 	//if(s_Data->MoveFlg!=true)
 
@@ -23,32 +23,29 @@ C_GunMoveBase_A * C_Enemy_No1_Gun_1_Lockon::Update(S_GUN_DATA * s_Data, const S_
 
 	s_Data->Ray_Judg_Flg = true;
 
-	if(Ray_Judg(s_Data)!=true)return Get_Move(s_Data, &s_Update->StandMat, new C_Enemy_No1_Gun_1_Shot());
+	if(Ray_Judg(s_Data)!=true)return Get_Move(s_Data, &s_Update->StandMat, &Chara->NowHp, new C_Enemy_No1_Gun_1_Shot());
 
 	Init(s_Data, s_Update);
 
 	//if (s_Data->RayJudgFlg != true)return nullptr;
 
-	D3DXMATRIX StartMat, EndMat, NowMat, TmpMat;
-	TmpMat = s_Update->StandMat;
-	StartMat = Start.RotXMat*(Start.RotYMat*TmpMat);
-	EndMat = End.RotXMat*(End.RotYMat*TmpMat);
-
 	Judg judg;
 
+	bool MoveFlg=true;
+
 	//‰ñ“]
-	if (judg.Quaternion(&NowMat, StartMat, EndMat, &NowAnime, FrameAnime, true) == false) {
+	if (judg.AnimeFrameInc(&NowAnime, &FrameAnime, &MoveFlg) == true) {
 		//if (s_Data->RayHitFlg != true) {
-			InitFlg = true;
+		InitFlg = true;
 		//}
 	}
 
-	D3DXVECTOR3 Pos;
-	D3DXVec3TransformCoord(&Pos, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &NowMat);
 
-	judg.TarEndMat(&NowMat, TmpMat, &s_Data->NowRot.RotXMat, &s_Data->NowRot.RotYMat, Pos, D3DXVECTOR3(0.0f, 0.0f, 1.0f));
+	judg.AnimeQua(&s_Data->NowRot.RotXMat, &Start.RotXMat, &End.RotXMat, &NowAnime);
 
-	return Get_Move(s_Data, &s_Update->StandMat);
+	judg.AnimeQua(&s_Data->NowRot.RotYMat, &Start.RotYMat, &End.RotYMat, &NowAnime);
+
+	return Get_Move(s_Data, &s_Update->StandMat, &Chara->NowHp);
 }
 
 void C_Enemy_No1_Gun_1_Lockon::Init(S_GUN_DATA * s_Data,const S_GUN_UPDATE_DATA * s_Update)
@@ -63,7 +60,7 @@ void C_Enemy_No1_Gun_1_Lockon::Init(S_GUN_DATA * s_Data,const S_GUN_UPDATE_DATA 
 	Start.RotYMat = s_Data->NowRot.RotYMat;
 
 	D3DXMATRIX TmpMat;
-	TmpMat = s_Update->StandMat;
+	TmpMat =s_Update->StandMat;
 
 	Judg judg;
 

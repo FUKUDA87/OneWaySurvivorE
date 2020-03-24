@@ -1,12 +1,7 @@
 #include "SpaekDamage.h"
 #include"../../GameSource/TextureManager.h"
 #include"../../GameSource/Judgment.h"
-#include"../../GameSource/InvBi.h"
 
-extern Inv inv;
-
-
-extern Judg judg;
 extern TextureManager textureManager;
 
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
@@ -20,7 +15,8 @@ C_SparkDamage::C_SparkDamage(const D3DXMATRIX * Mat, const D3DXVECTOR3 * Pos, co
 	DrawSDFlg = true;
 	UpdateFlg = false;
 	spark.Base.Mat = *Mat;
-	judg.SetMatP(&spark.Base.Mat, *Pos);
+	Judg judg;
+	judg.SetMatP(&spark.Base.Mat, Pos);
 
 	//ポリゴンサイズの初期化
 	PolSize = 0.03f;
@@ -36,7 +32,7 @@ C_SparkDamage::C_SparkDamage(const D3DXMATRIX * Mat, const D3DXVECTOR3 * Pos, co
 	Flash.TEX = { NULL,128,128,NULL,NULL,NULL };
 	Flash.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/MuzFla1T.png", Flash.TEX.Width, Flash.TEX.Height, NULL);
 	Flash.Base.Mat = *Mat;
-	judg.SetMatP(&Flash.Base.Mat, *Pos);
+	judg.SetMatP(&Flash.Base.Mat, Pos);
 }
 
 C_SparkDamage::~C_SparkDamage()
@@ -61,7 +57,8 @@ bool C_SparkDamage::UpdateCar(void)
 {
 	spark.Base.Mat._42 += yUp;
 	//上移動と後ろ移動
-	judg.SetMatP(&spark.Base.Mat, judg.SetPosM(spark.Base.Mat) + spark.Base.Pos);
+	Judg judg;
+	judg.SetMatP(&spark.Base.Mat, &(judg.SetPosM(&spark.Base.Mat) + spark.Base.Pos));
 	//行列の更新
 	for (int i = (PNum - 1); i > 0; i--) {
 		spark.PolMat[i] = spark.PolMat[i - 1];
@@ -84,7 +81,7 @@ bool C_SparkDamage::UpdateSuper(void)
 	return Flg;
 }
 
-void C_SparkDamage::DrawSD(void)
+void C_SparkDamage::DrawSD(const D3DXVECTOR3 *CameraPos)
 {
 	if (DrawSDFlg == true) {
 		UpdateSD();
@@ -99,10 +96,12 @@ void C_SparkDamage::DrawSD(void)
 		D3DXVECTOR3 vec, oPos, nPos;
 		D3DXMATRIX TransTmp;
 		D3DXMatrixTranslation(&TransTmp, 0.0f, 1.0f*PolSizeSD, 0.0f);
-		judg.SetPosM(&nPos, TransTmp*Flash.Base.Mat);
+		Judg judg;
+		judg.SetPosM(&nPos, &(TransTmp*Flash.Base.Mat));
 		D3DXMatrixTranslation(&TransTmp, 0.0f, -1.0f*PolSizeSD, 0.0f);
-		judg.SetPosM(&oPos, TransTmp*Flash.Base.Mat);
-		vec = judg.Billboard(oPos, nPos, inv.GetcaPos(), 3.0f*PolSizeSD);
+		judg.SetPosM(&oPos, &(TransTmp*Flash.Base.Mat));
+		float L_Size = 3.0f*PolSizeSD;
+		vec = judg.Billboard(&oPos, &nPos, CameraPos, &L_Size);
 		Flash.v[0].Pos = nPos - vec;
 		Flash.v[1].Pos = nPos + vec;
 		Flash.v[2].Pos = oPos + vec;
@@ -116,10 +115,10 @@ void C_SparkDamage::DrawSD(void)
 
 }
 
-void C_SparkDamage::Draw3DSuper(void)
+void C_SparkDamage::Draw3DSuper(const D3DXVECTOR3 *CameraPos)
 {
-	Draw3D();
-	DrawSD();
+	Draw3D(CameraPos);
+	DrawSD(CameraPos);
 }
 
 void C_SparkDamage::SparkJudgGround(const D3DXMATRIX * Mat, const D3DXVECTOR3 * Pos, const int * SparkFlg)

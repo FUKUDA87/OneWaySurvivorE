@@ -1,35 +1,17 @@
 #include"Judgment.h"
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 extern HWND Hwnd;
-extern D3DXVECTOR3 CamPosG;
 
-bool Judg::ball(D3DXMATRIX mat1, D3DXMATRIX mat2,float rad) {
-	D3DXVECTOR3 pos1,pos2,targetPos;
-	pos1 = D3DXVECTOR3(mat1._41, mat1._42, mat1._43);
-	pos2 = D3DXVECTOR3(mat2._41, mat2._42, mat2._43);
-	targetPos = pos2 - pos1;
-	float length = D3DXVec3Length(&targetPos);
-	if (length < rad) {
-		return true;
-	}
-	return false;
-}
-
-bool Judg::ball(D3DXVECTOR3 PosA, D3DXMATRIX MatB, float Rad)
-{
-	bool Flg = false;
-	D3DXMATRIX Mat;
-	Mat=SetMatP(PosA);
-	Flg=ball(Mat, MatB, Rad);
-	return Flg;
-}
-
-bool Judg::Ball(const D3DXVECTOR3 * PosA, const D3DXVECTOR3 * PosB, const float * Radius)
+bool Judg::BallJudg(const D3DXVECTOR3 * PosA, const D3DXVECTOR3 * PosB, const float * Radius)
 {
 	D3DXVECTOR3 targetPos;
+
 	targetPos = (*PosB) - (*PosA);
+
 	float length = D3DXVec3Length(&targetPos);
+
 	if (length < *Radius) return true;
+
 	return false;
 }
 
@@ -51,25 +33,18 @@ bool Judg::ball(D3DXMATRIX mat1, D3DXMATRIX mat2, float rad,D3DXMATRIX *Trans1,D
 	return false;
 }
 
-float Judg::ball(D3DXMATRIX mat1, D3DXMATRIX mat2)
+float Judg::BallJudg(const D3DXVECTOR3 * PosA, const D3DXVECTOR3 * PosB)
 {
-	D3DXVECTOR3 pos1, pos2, targetPos;
-	pos1 = D3DXVECTOR3(mat1._41, mat1._42, mat1._43);
-	pos2 = D3DXVECTOR3(mat2._41, mat2._42, mat2._43);
-	targetPos = pos2 - pos1;
-	float length = D3DXVec3Length(&targetPos);
-	return length;
+	D3DXVECTOR3 targetPos;
+
+	targetPos = (*PosB) - (*PosA);
+
+	return D3DXVec3Length(&targetPos);
 }
 
-bool Judg::ball(judgDeta *jd, D3DXMATRIX matB, float radB, int damB)
+bool Judg::Pop_BallJudg(const D3DXVECTOR3 * PosA, const D3DXVECTOR3 * PosB, const float * Radius)
 {
-	if (ball(jd->Mat, matB, jd->Rad + radB) == true) {
-		jd->Hp -= damB;
-		if (HPj(&jd->Hp, &jd->MaxHp) == true) {
-			return true;
-		}
-	}
-	return false;
+	return BallJudg(&D3DXVECTOR3(PosA->x, 0.0f, PosA->z), &D3DXVECTOR3(PosB->x, 0.0f, PosB->z), Radius);
 }
 
 bool Judg::HPj(int *NowHp, int *NowMaxHp)
@@ -86,192 +61,113 @@ bool Judg::HPj(int *NowHp, int *NowMaxHp)
 	return true;
 }
 
-bool Judg::RayPolM(D3DXMATRIX mat,D3DXVECTOR3 v0, D3DXVECTOR3 v1, D3DXVECTOR3 v2, D3DXVECTOR3 v3, D3DXMATRIX pmat,D3DXVECTOR3 ray,float *Dis)
+bool Judg::RayJudg_Polygon(const D3DXVECTOR3 * Ray_Pos, const D3DXVECTOR3 * Ray_Vec,
+	const D3DXVECTOR3 * vA, const D3DXVECTOR3 * vB, const D3DXVECTOR3 * vC, const D3DXVECTOR3 * vD, float *Dis)
 {
-	D3DXVECTOR3 Pos,VPos[4];
-	Pos = D3DXVECTOR3(mat._41, mat._42, mat._43);
-	D3DXVec3TransformCoord(&VPos[0], &v0, &pmat);
-	D3DXVec3TransformCoord(&VPos[1], &v1, &pmat);
-	D3DXVec3TransformCoord(&VPos[2], &v2, &pmat);
-	D3DXVec3TransformCoord(&VPos[3], &v3, &pmat);
-	D3DXVec3Normalize(&ray, &ray);
-	if (D3DXIntersectTri(&VPos[0], &VPos[1], &VPos[2], &Pos, &ray, NULL, NULL, Dis) ||
-		D3DXIntersectTri(&VPos[0], &VPos[2], &VPos[3], &Pos, &ray, NULL, NULL, Dis)) {
+	//レイ方向
+	D3DXVECTOR3 L_RayVec = *Ray_Vec;
+
+	D3DXVec3Normalize(&L_RayVec, &L_RayVec);
+
+	//レイが当たった長さ
+	float L_Dis;
+
+	if (D3DXIntersectTri(vA, vB, vC, Ray_Pos, &L_RayVec, NULL, NULL, &L_Dis) ||
+		D3DXIntersectTri(vA, vC, vD, Ray_Pos, &L_RayVec, NULL, NULL, &L_Dis)) {
+
+		if (Dis != nullptr)*Dis = L_Dis;
+
 		return true;
+
 	}
+
 	return false;
 }
 
-bool Judg::RayPolP(D3DXVECTOR3 Pos, D3DXVECTOR3 v0, D3DXVECTOR3 v1, D3DXVECTOR3 v2, D3DXVECTOR3 v3, D3DXMATRIX pmat, D3DXVECTOR3 ray, float * Dis)
+bool Judg::RayJudg_Polygon(const D3DXVECTOR3 * Ray_Pos, const D3DXVECTOR3 * Ray_Vec, const D3DXMATRIX * Polygon_Mat,
+	const D3DXVECTOR3 * vA, const D3DXVECTOR3 * vB, const D3DXVECTOR3 * vC, const D3DXVECTOR3 * vD, float * Dis)
 {
 	D3DXVECTOR3 VPos[4];
-	D3DXVec3TransformCoord(&VPos[0], &v0, &pmat);
-	D3DXVec3TransformCoord(&VPos[1], &v1, &pmat);
-	D3DXVec3TransformCoord(&VPos[2], &v2, &pmat);
-	D3DXVec3TransformCoord(&VPos[3], &v3, &pmat);
-	D3DXVec3Normalize(&ray, &ray);
-	if (D3DXIntersectTri(&VPos[0], &VPos[1], &VPos[2], &Pos, &ray, NULL, NULL, Dis) ||
-		D3DXIntersectTri(&VPos[0], &VPos[2], &VPos[3], &Pos, &ray, NULL, NULL, Dis)) {
-		return true;
-	}
-	return false;
+	D3DXVec3TransformCoord(&VPos[0], vA, Polygon_Mat);
+	D3DXVec3TransformCoord(&VPos[1], vB, Polygon_Mat);
+	D3DXVec3TransformCoord(&VPos[2], vC, Polygon_Mat);
+	D3DXVec3TransformCoord(&VPos[3], vD, Polygon_Mat);
+
+	//レイ判定
+	return RayJudg_Polygon(Ray_Pos, Ray_Vec, &VPos[0], &VPos[1], &VPos[2], &VPos[3], Dis);
 }
 
-bool Judg::RayPolP(D3DXVECTOR3 Pos, D3DXVECTOR3 v0, D3DXVECTOR3 v1, D3DXVECTOR3 v2, D3DXVECTOR3 v3, D3DXVECTOR3 ray, float * Dis)
+bool Judg::RayJudg_Polygon_SmallDis(const D3DXVECTOR3 * Ray_Pos, const D3DXVECTOR3 * Ray_Vec, const D3DXMATRIX * Polygon_Mat,
+	const D3DXVECTOR3 * vA, const D3DXVECTOR3 * vB, const D3DXVECTOR3 * vC, const D3DXVECTOR3 * vD, float * Small_Dis)
 {
-	D3DXVECTOR3 VPos[4];
-	VPos[0] = v0;
-	VPos[1] = v1;
-	VPos[2] = v2;
-	VPos[3] = v3;
-	D3DXVec3Normalize(&ray, &ray);
-	if (D3DXIntersectTri(&VPos[0], &VPos[1], &VPos[2], &Pos, &ray, NULL, NULL, Dis) ||
-		D3DXIntersectTri(&VPos[0], &VPos[2], &VPos[3], &Pos, &ray, NULL, NULL, Dis)) {
-		return true;
-	}
-	return false;
-}
+	if (Small_Dis == nullptr)return false;
 
-bool Judg::RayPolM(D3DXMATRIX Mat,D3DXVECTOR3 v0, D3DXVECTOR3 v1, D3DXVECTOR3 v2, D3DXVECTOR3 v3, D3DXVECTOR3 ray, float * Dis)
-{
-	D3DXVECTOR3 Pos,VPos[4];
-	Pos = D3DXVECTOR3(Mat._41, Mat._42, Mat._43);
-	VPos[0] = v0;
-	VPos[1] = v1;
-	VPos[2] = v2;
-	VPos[3] = v3;
-	D3DXVec3Normalize(&ray, &ray);
-	if (D3DXIntersectTri(&VPos[0], &VPos[1], &VPos[2], &Pos, &ray, NULL, NULL, Dis) ||
-		D3DXIntersectTri(&VPos[0], &VPos[2], &VPos[3], &Pos, &ray, NULL, NULL, Dis)) {
-		return true;
-	}
-	return false;
-}
+	float Dis;
 
-D3DXVECTOR3 Judg::Pos2D(D3DXVECTOR3 pos3D)
-{
-	D3DXMATRIX IdenMat;
-	D3DXMatrixIdentity(&IdenMat);
-	D3DXVECTOR3 pos2D;
-	if (D2Flg == true) {
-		D3DXVec3Project(&pos2D, &pos3D, &SViewport, &SmProj, &SmView, &IdenMat);
-	}
-	return pos2D;
-}
+	if (RayJudg_Polygon(Ray_Pos, Ray_Vec, Polygon_Mat, vA, vB, vC, vD, &Dis) == true) {
 
-D3DXVECTOR3 Judg::Pos2D(const D3DXVECTOR3 * Pos3D, const D3DXMATRIX * mProj, const D3DXMATRIX * mView, const D3DVIEWPORT9 * Viewport)
-{
-	D3DXMATRIX IdenMat;
-	D3DXMatrixIdentity(&IdenMat);
-	D3DXVECTOR3 pos2D;
-	D3DXVec3Project(&pos2D, Pos3D, Viewport, mProj, mView, &IdenMat);
-	return pos2D;
-}
-
-void Judg::CC(const D3DXMATRIX * mProj, const D3DXMATRIX * mView, const D3DVIEWPORT9 * Viewport)
-{
-	// 視錐台の平面の法線ベクトル計算
-	float x1 = (float)Viewport->X;
-	float y1 = (float)Viewport->Y;
-	float x2 = (float)Viewport->X + (float)Viewport->Width;
-	float y2 = (float)Viewport->Y + (float)Viewport->Height;
-	D3DXVECTOR3 Near[4];
-	D3DXVECTOR3 Far[4];
-	Near[0] = D3DXVECTOR3(x1, y1, 0);
-	Near[1] = D3DXVECTOR3(x2, y1, 0);
-	Near[2] = D3DXVECTOR3(x1, y2, 0);
-	Near[3] = D3DXVECTOR3(x2, y2, 0);
-	Far[0] = D3DXVECTOR3(x1, y1, 1);
-	Far[1] = D3DXVECTOR3(x2, y1, 1);
-	Far[2] = D3DXVECTOR3(x1, y2, 1);
-	Far[3] = D3DXVECTOR3(x2, y2, 1);
-
-	// 視錐台の８点の計算
-	D3DXMATRIX world;
-	D3DXMatrixIdentity(&world);
-	for (int i = 0; i < 4; ++i)
-	{
-		D3DXVec3Unproject(&Near[i], &Near[i], Viewport, mProj, mView,
-			&world);
-		D3DXVec3Unproject(&Far[i], &Far[i], Viewport, mProj, mView,
-			&world);
-	}
-
-	// 平面の3点から法線の計算
-	D3DXVECTOR3 nt, nb, nl, nr;
-	D3DXVECTOR3 tmp1, tmp2;
-
-	// 左
-	tmp1 = Near[2] - Near[0];
-	tmp2 = Far[0] - Near[0];
-	D3DXVec3Cross(&nl, &tmp1, &tmp2);
-	D3DXVec3Normalize(&nl, &nl);
-
-	// 右
-	tmp1 = Near[3] - Near[1];
-	tmp2 = Far[1] - Near[1];
-	D3DXVec3Cross(&nr, &tmp1, &tmp2);
-	D3DXVec3Normalize(&nr, &nr);
-
-	// 上
-	tmp1 = Near[3] - Near[2];
-	tmp2 = Far[2] - Near[2];
-	D3DXVec3Cross(&nt, &tmp1, &tmp2);
-	D3DXVec3Normalize(&nt, &nt);
-
-	// 下
-	tmp1 = Far[0] - Near[0];
-	tmp2 = Near[1] - Near[0];
-	D3DXVec3Cross(&nb, &tmp1, &tmp2);
-	D3DXVec3Normalize(&nb, &nb);
-
-	//for (SphereIterator it = mSphere.begin(); it != mSphere.end(); ++it)
-	//{
-	//	D3DXVECTOR3 pos = (*it).position;
-
-	//	// 上下左右との比較(Near,Farは省略) normal ・ center > radius
-	//	if ((nt.x * pos.x + nt.y * pos.y + nt.z * pos.z > (*it).radius
-	//		|| nb.x * pos.x + nb.y * pos.y + nb.z * pos.z > (*it).radius
-	//		|| nl.x * pos.x + nl.y * pos.y + nl.z * pos.z > (*it).radius
-	//		|| nr.x * pos.x + nr.y * pos.y + nr.z * pos.z > (*it).radius))
-	//	{
-	//		(*it).is_visible = false;
-	//		continue;
-	//	}
-
-	//	// 合格
-	//	(*it).is_visible = true;
-	//}
-}
-
-void Judg::Pos2Dpvv(D3DXMATRIX mProj, D3DXMATRIX mView, D3DVIEWPORT9 Viewport)
-{
-	SmProj = mProj;
-	SmView = mView;
-	SViewport = Viewport;
-	if (D2Flg == false) {
-		D2Flg = true;
-	}
-}
-
-D3DXVECTOR3 Judg::Pos2DPE(D3DXMATRIX eMat, D3DXMATRIX pMat)
-{
-	D3DXVECTOR3 Pos, EPos;
-	if (D2Flg == true) {
-		EPos = D3DXVECTOR3(eMat._41, eMat._42, eMat._43);
-		Pos = Pos2D(EPos);
-		if ((Pos.z < 0) || (Pos.z > 1)) {
-			//playerからみて逆の位置のenemy
-			D3DXVECTOR3 PPos, vec;
-			PPos = D3DXVECTOR3(pMat._41, pMat._42, pMat._43);
-			vec = PPos - EPos;
-			EPos = PPos + vec;
-			EPos.y = eMat._42;
-			Pos = Pos2D(EPos);
-			Pos.z = 2.0f;
+		if (*Small_Dis > Dis) {
+			*Small_Dis = Dis;
+			return true;
 		}
+
 	}
-	return Pos;
+
+	return false;
+}
+
+bool Judg::RayJudg_Polygon_SmallDis(const D3DXVECTOR3 * Ray_Pos, const D3DXVECTOR3 * Ray_Vec,
+	const D3DXVECTOR3 * vA, const D3DXVECTOR3 * vB, const D3DXVECTOR3 * vC, const D3DXVECTOR3 * vD, float * Small_Dis)
+{
+	if (Small_Dis == nullptr)return false;
+
+	float Dis;
+
+	if (RayJudg_Polygon(Ray_Pos, Ray_Vec, vA, vB, vC, vD, &Dis) == true) {
+
+		if (*Small_Dis > Dis) {
+			*Small_Dis = Dis;
+			return true;
+		}
+
+	}
+	
+	return false;
+}
+
+bool Judg::RayJudg_Polygon(const D3DXVECTOR3 * Ray_Pos, const D3DXVECTOR3 * Ray_Vec, const D3DXMATRIX * Polygon_Mat,
+	const D3DXVECTOR3 * vA, const D3DXVECTOR3 * vB, const D3DXVECTOR3 * vC, const D3DXVECTOR3 * vD, float * Small_Dis,
+	const bool * Judg_Type_IdenMat)
+{
+	if (*Judg_Type_IdenMat == true)return RayJudg_Polygon(Ray_Pos, Ray_Vec, vA, vB, vC, vD, Small_Dis);
+
+	return RayJudg_Polygon(Ray_Pos, Ray_Vec, Polygon_Mat, vA, vB, vC, vD, Small_Dis);
+}
+
+void Judg::Pos2D(D3DXVECTOR3 * Pos_2D, const D3DXVECTOR3 * Pos3D, const D3DXMATRIX * mProj, const D3DXMATRIX * mView, const D3DVIEWPORT9 * Viewport)
+{
+	D3DXMATRIX IdenMat;
+	D3DXMatrixIdentity(&IdenMat);
+	D3DXVec3Project(Pos_2D, Pos3D, Viewport, mProj, mView, &IdenMat);
+}
+
+void Judg::Pos2DPE(D3DXVECTOR3 * Pos_2D, const D3DXMATRIX * eMat, const D3DXMATRIX * pMat, const D3DXMATRIX * mProj, const D3DXMATRIX * mView, const D3DVIEWPORT9 * Viewport)
+{
+	D3DXVECTOR3 EPos;
+
+	EPos = D3DXVECTOR3(eMat->_41, eMat->_42, eMat->_43);
+	Pos2D(Pos_2D,&EPos,mProj,mView,Viewport);
+
+	if ((Pos_2D->z >= 0.0f) && (Pos_2D->z <= 1.0f)) return;
+
+	//playerからみて逆の位置のenemy
+	D3DXVECTOR3 PPos, vec;
+	PPos = D3DXVECTOR3(pMat->_41, pMat->_42, pMat->_43);
+	vec = PPos - EPos;
+	EPos = PPos + vec;
+	EPos.y = eMat->_42;
+	Pos2D(Pos_2D, &EPos, mProj, mView, Viewport);
+	Pos_2D->z = 2.0f;
 }
 
 double Judg::Ang(D3DXVECTOR3 pla,D3DXVECTOR3 tar,D3DXVECTOR3 vec)
@@ -333,6 +229,29 @@ bool Judg::Mesh(D3DXVECTOR3 pos, D3DXVECTOR3 vec,D3DXMATRIX mat, LPD3DXMESH mesh
 	}
 }
 
+bool Judg::RayJudg_Mesh(const D3DXVECTOR3 * Ray_Pos, const D3DXVECTOR3 * Ray_Vec, const D3DXMATRIX * Draw_Mat, const LPD3DXMESH Mesh, float * Small_Dis)
+{
+	//セットする
+	D3DXMATRIX InvMat;
+	D3DXMatrixInverse(&InvMat, NULL, Draw_Mat);
+	D3DXVECTOR3 LocalPos, LocalVec;
+	D3DXVec3TransformCoord(&LocalPos, Ray_Pos, &InvMat);
+	D3DXVec3TransformNormal(&LocalVec, Ray_Vec, &InvMat);
+	//レイ判定
+	BOOL Hit;
+	float Dis;
+	D3DXIntersect(Mesh, &LocalPos, &LocalVec, &Hit, NULL, NULL, NULL, &Dis, NULL, NULL);
+
+	if (Hit != TRUE)return false;
+
+	if (*Small_Dis > Dis) {
+		*Small_Dis = Dis;
+		return true;
+	}
+
+	return false;
+}
+
 bool Judg::Mesh(D3DXMATRIX MatA, int VecNumA, float BodyRadA, D3DXMATRIX MatB, LPD3DXMESH MeshB)
 {
 	//方向Vec
@@ -376,7 +295,7 @@ bool Judg::Mesh(D3DXMATRIX MatA, int VecNumA, float BodyRadA, D3DXMATRIX MatB, L
 	//MatAのPos
 	D3DXVECTOR3 PosA;
 	//PosAにMatAの座標を入れる
-	PosA = SetPosM(MatA);
+	SetPosM(&PosA,&MatA);
 	//レイ判定
 	if (Mesh(PosA, Vec, MatB, MeshB, &Dis) == true) {
 
@@ -496,28 +415,9 @@ bool Judg::TarEndMat(D3DXMATRIX * mat, D3DXMATRIX TransMat, D3DXMATRIX * RotXMat
 	return true;
 }
 
-D3DXVECTOR3 Judg::Get_MatPos(const D3DXMATRIX * Mat)
-{
-	D3DXVECTOR3 Pos = D3DXVECTOR3(Mat->_41, Mat->_42, Mat->_43);
-	return Pos;
-}
-
-
-
-D3DXVECTOR3 Judg::SetPosM(D3DXMATRIX Mat)
-{
-	return D3DXVECTOR3(Mat._41, Mat._42, Mat._43);
-}
-
 D3DXVECTOR3 Judg::SetPosM(const D3DXMATRIX * Mat)
 {
 	return D3DXVECTOR3(Mat->_41, Mat->_42, Mat->_43);
-}
-
-bool Judg::SetPosM(D3DXVECTOR3 *Pos, D3DXMATRIX Mat)
-{
-	*Pos = D3DXVECTOR3(Mat._41, Mat._42, Mat._43);
-	return true;
 }
 
 void Judg::SetPosM(D3DXVECTOR3 * Pos, const D3DXMATRIX * Mat)
@@ -525,21 +425,20 @@ void Judg::SetPosM(D3DXVECTOR3 * Pos, const D3DXMATRIX * Mat)
 	*Pos = D3DXVECTOR3(Mat->_41, Mat->_42, Mat->_43);
 }
 
-D3DXMATRIX Judg::SetMatP(D3DXVECTOR3 Pos)
+D3DXMATRIX Judg::SetMatP(const D3DXVECTOR3 *Pos)
 {
 	D3DXMATRIX Mat;
-	Mat._41 = Pos.x;
-	Mat._42 = Pos.y;
-	Mat._43 = Pos.z;
+
+	SetMatP(&Mat,Pos);
+
 	return Mat;
 }
 
-bool Judg::SetMatP(D3DXMATRIX * Mat, D3DXVECTOR3 Pos)
+void Judg::SetMatP(D3DXMATRIX * Mat,const D3DXVECTOR3 *Pos)
 {
-	Mat->_41 = Pos.x;
-	Mat->_42 = Pos.y;
-	Mat->_43 = Pos.z;
-	return true;
+	Mat->_41 = Pos->x;
+	Mat->_42 = Pos->y;
+	Mat->_43 = Pos->z;
 }
 
 bool Judg::AnimeProc(D3DXMATRIX * NowMat, D3DXMATRIX StartMat, D3DXMATRIX EndMat, float AnimeFrame)
@@ -551,12 +450,21 @@ bool Judg::AnimeProc(D3DXMATRIX * NowMat, D3DXMATRIX StartMat, D3DXMATRIX EndMat
 	D3DXMatrixRotationQuaternion(NowMat, &NowQua);
 
 	D3DXVECTOR3 StartPos, EndPos, NowPos;
-	SetPosM(&StartPos, StartMat);
-	SetPosM(&EndPos,EndMat);
+	SetPosM(&StartPos, &StartMat);
+	SetPosM(&EndPos,&EndMat);
 	D3DXVec3Lerp(&NowPos, &StartPos, &EndPos, AnimeFrame);
 	SetFloatQ(&NowPos);
-	SetMatP(NowMat, NowPos);
+	SetMatP(NowMat, &NowPos);
 	return true;
+}
+
+void Judg::AnimeQua(D3DXMATRIX * NowMat, const D3DXMATRIX * StartMat, const D3DXMATRIX * EndMat, const float * AnimeFrame)
+{
+	D3DXQUATERNION StartQua, EndQua, NowQua;
+	D3DXQuaternionRotationMatrix(&StartQua, StartMat);
+	D3DXQuaternionRotationMatrix(&EndQua, EndMat);
+	D3DXQuaternionSlerp(&NowQua, &StartQua, &EndQua, *AnimeFrame);
+	D3DXMatrixRotationQuaternion(NowMat, &NowQua);
 }
 
 bool Judg::AnimeProc(D3DXVECTOR3 * NowPos, D3DXVECTOR3 StartPos, D3DXVECTOR3 EndPos, float AnimeFrame)
@@ -579,6 +487,26 @@ bool Judg::AnimeFrameInc(float * AnimeFrame, float up, bool upFlg)
 		return false;
 	}
 	return true;
+}
+
+bool Judg::AnimeFrameInc(float * AnimeFrame, const float * up, const bool * FrameMoveFlg)
+{
+	if (*FrameMoveFlg != true)return false;
+
+	//フレームに変化
+	*AnimeFrame += *up;
+
+	if (*AnimeFrame < 0.0f) {
+		*AnimeFrame = 0.0f;
+		return true;
+	}
+
+	if (*AnimeFrame > 1.0f) {
+		*AnimeFrame = 1.0f;
+		return true;
+	}
+
+	return false;
 }
 
 bool Judg::Quaternion(D3DXMATRIX * NowMat, D3DXMATRIX StartMat, D3DXMATRIX EndMat, float * AnimeFrame, float up, bool upFlg)
@@ -606,29 +534,29 @@ D3DXVECTOR3 Judg::DisPos(D3DXVECTOR3 PosA, D3DXVECTOR3 PosB, float Dis)
 	return PosD;
 }
 
-D3DXVECTOR3 Judg::Billboard(const D3DXVECTOR3 OldPos, const D3DXVECTOR3 NowPos, const D3DXVECTOR3 camPos, const float Size)
+D3DXVECTOR3 Judg::Billboard(const D3DXVECTOR3 * OldPos, const D3DXVECTOR3 * NowPos, const D3DXVECTOR3 * camPos, const float * Size)
 {
 	D3DXVECTOR3 LPos, EPos, CPos, cVec, eVec, vec;
-	LPos = OldPos;
-	EPos = NowPos;
-	CPos = camPos;
+	LPos = *OldPos;
+	EPos = *NowPos;
+	CPos = *camPos;
 	cVec = CPos - LPos;
 	eVec = EPos - LPos;
 	D3DXVec3Normalize(&cVec, &cVec);
 	D3DXVec3Normalize(&eVec, &eVec);
 	D3DXVec3Cross(&vec, &cVec, &eVec);
 	D3DXVec3Normalize(&vec, &vec);
-	vec = vec * Size;
+	vec = vec * (*Size);
 	return vec;
 }
 
-D3DXVECTOR3 Judg::Billboard(const D3DXVECTOR3 OldPos, const D3DXVECTOR3 NowPos, const float Size,const bool Reverse)
+D3DXVECTOR3 Judg::Billboard(const D3DXVECTOR3 *OldPos, const D3DXVECTOR3 *NowPos,const D3DXVECTOR3 *CameraPos, const float *Size,const bool *Reverse)
 {
 	D3DXVECTOR3 LPos, EPos, CPos, cVec, eVec, vec;
-	LPos = OldPos;
-	EPos = NowPos;
-	CPos = CamPosG;
-	if (Reverse == false) {
+	LPos = *OldPos;
+	EPos = *NowPos;
+	CPos = *CameraPos;
+	if (*Reverse == false) {
 		cVec = CPos - LPos;
 		eVec = EPos - LPos;
 	}
@@ -640,7 +568,7 @@ D3DXVECTOR3 Judg::Billboard(const D3DXVECTOR3 OldPos, const D3DXVECTOR3 NowPos, 
 	D3DXVec3Normalize(&eVec, &eVec);
 	D3DXVec3Cross(&vec, &cVec, &eVec);
 	D3DXVec3Normalize(&vec, &vec);
-	vec = vec * Size;
+	vec = vec * (*Size);
 	return vec;
 }
 
@@ -724,7 +652,7 @@ bool Judg::PlaneCri(const D3DXMATRIX MatA, const D3DXVECTOR3 sPos, const int Wid
 {
 	RECT rcM;
 	D3DXVECTOR3 pos;
-	SetPosM(&pos, MatA);
+	SetPosM(&pos, &MatA);
 	PlaneP(&rcM, pos, sPos, Width, Height);
 	POINT Pt;
 	Pt = GetPoint();
@@ -807,13 +735,6 @@ bool Judg::LineLine3D(D3DXVECTOR3 * GetPos, D3DXVECTOR3 PosA1, D3DXVECTOR3 PosA2
 	return false;
 }
 
-D3DXMATRIX Judg::VecTransMat(D3DXVECTOR3 VecA)
-{
-	D3DXMATRIX TransMat;
-	D3DXMatrixTranslation(&TransMat, VecA.x, VecA.y, VecA.z);
-	return TransMat;
-}
-
 bool Judg::SetppMat(D3DXMATRIX * Mat, D3DXVECTOR3 PosA, D3DXVECTOR3 PosB, D3DXVECTOR3 PosC, int RailNum, bool bc)
 {
 	if ((RailNum != 5)) {
@@ -822,13 +743,13 @@ bool Judg::SetppMat(D3DXMATRIX * Mat, D3DXVECTOR3 PosA, D3DXVECTOR3 PosB, D3DXVE
 	D3DXVECTOR3 Vec, Pos;
 	Vec = PosB - PosA;
 	Vec /= 2.0f;
-	SetMatP(&Mat[2], (PosA + Vec));
+	SetMatP(&Mat[2], &(PosA + Vec));
 	D3DXVec3Normalize(&Vec, &Vec);
-	SetPosM(&Pos, Mat[2]);
-	SetMatP(&Mat[1], (Pos + -(Vec*5.0f)));
-	SetMatP(&Mat[0], (Pos + -(Vec * 10.0f)));
-	SetMatP(&Mat[3], (Pos + (Vec * 5.0f)));
-	SetMatP(&Mat[4], (Pos + (Vec * 10.0f)));
+	SetPosM(&Pos, &Mat[2]);
+	SetMatP(&Mat[1], &(Pos + -(Vec*5.0f)));
+	SetMatP(&Mat[0], &(Pos + -(Vec * 10.0f)));
+	SetMatP(&Mat[3], &(Pos + (Vec * 5.0f)));
+	SetMatP(&Mat[4], &(Pos + (Vec * 10.0f)));
 
 	float f = 2.0f;
 	if (bc == true) {
@@ -840,10 +761,10 @@ bool Judg::SetppMat(D3DXMATRIX * Mat, D3DXVECTOR3 PosA, D3DXVECTOR3 PosB, D3DXVE
 	//D3DXVec3Normalize(&Vec, &Vec);
 	Vec /= f;
 	for (int i = 0; i < RailNum; i++) {
-		SetPosM(&Pos, Mat[i]);
+		SetPosM(&Pos, &Mat[i]);
 		Pos += Vec;
 		SetFloatQ(&Pos);
-		SetMatP(&Mat[i], Pos);
+		SetMatP(&Mat[i], &Pos);
 	}
 	return true;
 }
@@ -851,8 +772,8 @@ bool Judg::SetppMat(D3DXMATRIX * Mat, D3DXVECTOR3 PosA, D3DXVECTOR3 PosB, D3DXVE
 bool Judg::MatMatVec(D3DXVECTOR3 * Vec, D3DXMATRIX MatA, D3DXMATRIX MatB)
 {
 	D3DXVECTOR3 PosA, PosB;
-	SetPosM(&PosA, MatA);
-	SetPosM(&PosB, MatB);
+	SetPosM(&PosA, &MatA);
+	SetPosM(&PosB, &MatB);
 	*Vec = PosB - PosA;
 	return true;
 }
@@ -860,8 +781,8 @@ bool Judg::MatMatVec(D3DXVECTOR3 * Vec, D3DXMATRIX MatA, D3DXMATRIX MatB)
 D3DXVECTOR3 Judg::MatMatVec(D3DXMATRIX MatA, D3DXMATRIX MatB)
 {
 	D3DXVECTOR3 PosA, PosB;
-	SetPosM(&PosA, MatA);
-	SetPosM(&PosB, MatB);
+	SetPosM(&PosA, &MatA);
+	SetPosM(&PosB, &MatB);
 	PosA = PosB - PosA;
 	return PosA;
 }
@@ -869,9 +790,9 @@ D3DXVECTOR3 Judg::MatMatVec(D3DXMATRIX MatA, D3DXMATRIX MatB)
 bool Judg::VecMatIn(D3DXMATRIX * Mat, D3DXVECTOR3 Vec)
 {
 	D3DXVECTOR3 Pos;
-	SetPosM(&Pos, *Mat);
+	SetPosM(&Pos, Mat);
 	Pos += Vec;
-	SetMatP(Mat, Pos);
+	SetMatP(Mat, &Pos);
 	return true;
 }
 
@@ -1039,16 +960,18 @@ void Judg::InitMatPos(D3DXMATRIX * Mat, D3DXVECTOR3 * TransPos, D3DXVECTOR3 * Sc
 	*ScalPos = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 }
 
-void Judg::SetTransMat(D3DXMATRIX * TransMat, const D3DXVECTOR3 * TransPos)
+void Judg::Set_TransMat(D3DXMATRIX * TransMat, const D3DXVECTOR3 * TransPos)
 {
 	D3DXMatrixTranslation(TransMat, TransPos->x, TransPos->y, TransPos->z);
 }
 
-D3DXMATRIX Judg::Set_TransMat(const D3DXVECTOR3 * TransPos)
+D3DXMATRIX Judg::Get_TransMat(const D3DXVECTOR3 * TransPos)
 {
-	D3DXMATRIX Mat;
-	SetTransMat(&Mat, TransPos);
-	return Mat;
+	D3DXMATRIX TransMat;
+
+	Set_TransMat(&TransMat, TransPos);
+
+	return TransMat;
 }
 
 D3DXMATRIX Judg::GetDrawMat(const D3DXMATRIX * Mat,D3DXMATRIX * ScalMat, const D3DXVECTOR3 * ScalPos)
@@ -1075,9 +998,9 @@ BASE3D Judg::GetInitBase3D(const D3DXVECTOR3 * InitPos, const D3DXVECTOR3 * Tran
 	BASE3D b;
 
 	b.Pos = *InitPos;
-	SetTransMat(&b.Mat, &b.Pos);
+	Set_TransMat(&b.Mat, &b.Pos);
 	b.TraPos = *TransPos;
-	SetTransMat(&b.Trans, &b.TraPos);
+	Set_TransMat(&b.Trans, &b.TraPos);
 	b.ScaPos = *ScalPos;
 	ScalingMat(&b.Scal, &b.ScaPos);
 
@@ -1128,7 +1051,7 @@ BASE3D Judg::InitGunParts(const Object3DGun * Init)
 {
 	BASE3D Base;
 	Base.TraPos = Init->TransPos;
-	SetTransMat(&Base.Trans, &Base.TraPos);
+	Set_TransMat(&Base.Trans, &Base.TraPos);
 
 	Base.ScaPos = Init->ScalPos;
 	ScalingMat(&Base.Scal, &Base.ScaPos);
@@ -1239,11 +1162,9 @@ D3DXVECTOR3 Judg::Get_Size2D(const float * Size)
 	return Scal;
 }
 
-D3DXVECTOR3 Judg::Get_Ray_Pos3D(const D3DXMATRIX * Ray_Mat, const D3DXVECTOR3 * Ray_Vec, const float * Ray_Dis)
+void Judg::Get_Ray_Pos3D(D3DXVECTOR3 * Ray_Hit_Pos, const D3DXVECTOR3 * Ray_Pos, const D3DXVECTOR3 * Ray_Vec, const float * Ray_Dis)
 {
-	D3DXVECTOR3 Pos;
-	Pos = Get_MatPos(Ray_Mat) + (*Ray_Vec)*(*Ray_Dis);
-	return Pos;
+	*Ray_Hit_Pos = (*Ray_Pos) + (*Ray_Vec)*(*Ray_Dis);
 }
 
 void Judg::Set_Vec3_Vec2(D3DXVECTOR3 * Vec3, const D3DXVECTOR2 * Vec2)
@@ -1423,7 +1344,7 @@ D3DXVECTOR3 Judg::VecPos(D3DXMATRIX MatA, D3DXVECTOR3 VecA)
 {
 	D3DXMATRIX TransMat;
 	D3DXVECTOR3 Pos;
-	SetPosM(&Pos, MatA);
+	SetPosM(&Pos, &MatA);
 	Pos = VecA - Pos;
 	return Pos;
 }

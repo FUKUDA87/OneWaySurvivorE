@@ -10,38 +10,55 @@ extern LPDIRECT3DDEVICE9 lpD3DDevice;
 
 class Judg {
 public:
-	void Init(){ D2Flg = false; }
-	Judg() { Init(); };
 	//距離判定
-	bool ball(D3DXMATRIX mat1, D3DXMATRIX mat2,float rad);
-	bool ball(D3DXVECTOR3 PosA, D3DXMATRIX MatB, float Rad);
-	bool Ball(const D3DXVECTOR3 *PosA, const D3DXVECTOR3 *PosB,const float *Radius);
+	bool BallJudg(const D3DXVECTOR3 *PosA, const D3DXVECTOR3 *PosB,const float *Radius);
 	//距離判定+球と球
 	bool ball(D3DXMATRIX mat1, D3DXMATRIX mat2, float rad, D3DXMATRIX *Trans1, D3DXMATRIX *Trans2);
 	//距離判定+距離取得
-	float ball(D3DXMATRIX mat1, D3DXMATRIX mat2);
+	float BallJudg(const D3DXVECTOR3 * PosA, const D3DXVECTOR3 * PosB);
 	//距離判定+Hp
-	bool ball(judgDeta *jd, D3DXMATRIX matB, float radB, int damB);
+	/*bool ball(judgDeta *jd, D3DXMATRIX matB, float radB, int damB);*/
+
+	//出現する位置に被らない様にする判定
+	bool Pop_BallJudg(const D3DXVECTOR3 *PosA, const D3DXVECTOR3 *PosB, const float *Radius);
+
 	//Hpの処理
 	bool HPj(int *NowHp, int *NowMaxHp);
-	//レイと四角ポリゴン判定M
-	bool RayPolM(D3DXMATRIX mat,D3DXVECTOR3 v0, D3DXVECTOR3 v1, D3DXVECTOR3 v2, D3DXVECTOR3 v3, D3DXMATRIX pmat, D3DXVECTOR3 ray, float *Dis);
-	//レイと四角ポリゴン判定P
-	bool RayPolP(D3DXVECTOR3 Pos, D3DXVECTOR3 v0, D3DXVECTOR3 v1, D3DXVECTOR3 v2, D3DXVECTOR3 v3, D3DXMATRIX pmat, D3DXVECTOR3 ray, float *Dis);
-	bool RayPolP(D3DXVECTOR3 Pos, D3DXVECTOR3 v0, D3DXVECTOR3 v1, D3DXVECTOR3 v2, D3DXVECTOR3 v3, D3DXVECTOR3 ray, float *Dis);
-	bool RayPolM(D3DXMATRIX Mat, D3DXVECTOR3 v0, D3DXVECTOR3 v1, D3DXVECTOR3 v2, D3DXVECTOR3 v3, D3DXVECTOR3 ray, float * Dis);
+
+	/*板ポリゴンのレイ判定*/
+
+	//板ポリゴンでレイ判定
+	bool RayJudg_Polygon(const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3 *Ray_Vec,
+		const D3DXVECTOR3 *vA, const D3DXVECTOR3 *vB, const D3DXVECTOR3 *vC, const D3DXVECTOR3 *vD, float *Dis);
+
+	//板ポリゴンでレイ判定(+行列から頂点計算)
+	bool RayJudg_Polygon(const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3 *Ray_Vec, const D3DXMATRIX *Polygon_Mat,
+		const D3DXVECTOR3 *vA, const D3DXVECTOR3 *vB, const D3DXVECTOR3 *vC, const D3DXVECTOR3 *vD, float *Dis);
+
+	//板ポリゴンでレイ判定(+レイ判定種類判定)
+	bool RayJudg_Polygon(const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3 *Ray_Vec, const D3DXMATRIX *Polygon_Mat,
+		const D3DXVECTOR3 *vA, const D3DXVECTOR3 *vB, const D3DXVECTOR3 *vC, const D3DXVECTOR3 *vD,
+		float *Small_Dis, const bool *Judg_Type_IdenMat);
+
+	//板ポリゴンでレイ判定+レイが当たった長さ判定
+	bool RayJudg_Polygon_SmallDis(const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3 *Ray_Vec, const D3DXMATRIX *Polygon_Mat,
+		const D3DXVECTOR3 *vA,const D3DXVECTOR3 *vB,const D3DXVECTOR3 *vC,const D3DXVECTOR3 *vD, float *Small_Dis);
+
+	//板ポリゴンでレイ判定+レイが当たった長さ判定(+行列から頂点計算)
+	bool RayJudg_Polygon_SmallDis(const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3 *Ray_Vec,
+		const D3DXVECTOR3 *vA, const D3DXVECTOR3 *vB, const D3DXVECTOR3 *vC, const D3DXVECTOR3 *vD, float *Small_Dis);
+
+	/**/
+
 	//3Dから2Dの座標取得
-	D3DXVECTOR3 Pos2D(D3DXVECTOR3 pos3D);
-	D3DXVECTOR3 Pos2D(const D3DXVECTOR3 *Pos3D,const D3DXMATRIX *mProj,const D3DXMATRIX *mView,const D3DVIEWPORT9 *Viewport);
-	void CC(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport);
-	///3Dから2Dのため
-	void Pos2Dpvv(D3DXMATRIX mProj, D3DXMATRIX mView, D3DVIEWPORT9 Viewport);
+	void Pos2D(D3DXVECTOR3 *Pos_2D,const D3DXVECTOR3 *Pos3D,const D3DXMATRIX *mProj,const D3DXMATRIX *mView,const D3DVIEWPORT9 *Viewport);
 	//3Dから2Dの座標取得+playerとenemyの逆位置作成
-	D3DXVECTOR3 Pos2DPE(D3DXMATRIX eMat,D3DXMATRIX pMat);
+	void Pos2DPE(D3DXVECTOR3 *Pos_2D,const D3DXMATRIX *eMat,const D3DXMATRIX *pMat, const D3DXMATRIX * mProj, const D3DXMATRIX * mView, const D3DVIEWPORT9 * Viewport);
 	//Ang計算
 	double Ang(D3DXVECTOR3 pla, D3DXVECTOR3 tar, D3DXVECTOR3 vec);
 	//レイMesh
 	bool Mesh(D3DXVECTOR3 pos, D3DXVECTOR3 vec, D3DXMATRIX mat,LPD3DXMESH mesh, float *Dis);
+	bool RayJudg_Mesh(const D3DXVECTOR3 *Ray_Pos,const D3DXVECTOR3 *Ray_Vec,const D3DXMATRIX *Draw_Mat,const LPD3DXMESH Mesh, float *Small_Dis);
 	//int Vec=前なら０、後ろなら１、左なら２、右なら３
 	bool Mesh(D3DXMATRIX MatA,int VecNumA, float BodyRadA,D3DXMATRIX MatB, LPD3DXMESH MeshB);
 	bool Mesh(D3DXVECTOR3 pos, D3DXVECTOR3 vec, D3DXMATRIX mat, LPD3DXMESH mesh, float *Dis, int m);
@@ -53,31 +70,36 @@ public:
 	bool TarRotY(D3DXMATRIX mat,D3DXMATRIX *rotY,  D3DXVECTOR3 targetPos, D3DXVECTOR3 FrontVec);
 	//tragetEndMat作成
 	bool TarEndMat(D3DXMATRIX *mat,D3DXMATRIX TransMat, D3DXMATRIX * RotXMat, D3DXMATRIX *RotYMat, D3DXVECTOR3 TargetPos, D3DXVECTOR3 FrontVec);
-	//行列を座標変換
-	D3DXVECTOR3 Get_MatPos(const D3DXMATRIX* Mat);
-	//Pos<-Mat
-	D3DXVECTOR3 SetPosM(D3DXMATRIX Mat);
+
+	//行列を座標に変換
 	D3DXVECTOR3 SetPosM(const D3DXMATRIX *Mat);
-	bool SetPosM(D3DXVECTOR3 *Pos,D3DXMATRIX Mat);
 	void SetPosM(D3DXVECTOR3 *Pos, const D3DXMATRIX *Mat);
-	//Mat<-Pos
-	D3DXMATRIX SetMatP(D3DXVECTOR3 Pos);
-	bool SetMatP(D3DXMATRIX *Mat, D3DXVECTOR3 Pos);
+
+	//座標を行列に変換
+	D3DXMATRIX SetMatP(const D3DXVECTOR3 *Pos);
+	void SetMatP(D3DXMATRIX *Mat,const D3DXVECTOR3 *Pos);
+
+	//移動行列のセット
+	void Set_TransMat(D3DXMATRIX *TransMat, const D3DXVECTOR3 *TransPos);
+	D3DXMATRIX Get_TransMat(const D3DXVECTOR3 *TransPos);
+
 	//クォータニオン==============================================================================================
 	//アニメーション
 	bool AnimeProc(D3DXMATRIX *NowMat, D3DXMATRIX StartMat, D3DXMATRIX EndMat, float AnimeFrame);
+	void AnimeQua(D3DXMATRIX *NowMat,const D3DXMATRIX *StartMat,const D3DXMATRIX *EndMat,const float *AnimeFrame);
 	bool AnimeProc(D3DXVECTOR3 *NowPos, D3DXVECTOR3 StartPos, D3DXVECTOR3 EndPos, float AnimeFrame);
 	//AnimeFrame+=
 	bool AnimeFrameInc(float *AnimeFrame, float up, bool upFlg);
+	bool AnimeFrameInc(float *AnimeFrame,const float *up,const bool *FrameMoveFlg);
 	//アニメーション+AnimeFrame+=
 	bool Quaternion(D3DXMATRIX *NowMat, D3DXMATRIX StartMat, D3DXMATRIX EndMat, float *AnimeFrame, float up, bool upFlg);
 	bool Quaternion(D3DXVECTOR3 *NowPos, D3DXVECTOR3 StartPos, D3DXVECTOR3 EndPos, float *AnimeFrame, float up, bool upFlg);
 	//レイ判定のDisをPos変換
 	D3DXVECTOR3 DisPos(D3DXVECTOR3 PosA, D3DXVECTOR3 PosB, float Dis);
 	//ビルボード
-	D3DXVECTOR3 Billboard(const D3DXVECTOR3 OldPos, const D3DXVECTOR3 NowPos, const D3DXVECTOR3 camPos, const float Size);
+	D3DXVECTOR3 Billboard(const D3DXVECTOR3 *OldPos, const D3DXVECTOR3 *NowPos, const D3DXVECTOR3 *camPos, const float *Size);
 	//ビルボード＋板ポリ対応
-	D3DXVECTOR3 Billboard(const D3DXVECTOR3 OldPos, const D3DXVECTOR3 NowPos,const float Size,const bool Reverse);
+	D3DXVECTOR3 Billboard(const D3DXVECTOR3 *OldPos, const D3DXVECTOR3 *NowPos, const D3DXVECTOR3 *CameraPos, const float *Size, const bool *Reverse);
 	//線とレイ2D
 	bool LineLine(const D3DXVECTOR2 PosA, const D3DXVECTOR2 VecA, const D3DXVECTOR2 PosB, const D3DXVECTOR2 VecB, float *Dis);
 	//画像の半分サイズ
@@ -93,8 +115,6 @@ public:
 	bool LineLine3D(D3DXVECTOR3 *GetPos, D3DXVECTOR3 PosA1, D3DXVECTOR3 PosA2, D3DXVECTOR3 PosB1, D3DXVECTOR3 PosB2);
 	//vectorPos
 	D3DXVECTOR3 VecPos(D3DXMATRIX MatA, D3DXVECTOR3 PosB);
-	//vectorTrans
-	D3DXMATRIX VecTransMat(D3DXVECTOR3 VecA);
 	//**Mat入れ
 	bool SetppMat(D3DXMATRIX *Mat, D3DXVECTOR3 PosA, D3DXVECTOR3 PosB, D3DXVECTOR3 PosC, int RailNum, bool bc);
 	//Vec=MatB-MatA
@@ -125,9 +145,6 @@ public:
 	QuaAnimeC InitQuaAnime(const D3DXMATRIX *StartMat, const D3DXMATRIX *EndMat, const float *NowAnime, const float *AnimeFrame);
 	//初期化１
 	void InitMatPos(D3DXMATRIX *Mat, D3DXVECTOR3 *TransPos, D3DXVECTOR3 *ScalPos);
-	//移動行列のセット
-	void SetTransMat(D3DXMATRIX *TransMat, const D3DXVECTOR3 *TransPos);
-	D3DXMATRIX Set_TransMat(const D3DXVECTOR3 *TransPos);
 	//表示用の行列作成
 	D3DXMATRIX GetDrawMat(const D3DXMATRIX *Mat,D3DXMATRIX *ScalMat, const D3DXVECTOR3 *ScalPos);
 	D3DXMATRIX GetDrawMat(const D3DXMATRIX *Mat,const D3DXVECTOR3 *ScalPos);
@@ -164,8 +181,8 @@ public:
 	void Get_Size3D(D3DXVECTOR3 *Pos,const float *Size);
 	D3DXVECTOR3 Get_Size2D(const float *Size);
 
-	//レイの位置を求める
-	D3DXVECTOR3 Get_Ray_Pos3D(const D3DXMATRIX *Ray_Mat, const D3DXVECTOR3* Ray_Vec, const float *Ray_Dis);
+	//レイが当たった座標を求める
+	void Get_Ray_Pos3D(D3DXVECTOR3 *Ray_Hit_Pos, const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3* Ray_Vec, const float *Ray_Dis);
 
 	//Vec3にVec2を足す
 	void Set_Vec3_Vec2(D3DXVECTOR3 *Vec3, const D3DXVECTOR2 *Vec2);
@@ -199,11 +216,6 @@ public:
 	void Pos_Big_Judg(D3DXVECTOR3 *Pos_Big, const D3DXVECTOR3 *Pos);
 	void Pos_Small_Judg(D3DXVECTOR3 *Pos_Small, const D3DXVECTOR3 *Pos);
 private:
-	//pos2D用
-	D3DXMATRIX SmProj;
-	D3DXMATRIX SmView;
-	D3DVIEWPORT9 SViewport;
-	bool D2Flg;
 
 	//平面と半径の判定
 	bool Judg_Plane_Rad(const D3DXVECTOR3 *Vec, const D3DXVECTOR3 *Pos, const float *Radius);

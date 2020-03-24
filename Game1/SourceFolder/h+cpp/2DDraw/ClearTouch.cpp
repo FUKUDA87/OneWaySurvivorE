@@ -91,7 +91,7 @@ void C_ClearTouch::Draw2DTitle(void)
 {
 	//位置のセット
 	D3DXMatrixTranslation(&Title.Base.Mat, Title.Base.Pos.x, Title.Base.Pos.y, NULL);
-	judg.SetTransMat(&Title.Base.Trans, &Title.Base.TraPos);
+	judg.Set_TransMat(&Title.Base.Trans, &Title.Base.TraPos);
 	D3DXMatrixScaling(&Title.Base.Scal, Title.Base.ScaPos.x, Title.Base.ScaPos.y, Title.Base.ScaPos.z);
 	D3DXMATRIX tmp;
 	tmp = Title.Base.Trans*Title.Base.Mat;
@@ -112,7 +112,7 @@ void C_ClearTouch::Draw2DTitle(void)
 
 bool C_ClearTouch::UpdateTitle(void)
 {
-	return judg.PlaneCri(judg.SetMatP(Title.Base.Pos + Title.Base.TraPos), Title.Base.ScaPos, Title.TEX.Width, Title.TEX.Height);
+	return judg.PlaneCri(judg.SetMatP(&(Title.Base.Pos + Title.Base.TraPos)), Title.Base.ScaPos, Title.TEX.Width, Title.TEX.Height);
 }
 
 void C_ClearTouch::InitStage(void)
@@ -136,7 +136,7 @@ void C_ClearTouch::Draw2DStage(void)
 {
 	//位置のセット
 	D3DXMatrixTranslation(&Stage.Base.Mat, Stage.Base.Pos.x, Stage.Base.Pos.y, NULL);
-	judg.SetTransMat(&Stage.Base.Trans, &Stage.Base.TraPos);
+	judg.Set_TransMat(&Stage.Base.Trans, &Stage.Base.TraPos);
 	D3DXMatrixScaling(&Stage.Base.Scal, Stage.Base.ScaPos.x, Stage.Base.ScaPos.y, Stage.Base.ScaPos.z);
 	D3DXMATRIX tmp;
 	tmp = Stage.Base.Scal*Stage.Base.Trans*Stage.Base.Mat;
@@ -156,6 +156,6 @@ void C_ClearTouch::Draw2DStage(void)
 
 bool C_ClearTouch::UpdateStage(void)
 {
-	return judg.PlaneCri(judg.SetMatP(Stage.Base.Pos + Stage.Base.TraPos), Stage.Base.ScaPos, Stage.TEX.Width, Stage.TEX.Height);
+	return judg.PlaneCri(judg.SetMatP(&(Stage.Base.Pos + Stage.Base.TraPos)), Stage.Base.ScaPos, Stage.TEX.Width, Stage.TEX.Height);
 }
 

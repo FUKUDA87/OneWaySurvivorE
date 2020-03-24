@@ -60,7 +60,7 @@ void C_CarSelect::Draw2DCS(void)
 
 	//位置と拡大のセット
 	judg.ScalingMat(&Back.Base.Scal, &Back.Base.ScaPos);
-	judg.SetTransMat(&Back.Base.Mat, &Back.Base.Pos);
+	judg.Set_TransMat(&Back.Base.Mat, &Back.Base.Pos);
 	//行列の合成
 	TmpMat = Back.Base.Scal*Back.Base.Mat;
 	//表示
@@ -75,7 +75,7 @@ void C_CarSelect::Draw2DCS(void)
 		judg.ScalingMat(&Arr[a].Scal, &Arr[a].ScaPos);
 		D3DXVECTOR3 tmpPos=Arr[a].TraPos;
 		if (a == 1)tmpPos *= -1.0f;//移動の反転
-		judg.SetTransMat(&Arr[a].Trans, &tmpPos);
+		judg.Set_TransMat(&Arr[a].Trans, &tmpPos);
 		//画像の回転行列作成
 		float AngZ = 0;
 		if (a == 1)AngZ = 180;
@@ -101,8 +101,8 @@ int C_CarSelect::Touch(void)
 {
 	if (ArrNum <= 1)return 0;
 	//判定
-	if (judg.PlaneCri(judg.SetMatP(Back.Base.Pos + Arr[0].TraPos), Arr[0].ScaPos, ArrTex.Width, ArrTex.Height) == true)return 1;
-	if (judg.PlaneCri(judg.SetMatP(Back.Base.Pos - Arr[1].TraPos), Arr[1].ScaPos, ArrTex.Width, ArrTex.Height) == true)return 2;
+	if (judg.PlaneCri(judg.SetMatP(&(Back.Base.Pos + Arr[0].TraPos)), Arr[0].ScaPos, ArrTex.Width, ArrTex.Height) == true)return 1;
+	if (judg.PlaneCri(judg.SetMatP(&(Back.Base.Pos - Arr[1].TraPos)), Arr[1].ScaPos, ArrTex.Width, ArrTex.Height) == true)return 2;
 	return 0;
 }
 

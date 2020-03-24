@@ -12,8 +12,8 @@ public:
 	bool UpdateCar(void);
 	bool UpdateSuper(void);
 	//•\Ž¦
-	void DrawSD(void);
-	void Draw3DSuper(void);
+	void DrawSD(const D3DXVECTOR3 *CameraPos);
+	void Draw3DSuper(const D3DXVECTOR3 *CameraPos);
 protected:
 
 private:

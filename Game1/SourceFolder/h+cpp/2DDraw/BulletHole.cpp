@@ -12,7 +12,7 @@ C_BulletHole::C_BulletHole(const D3DXVECTOR3 * Pos, const float * AngZ, const D3
 	BulHol.Base.AngZ = *AngZ;
 	BulHol.Base.Pos = *Pos;
 
-	judg.SetTransMat(&BulHol.Base.Mat, &BulHol.Base.Pos);
+	judg.Set_TransMat(&BulHol.Base.Mat, &BulHol.Base.Pos);
 	D3DXMatrixRotationZ(&BulHol.Base.RotZ, D3DXToRadian(BulHol.Base.AngZ));
 	BulHol.Base.Mat = BulHol.Base.RotZ*BulHol.Base.Mat;
 }
@@ -25,7 +25,7 @@ C_BulletHole::C_BulletHole(const D3DXVECTOR3 * Pos, const float * AngZ, const D3
 	BulHol.Base.AngZ = *AngZ;
 	BulHol.Base.Pos = *Pos;
 
-	judg.SetTransMat(&BulHol.Base.Mat, &BulHol.Base.Pos);
+	judg.Set_TransMat(&BulHol.Base.Mat, &BulHol.Base.Pos);
 	D3DXMatrixRotationZ(&BulHol.Base.RotZ, D3DXToRadian(BulHol.Base.AngZ));
 	BulHol.Base.Mat = BulHol.Base.RotZ*BulHol.Base.Mat;
 }

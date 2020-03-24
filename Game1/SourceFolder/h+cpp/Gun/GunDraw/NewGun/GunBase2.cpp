@@ -106,7 +106,7 @@ D3DXMATRIX C_GunBase2::Get_GunMouth_Mat(const unsigned int * MouthNo)
 			if (g->Get_M_Data().BulletFlg == true) {
 				Judg judg;
 				Mat = g->Get_Parts_TransMat() *Mat;
-				Mat = judg.VecTransMat(g->Get_Gun_Mouth_Pos()) * Mat;
+				Mat = judg.Get_TransMat(&g->Get_Gun_Mouth_Pos()) * Mat;
 			}
 		}
 	}

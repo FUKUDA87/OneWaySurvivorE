@@ -490,7 +490,7 @@ struct S_GUN_UPDATE_DATA {
 	//スタンド
 	D3DXMATRIX StandMat;
 	//本体の状態
-	bool Car_Alive_Flg;
+	bool Gun_Stop_Flg;
 };
 
 struct S_BULLET_DEPAR {
@@ -732,6 +732,15 @@ struct XFILE_B {
 //視錐台の法線の構造体
 struct S_Frustum_Vec {
 	D3DXVECTOR3 nt, nb, nl, nr;
+};
+
+/*横の衝突判定*/
+//横判定する車の情報の構造体
+struct S_SideJudgChara {
+	bool LeftFlg;
+	int Car_Type;
+	unsigned int No;
+	float Rad;
 };
 
 

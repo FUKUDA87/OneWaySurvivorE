@@ -14,7 +14,7 @@ public:
 	void Draw3DAll(const D3DXVECTOR3 *CamPos);
 	void Draw2DAll(void);
 	//矢印作成に必要な情報の取得とアップデート
-	void GetPos2DSet(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport);
+	void GetPos2DSet(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport, const D3DXVECTOR3 *CameraPos);
 
 	//エネミーの存在削除渡し
 	bool GetDeleFlg(void);
@@ -24,6 +24,11 @@ public:
 
 	void UpdateBullet(void);
 
+	//ボスなのか確認
+	bool Get_BossFlg(void) {
+		return M_BossFlg;
+	}
+
 protected:
 	//矢印
 	Vector *Vect;
@@ -31,6 +36,11 @@ protected:
 	D3DXVECTOR3 Pos2D;
 
 	int m_EnemyNo;
+
+	//ボスであるかの確認Flg
+	bool M_BossFlg;
+
+	
 private:
 	
 };

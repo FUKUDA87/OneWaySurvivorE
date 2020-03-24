@@ -1,9 +1,6 @@
 #pragma once
 #include<d3dx9.h>
 #include"LaserBase.h"
-#include"../../GameSource/InvBi.h"
-
-extern Inv inv;
 
 class LaserA:public LaserBase{
 protected:
@@ -19,5 +16,5 @@ public:
 	D3DXVECTOR3 GetLasVec();
 	bool UpdateS(D3DXMATRIX Mat, D3DXMATRIX tmp);
 	bool UpdateL(float Dis, bool Flg);
-	void Draw3D();
+	void Draw3D(const D3DXVECTOR3 *CameraPos);
 };

@@ -22,7 +22,7 @@ void C_Light_Object_1::Init(void)
 
 	judg.ScalingMat(&M_Base.Base.Scal, &M_Base.Base.ScaPos);
 
-	judg.SetTransMat(&M_Base.Base.Trans, &D3DXVECTOR3(-1.0f, 5.0f, 0.0f));
+	judg.Set_TransMat(&M_Base.Base.Trans, &D3DXVECTOR3(-1.0f, 5.0f, 0.0f));
 
 	D3DXMatrixRotationY(&M_Base.Base.RotY, D3DXToRadian(90.0f));
 }

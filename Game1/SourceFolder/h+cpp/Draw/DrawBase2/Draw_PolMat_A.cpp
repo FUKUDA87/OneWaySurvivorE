@@ -121,9 +121,10 @@ void C_Draw_PolMat_Base_1::Draw_PolMat_No1(const D3DXVECTOR3 * CameraPos)
 	for (int i = 0; i < (Get_PolMatNum() - 1); i++) {
 		//ビルボード
 		D3DXVECTOR3 vec, oPos, nPos;
-		judg.SetPosM(&nPos, M_Polygon.PolMat[i]);
-		judg.SetPosM(&oPos, M_Polygon.PolMat[i + 1]);
-		vec = judg.Billboard(oPos, nPos, *CameraPos, Get_ScalPos().x);
+		judg.SetPosM(&nPos, &M_Polygon.PolMat[i]);
+		judg.SetPosM(&oPos, &M_Polygon.PolMat[i + 1]);
+		float L_Size = Get_ScalPos().x;
+		vec = judg.Billboard(&oPos, &nPos, CameraPos, &L_Size);
 
 
 		v[0].Pos = nPos - vec;

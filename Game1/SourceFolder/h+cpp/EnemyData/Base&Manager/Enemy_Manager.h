@@ -3,5 +3,5 @@
 
 class C_Enemy_Manager {
 public:
-	C_EnemyAi* Get_Enemy(const int *EnemyNo, D3DXMATRIX GroundMat, float * TransX);
+	C_EnemyAi* Get_Enemy(const int *EnemyNo, const D3DXMATRIX * GroundMat, const float * TransX);
 };

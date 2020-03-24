@@ -7,8 +7,10 @@
 #include"../../Draw/Polygon/Polygon_Judg.h"
 #include"../../Draw/Judg/Car_Parts_Judg_Mesh.h"
 #include"../../Draw/Judg/Car_Parts_Judg_Ball.h"
+#include"../../EnemyData/EnemyNo101/SpeedMove/EnemySpeedNo201.h"
+#include"../../EnemyData/EnemyNo101/EnemyAi/ENo101_AiPhase_1.h"
 
-C_Enemy_No101::C_Enemy_No101(D3DXMATRIX GroundMat, float * TransX):C_EnemyA(GroundMat,TransX)
+C_Enemy_No101::C_Enemy_No101(const D3DXMATRIX * GroundMat, const float * TransX):C_EnemyA(GroundMat,TransX)
 {
 	S_ENEMYBODYDATA l_EBD;
 	l_EBD.Body.CarBodyNo = CarNo201;
@@ -27,43 +29,41 @@ C_Enemy_No101::C_Enemy_No101(D3DXMATRIX GroundMat, float * TransX):C_EnemyA(Grou
 	//パーツの初期化
 	int l_MaxHp = GetCharaBase().MaxHp;
 
-	//パーツのセット
+	/*パーツのセット*/
 
-	M_Parts_Set_Data.push_back(new C_Parts_Set_Data(Co_Parts_Tire, 1, TireNo201));
-	M_Parts_Set_Data.push_back(new C_Parts_Set_Data(Co_Parts_Gun, 1, 101));
-	M_Parts_Set_Data.push_back(new C_Parts_Set_Data(Co_Parts_Gun, 2, 0));
-	M_Parts_Set_Data.push_back(new C_Parts_Set_Data(Co_Parts_Door, 1, 1));
+	M_NewSet_CarPartsData(&Co_Parts_Tire, 1, TireNo201);
+	M_NewSet_CarPartsData(&Co_Parts_Gun, 1, 101);
+	M_NewSet_CarPartsData(&Co_Parts_Gun, 2, 0);
+	M_NewSet_CarPartsData(&Co_Parts_Door, 1, 1);
+    
+	New_Set_EnemyCar_Parts(&BodyData.CarBodyNo);
 
-	//New_Set_Car_Parts(&BodyData.CarBodyNo, M_Parts_Set_Data, &Flg, &Flg2);
-	New_Car_Parts_Data(&BodyData.CarBodyNo);
-
-	New_CarParts(M_Parts_Set_Data);
-
-	M_Car_Parts.push_back(new C_Car_Parts_Judg_Polygon(Get_Data_CarParts(&Co_Parts_Judg,1),&D3DXVECTOR3(-0.3f,0.25f,0.0f),
-		&D3DXVECTOR3(0.3f, 0.25f, 0.0f), &D3DXVECTOR3(0.3f, -0.25f, 0.0f), &D3DXVECTOR3(-0.3f, -0.25f, 0.0f)));
-
-	M_Car_Parts.push_back(new C_Car_Parts_Judg_Mesh(Get_Data_CarParts(&Co_Parts_Judg, 2), "../GameFolder/Material/XFile/Car_O_201_Judg_1.x"));
-
-	M_Car_Parts.push_back(new C_Car_Parts_Judg_Ball(Get_Data_CarParts(&Co_Parts_Judg, 1), 0.3f));
-
-	New_Car_Parts_Gun(M_Parts_Set_Data);
-
-	if (M_DriverNo!=co_PlayerCar)Delete_ALL_Data();
-
-	//Aiの初期化
+	/*Aiの初期化*/
 	m_Ai = new C_E_No101_AiPhase_1();
 
+	//ボスにする
+	M_BossFlg = true;
+
+	//ボスのHpの表示の作成
 	Hp_Init(new C_Hp2DEnemy(&D3DXVECTOR3(800.0f, 30.0f, 1.0f), &D3DXVECTOR3(1280.0f / 2.0f, 720.0f*0.1f, 0.0f)));
 
-	//銃の初期化
+	/*銃の初期化*/
 	C_Gun_Darw_Manager Manager;
 	int g = 101;
 	M_Gun.push_back(Manager.Get_Gun(&g, new C_Enemy_No1_Gun_1_Lockon()));
 	g = 201;
 	M_Gun.push_back(Manager.Get_Gun(&g, new C_Enemy_No1_Gun_1_Lockon()));
 
-	//車のパーツのサイズ変更
+	/*車のパーツのサイズ変更*/
 	New_Car_Parts_Size(Co_Parts_Gun, 1, 0.7f);
+}
 
-	Delete_All_Parts_Set_Data();
+void C_Enemy_No101::New_Car_Judg_Parts(void)
+{
+	M_Car_Parts.push_back(new C_Car_Parts_Judg_Polygon(Get_Data_CarParts(&Co_Parts_Judg, 1), &D3DXVECTOR3(-0.3f, 0.25f, 0.0f),
+		&D3DXVECTOR3(0.3f, 0.25f, 0.0f), &D3DXVECTOR3(0.3f, -0.25f, 0.0f), &D3DXVECTOR3(-0.3f, -0.25f, 0.0f)));
+
+	M_Car_Parts.push_back(new C_Car_Parts_Judg_Mesh(Get_Data_CarParts(&Co_Parts_Judg, 2), "../GameFolder/Material/XFile/Car_O_201_Judg_1.x"));
+
+	M_Car_Parts.push_back(new C_Car_Parts_Judg_Ball(Get_Data_CarParts(&Co_Parts_Judg, 1), 0.3f));
 }

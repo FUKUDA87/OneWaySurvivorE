@@ -1,7 +1,6 @@
 #include "Smoke2.h"
 #include"../../GameSource/Judgment.h"
 
-extern Judg judg;
 extern LPDIRECT3DDEVICE9	lpD3DDevice;
 
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
@@ -64,7 +63,10 @@ bool C_Smoke2::Update(const int * NowHp, const int * MaxHp, const D3DXVECTOR3 * 
 			float NA = 0.0f;
 			float NF = 0.2f;
 			smoke.push_back(new PolQuaAni);
-			smoke[smoke.size() - 1]->Qac = judg.InitQuaAnime(&judg.SetMatP(SmokePos[0] /*+ (SmokePos[2]- SmokePos[0])*((1.0f/(float)MaxNum*(float)i))*/), &judg.SetMatP(SmokePos[SmokeNum - 1]), &NA, &NF);
+
+			Judg judg;
+
+			smoke[smoke.size() - 1]->Qac = judg.InitQuaAnime(&judg.SetMatP(&SmokePos[0] /*+ (SmokePos[2]- SmokePos[0])*((1.0f/(float)MaxNum*(float)i))*/), &judg.SetMatP(&SmokePos[SmokeNum - 1]), &NA, &NF);
 			smoke[smoke.size() - 1]->AlphaMax = smoke[smoke.size() - 1]->Alpha = 255;
 			smoke[smoke.size() - 1]->PolSizeNow = smoke[smoke.size() - 1]->PolSizeSmall = 0.4f;
 			smoke[smoke.size() - 1]->PolSizeMax = 1.0f;
@@ -79,6 +81,7 @@ bool C_Smoke2::UpdateQua(void)
 	if (smoke.size() > 0) {
 		for (unsigned int s = 0; s< smoke.size(); s++) {
 			bool DelFlg = false;
+			Judg judg;
 			if (judg.Quaternion(&smoke[s]->Qac.NowMat, smoke[s]->Qac.StartMat, smoke[s]->Qac.EndMat, &smoke[s]->Qac.NowAnime, smoke[s]->Qac.AnimeFrame, true) == false) {
 				DelFlg = true;
 				delete smoke[s];
@@ -113,9 +116,10 @@ void C_Smoke2::Draw3D(const D3DXVECTOR3 * CamPos)
 			//ビルボード
 			D3DXVECTOR3 vec, oPos, nPos;
 			vec = D3DXVECTOR3(0.0f, 1.0f*smoke[s]->PolSizeNow, 0.0f);
-			nPos = judg.SetPosM(smoke[s]->Qac.NowMat) + vec;
-			oPos = judg.SetPosM(smoke[s]->Qac.NowMat) - vec;
-			vec = judg.Billboard(oPos, nPos, *CamPos, vec.y);
+			Judg judg;
+			nPos = judg.SetPosM(&smoke[s]->Qac.NowMat) + vec;
+			oPos = judg.SetPosM(&smoke[s]->Qac.NowMat) - vec;
+			vec = judg.Billboard(&oPos, &nPos, CamPos, &vec.y);
 			smog.v[0].Pos = nPos - vec;
 			smog.v[1].Pos = nPos + vec;
 			smog.v[2].Pos = oPos + vec;

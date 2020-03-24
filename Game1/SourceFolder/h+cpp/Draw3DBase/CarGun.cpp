@@ -68,9 +68,11 @@ void C_CarGun::New_Set_Car_Parts(const BODYDATA * CarData)
 
 	New_CarParts(CarData);
 
+	New_Car_Judg_Parts();
+
 	New_Car_Parts_Gun(CarData);
 
-	if (M_DriverNo != co_PlayerCar)Delete_ALL_Data();
+	if (M_Driver != Hit_Type_Player)Delete_ALL_Data();
 }
 
 void C_CarGun::New_Set_Car_Parts(const int * CarNo, std::vector<C_Parts_Set_Data*> M_Set_Data)
@@ -79,9 +81,11 @@ void C_CarGun::New_Set_Car_Parts(const int * CarNo, std::vector<C_Parts_Set_Data
 
 	New_CarParts(M_Set_Data);
 
+	New_Car_Judg_Parts();
+
 	New_Car_Parts_Gun(M_Set_Data);
 
-	if (M_DriverNo != co_PlayerCar)Delete_ALL_Data();
+	if (M_Driver != Hit_Type_Player)Delete_ALL_Data();
 }
 
 void C_CarGun::New_Car_Parts_Gun(const BODYDATA * CarData)
@@ -161,7 +165,7 @@ D3DXMATRIX C_CarGun::Get_Joint_Mat(void)
 					Judg judg_a;
 					D3DXVECTOR3 Vec= M_Car_Parts[p]->Get_Joint_Data(&d).TransPos;
 					Vec = judg_a.GetVecVec(&M_Car_Parts[p]->Get_Draw_ScalPos(), &Vec);
-					judg_a.SetTransMat(&TmpMat,&Vec);
+					judg_a.Set_TransMat(&TmpMat,&Vec);
 					Mat = TmpMat * Mat;
 					return Mat;
 				}
@@ -187,7 +191,7 @@ D3DXMATRIX C_CarGun::Get_Joint_Mat(const int * JointNo)
 					Judg judg_a;
 					D3DXVECTOR3 Vec = M_Car_Parts[p]->Get_Joint_Data(&d).TransPos;
 					Vec = judg_a.GetVecVec(&M_Car_Parts[p]->Get_Draw_ScalPos(), &Vec);
-					judg_a.SetTransMat(&TmpMat, &Vec);
+					judg_a.Set_TransMat(&TmpMat, &Vec);
 					Mat = TmpMat * Mat;
 					return Mat;
 				}

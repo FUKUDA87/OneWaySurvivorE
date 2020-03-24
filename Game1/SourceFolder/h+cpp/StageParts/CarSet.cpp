@@ -1,6 +1,5 @@
 #include "CarSet.h"
 #include<stdio.h>
-#include"../Draw3DBase/Draw3DManager/TireMeshManager.h"
 #include"../GameSource/XfileManager.h"
 #include"../Draw3DBase/Draw3DManager/CarNoManager.h"
 #include"../Draw/Tire/Car_Tire_No1.h"
@@ -62,7 +61,7 @@ void C_CarSet::Draw3D(const D3DXVECTOR3 *CameraPos)
 	DrawMesh(&Car);
 
 	D3DXMATRIX PartsMat;
-	judg.SetTransMat(&PartsMat, &PartsPos);
+	judg.Set_TransMat(&PartsMat, &PartsPos);
 
 	M_Draw->Set_Mat(&PartsMat);
 

@@ -15,7 +15,7 @@ public:
 	void Init();
 	Vector() { Init(); };
 	~Vector();
-	bool Update(D3DXVECTOR3 Pos, D3DXMATRIX mat);
+	bool Update(const D3DXVECTOR3 *Pos_2D, const D3DXMATRIX *Mat, const D3DXVECTOR3 *CameraPos);
 	void Draw(bool b);
 	//debug—p
 	float GetAng(void) { return vector.Base.AngZ; };

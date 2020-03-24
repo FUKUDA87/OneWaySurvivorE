@@ -23,24 +23,26 @@ C_Sound_Base_2D::~C_Sound_Base_2D()
 	//StopSound_All();
 }
 
-bool C_Sound_Base_2D::Update(const S_CAMERA_POS* CamPos, const bool * Flg)
+bool C_Sound_Base_2D::Update(const S_CAMERA_POS* CamPos, const bool * PlayFlg)
 {
 	if (DeleteFlg > 1)return false;
 
-		soundCol.Sound3D->SetMode(DS3DMODE_DISABLE, DS3D_IMMEDIATE);
-		DWORD SFlg;
-		soundCol.Sound->GetStatus(&SFlg);
-		if (M_MoveFlg != 2) {
-			if ((SFlg&DSBSTATUS_PLAYING) == 0) {
-				Loop_Mode();
-				if ((*Flg == true)||(Loop_Mode_Flg==true)) {
-					soundCol.Sound->Play(0, 0, 0);
-					soundCol.Sound->SetVolume(SoundSize);
+	soundCol.Sound3D->SetMode(DS3DMODE_DISABLE, DS3D_IMMEDIATE);
+	DWORD SFlg;
+	soundCol.Sound->GetStatus(&SFlg);
 
-					M_MoveFlg = 1;
-				}
-			}
-		}
+	if (M_MoveFlg == 2)return true;
+
+	if ((SFlg&DSBSTATUS_PLAYING) != 0) return true;
+
+	Loop_Mode();
+
+	if ((*PlayFlg != true) && (Loop_Mode_Flg != true)) return true;
+
+	soundCol.Sound->Play(0, 0, 0);
+	soundCol.Sound->SetVolume(SoundSize);
+
+	M_MoveFlg = 1;
 
 
 	return true;
@@ -96,14 +98,6 @@ void C_Sound_Base_2D::Init_Sound(const int * CategoryNo, const int * No, std::st
 	SoundSize = *Volume;
 
 	soundManager.GetSound(&soundCol, FileName);
-	/*LPDIRECTSOUNDBUFFER lpSTmp;
-	for (int i = 1; i < SoundNum; i++) {
-		lpDSound->DuplicateSoundBuffer(soundCol[0].Sound, &lpSTmp);
-		lpSTmp->QueryInterface(IID_IDirectSoundBuffer8, (LPVOID*)&soundCol[i].Sound);
-		soundCol[i].Sound->QueryInterface(IID_IDirectSound3DBuffer8, (LPVOID*)&soundCol[i].Sound3D);
-		soundCol[i].Sound3D->SetMode(DS3DMODE_DISABLE, DS3D_IMMEDIATE);
-		lpSTmp->Release();
-	}*/
 
 	StopSound_All();
 }

@@ -2,13 +2,7 @@
 #include"PartsBase.h"
 #include<vector>
 #include"BaseDataManager/CarDataManager.h"
-#include"../Draw3DBase/Draw3DManager/TireMeshManager.h"
-#include"../Draw3DBase/Draw3DManager/StandMeshManager.h"
-#include"../Draw3DBase/TireParts.h"
 #include"../GameSource/Judgment.h"
-#include"Draw3DManager/PartsMeshManager.h"
-#include"EnemyParts.h"
-#include"../EnemyData/Base&Manager/EnemyDataManager.h"
 #include"Car_Parts_Data.h"
 #include"Car_Parts_Joint.h"
 #include"../Const/Const_PartsTypeNo.h"
@@ -95,7 +89,8 @@ protected:
 	//車のパーツの情報入手
 	void New_Car_Parts_Data(const int *CarNo);
 
-
+	//車の当たり判定用の情報の初期化
+	virtual void New_Car_Judg_Parts(void);
 private:
 
 };

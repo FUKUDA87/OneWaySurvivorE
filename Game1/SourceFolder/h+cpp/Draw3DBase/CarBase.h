@@ -175,6 +175,19 @@ public:
 		M_S_Gun_Update_Data.CameraMat = *CameraMat;
 	}
 
+	//操作・動作できるまでの時間の渡し
+	int Get_Move_Stop_Time(void) {
+		return MMove_Stop_Time;
+	}
+
+	//操作・動作できるまでの時間の入れ
+	void Set_Move_Stop_Time(const int *Time);
+
+	//車の操作者の渡し
+	int Get_DriverNo(void) {
+		return M_Driver;
+	}
+
 protected:
 	//車のモデル入れ
 	void SetMeshCar(int MeshNo);
@@ -198,7 +211,16 @@ protected:
 	S_GUN_UPDATE_DATA M_S_Gun_Update_Data;
 
 	//車の操作者
-	int M_DriverNo;
+	int M_Driver;
+
+	//銃の情報の更新
+	void Update_Gun_Data(void);
+
+	//操作・動作できるまでの時間
+	int MMove_Stop_Time;
+
+	//操作・動作できるまでの時間を減らす更新の処理
+	void Update_Move_Stop_Time(void);
 
 private:
 	C_CarMeshManager carMeshManager;
@@ -213,5 +235,8 @@ private:
 
 	//操作の構造体の初期化
 	void Init_S_Gun_Update_Data(void);
+
+	//銃の動きの停止判定
+	bool Judg_Gun_Move_Data(void);
 
 };

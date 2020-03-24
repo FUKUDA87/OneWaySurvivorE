@@ -18,9 +18,9 @@ void C_LaserBase2::SetTexNo(const int * TexNo)
 void C_LaserBase2::GetHitPos(D3DXVECTOR3*StartPos, D3DXVECTOR3*HitPos, const D3DXMATRIX * Mat, const D3DXVECTOR3 * TransPos, const float * Dis)
 {
 	D3DXMATRIX TmpMat;
-	judg.SetTransMat(&TmpMat, TransPos);
+	judg.Set_TransMat(&TmpMat, TransPos);
 	TmpMat = TmpMat * (*Mat);
-	*StartPos = judg.SetPosM(TmpMat);
+	*StartPos = judg.SetPosM(&TmpMat);
 
 	D3DXVECTOR3 Vec;
 	D3DXVec3TransformNormal(&Vec, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &TmpMat);

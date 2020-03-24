@@ -123,7 +123,7 @@ void Wall::Init_Wall_Mat(void)
 
 		Wall3D[w].Base.TraPos.y *= Wall3D[w].Base.ScaPos.y;
 		//”½‰f
-		judg.SetTransMat(&Wall3D[w].Base.Trans, &Wall3D[w].Base.TraPos);
+		judg.Set_TransMat(&Wall3D[w].Base.Trans, &Wall3D[w].Base.TraPos);
 		//‰ñ“]
 		float AngY;
 		if (w == 0) {
@@ -159,7 +159,7 @@ void Wall::Init_Wall_Iden(void)
 
 		//ˆÊ’u‚Ì‘ã“ü
 		D3DXVECTOR3 Pos = ground.v[s].Pos + wVec / 2.0f;
-		judg.SetTransMat(&Wall3D[w].Base.Mat, &Pos);
+		judg.Set_TransMat(&Wall3D[w].Base.Mat, &Pos);
 		//‰ñ“]
 		D3DXMATRIX RotX, RotY;
 		judg.TarEndMat(&Wall3D[w].Base.Mat, Wall3D[w].Base.Mat, &RotX, &RotY, ground.v[e].Pos, FrontVec);

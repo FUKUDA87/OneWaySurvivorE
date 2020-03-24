@@ -1,5 +1,4 @@
 #pragma once
-#include"../../Draw/DrawBase3/Draw_3D_Base.h"
 #include"../../GameSource/Struct.h"
 #include<string>
 

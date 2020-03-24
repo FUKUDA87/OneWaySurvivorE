@@ -50,7 +50,7 @@ bool C_OK::Touch(void)
 {
 	if (OK.Base.DrawFlg != true)return false;
 	//タッチ確認
-	if (judg.PlaneCri(judg.SetMatP(wind.Base.Pos), wind.Base.ScaPos, wind.TEX.Width, wind.TEX.Height) == true)return true;
+	if (judg.PlaneCri(judg.SetMatP(&wind.Base.Pos), wind.Base.ScaPos, wind.TEX.Width, wind.TEX.Height) == true)return true;
 
 	return false;
 }

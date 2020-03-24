@@ -22,7 +22,7 @@ bool C_SmokeCar::Update_CS(const CHARABASE* CharaBase,const int *CarNo,const D3D
 			C_CarSmogManager L_CarSmogManager;
 			D3DXVECTOR3 Vec = L_CarSmogManager.GetPos(*CarNo);
 			Judg judg;
-			judg.SetTransMat(&TmpMat, &Vec);
+			judg.Set_TransMat(&TmpMat, &Vec);
 			TmpMat = TmpMat * (*CarMat);
 			S_Smog s = L_CarSmogManager.GetSmog(*CarNo);
 			if (L_Per < 0.3f)s.Draw_No = 53;

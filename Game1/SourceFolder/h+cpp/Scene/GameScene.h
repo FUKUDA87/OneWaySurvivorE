@@ -3,13 +3,12 @@
 #include<vector>
 #include"SceneBase.h"
 #include"../Ground/Sky.h"
-#include"../Ground/BillBase.h"
 #include"../Player/Aiming.h"
 #include"../3DDraw/Effect_3D/Explosion.h"
 #include"../Player/Camera.h"
 #include"../GameSource/Countdown.h"
 #include"../GameSource/Debug.h"
-#include"../GameSource/Debug2.h"
+#include"../GameSource/Text_Num.h"
 #include"../2DDraw/Game_End/Game_End_Now.h"
 #include"../GameSource/Struct.h"
 #include"../2DDraw/Warning.h"
@@ -22,7 +21,6 @@
 #include"../3DDraw/Effect_3D/SpaekDamage.h"
 #include"../3DDraw/Effect_3D/Smog.h"
 #include"../3DDraw/Effect_3D/BulletGround.h"
-#include"GameSceneSoundManager.h"
 #include"../3DDraw/Effect_3D/Spark2.h"
 #include"../Key/CMouse.h"
 #include"../Key/KeyTrue.h"
@@ -40,12 +38,11 @@
 #include"../Const/Const_Draw_Judg.h"
 #include"../Stage_Data/Car_Pop/Car_Pop_New.h"
 #include"../Ground/Stage_Ground/Ground_Pop_New.h"
-#include"../Sound/Sound_Manager_Game.h"
+#include"../Sound/Sound_Manager_Base.h"
 #include"../Draw/Damage_Num/Damage_Move_A.h"
 #include"../Draw/Damage_Num/Damage_Move_B.h"
 #include"../Ground/Ground_Object.h"
 
-extern Judg judg;
 extern Motion motion;
 
 //#ifndef GameScene_H
@@ -53,7 +50,7 @@ extern Motion motion;
 
 #define RadChara 200//キャラクターの範囲
 
-class GameScene :public SceneBase, public C_GameSSM
+class GameScene :public SceneBase
 {
 public:
 	GameScene(const int stageNum);
@@ -65,23 +62,23 @@ public:
 	void SetCamera(void);
 	bool Update(void);
 	bool UpdateE(void);
-	void GDebug(void);
 	//地面取得
 	bool NowGroNum(D3DXMATRIX Mat,unsigned int *Num,float *Dis);
 	//弾のレイ判定
 	void BulletJudg(const int *TypeCar,const unsigned int *CarNo);
 	//壁と車体横の判定
-	bool WallJudg(bool LeftFlg, bool PlayerFlg, bool EnemyFlg, unsigned int No);
-	//壁と車横の判定(車が地面から離れた時用)
-	bool WallJudg(const D3DXMATRIX *JudgMat, D3DXMATRIX *TransMat, const SizePos *sizePos);
+	void Side_Judg(const int *Car_Type, const unsigned int *Car_No);
+	bool Side_Judg(const bool *Left_Flg,const int *Car_Type,const unsigned int *Car_No);
 	//敵の誕生と思考
 	bool UpdateEnemyAI(void);
 	//敵の移動
 	bool UpdateEnemyMove(void);
 	//前進レイ判定
-	bool ForMoveJudg(CONSTITUTION Con, D3DXMATRIX StartMat, D3DXMATRIX EndMat, bool PlayerFlg, bool EnemyFlg, unsigned int No, D3DXVECTOR3 RayVec1, D3DXVECTOR3 RayVec2, D3DXVECTOR3 RayVec3, float *SpeedMul2,const D3DXVECTOR3 *ScalPosB);
-	//移動後のMat作成
-	D3DXMATRIX ForMoveEnd(CONSTITUTION Con, QuaForMove q, D3DXMATRIX TransMat);
+	bool ForMoveJudg(const CONSTITUTION *Con,const D3DXMATRIX *StartMat,const D3DXMATRIX *EndMat,
+		const int *Car_Type,const unsigned int *Car_No,const D3DXVECTOR3 *RayVec1,const D3DXVECTOR3 *RayVec2,
+		const D3DXVECTOR3 *RayVec3,float *SpeedMul2,const D3DXVECTOR3 *ScalPos);
+	//移動後の行列作成
+	void ForMoveEnd(D3DXMATRIX *Mat,const CONSTITUTION *Con,const QuaForMove *q,const D3DXMATRIX *TransMat);
 	//カメラと壁判定
 	void CameraWallJudg(void);
 	//BulletBirthFlg
@@ -90,8 +87,6 @@ public:
 	void BombInit(const D3DXMATRIX *Mat);
 	//デリートエネミー
 	bool EnemyDelete(const unsigned int *EnemyNo);
-	//敵の出現種類
-	bool EnemyBirth(const int *EnemyNo,D3DXMATRIX *GroundMat,float *TransX);
 
 	//チェンジシーン用
 	void ChangeSceneFade(int ChangeSceneNo);
@@ -234,10 +229,16 @@ protected:
 	void Pop_Enemy(void);
 
 	//車の出現可能調査(出現可能ならtrue)
-	bool Judg_Car_Pop(const D3DXMATRIX *GroundMat, const float *TransX);
+	bool Car_Pop_Judg(const D3DXMATRIX *GroundMat, const float *TransX);
 
-	//車の出現可能判定
-	bool Judg_Car_Pop(const D3DXVECTOR3 *Pop_Pos, const D3DXMATRIX *Car_Mat, const float *Radius);
+	//出現する車とプレイヤーの出現判定
+	bool Car_Pop_Judg_Player(const D3DXVECTOR3 *Pop_Pos, const float *Pop_Radius);
+
+	//出現する車とエネミーの出現判定
+	bool Car_Pop_Judg_Enemy(const D3DXVECTOR3 *Pop_Pos, const float *Pop_Radius);
+
+	//デバック用の文字表示
+	void Debug_Text(void);
 
 	//車の生存確認
 
@@ -265,13 +266,52 @@ protected:
 	bool SetBulletDamageEneCar(const BULLETJUDGDATA* BJD, const RAYDATA *RD, const int *Damage);
 	bool SetBulletDamageEneParts(const BULLETJUDGDATA* BJD, const RAYDATA *RD, const int *Damage);
 	bool SetBulletDamageEneGun(const BULLETJUDGDATA* BJD, const RAYDATA *RD, const int *Damage);
+
+	/*横の衝突判定*/
+
+	//横の衝突判定でプレイヤーと判定
+	int Side_Judg_Player(const S_SideJudgChara *Data, S_SideJudgChara *Next_Data, const D3DXMATRIX *JudgMat_A,
+		const D3DXMATRIX *JudgMat_Base, const D3DXMATRIX *JudgMat_C, const D3DXVECTOR3 *Ray_Vec, float *Small_Dis,
+		int *RayHit_No, D3DXMATRIX *RayHit_Mat);
+	//横の衝突判定で敵と判定
+	int Side_Judg_Enemy(const S_SideJudgChara *Data, S_SideJudgChara *Next_Data, const D3DXMATRIX *JudgMat_A,
+		const D3DXMATRIX *JudgMat_Base, const D3DXMATRIX *JudgMat_C, const D3DXVECTOR3 *Ray_Vec, float *Small_Dis,
+		int *RayHit_No, D3DXMATRIX *RayHit_Mat);
+
+	//横の衝突判定で地面と判定
+	bool Side_Judg_Ground(const S_SideJudgChara *Data,
+		const D3DXMATRIX *JudgMat_Base,const D3DXVECTOR3 *Ray_Vec, float *Small_Dis,
+		int *RayHit_No, D3DXMATRIX *RayHit_Mat);
+
+	//横の衝突判定
+	int Side_Judg_Ray(const int *Judg_Car_Type, const unsigned int *Car_No, const float *Judg_Rad, S_SideJudgChara *Next_Data
+		, const D3DXMATRIX *JudgMat_A, const D3DXMATRIX *JudgMat_Base, const D3DXMATRIX *JudgMat_C, const D3DXVECTOR3 *Ray_Vec
+		, float *Small_Dis, int *RayHit_No, D3DXMATRIX *RayHit_Mat);
+
+	int Side_Judg_Ray(const int *Judg_Car_Type, const unsigned int *Car_No, const float *Car_Rad, S_SideJudgChara *Next_Data
+		, float *Small_Dis,int *RayHit_No, D3DXMATRIX *RayHit_Mat,const float *Ray_Hit_Dis,const D3DXMATRIX *Judg_Car_Mat,const int *RayPos_No);
+
+	//横の衝突判定の壁の火花の出現処理
+	void Wall_Spark_Init(bool *Spark_Init_Flg, const D3DXMATRIX *RayHit_Mat, const D3DXVECTOR3 *RayHit_Pos, bool *LeftFlg);
+	void Car_Spark_Init(const bool *Spark_Init_Flg, const D3DXMATRIX *RayHit_Mat, const D3DXVECTOR3 *RayHit_Pos);
+
+	/*レイ判定*/
+	//プレイヤーのコリジョンモデル
+	bool Ray_Judg_Player_ColModel(const D3DXVECTOR3* Ray_Pos, const D3DXVECTOR3* Ray_Vec, float *Dis);
+	//敵のコリジョンモデル
+	bool Ray_Judg_Enemy_ColModel(const unsigned int *Enemy_No,const D3DXVECTOR3* Ray_Pos, const D3DXVECTOR3* Ray_Vec, float *Dis);
+
+	//衝突による敵のAiと攻撃をStopさせる
+	void Enemy_Stop(const unsigned int *e,const int *Side_Judg_Car_Type);
+
 private:
+	//判定用の関数のクラス
+	Judg judg;
+
 	//デバッグ用----------------
-	float Size, RaySize;
 	int CountNum, MaxCount;//スロー再生用
 	Spear *spear;
 	D3DXMATRIX SpeMat;
-	float DbgSize;
 	//--------------------------
 	//プレイヤーの情報
 	C_PlayerBody *PlayerBody;
@@ -292,7 +332,8 @@ private:
 	std::vector<Explo*>explo;
 	Camera *camera;
 	Debug *debug;
-	DebugT *debugT;
+	//文字表示
+	C_Text_Num *M_Text_Num;
 	
 	C_Game_End_Base* M_C_Game_End;
 
@@ -364,6 +405,11 @@ private:
 
 	//地面の表示物の視錐台カリング
 	void FrustumCulling_Ground_Object(const unsigned int *gNo, const S_Frustum_Vec *FV_Data);
+
+	//被弾音を流す処理
+	void Set_BulletHit_Sound(const int *BulletHit_Type, const D3DXVECTOR3 *Sound_Pos);
+	void Set_BulletHit_Sound(const int *BulletHit_Type, const D3DXVECTOR3 *Sound_Pos,const bool *DamageFlg);
+	void Set_BulletHit_Sound(const int *BulletHit_Type, const BULLETJUDGDATA* BJD, const RAYDATA * RD,const bool *DamageFlg);
 };
 
 //#endif // !GameScene_H

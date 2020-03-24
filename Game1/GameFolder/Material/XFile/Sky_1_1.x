@@ -4384,7 +4384,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\GIMP2‰æ‘œ\\Sky_1_1.png";
+    "../GameFolder/Material/Texture/Sky_1_1.png";
    }
   }
  }

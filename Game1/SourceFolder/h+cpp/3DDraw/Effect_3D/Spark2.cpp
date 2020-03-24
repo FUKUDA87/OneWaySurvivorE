@@ -1,11 +1,7 @@
 #include "Spark2.h"
-#include"../../GameSource/Judgment.h"
-#include"../../GameSource/InvBi.h"
 #include"../../GameSource/TextureManager.h"
+#include"../../GameSource/Judgment.h"
 
-extern Inv inv;
-
-extern Judg judg;
 extern TextureManager textureManager;
 //extern LPDIRECT3DDEVICE9		lpD3DDevice;
 
@@ -36,7 +32,8 @@ C_Spark2::C_Spark2(const D3DXMATRIX * Mat, const D3DXVECTOR3 * Pos):C_Spark(Mat,
 	//ずらす
 	D3DXMatrixTranslation(&Trans, 0.0f, 0.0f, 0.15f);
 	//位置の初期化
-	judg.SetMatP(&spark.Base.Mat, *Pos);
+	Judg judg;
+	judg.SetMatP(&spark.Base.Mat, Pos);
 	spark.Base.Mat = Rot * Trans * spark.Base.Mat;
 	//他の行列を初期化
 	for (int p = 0; p < PNum; p++) {
@@ -117,7 +114,8 @@ C_Spark2::C_Spark2(const D3DXMATRIX * Mat, const D3DXVECTOR3 * Pos, const bool *
 	//ずらす
 	//D3DXMatrixTranslation(&Trans, 0.0f, 0.0f, zMove);
 	//位置の初期化
-	judg.SetMatP(&spark.Base.Mat, *Pos);
+	Judg judg;
+	judg.SetMatP(&spark.Base.Mat, Pos);
 	spark.Base.Mat = Rot /** Trans*/ * spark.Base.Mat;
 	//他の行列を初期化
 	for (int p = 0; p < PNum; p++) {
@@ -199,7 +197,8 @@ C_Spark2::C_Spark2(const D3DXMATRIX * Mat, const D3DXVECTOR3 * Pos, const bool *
 	//ずらす
 	D3DXMatrixTranslation(&Trans, 0.0f, (float)(rand()%100)/1000.0f*-1.0f, zMove);
 	//位置の初期化
-	judg.SetMatP(&spark.Base.Mat, *Pos);
+	Judg judg;
+	judg.SetMatP(&spark.Base.Mat, Pos);
 	spark.Base.Mat = RotX*RotY *Trans * spark.Base.Mat;
 	//他の行列を初期化
 	for (int p = 0; p < PNum; p++) {

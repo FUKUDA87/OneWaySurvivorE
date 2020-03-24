@@ -42,11 +42,11 @@ void C_Hp3D::Draw3DAll(const int * NowHp, const int * MaxHp, const D3DXVECTOR3 *
 	if (y < 0.0f)y *= -1.0f;
 	D3DXMatrixTranslation(&TmpMat, 0.0f, y, 0.0f);
 	TmpMat = TmpMat * (*Mat);
-	m_Hp.Pos = judg.SetPosM(TmpMat);
+	judg.SetPosM(&m_Hp.Pos, &TmpMat);
 	D3DXVECTOR3 PosS, PosE, vec;
 	PosS = m_Hp.Pos + D3DXVECTOR3(0.0f, m_Hp.TraPos.y, 0.0f);
 	PosE = m_Hp.Pos + D3DXVECTOR3(0.0f, -m_Hp.TraPos.y, 0.0f);
-	vec = judg.Billboard(PosS, PosE, *CamPos, m_Hp.TraPos.x);
+	vec = judg.Billboard(&PosS, &PosE, CamPos, &m_Hp.TraPos.x);
 	v[0].Pos = PosS + vec;
 	v[1].Pos = PosS - vec;
 	v[2].Pos = PosE - vec;

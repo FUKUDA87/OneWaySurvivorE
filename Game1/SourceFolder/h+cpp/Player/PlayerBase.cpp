@@ -50,7 +50,7 @@ void C_PlayerBase::InitPlayer(void)
 	CurAng = 0.0f;
 
 
-	M_DriverNo = co_PlayerCar;
+	M_Driver = Hit_Type_Player;
 }
 
 bool C_PlayerBase::UpdatePlayer(void)

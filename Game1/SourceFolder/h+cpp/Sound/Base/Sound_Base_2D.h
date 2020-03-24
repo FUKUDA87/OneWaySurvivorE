@@ -11,7 +11,7 @@ public:
 	C_Sound_Base_2D();
 	~C_Sound_Base_2D();
 
-	virtual bool Update(const S_CAMERA_POS* CamPos, const bool *Flg);
+	virtual bool Update(const S_CAMERA_POS* CamPos, const bool *PlayFlg);
 
 	void StopSound_All(void);
 

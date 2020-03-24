@@ -2,10 +2,8 @@
 #include"../GameSource/TextureManager.h"
 #include"../GameSource/Judgment.h"
 
-extern Judg judg;
 extern TextureManager textureManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
-extern D3DXVECTOR3 CamPosG;
 #define	SCRW		1280	// ウィンドウ幅（Width
 #define	SCRH		720		// ウィンドウ高さ（Height
 
@@ -44,8 +42,10 @@ Vector::~Vector()
 	delete cou;
 }
 
-bool Vector::Update(D3DXVECTOR3 Pos, D3DXMATRIX mat)
+bool Vector::Update(const D3DXVECTOR3 *Pos_2D,const D3DXMATRIX *Mat,const D3DXVECTOR3 *CameraPos)
 {
+	D3DXVECTOR3 Pos = *Pos_2D;
+
 	vector.Base.Flg = true;
 	if ((Pos.z >= 0.0f) && (Pos.z <= 1.0f)) {
 		if ((Pos.x>0) && (Pos.x<1280) && (Pos.y>0) && (Pos.y<720)) {
@@ -69,7 +69,7 @@ bool Vector::Update(D3DXVECTOR3 Pos, D3DXMATRIX mat)
 				x = true;
 			}
 		}
-		if (mat._42 < CamPosG.y) {
+		if (Mat->_42 < CameraPos->y) {
 			float f = (float)(720 / 2);
 			if ( f> Pos.y) {
 				Pos.y = f;
@@ -146,6 +146,7 @@ bool Vector::Update(D3DXVECTOR3 Pos, D3DXMATRIX mat)
 		}
 		posA = v[i];
 		vecA = v[n];
+		Judg judg;
 		if (judg.LineLine(NowPos, NowVec, posA, vecA, &Dis) == true) {
 			vector.Base.Pos.x = NowPos.x + NowVec.x * Dis;
 			vector.Base.Pos.y = NowPos.y + NowVec.y * Dis;

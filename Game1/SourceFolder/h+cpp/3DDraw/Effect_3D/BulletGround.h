@@ -10,7 +10,7 @@ public:
 	//アップデート
 	bool Update(void);
 	//表示
-	void Draw3D(void);
+	void Draw3D(const D3DXVECTOR3 *CameraPos);
 protected:
 
 private:

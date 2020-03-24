@@ -9,7 +9,7 @@ C_Damage_Num_Base::C_Damage_Num_Base(const D3DXVECTOR3 * Pos_3D, const D3DXMATRI
 {
 	Judg judg;
 
-	M_Vec = (*Pos_3D) - judg.SetPosM(*Mat);
+	M_Vec = (*Pos_3D) - judg.SetPosM(Mat);
 
 	M_Damage_Num = *Damage_Num;
 
@@ -69,7 +69,7 @@ void C_Damage_Num_Base::Draw_2D(void)
 		int Type_Num = Num % 2;
 		int Judg_Num = Num / 2;
 
-		D3DXVECTOR2 TransPos = D3DXVECTOR2((float)L_w*M_ScalSize, 0.0f),
+		D3DXVECTOR2 TransPos = D3DXVECTOR2((float)L_w*M_ScalSize*0.84f, 0.0f),
 			Pos;
 		Pos = TransPos;
 		for (int i = 0; i < Judg_Num; i++) {
@@ -120,7 +120,7 @@ void C_Damage_Num_Base::Draw_2D(void)
 D3DXVECTOR3 C_Damage_Num_Base::Get_Pos_3D(const D3DXMATRIX * Mat)
 {
 	Judg judg;
-	D3DXVECTOR3 Pos = judg.SetPosM(*Mat) + M_Vec;
+	D3DXVECTOR3 Pos = judg.SetPosM(Mat) + M_Vec;
 	return Pos;
 }
 

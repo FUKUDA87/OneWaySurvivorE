@@ -11,7 +11,7 @@ Speed * Speed_Dead_A::Action(const bool * Car_Flg, int * NowSpeed, const int * T
 	if (InitFlg == true) {
 		InitFlg = false;
 
-		*NowSpeed = *TargetSpeed;
+		if(*NowSpeed > *TargetSpeed)*NowSpeed = *TargetSpeed;
 	}
 
 	Count_Now--;

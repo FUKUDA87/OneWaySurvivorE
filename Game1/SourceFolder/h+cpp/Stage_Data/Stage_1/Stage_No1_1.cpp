@@ -3,18 +3,11 @@
 
 C_Stage_No1_1::C_Stage_No1_1()
 {
+	New_Car_Data(co_EnemyCar, 1, 0, -10);
+	New_Car_Data(co_EnemyCar, 1, 180, -10);
 
-	int Time = 0
-		,Up=180;
-
-	int Start = -1;
-
-	for (int i = 0; i < 5; i++) {
-
-		New_Car_Data(co_EnemyCar, 1, Time, Start, 2);
-		Time += Up;
-		if (Time > Up)Time = Up;
-	}
+	//¶¬‚³‚ê‚é’n–Ê‚Ì‰Šú‰»
+	M_Ground_Type = 1;
 }
 
 C_Car_Pop_Base * C_Stage_No1_1::Next_Pop(void)

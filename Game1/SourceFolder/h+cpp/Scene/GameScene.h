@@ -66,17 +66,22 @@ public:
 	bool NowGroNum(D3DXMATRIX Mat,unsigned int *Num,float *Dis);
 	//弾のレイ判定
 	void BulletJudg(const int *TypeCar,const unsigned int *CarNo);
+
 	//壁と車体横の判定
 	void Side_Judg(const int *Car_Type, const unsigned int *Car_No);
 	bool Side_Judg(const bool *Left_Flg,const int *Car_Type,const unsigned int *Car_No);
+
 	//敵の誕生と思考
 	bool UpdateEnemyAI(void);
 	//敵の移動
 	bool UpdateEnemyMove(void);
+
 	//前進レイ判定
 	bool ForMoveJudg(const CONSTITUTION *Con,const D3DXMATRIX *StartMat,const D3DXMATRIX *EndMat,
 		const int *Car_Type,const unsigned int *Car_No,const D3DXVECTOR3 *RayVec1,const D3DXVECTOR3 *RayVec2,
-		const D3DXVECTOR3 *RayVec3,float *SpeedMul2,const D3DXVECTOR3 *ScalPos);
+		const D3DXVECTOR3 *RayVec3,float *SpeedMul2,const D3DXVECTOR3 *ScalPos,const bool *CollisionJudg_TrueFlg);
+
+
 	//移動後の行列作成
 	void ForMoveEnd(D3DXMATRIX *Mat,const CONSTITUTION *Con,const QuaForMove *q,const D3DXMATRIX *TransMat);
 	//カメラと壁判定
@@ -269,14 +274,19 @@ protected:
 
 	/*横の衝突判定*/
 
+	//横の衝突判定の準備
+	bool SideJudg_Preparation(S_SideJudgChara *Judg_Car, D3DXMATRIX *JudgMat,
+		D3DXVECTOR3 *JudgVec, float *SmallDis, float *Over_Dis, const int *JudgMat_Num);
+
 	//横の衝突判定でプレイヤーと判定
-	int Side_Judg_Player(const S_SideJudgChara *Data, S_SideJudgChara *Next_Data, const D3DXMATRIX *JudgMat_A,
-		const D3DXMATRIX *JudgMat_Base, const D3DXMATRIX *JudgMat_C, const D3DXVECTOR3 *Ray_Vec, float *Small_Dis,
-		int *RayHit_No, D3DXMATRIX *RayHit_Mat);
+	int Side_Judg_Player(S_SideJudgChara *Next_Data, float *Small_Dis,int *RayHit_No,
+		D3DXMATRIX *RayHit_Mat, float *Over_Dis, bool *Over_Flg,const S_SideJudgChara *Data,
+		const int *JudgMat_Num,const D3DXMATRIX *JudgMat,const D3DXVECTOR3 *Ray_Vec);
+
 	//横の衝突判定で敵と判定
-	int Side_Judg_Enemy(const S_SideJudgChara *Data, S_SideJudgChara *Next_Data, const D3DXMATRIX *JudgMat_A,
-		const D3DXMATRIX *JudgMat_Base, const D3DXMATRIX *JudgMat_C, const D3DXVECTOR3 *Ray_Vec, float *Small_Dis,
-		int *RayHit_No, D3DXMATRIX *RayHit_Mat);
+	int Side_Judg_Enemy(S_SideJudgChara *Next_Data, float *Small_Dis, int *RayHit_No,
+		D3DXMATRIX *RayHit_Mat, float *Over_Dis, bool *Over_Flg, const S_SideJudgChara *Data,
+		const int *JudgMat_Num, const D3DXMATRIX *JudgMat, const D3DXVECTOR3 *Ray_Vec);
 
 	//横の衝突判定で地面と判定
 	bool Side_Judg_Ground(const S_SideJudgChara *Data,
@@ -284,9 +294,10 @@ protected:
 		int *RayHit_No, D3DXMATRIX *RayHit_Mat);
 
 	//横の衝突判定
-	int Side_Judg_Ray(const int *Judg_Car_Type, const unsigned int *Car_No, const float *Judg_Rad, S_SideJudgChara *Next_Data
-		, const D3DXMATRIX *JudgMat_A, const D3DXMATRIX *JudgMat_Base, const D3DXMATRIX *JudgMat_C, const D3DXVECTOR3 *Ray_Vec
-		, float *Small_Dis, int *RayHit_No, D3DXMATRIX *RayHit_Mat);
+	int Side_Judg_Ray(S_SideJudgChara *Next_Data, float *Small_Dis, int *RayHit_No,
+		D3DXMATRIX *RayHit_Mat, float *Over_Dis, bool *Over_Flg, const int *Judg_Car_Type,
+		const unsigned int *Car_No, const S_SideJudgChara *Data, const int *JudgMat_Num,
+		const D3DXMATRIX *JudgMat, const D3DXVECTOR3 *Ray_Vec);
 
 	int Side_Judg_Ray(const int *Judg_Car_Type, const unsigned int *Car_No, const float *Car_Rad, S_SideJudgChara *Next_Data
 		, float *Small_Dis,int *RayHit_No, D3DXMATRIX *RayHit_Mat,const float *Ray_Hit_Dis,const D3DXMATRIX *Judg_Car_Mat,const int *RayPos_No);
@@ -410,6 +421,37 @@ private:
 	void Set_BulletHit_Sound(const int *BulletHit_Type, const D3DXVECTOR3 *Sound_Pos);
 	void Set_BulletHit_Sound(const int *BulletHit_Type, const D3DXVECTOR3 *Sound_Pos,const bool *DamageFlg);
 	void Set_BulletHit_Sound(const int *BulletHit_Type, const BULLETJUDGDATA* BJD, const RAYDATA * RD,const bool *DamageFlg);
+
+	/*正面衝突判定*/
+
+	//プレイヤーと正面衝突判定
+	void M_ForMoveJudg_Player(bool *JudgFlg, float *SmallDis,int *Hit_CarType,
+		unsigned int *Hit_CarNumber, const int *Car_Type,
+		const D3DXMATRIX *StartMat, const D3DXMATRIX *EndMat, const D3DXMATRIX *TransMat,
+		const int *TransNum, const D3DXVECTOR3 *MoveVec, const D3DXVECTOR3 *PosBig,
+		const D3DXVECTOR3 *PosSmall, const D3DXVECTOR3 *ScalPos,
+		const bool *CollisionJudg_TrueFlg);
+
+	//敵と正面衝突判定
+	void M_ForMoveJudg_Enemy(bool *JudgFlg, float *SmallDis, int *Hit_CarType,
+		unsigned int *Hit_CarNumber,const int *Car_Type,const unsigned int *Car_No,
+		const D3DXMATRIX *StartMat, const D3DXMATRIX *EndMat, const D3DXMATRIX *TransMat, const int *TransNum,
+		const D3DXVECTOR3 *MoveVec, const D3DXVECTOR3 *PosBig, const D3DXVECTOR3 *PosSmall,
+		const D3DXVECTOR3 *ScalPos, const bool *CollisionJudg_TrueFlg);
+
+	//正面衝突判定の移動後の車のレイの発射位置とベクトルの作成
+	bool M_ForMoveJudg_AfterMovingRay(D3DXVECTOR3 *Ray_Pos, D3DXVECTOR3 *Ray_Vec,const int *Vec_No,
+		const D3DXVECTOR3 *PosBig,const D3DXVECTOR3 *PosSmall,const D3DXVECTOR3 *ScalPos,const D3DXMATRIX *EndMat);
+
+	//死亡確認
+	bool Get_Dead_Flg(const int *Car_Type,const unsigned int *Car_Number);
+
+	//特定のターゲットを死亡させる
+	void M_Dead_Car(const int *Car_Type, const unsigned int *Car_Number);
+
+	//出現している車の情報の作成と車の出現の更新
+	void M_Car_Pop_Data_Update(void);
+
 };
 
 //#endif // !GameScene_H

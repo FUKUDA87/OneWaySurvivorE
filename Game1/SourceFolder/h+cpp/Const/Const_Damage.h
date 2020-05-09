@@ -15,3 +15,22 @@ const int Hit_Type_Enemy = 2;
 const int Hit_Type_Wall = 3;
 const int Hit_Type_Ground = 4;
 const int Hit_Type_EnemyBoss = 5;
+
+/*ƒŒƒC‚Ì•ûŒü*/
+
+const int Const_Left = 0;
+const int Const_Middle = 1;
+const int Const_Right = 2;
+const int Const_Previous = 0;
+const int Const_Back = 2;
+
+/*”»’èó‹µ*/
+
+//”»’è‚µ‚È‚¢
+const int Co_Judge_NO = 0;
+
+//”»’è‚·‚é
+const int Co_Judge_YES = 1;
+
+//ƒ{ƒX‚Ì”»’è
+const int Co_Judge_BOSS = 2;

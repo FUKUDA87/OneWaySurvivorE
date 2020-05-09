@@ -10,13 +10,9 @@ C_GunMoveBase_A * C_Enemy_Gun_Move_Base::Update(S_GUN_DATA * s_Data, const S_GUN
 	return nullptr;
 }
 
-D3DXMATRIX C_Enemy_Gun_Move_Base::Get_Mat(const QUAMAT * Rot, const D3DXMATRIX * StandMat)
+void C_Enemy_Gun_Move_Base::Get_Mat(D3DXMATRIX * Mat, const QUAMAT * Rot, const D3DXMATRIX * StandMat)
 {
-	D3DXMATRIX Mat;
-
-	Mat = Rot->RotXMat*(Rot->RotYMat*(*StandMat));
-
-	return Mat;
+	*Mat = Rot->RotXMat*(Rot->RotYMat*(*StandMat));
 }
 
 C_GunMoveBase_A * C_Enemy_Gun_Move_Base::Get_Move(S_GUN_DATA * s_Data, const D3DXMATRIX * StandMat, const int * NowHp, C_GunMoveBase_A * Move)
@@ -24,13 +20,11 @@ C_GunMoveBase_A * C_Enemy_Gun_Move_Base::Get_Move(S_GUN_DATA * s_Data, const D3D
 	//e‚Ì‰ñ“]‚Ì‰Šú‰»
 	Init_Gun_RotMat(s_Data,NowHp);
 
-
 	//¡‰ñ‚Ì“®‚«‚ÌI—¹ˆ—
 	if (Move != nullptr) End_Move(s_Data);
 
 	//•\Ž¦s—ñ‚Ì‡¬
-	s_Data->DrawBase.Mat = Get_Mat(&s_Data->NowRot, StandMat);
-
+	Get_Mat(&s_Data->DrawBase.Mat, &s_Data->NowRot, StandMat);
 
 	return Move;
 }

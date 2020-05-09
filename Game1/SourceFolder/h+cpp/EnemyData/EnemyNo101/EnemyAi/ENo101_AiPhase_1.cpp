@@ -3,25 +3,15 @@
 #include"Ene_101_Pha_3.h"
 #include"Enemy101_Phase5.h"
 #include"Enemy101_Phase7.h"
-/*
-フェーズ０：準備
-Speed側で所定の位置に着くとフェーズ１
-フェーズ１：銃(1)の回転
-銃(1)のHpが０になるとフェーズ２
-フェーズ２：ドアのオープン、銃(２)の回転、本体HP減少true
-本体Hpが６６％以下になればフェーズ３
-フェーズ３：フェーズ１と同じ
-フェーズ４で本体Hpが33％以下になればフェーズ５
-フェーズ6で本体Hpが0％以下になればフェーズ７
-
-*/
 
 C_E_No101_AiPhase_1::C_E_No101_AiPhase_1()
 {
 	InitFlg = true;
 }
 
-C_E_AiPhaseBase * C_E_No101_AiPhase_1::Action(const CHARABASE *Chara, std::vector<C_Car_Parts_Joint*>M_Car_Parts, std::vector<C_GunLaser*>M_Gun, S_GUN_UPDATE_DATA* s_Update, const unsigned int *GroNo, const unsigned int *Traget_GroNo)
+C_E_AiPhaseBase * C_E_No101_AiPhase_1::Action(const CHARABASE *Chara,
+	std::vector<C_Car_Parts_Joint*>M_Car_Parts, std::vector<C_GunLaser*>M_Gun,
+	S_GUN_UPDATE_DATA* s_Update, const unsigned int *GroNo, const unsigned int *Traget_GroNo)
 {
 	//初期化
 	if (InitFlg == true) {
@@ -29,12 +19,17 @@ C_E_AiPhaseBase * C_E_No101_AiPhase_1::Action(const CHARABASE *Chara, std::vecto
 
 		s_Update->NowPhase = 1;
 
+		//銃の初期化
 		if (M_Gun.size() > 0) {
 			M_Gun[0]->Init_Hp(20,&Co_Damage_Yes);
 		}
+
+		//車内の銃の初期化
 		if (M_Gun.size() > 1) {
 			M_Gun[1]->Init_Hp(0, &Co_Damage_No);
 		}
+
+		//ダメージを受ける部分のダメージ判定の無効化
 		for (auto && p : M_Car_Parts) {
 			if ((p->Get_Parts_Data().MeshTypeNo == Co_Parts_Judg) && (p->Get_Parts_Data().MeshJointNo == 1))p->Init_Hp(1, &Co_Damage_No);
 			if ((p->Get_Parts_Data().MeshTypeNo == Co_Parts_Judg) && (p->Get_Parts_Data().MeshJointNo == 2))p->SetDamageFlg(&Co_Damage_No);

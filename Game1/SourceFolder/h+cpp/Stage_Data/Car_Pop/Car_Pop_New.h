@@ -13,7 +13,7 @@ public:
 	S_CAR_INIT_DATA Get_Next_Car_Data_N(void);
 
 	//ステージの構成情報渡し
-	S_STAGE_PHASE_DATA Get_Stage_Phase_Data_N(void);
+	S_NOW_WAVE_DATA Get_Now_Wave_Data_N(void);
 
 	//車の出現可能渡し
 	bool Get_Car_Pop_Flg_N(void);
@@ -31,6 +31,9 @@ public:
 
 	//地面情報 
 	int Get_GroundNo(void);
+
+	//出現している車のから情報の出現情報の作成
+	void M_Car_Pop_Update_N(std::vector<C_EnemyAi*>enemy);
 
 
 protected:

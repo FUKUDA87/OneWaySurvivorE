@@ -24,17 +24,17 @@ C_EnemyAi::~C_EnemyAi()
 	}
 }
 
-bool C_EnemyAi::UpdateAi(CHARAData cd[], unsigned int NUM, std::vector<C_Ground_Object*> ground)
+bool C_EnemyAi::UpdateAi(const CHARAData * cd, const int * Data_Num, std::vector<C_Ground_Object*> ground, const bool * End_Flg)
 {
-	if (NUM <= 0) {
+	if (*Data_Num <= 0) {
 		return false;
 	}
 	if (GetHp() <= 0)Car.Base.Flg = false;
 
-	if (Car.Base.Flg == true) {
+	if ((Car.Base.Flg == true) && (*End_Flg != true)) {
 		if (m_Ai != nullptr) {
 			C_E_AiPhaseBase *L_Ai;
-			L_Ai=m_Ai->Action(&GetCharaBase(),M_Car_Parts, M_Gun, &M_S_Gun_Update_Data, &Car.Con.GroNum, &cd[0].NowGround);
+			L_Ai = m_Ai->Action(&GetCharaBase(), M_Car_Parts, M_Gun, &M_S_Gun_Update_Data, &Car.Con.GroNum, &cd[0].NowGround);
 			if (L_Ai != nullptr) {
 				delete m_Ai;
 				m_Ai = L_Ai;
@@ -44,14 +44,18 @@ bool C_EnemyAi::UpdateAi(CHARAData cd[], unsigned int NUM, std::vector<C_Ground_
 		M_S_Gun_Update_Data.TargetPos = judg.SetPosM(&cd[0].NowMat);
 
 		unsigned int GNo = cd[0].NowGround - 5;
-		bool Flg=StartAi(&GNo);
-		
+		bool Flg = StartAi(&GNo);
+
 	}
 
 	//スピード管理
-	Speed *NextSpeed;
-	bool CarFlg = GetFlgCar();
-	NextSpeed = speed->Action(&CarFlg,&Car.Con.NowSpeed, &cd[0].Speed, &Car.Con.GroNum, &cd[0].NowGround, &M_S_Gun_Update_Data.NowPhase);
+	C_Speed_Update *NextSpeed;
+
+	bool CarFlg = GetFlgCar(), L_StopFlg = Get_Stop_Flg();
+
+
+	NextSpeed = speed->Update(&Car.Con.NowSpeed, &CarFlg, &Car.Con.GroNum,
+		&M_S_Gun_Update_Data.NowPhase, &cd[0].Speed, &cd[0].NowGround, &L_StopFlg);
 	if (NextSpeed != nullptr) {
 		delete speed;
 		speed = NextSpeed;
@@ -115,10 +119,11 @@ bool C_EnemyAi::StartAi(const unsigned int * GNo)
 	return true;
 }
 
-void C_EnemyAi::InitSpeedMove(Speed * Initspeed)
+void C_EnemyAi::InitSpeedMove(C_Speed_Update * Initspeed)
 {
 	if (speed != nullptr) {
 		delete speed;
 	}
 	speed = Initspeed;
 }
+

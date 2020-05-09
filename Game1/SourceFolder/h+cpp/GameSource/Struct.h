@@ -65,7 +65,6 @@ struct STATUS {
 struct CONSTITUTION {
 	D3DXVECTOR3 Speed;//スピード
 	int NowSpeed,MaxSpeed;
-	float SpeedMul, SpeedMulJudg;//multiplication
 	bool CurFlg;//車線変更時の判定
 	bool CurLFlg;//車線変更時の左キー設定
 	bool CurRFlg;//車線変更時の右キー設定
@@ -194,7 +193,7 @@ struct CLONEVERTEX {
 };
 struct QuaForMove{
 	D3DXMATRIX NowMat, StartMat, EndMat;
-	float AnimeFrame, BodyHeight,SpeedMul,SpeedMul2;
+	float AnimeFrame, BodyHeight,SpeedMul,SpeedMulJudg;
 	bool QuaInitFlg,QuaMatInitFlg,CurFlg;
 	D3DXVECTOR3 WayVec, CurVec;
 };
@@ -677,10 +676,17 @@ struct S_STAGE_DATA {
 	int Stage_Num;
 };
 
-//ステージの情報
-struct S_STAGE_PHASE_DATA {
-	int Phase_Type;
-	int Enemy_Alive_Num;
+//敵のデータ
+struct S_ENEMY_DATA {
+	bool CarFlg;
+	int Phase_Now;
+	bool BossFlg;//ボス確認
+};
+
+//現在のウェーブの情報
+struct S_NOW_WAVE_DATA {
+	int WaveType_Now;//今のウェーブの状態
+	int Enemy_Alive_Num;//敵の生存数
 };
 
 //音の検索と初期化の情報
@@ -741,6 +747,9 @@ struct S_SideJudgChara {
 	int Car_Type;
 	unsigned int No;
 	float Rad;
+	
+	//判定の種類
+	int JudgeType;
 };
 
 

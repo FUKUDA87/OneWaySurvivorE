@@ -1,11 +1,19 @@
 #include "EnemySpeedManager.h"
 
-Speed * C_EnemySpeedManager::GetEnemySpeed(int EnemyNo)
+C_Speed_Update * C_EnemySpeedManager::GetEnemySpeed(const int * EnemyNo)
 {
-	//No1
-	if (EnemyNo == EnemyNo1)return new SpeedUp1();
-	//No101
-	if (EnemyNo == EnemyBossNo101)return new C_EnemySpeedNo201();
+	switch (*EnemyNo)
+	{
+	case EnemyNo1:
+		return new SpeedUp1();
+		break;
+	case EnemyBossNo101:
+		return new C_Enemy101_Speed_1();
+		break;
+	default://ŒŸõ‚Éˆø‚Á‚©‚©‚ç‚È‚¢
+		return new SpeedUp1();
+		break;
+	}
 
 	//ŒŸõ‚Éˆø‚Á‚©‚©‚ç‚È‚¢
 	return new SpeedUp1();

@@ -60,7 +60,7 @@ void C_Car_Pop_Base::Delete_All_Car(void)
 void C_Car_Pop_Base::Init_Stage_Data(void)
 {
 	M_Stage_Data.Enemy_Alive_Num = 0;
-	M_Stage_Data.Phase_Type = Co_Phase_Type_Normal;
+	M_Stage_Data.WaveType_Now = Co_Wave_Type_Normal;
 }
 
 S_CAR_INIT_DATA C_Car_Pop_Base::Get_Next_Car_Data(void)

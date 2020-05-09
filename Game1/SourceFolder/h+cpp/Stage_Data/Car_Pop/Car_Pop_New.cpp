@@ -43,9 +43,9 @@ S_CAR_INIT_DATA C_Car_Pop_New::Get_Next_Car_Data_N(void)
 	return M_C_Car_Pop_Base->Get_Next_Car_Data();
 }
 
-S_STAGE_PHASE_DATA C_Car_Pop_New::Get_Stage_Phase_Data_N(void)
+S_NOW_WAVE_DATA C_Car_Pop_New::Get_Now_Wave_Data_N(void)
 {
-	if (M_C_Car_Pop_Base == nullptr)return S_STAGE_PHASE_DATA();
+	if (M_C_Car_Pop_Base == nullptr)return S_NOW_WAVE_DATA();
 
 	return M_C_Car_Pop_Base->Get_Stage_Phase_Data();
 }
@@ -76,4 +76,11 @@ int C_Car_Pop_New::Get_GroundNo(void)
 	if (M_C_Car_Pop_Base == nullptr)return 0;
 
 	return M_C_Car_Pop_Base->Get_GroundNo();
+}
+
+void C_Car_Pop_New::M_Car_Pop_Update_N(std::vector<C_EnemyAi*> enemy)
+{
+	if (M_C_Car_Pop_Base == nullptr)return;
+
+	M_C_Car_Pop_Base->M_Car_Pop_Update(enemy);
 }

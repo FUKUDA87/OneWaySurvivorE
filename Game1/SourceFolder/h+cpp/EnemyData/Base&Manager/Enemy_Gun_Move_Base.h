@@ -10,7 +10,7 @@ public:
 	C_GunMoveBase_A* Update(S_GUN_DATA *s_Data, const S_GUN_UPDATE_DATA* s_Update, CHARABASE *Chara);
 protected:
 	//•\¦‚Ìs—ñì¬
-	D3DXMATRIX Get_Mat(const QUAMAT *Rot, const D3DXMATRIX *StandMat);
+	void Get_Mat(D3DXMATRIX *Mat, const QUAMAT *Rot, const D3DXMATRIX *StandMat);
 
 	//Ÿ‚Ì“®‚«“n‚µ
 	C_GunMoveBase_A* Get_Move(S_GUN_DATA * s_Data, const D3DXMATRIX *StandMat, const int *NowHp, C_GunMoveBase_A * Move);

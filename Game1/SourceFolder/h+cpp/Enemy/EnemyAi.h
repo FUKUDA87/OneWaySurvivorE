@@ -9,7 +9,7 @@ public:
 	C_EnemyAi();
 	~C_EnemyAi();
 	//思考
-	bool UpdateAi(CHARAData cd[], unsigned int NUM, std::vector<C_Ground_Object*>ground);
+	bool UpdateAi(const CHARAData *cd,const int *Data_Num, std::vector<C_Ground_Object*>ground,const bool *End_Flg);
 	//アップデート
 	bool UpdateAll(std::vector<C_Ground_Object*>ground);
 
@@ -28,7 +28,7 @@ public:
 
 protected:
 	//スピードの初期化
-	void InitSpeedMove(Speed* Initspeed);
+	void InitSpeedMove(C_Speed_Update* Initspeed);
 
 	C_E_AiPhaseBase *m_Ai;
 private:
@@ -36,8 +36,7 @@ private:
 
 	//------------------------
 	//スピード管理
-	//SpeedMove EneSpe;
-	Speed *speed;
+	C_Speed_Update *speed;
 	float SpeedMul;
 	int NowCount, MaxCount;
 	//------------------------

@@ -37,6 +37,11 @@ void C_CharaBase::SetNowHp(const int * Hp)
 	if (CharaBase.NowHp > CharaBase.MaxHp)CharaBase.NowHp = CharaBase.MaxHp;
 }
 
+CHARABASE C_CharaBase::GetCharaBase(void)
+{
+	return CharaBase;
+}
+
 int C_CharaBase::GetHp(void)
 {
 	return CharaBase.NowHp;
@@ -94,11 +99,6 @@ CHARABASE C_CharaBase::GetInitCharaBase(void)
 	c.NowHp=c.MaxHp= 1;
 	c.DamageSetFlg = Co_Damage_No;
 	return c;
-}
-
-CHARABASE C_CharaBase::GetCharaBase(void)
-{
-	return CharaBase;
 }
 
 void C_CharaBase::SetCharaBase(const STATUS * S)

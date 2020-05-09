@@ -226,9 +226,6 @@
     <Filter Include="ソース ファイル\Enemy\No">
       <UniqueIdentifier>{114aa120-02b4-413d-9bc3-d7d4d706b98e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Enemy\Ai">
-      <UniqueIdentifier>{8416cec5-068b-4ad0-b27d-4eab2ac687b8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Draw\DrawBase2\New_Draw">
       <UniqueIdentifier>{7a33324b-ee0c-4d6b-aefd-0e3b6115c1ad}</UniqueIdentifier>
     </Filter>
@@ -410,9 +407,6 @@
     </ClInclude>
     <ClInclude Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\ENo101_AiPhase_1.h">
       <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\EnemySpeedNo201.h">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\GameSource\XfileManager.h">
       <Filter>ソース ファイル\GameSource</Filter>
@@ -936,9 +930,6 @@
     <ClInclude Include="h+cpp\Enemy\Enemy_No\Enemy_No101.h">
       <Filter>ソース ファイル\Enemy\No</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\Enemy\EnemyAI\EnemyDeadSpeed.h">
-      <Filter>ソース ファイル\Enemy\Ai</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Player\Aiming.h">
       <Filter>ソース ファイル\Player</Filter>
     </ClInclude>
@@ -1125,9 +1116,6 @@
     <ClInclude Include="h+cpp\Const\Const_PartsTypeNo.h">
       <Filter>ソース ファイル\Const</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\Const\Const_Phase_Type.h">
-      <Filter>ソース ファイル\Const</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Const\Const_Rail_Type.h">
       <Filter>ソース ファイル\Const</Filter>
     </ClInclude>
@@ -1145,6 +1133,27 @@
     </ClInclude>
     <ClInclude Include="h+cpp\Sound\SE\Bullet_Hit\Sound_Bullet_Hit_Manager.h">
       <Filter>ソース ファイル\Sound\SE\Bullet_Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Move\Speed\Speed_Stop_A.h">
+      <Filter>ソース ファイル\Move\Speed</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_SpeedStop_1.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_1.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_2.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_SpeedStop_2.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_3.h">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Const\Const_Wave_Type.h">
+      <Filter>ソース ファイル\Const</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1252,9 +1261,6 @@
     </ClCompile>
     <ClCompile Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\ENo101_AiPhase_1.cpp">
       <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\EnemySpeedNo201.cpp">
-      <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\GameSource\3DSound.cpp">
       <Filter>ソース ファイル\GameSource</Filter>
@@ -1733,9 +1739,6 @@
     <ClCompile Include="h+cpp\Enemy\Enemy_No\Enemy_No101.cpp">
       <Filter>ソース ファイル\Enemy\No</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\Enemy\EnemyAI\EnemyDeadSpeed.cpp">
-      <Filter>ソース ファイル\Enemy\Ai</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\Player\Aiming.cpp">
       <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
@@ -1909,6 +1912,24 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Sound\SE\Bullet_Hit\Sound_Bullet_Hit_Manager.cpp">
       <Filter>ソース ファイル\Sound\SE\Bullet_Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Move\Speed\Speed_Stop_A.cpp">
+      <Filter>ソース ファイル\Move\Speed</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_SpeedStop_1.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_1.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_2.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_SpeedStop_2.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_3.cpp">
+      <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 #include "EnemySpeed.h"
 
-bool Speed::CountUpdate(void)
+bool C_Speed_Update::CountUpdate(void)
 {
 	if (CountDownNow <= 0) {
 		CountDownNow = CountDown;

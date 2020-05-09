@@ -6,23 +6,21 @@ Motion::Motion()
 	CurSize = 0.0365f;
 }
 
-float Motion::CurveFloat(float A, float B, float C, float AnimeFlame)
+void Motion::CurveFloat(float * P, const float * A, const float * B, const float * C, const float * AnimeFlame)
 {
-	return (pow((1.0f - AnimeFlame), 2.0f)*A + 2 * (1.0f - AnimeFlame)*AnimeFlame*B + pow(AnimeFlame, 2.0f)*C);
+	*P = pow((1.0f - *AnimeFlame), 2.0f)*(*A) +
+		2 * (1.0f - *AnimeFlame)*(*AnimeFlame)*(*B) + pow(*AnimeFlame, 2.0f)*(*C);
 }
 
-D3DXVECTOR3 Motion::CurvePos(D3DXMATRIX MatS, D3DXVECTOR3 PosV, D3DXMATRIX MatE, float AnimeFlame)
+void Motion::CurvePos(D3DXVECTOR3 * Pos, const D3DXMATRIX * Start_Mat, const D3DXVECTOR3 * PosV,
+	const D3DXMATRIX * End_Mat, const float * AnimeFlame)
 {
-	D3DXVECTOR3 Pos;
-	Pos.x = CurveFloat(MatS._41, PosV.x, MatE._41, AnimeFlame);
-	Pos.y = CurveFloat(MatS._42, PosV.y, MatE._42, AnimeFlame);
-	Pos.z = CurveFloat(MatS._43, PosV.z, MatE._43, AnimeFlame);
-	return Pos;
+	CurveFloat(&Pos->x, &Start_Mat->_41, &PosV->x, &End_Mat->_41, AnimeFlame);
+	CurveFloat(&Pos->y, &Start_Mat->_42, &PosV->y, &End_Mat->_42, AnimeFlame);
+	CurveFloat(&Pos->z, &Start_Mat->_43, &PosV->z, &End_Mat->_43, AnimeFlame);
 }
 
-bool Motion::Formove(const CONSTITUTION *Con, D3DXMATRIX * Car_Mat, float * Anime, std::vector<C_Ground_Object*> ground,
-	bool * QuaInitFlg, bool * QuaMatInitFlg ,float *SpeedMul, float SpeedMul2 , D3DXMATRIX * StartMat,
-	D3DXMATRIX * EndMat, D3DXVECTOR3 * WayVec,bool *CurFlg,D3DXVECTOR3 *CurVec, float BodyHeight)
+bool Motion::Formove(QuaForMove * CarFM, const CONSTITUTION * Con, std::vector<C_Ground_Object*> ground)
 {
 	Judg judg;
 
@@ -30,7 +28,7 @@ bool Motion::Formove(const CONSTITUTION *Con, D3DXMATRIX * Car_Mat, float * Anim
 
 	bool EndFlg = false;//クォータニオン終了Flg
 
-	float VecSize,CurDrawSpeed=1.0f;
+	float VecSize, CurDrawSpeed = 1.0f;
 
 	while (EndFlg != true) {
 		//地面のナンバーと次のナンバー
@@ -49,27 +47,28 @@ bool Motion::Formove(const CONSTITUTION *Con, D3DXMATRIX * Car_Mat, float * Anim
 
 				float L_Radius = 40.0f;
 				//自分の周囲の地面だけを判定
-				if (judg.BallJudg(&judg.SetPosM(Car_Mat), &judg.SetPosM(&ground[g]->GetMat()), &L_Radius) != true) continue;
-					D3DXVECTOR3 v[4];
-					for (int i = 0; i < 4; i++) {
-						v[i] = ground[g]->GetVer(i);
-					}
+				if (judg.BallJudg(&judg.SetPosM(&CarFM->NowMat),
+					&judg.SetPosM(&ground[g]->GetMat()), &L_Radius) != true) continue;
+				D3DXVECTOR3 v[4];
+				for (int i = 0; i < 4; i++) {
+					v[i] = ground[g]->GetVer(i);
+				}
 
-					bool L_IdenFlg = ground[g]->GetIdenFlg();
+				bool L_IdenFlg = ground[g]->GetIdenFlg();
 
-					//レイ判定
-					if (judg.RayJudg_Polygon(&judg.SetPosM(Car_Mat), &D3DXVECTOR3(0.0f, -1.0f, 0.0f), &ground[g]->GetMat(),
-						&v[0], &v[1], &v[2], &v[3], &Dis, &L_IdenFlg) == true) {
+				//レイ判定
+				if (judg.RayJudg_Polygon(&judg.SetPosM(&CarFM->NowMat), &D3DXVECTOR3(0.0f, -1.0f, 0.0f),
+					&ground[g]->GetMat(),&v[0], &v[1], &v[2], &v[3], &Dis, &L_IdenFlg) == true) {
 
-						//レイが当たった時の処理
+					//レイが当たった時の処理
 
-						GNo = g;
-						NextGNo = GNo + 1;
-						JudgFlg = true;
-						break;
+					GNo = g;
+					NextGNo = GNo + 1;
+					JudgFlg = true;
+					break;
 
-					}
-				
+				}
+
 			}
 			//判定
 			if (JudgFlg == false) {
@@ -82,13 +81,13 @@ bool Motion::Formove(const CONSTITUTION *Con, D3DXMATRIX * Car_Mat, float * Anim
 			//無いとき
 			return false;
 		}
-		bool CurInitFlg = false,CurveFlg=true;
+		bool CurInitFlg = false, CurveFlg = true;
 		//地面の形
 		unsigned int Type = ground[GNo]->GetWay().WayType;
 		//初期化
-		if (*QuaInitFlg == false) {
+		if (CarFM->QuaInitFlg == false) {
 			//初期化した
-			*QuaInitFlg = true;
+			CarFM->QuaInitFlg = true;
 			//Flg = true;
 			D3DXVECTOR3 Vec;
 			//カーブ判定Flg
@@ -117,10 +116,10 @@ bool Motion::Formove(const CONSTITUTION *Con, D3DXMATRIX * Car_Mat, float * Anim
 						NoFlg = true;
 						break;
 					}
-					if(Ang < 90.0f) {
+					if (Ang < 90.0f) {
 						Ang += ground[g]->GetWay().Ang;
 						if (Ang > 90.0f) {
-							NextGNo = g-1;
+							NextGNo = g - 1;
 							NoFlg = true;
 							break;
 						}
@@ -132,42 +131,42 @@ bool Motion::Formove(const CONSTITUTION *Con, D3DXMATRIX * Car_Mat, float * Anim
 				}
 			}
 			//カーブの速度調整
-			if(Type!=0){
+			if (Type != 0) {
 				//カーブ
-				*SpeedMul = 1.1f;
+				CarFM->SpeedMul = 1.1f;
 			}
 			else {
 				//ストレート
-				*SpeedMul = 1.0f;
+				CarFM->SpeedMul = 1.0f;
 			}
 			//startからendまでのVec計算
 			judg.MatMatVec(&Vec, ground[GNo]->GetWay().StartMat, ground[NextGNo]->GetWay().StartMat);
-			*WayVec = Vec;
+			CarFM->WayVec = Vec;
 			//ベジェ曲線の判定
-			if (Type!=0) {
-				*CurFlg = true;
+			if (Type != 0) {
+				CarFM->CurFlg = true;
 				CurInitFlg = true;
 			}
 			else {
-				*CurFlg = false;
+				CarFM->CurFlg = false;
 			}
 		}
 		//startMatとendMatのセット
-		if (*QuaMatInitFlg == false) {
-			*StartMat = ground[GNo]->GetWay().StartMat;
-			*EndMat = ground[NextGNo]->GetWay().StartMat;
-			*QuaMatInitFlg = true;
+		if (CarFM->QuaMatInitFlg == false) {
+			CarFM->StartMat = ground[GNo]->GetWay().StartMat;
+			CarFM->EndMat = ground[NextGNo]->GetWay().StartMat;
+			CarFM->QuaMatInitFlg = true;
 		}
 		//ベジェ曲線の計算
 		if (CurInitFlg == true) {
 			D3DXMATRIX Mat, MatE, RotX, RotY;
-			D3DXVECTOR3 wVec = *WayVec / 2.0f, wPos;
+			D3DXVECTOR3 wVec = CarFM->WayVec / 2.0f, wPos;
 			D3DXMatrixTranslation(&Mat, 0.0f, 0.0f, 0.0f);
-			judg.TarEndMat(&MatE, Mat, &RotX, &RotY, *WayVec, D3DXVECTOR3(0.0f, 0.0f, 1.0f));
-			judg.SetPosM(&wPos, StartMat);
+			judg.TarEndMat(&MatE, Mat, &RotX, &RotY, CarFM->WayVec, D3DXVECTOR3(0.0f, 0.0f, 1.0f));
+			judg.SetPosM(&wPos, &CarFM->StartMat);
 			judg.SetMatP(&MatE, &(wPos + wVec));
-			float Size=0.0f,LR=1.0f;
-			if (Type==1) {
+			float Size = 0.0f, LR = 1.0f;
+			if (Type == 1) {
 				LR *= -1.0f;
 			}
 			D3DXVECTOR3 Vec;
@@ -175,37 +174,38 @@ bool Motion::Formove(const CONSTITUTION *Con, D3DXMATRIX * Car_Mat, float * Anim
 				judg.MatMatVec(&Vec, ground[i]->GetWay().StartMat, ground[i + 1]->GetWay().StartMat);
 				Size += D3DXVec3Length(&Vec);
 			}
-			Size += D3DXVec3Length(WayVec);
-			D3DXVec3TransformCoord(CurVec, &D3DXVECTOR3(CurSize*(float)(NextGNo-GNo)*Size*LR, 0.0f, 0.0f), &MatE);
+			Size += D3DXVec3Length(&CarFM->WayVec);
+			D3DXVec3TransformCoord(&CarFM->CurVec,
+				&D3DXVECTOR3(CurSize*(float)(NextGNo - GNo)*Size*LR, 0.0f, 0.0f), &MatE);
 		}
 		//スピードの計算
-		if (OverFlg ==false) {
-			if (*CurFlg == true) {//カーブ時にスピードを遅くする
+		if (OverFlg == false) {
+			if (CarFM->CurFlg == true) {//カーブ時にスピードを遅くする
 				CurDrawSpeed = 0.8f;
 			}
 			else {
 				CurDrawSpeed = 1.0f;
 			}
-			float Size = D3DXVec3Length(WayVec),NowSpeed= D3DXVec3Length(&Con->Speed)*SpeedMul2;
-			Size *= *SpeedMul;
-			float Speed =NowSpeed*CurDrawSpeed / Size;
-			*Anime += Speed;
+			float Size = D3DXVec3Length(&CarFM->WayVec), NowSpeed = D3DXVec3Length(&Con->Speed)*CarFM->SpeedMulJudg;
+			Size *= CarFM->SpeedMul;
+			float Speed = NowSpeed * CurDrawSpeed / Size;
+			CarFM->AnimeFrame += Speed;
 		}
 		else {
 			//オーバー時の処理
 			float wVec;
-			wVec = D3DXVec3Length(WayVec);
-			wVec *= *SpeedMul;
+			wVec = D3DXVec3Length(&CarFM->WayVec);
+			wVec *= CarFM->SpeedMul;
 			wVec = VecSize / wVec;
-			*Anime += wVec;
+			CarFM->AnimeFrame += wVec;
 		}
 		bool qeFlg = false;
 		//オーバー時の計算
-		if (*Anime > 1.0f) {
+		if (CarFM->AnimeFrame > 1.0f) {
 			D3DXVECTOR3 Vec;
-			Vec = *WayVec;
-			VecSize = D3DXVec3Length(&(Vec*(*Anime) - Vec));
-			*Anime = 1.0f;
+			Vec = CarFM->WayVec;
+			VecSize = D3DXVec3Length(&(Vec*CarFM->AnimeFrame - Vec));
+			CarFM->AnimeFrame = 1.0f;
 			OverFlg = true;
 			qeFlg = true;
 		}
@@ -213,71 +213,29 @@ bool Motion::Formove(const CONSTITUTION *Con, D3DXMATRIX * Car_Mat, float * Anim
 			EndFlg = true;
 		}
 		//クォータニオン
-		judg.AnimeProc(Car_Mat, *StartMat, *EndMat, *Anime);
+		judg.AnimeProc(&CarFM->NowMat, CarFM->StartMat, CarFM->EndMat, CarFM->AnimeFrame);
 		//ベジェ曲線のクォータニオン
-		if (*CurFlg == true) {
+		if (CarFM->CurFlg == true) {
 			D3DXVECTOR3 Pos;
-			Pos = CurvePos(*StartMat, *CurVec, *EndMat, *Anime);
-			judg.SetMatP(Car_Mat, &Pos);
+			CurvePos(&Pos, &CarFM->StartMat, &CarFM->CurVec, &CarFM->EndMat, &CarFM->AnimeFrame);
+			judg.SetMatP(&CarFM->NowMat, &Pos);
 		}
 		//クォータニオンの終了処理
 		if (qeFlg == true) {//前進
-			*QuaInitFlg = false;
-			*QuaMatInitFlg = false;
-			*Anime = 0.0f;
+			CarFM->QuaInitFlg = false;
+			CarFM->QuaMatInitFlg = false;
+			CarFM->AnimeFrame = 0.0f;
 		}
+
 		//高さ処理
 		D3DXMATRIX Tmp;
-		D3DXMatrixTranslation(&Tmp, 0,BodyHeight, 0);
-		*Car_Mat = Tmp * (*Car_Mat);
+		D3DXMatrixTranslation(&Tmp, 0.0f, CarFM->BodyHeight, 0.0f);
+		CarFM->NowMat = Tmp * (CarFM->NowMat);
+
 		//終了処理
-		if (EndFlg == true) {
-			break;
-		}
+		if (EndFlg == true) break;
+
 	}
 	return true;
 }
 
-bool Motion::CurveMove(D3DXMATRIX * TransMat, D3DXMATRIX StartMat, D3DXMATRIX EndMat, float * AnimeFarme, float Up)
-{
-	Judg judg;
-	bool MoveFlg = true;
-	*AnimeFarme += Up;
-	if (*AnimeFarme > 1.0f) {
-		*AnimeFarme = 1.0f;
-		MoveFlg = false;
-	}
-	judg.AnimeProc(TransMat, StartMat, EndMat, *AnimeFarme);
-	if (MoveFlg == false) {
-		*AnimeFarme = 0.0f;
-	}
-	return MoveFlg;
-}
-
-bool Motion::CurveMove(D3DXMATRIX * TransMat, D3DXMATRIX StartMat, D3DXMATRIX RotMat, D3DXMATRIX EndMat, float * AnimeFarme, float Up, bool * Reverse)
-{
-	Judg judg;
-	bool MoveFlg = true;
-	*AnimeFarme += Up;
-	if (*AnimeFarme > 1.0f) {
-		*AnimeFarme = 1.0f;
-		MoveFlg = false;
-	}
-	if (*Reverse == false) {
-		judg.AnimeProc(TransMat, StartMat, RotMat, *AnimeFarme);
-	}
-	else {
-		judg.AnimeProc(TransMat, RotMat, EndMat, *AnimeFarme);
-	}
-	if (MoveFlg == false) {
-		*AnimeFarme = 0.0f;
-		if (*Reverse == false) {
-			MoveFlg = true;
-			*Reverse = true;
-		}
-		else {
-			*Reverse = false;
-		}
-	}
-	return MoveFlg;
-}

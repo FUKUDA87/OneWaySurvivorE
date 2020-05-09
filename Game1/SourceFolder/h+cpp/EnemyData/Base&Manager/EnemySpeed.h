@@ -2,11 +2,11 @@
 #include<d3dx9.h>
 #include"../EnemyConst/PhaseConst.h"
 
-class Speed {
+class C_Speed_Update {
 public:
-	virtual Speed* Action(const bool *Car_Flg,int *NowSpeed
-		,const int *TargetSpeed,const unsigned int *EneGroNo
-		, const unsigned int *TarGroNo,const int *NewPhase) = 0;//=0:純粋仮想関数にする（必ず継承し、派生クラス側でオーバーライドしないといけない関数
+	virtual C_Speed_Update* Update(int *Now_Speed, const bool *Car_Flg,
+		const unsigned int *Now_GroNo, const int *Now_Phase,
+		const int *Target_Speed, const unsigned int *Target_GroNo,const bool *UpdateStop_Flg) = 0;
 protected:
 	//アップタイミング
 	int CountDown, CountDownNow;

@@ -7,14 +7,14 @@
 #include"../../Draw/Polygon/Polygon_Judg.h"
 #include"../../Draw/Judg/Car_Parts_Judg_Mesh.h"
 #include"../../Draw/Judg/Car_Parts_Judg_Ball.h"
-#include"../../EnemyData/EnemyNo101/SpeedMove/EnemySpeedNo201.h"
-#include"../../EnemyData/EnemyNo101/EnemyAi/ENo101_AiPhase_1.h"
+#include"../../EnemyData/EnemyNo101/SpeedMove/Enemy101_Speed_1.h"
+#include"../../EnemyData/EnemyNo101/EnemyAi/E_101_Phase_0.h"
 
 C_Enemy_No101::C_Enemy_No101(const D3DXMATRIX * GroundMat, const float * TransX):C_EnemyA(GroundMat,TransX)
 {
 	S_ENEMYBODYDATA l_EBD;
 	l_EBD.Body.CarBodyNo = CarNo201;
-	l_EBD.CharaBase.NowHp = l_EBD.CharaBase.MaxHp = 100;
+	l_EBD.CharaBase.NowHp = l_EBD.CharaBase.MaxHp = 400;
 	l_EBD.CharaBase.DamageSetFlg = Co_Damage_No;
 	l_EBD.ScalPos = D3DXVECTOR3(2.0f, 2.0f, 2.0f);
 	l_EBD.GroundHeight = 0.5f;
@@ -25,7 +25,7 @@ C_Enemy_No101::C_Enemy_No101(const D3DXMATRIX * GroundMat, const float * TransX)
 	Car.Base.ScaPos = l_EBD.ScalPos;
 	SetMeshCar(BodyData.CarBodyNo);
 	//スピードセット
-	InitSpeedMove(new C_EnemySpeedNo201());
+	InitSpeedMove(new C_Enemy101_Speed_1());
 	//パーツの初期化
 	int l_MaxHp = GetCharaBase().MaxHp;
 
@@ -39,7 +39,7 @@ C_Enemy_No101::C_Enemy_No101(const D3DXMATRIX * GroundMat, const float * TransX)
 	New_Set_EnemyCar_Parts(&BodyData.CarBodyNo);
 
 	/*Aiの初期化*/
-	m_Ai = new C_E_No101_AiPhase_1();
+	m_Ai = new C_E_No101_Phase_0();
 
 	//ボスにする
 	M_BossFlg = true;
@@ -56,6 +56,10 @@ C_Enemy_No101::C_Enemy_No101(const D3DXMATRIX * GroundMat, const float * TransX)
 
 	/*車のパーツのサイズ変更*/
 	New_Car_Parts_Size(Co_Parts_Gun, 1, 0.7f);
+
+	//判定の状態の初期化
+	Set_JudgeType(&Co_Judge_BOSS);
+
 }
 
 void C_Enemy_No101::New_Car_Judg_Parts(void)

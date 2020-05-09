@@ -6,12 +6,16 @@ Speed_Dead_A::Speed_Dead_A()
 	InitFlg = true;
 }
 
-Speed * Speed_Dead_A::Action(const bool * Car_Flg, int * NowSpeed, const int * TargetSpeed, const unsigned int * EneGroNo, const unsigned int * TarGroNo, const int * NewPhase)
+C_Speed_Update * Speed_Dead_A::Update(int * Now_Speed, const bool * Car_Flg,
+	const unsigned int * Now_GroNo, const int * Now_Phase,
+	const int * Target_Speed, const unsigned int * Target_GroNo, const bool *UpdateStop_Flg)
 {
 	if (InitFlg == true) {
+
 		InitFlg = false;
 
-		if(*NowSpeed > *TargetSpeed)*NowSpeed = *TargetSpeed;
+		if (*Now_Speed > *Target_Speed)*Now_Speed = *Target_Speed;
+
 	}
 
 	Count_Now--;
@@ -20,7 +24,11 @@ Speed * Speed_Dead_A::Action(const bool * Car_Flg, int * NowSpeed, const int * T
 
 	Count_Now = Count_Start;
 
-	*NowSpeed -= 1;
+	*Now_Speed -= 1;
+
+	if (*Now_Speed < 0)*Now_Speed = 0;
 
 	return nullptr;
 }
+
+

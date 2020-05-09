@@ -44,7 +44,15 @@ float Judg::BallJudg(const D3DXVECTOR3 * PosA, const D3DXVECTOR3 * PosB)
 
 bool Judg::Pop_BallJudg(const D3DXVECTOR3 * PosA, const D3DXVECTOR3 * PosB, const float * Radius)
 {
-	return BallJudg(&D3DXVECTOR3(PosA->x, 0.0f, PosA->z), &D3DXVECTOR3(PosB->x, 0.0f, PosB->z), Radius);
+	D3DXVECTOR3 pA = *PosA,
+		        pB = *PosB;
+
+	pA.y = 0.0f;
+
+	pB.y = 0.0f;
+
+	//球判定
+	return BallJudg(&pA, &pB, Radius);
 }
 
 bool Judg::HPj(int *NowHp, int *NowMaxHp)
@@ -136,12 +144,12 @@ bool Judg::RayJudg_Polygon_SmallDis(const D3DXVECTOR3 * Ray_Pos, const D3DXVECTO
 }
 
 bool Judg::RayJudg_Polygon(const D3DXVECTOR3 * Ray_Pos, const D3DXVECTOR3 * Ray_Vec, const D3DXMATRIX * Polygon_Mat,
-	const D3DXVECTOR3 * vA, const D3DXVECTOR3 * vB, const D3DXVECTOR3 * vC, const D3DXVECTOR3 * vD, float * Small_Dis,
+	const D3DXVECTOR3 * vA, const D3DXVECTOR3 * vB, const D3DXVECTOR3 * vC, const D3DXVECTOR3 * vD, float * Dis,
 	const bool * Judg_Type_IdenMat)
 {
-	if (*Judg_Type_IdenMat == true)return RayJudg_Polygon(Ray_Pos, Ray_Vec, vA, vB, vC, vD, Small_Dis);
+	if (*Judg_Type_IdenMat == true)return RayJudg_Polygon(Ray_Pos, Ray_Vec, vA, vB, vC, vD, Dis);
 
-	return RayJudg_Polygon(Ray_Pos, Ray_Vec, Polygon_Mat, vA, vB, vC, vD, Small_Dis);
+	return RayJudg_Polygon(Ray_Pos, Ray_Vec, Polygon_Mat, vA, vB, vC, vD, Dis);
 }
 
 void Judg::Pos2D(D3DXVECTOR3 * Pos_2D, const D3DXVECTOR3 * Pos3D, const D3DXMATRIX * mProj, const D3DXMATRIX * mView, const D3DVIEWPORT9 * Viewport)
@@ -210,117 +218,72 @@ double Judg::Ang(D3DXVECTOR3 pla,D3DXVECTOR3 tar,D3DXVECTOR3 vec)
 	return ang;
 }
 
-bool Judg::Mesh(D3DXVECTOR3 pos, D3DXVECTOR3 vec,D3DXMATRIX mat, LPD3DXMESH mesh, float * Dis)
+bool Judg::RayJudg_Mesh(const D3DXVECTOR3 * Ray_Pos, const D3DXVECTOR3 * Ray_Vec, const D3DXMATRIX * Draw_Mat, const LPD3DXMESH Mesh, float * Dis)
 {
 	//セットする
 	D3DXMATRIX InvMat;
-	D3DXMatrixInverse(&InvMat, NULL, &mat);
-	D3DXVECTOR3 LocalPos, LocalVec;
-	D3DXVec3TransformCoord(&LocalPos, &pos, &InvMat);
-	D3DXVec3TransformNormal(&LocalVec, &vec, &InvMat);
-	//レイ判定
-	BOOL Hit;
-	D3DXIntersect(mesh, &LocalPos, &LocalVec, &Hit, NULL, NULL, NULL, Dis, NULL, NULL);
-	if (Hit == TRUE) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
 
-bool Judg::RayJudg_Mesh(const D3DXVECTOR3 * Ray_Pos, const D3DXVECTOR3 * Ray_Vec, const D3DXMATRIX * Draw_Mat, const LPD3DXMESH Mesh, float * Small_Dis)
-{
-	//セットする
-	D3DXMATRIX InvMat;
 	D3DXMatrixInverse(&InvMat, NULL, Draw_Mat);
+
 	D3DXVECTOR3 LocalPos, LocalVec;
+
 	D3DXVec3TransformCoord(&LocalPos, Ray_Pos, &InvMat);
+
 	D3DXVec3TransformNormal(&LocalVec, Ray_Vec, &InvMat);
-	//レイ判定
+	
 	BOOL Hit;
-	float Dis;
-	D3DXIntersect(Mesh, &LocalPos, &LocalVec, &Hit, NULL, NULL, NULL, &Dis, NULL, NULL);
+	float L_Dis;
+
+	//レイ判定
+	D3DXIntersect(Mesh, &LocalPos, &LocalVec, &Hit, NULL, NULL, NULL, &L_Dis, NULL, NULL);
 
 	if (Hit != TRUE)return false;
 
-	if (*Small_Dis > Dis) {
-		*Small_Dis = Dis;
-		return true;
-	}
+	if (Dis != nullptr)*Dis = L_Dis;
 
-	return false;
+	return true;
 }
 
-bool Judg::Mesh(D3DXMATRIX MatA, int VecNumA, float BodyRadA, D3DXMATRIX MatB, LPD3DXMESH MeshB)
-{
-	//方向Vec
-	D3DXVECTOR3 Vec;
-	//VecNumAの確認
-	//前か確認
-	if (VecNumA == 0) {
-		//前のベクトル作成
-		Vec = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
-	}
-	else {
-		//後ろか確認
-		if (VecNumA == 1) {
-			//後ろのベクトル作成
-			Vec = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
-		}
-		else {
-			//左か確認
-			if (VecNumA == 2) {
-				//左のベクトル作成
-				Vec = D3DXVECTOR3(-1.0f, 0.0f, 0.0f);
-			}
-			else {
-				//右か確認
-				if (VecNumA == 3) {
-					//右のベクトル作成
-					Vec = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
-				}
-				else {
-					//全て違う場合は判定しない
-					return false;
-				}
-			}
-		}
-	}
-	//方向ベクトルの作成
-	D3DXVec3TransformNormal(&Vec, &Vec, &MatA);
-	
-	//長さ用
-	float Dis;
-	//MatAのPos
-	D3DXVECTOR3 PosA;
-	//PosAにMatAの座標を入れる
-	SetPosM(&PosA,&MatA);
-	//レイ判定
-	if (Mesh(PosA, Vec, MatB, MeshB, &Dis) == true) {
-
-	}
-	return false;
-}
-
-bool Judg::Mesh(D3DXVECTOR3 pos, D3DXVECTOR3 vec, D3DXMATRIX mat, LPD3DXMESH mesh, float * Dis, int m)
+int Judg::RayJudg_Mesh_PolNum(const D3DXVECTOR3 * Ray_Pos, const D3DXVECTOR3 * Ray_Vec, const D3DXMATRIX * Draw_Mat, const LPD3DXMESH Mesh, float * Dis)
 {
 	//セットする
 	D3DXMATRIX InvMat;
-	D3DXMatrixInverse(&InvMat, NULL, &mat);
+
+	D3DXMatrixInverse(&InvMat, NULL, Draw_Mat);
+
 	D3DXVECTOR3 LocalPos, LocalVec;
-	D3DXVec3TransformCoord(&LocalPos, &pos, &InvMat);
-	D3DXVec3TransformNormal(&LocalVec, &vec, &InvMat);
-	//レイ判定
+
+	D3DXVec3TransformCoord(&LocalPos, Ray_Pos, &InvMat);
+
+	D3DXVec3TransformNormal(&LocalVec, Ray_Vec, &InvMat);
+
 	BOOL Hit;
-	DWORD Cou;
-	D3DXIntersect(mesh, &LocalPos, &LocalVec, &Hit, NULL, NULL, NULL, Dis, NULL, &Cou);
-	if ((Hit == TRUE)||(Cou>=2)) {
+	float L_Dis;
+	DWORD Hit_PolNum;
+
+	//レイ判定
+	D3DXIntersect(Mesh, &LocalPos, &LocalVec, &Hit, NULL, NULL, NULL, &L_Dis, NULL, &Hit_PolNum);
+
+	if (Hit != TRUE)return 0;
+
+	if (Dis != nullptr)*Dis = L_Dis;
+
+	return (int)Hit_PolNum;
+}
+
+bool Judg::RayJudg_Mesh_SmallDis(const D3DXVECTOR3 * Ray_Pos, const D3DXVECTOR3 * Ray_Vec, const D3DXMATRIX * Draw_Mat, const LPD3DXMESH Mesh, float * Small_Dis)
+{
+	float L_Dis;
+
+	//レイ判定
+	if (RayJudg_Mesh(Ray_Pos, Ray_Vec, Draw_Mat, Mesh, &L_Dis) != true)return false;
+
+	if (*Small_Dis > L_Dis) {
+		*Small_Dis = L_Dis;
 		return true;
 	}
-	else {
-		return false;
-	}
+
+	return false;
 }
 
 bool Judg::CroDot(D3DXMATRIX mat, D3DXMATRIX *rot, D3DXVECTOR3 targetPos, D3DXVECTOR3 FrontVec, double *Ang, double ang, bool angF)
@@ -1019,6 +982,11 @@ D3DXMATRIX Judg::GetTransMatScal(const D3DXVECTOR3 * TransPos, const D3DXVECTOR3
 	D3DXMATRIX Tmp;
 	D3DXMatrixTranslation(&Tmp, TransPos->x*ScalPos->x, TransPos->y*ScalPos->y, TransPos->z*ScalPos->z);
 	return Tmp;
+}
+
+void Judg::Get_TransMatScal(D3DXMATRIX * TransMat, const D3DXVECTOR3 * TransPos, const D3DXVECTOR3 * ScalPos)
+{
+	D3DXMatrixTranslation(TransMat, TransPos->x*ScalPos->x, TransPos->y*ScalPos->y, TransPos->z*ScalPos->z);
 }
 
 D3DXMATRIX Judg::GetMatY(const D3DXMATRIX * MatA, const D3DXMATRIX * MatB)

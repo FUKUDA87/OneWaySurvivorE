@@ -4,9 +4,9 @@
 #define KEY_H
 
 class Key{
-protected:
-	bool KeyAllFlg;
 public:
+	Key() { Init(); };
+	~Key() {};
 	//trueでキー操作不能
 	void SetFlg(bool Flg) {
 		KeyAllFlg = Flg;
@@ -14,8 +14,6 @@ public:
 	void Init(void) {
 		KeyAllFlg = false;
 	}
-	Key() { Init(); };
-	~Key() {};
 	//Aキー
 	bool AKey();
 	//Aキー+KeyFlg
@@ -106,13 +104,17 @@ public:
 	Num
 	*/
 
+	//1+長押し封じ
+	bool Num1_Key_F(void);
+
 	//7
 	bool Num7Key();
 	//8
 	bool Num8Key();
 	//9
 	bool Num9Key();
-
+protected:
+	bool KeyAllFlg;
 private:
 	static bool EscapeFlg;
 };

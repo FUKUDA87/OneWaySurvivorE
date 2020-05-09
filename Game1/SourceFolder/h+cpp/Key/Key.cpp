@@ -497,6 +497,25 @@ bool Key::EscapeKey_F()
 	return false;
 }
 
+bool Key::Num1_Key_F(void)
+{
+	static bool L_KeyFlg = false;
+
+	if (GetAsyncKeyState('1') & 0x8000) {
+		if (L_KeyFlg == false) {
+
+			L_KeyFlg = true;
+
+			return true;
+		}
+	}
+	else {
+		L_KeyFlg = false;
+	}
+
+	return false;
+}
+
 bool Key::Num7Key()
 {
 	if (GetAsyncKeyState('7') & 0x8000)return true;

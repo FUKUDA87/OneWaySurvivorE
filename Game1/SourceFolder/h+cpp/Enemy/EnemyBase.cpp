@@ -18,7 +18,7 @@ void C_EnemyBase::InitEnemy(void)
 	SetHp(&MaxHp);
 	Car.Con.DFlg = false;
 	//前進用のクォータニオンの初期化
-	Car.Con.SpeedMulJudg = 1.0f;
+	CarFM.SpeedMulJudg = 1.0f;
 
 	//矢印の初期化
 	Vect = new Vector();

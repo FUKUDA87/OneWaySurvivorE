@@ -16,8 +16,6 @@ public:
 	bool ball(D3DXMATRIX mat1, D3DXMATRIX mat2, float rad, D3DXMATRIX *Trans1, D3DXMATRIX *Trans2);
 	//距離判定+距離取得
 	float BallJudg(const D3DXVECTOR3 * PosA, const D3DXVECTOR3 * PosB);
-	//距離判定+Hp
-	/*bool ball(judgDeta *jd, D3DXMATRIX matB, float radB, int damB);*/
 
 	//出現する位置に被らない様にする判定
 	bool Pop_BallJudg(const D3DXVECTOR3 *PosA, const D3DXVECTOR3 *PosB, const float *Radius);
@@ -25,28 +23,40 @@ public:
 	//Hpの処理
 	bool HPj(int *NowHp, int *NowMaxHp);
 
-	/*板ポリゴンのレイ判定*/
+	/*レイ判定*/
 
-	//板ポリゴンでレイ判定
+	//板ポリゴンにレイ判定
 	bool RayJudg_Polygon(const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3 *Ray_Vec,
 		const D3DXVECTOR3 *vA, const D3DXVECTOR3 *vB, const D3DXVECTOR3 *vC, const D3DXVECTOR3 *vD, float *Dis);
 
-	//板ポリゴンでレイ判定(+行列から頂点計算)
+	//板ポリゴンにレイ判定(+行列から頂点計算)
 	bool RayJudg_Polygon(const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3 *Ray_Vec, const D3DXMATRIX *Polygon_Mat,
 		const D3DXVECTOR3 *vA, const D3DXVECTOR3 *vB, const D3DXVECTOR3 *vC, const D3DXVECTOR3 *vD, float *Dis);
 
-	//板ポリゴンでレイ判定(+レイ判定種類判定)
+	//板ポリゴンにレイ判定(+レイ判定種類判定)
 	bool RayJudg_Polygon(const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3 *Ray_Vec, const D3DXMATRIX *Polygon_Mat,
 		const D3DXVECTOR3 *vA, const D3DXVECTOR3 *vB, const D3DXVECTOR3 *vC, const D3DXVECTOR3 *vD,
-		float *Small_Dis, const bool *Judg_Type_IdenMat);
+		float *Dis, const bool *Judg_Type_IdenMat);
 
-	//板ポリゴンでレイ判定+レイが当たった長さ判定
+	//板ポリゴンにレイ判定+レイが当たった長さ判定
 	bool RayJudg_Polygon_SmallDis(const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3 *Ray_Vec, const D3DXMATRIX *Polygon_Mat,
 		const D3DXVECTOR3 *vA,const D3DXVECTOR3 *vB,const D3DXVECTOR3 *vC,const D3DXVECTOR3 *vD, float *Small_Dis);
 
-	//板ポリゴンでレイ判定+レイが当たった長さ判定(+行列から頂点計算)
+	//板ポリゴにレイ判定+レイが当たった長さ判定(+行列から頂点計算)
 	bool RayJudg_Polygon_SmallDis(const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3 *Ray_Vec,
 		const D3DXVECTOR3 *vA, const D3DXVECTOR3 *vB, const D3DXVECTOR3 *vC, const D3DXVECTOR3 *vD, float *Small_Dis);
+
+	//Meshにレイ判定
+	bool RayJudg_Mesh(const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3 *Ray_Vec,
+		const D3DXMATRIX *Draw_Mat, const LPD3DXMESH Mesh, float *Dis);
+
+	//Meshにレイ判定(当たったポリゴン数)
+	int RayJudg_Mesh_PolNum(const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3 *Ray_Vec,
+		const D3DXMATRIX *Draw_Mat, const LPD3DXMESH Mesh, float *Dis);
+
+	//Meshにレイ判定+レイが当たった長さ判定
+	bool RayJudg_Mesh_SmallDis(const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3 *Ray_Vec,
+		const D3DXMATRIX *Draw_Mat, const LPD3DXMESH Mesh, float *Small_Dis);
 
 	/**/
 
@@ -56,12 +66,7 @@ public:
 	void Pos2DPE(D3DXVECTOR3 *Pos_2D,const D3DXMATRIX *eMat,const D3DXMATRIX *pMat, const D3DXMATRIX * mProj, const D3DXMATRIX * mView, const D3DVIEWPORT9 * Viewport);
 	//Ang計算
 	double Ang(D3DXVECTOR3 pla, D3DXVECTOR3 tar, D3DXVECTOR3 vec);
-	//レイMesh
-	bool Mesh(D3DXVECTOR3 pos, D3DXVECTOR3 vec, D3DXMATRIX mat,LPD3DXMESH mesh, float *Dis);
-	bool RayJudg_Mesh(const D3DXVECTOR3 *Ray_Pos,const D3DXVECTOR3 *Ray_Vec,const D3DXMATRIX *Draw_Mat,const LPD3DXMESH Mesh, float *Small_Dis);
-	//int Vec=前なら０、後ろなら１、左なら２、右なら３
-	bool Mesh(D3DXMATRIX MatA,int VecNumA, float BodyRadA,D3DXMATRIX MatB, LPD3DXMESH MeshB);
-	bool Mesh(D3DXVECTOR3 pos, D3DXVECTOR3 vec, D3DXMATRIX mat, LPD3DXMESH mesh, float *Dis, int m);
+	
 	//外積内積
 	bool CroDot(D3DXMATRIX mat, D3DXMATRIX *rot, D3DXVECTOR3 targetPos, D3DXVECTOR3 FrontVec, double *Ang,double ang, bool angF);
 	//tragetX回転用(ミサイル回転)
@@ -149,9 +154,13 @@ public:
 	D3DXMATRIX GetDrawMat(const D3DXMATRIX *Mat,D3DXMATRIX *ScalMat, const D3DXVECTOR3 *ScalPos);
 	D3DXMATRIX GetDrawMat(const D3DXMATRIX *Mat,const D3DXVECTOR3 *ScalPos);
 	//初期化２
-	BASE3D GetInitBase3D(const D3DXVECTOR3 *InitPos, const D3DXVECTOR3 *TransPos, const D3DXVECTOR3 *ScalPos, const double * AngX, const  double * AngY, const  double * AngZ);
+	BASE3D GetInitBase3D(const D3DXVECTOR3 *InitPos, const D3DXVECTOR3 *TransPos, const D3DXVECTOR3 *ScalPos,
+		const double * AngX, const  double * AngY, const  double * AngZ);
+
 	//判定用の拡大を含めた移動行列の作成
 	D3DXMATRIX GetTransMatScal(const D3DXVECTOR3 *TransPos, const D3DXVECTOR3* ScalPos);
+	void Get_TransMatScal(D3DXMATRIX *TransMat,const D3DXVECTOR3 *TransPos, const D3DXVECTOR3* ScalPos);
+
 	//行列の合成(MatA*MatB)
 	D3DXMATRIX GetMatY(const D3DXMATRIX *MatA, const D3DXMATRIX *MatB);
 	//ベクトルの掛け算

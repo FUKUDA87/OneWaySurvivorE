@@ -4,8 +4,9 @@
 #include"Car_Pop_Data.h"
 #include<vector>
 #include"../../GameSource/Const.h"
-#include"../../Const/Const_Phase_Type.h"
+#include"../../Const/Const_Wave_Type.h"
 #include"../../Const/Const_Rail_Type.h"
+#include"../../Enemy/EnemyAi.h"
 
 class C_Car_Pop_Base {
 public:
@@ -14,6 +15,9 @@ public:
 
 	//更新処理
 	virtual C_Car_Pop_Base *Update(const bool *Update_MoveFlg)=0;
+
+	//出現している車のから情報の出現情報の作成
+	virtual void M_Car_Pop_Update(std::vector<C_EnemyAi*>enemy) {};
 
 	//地面情報 
 	virtual int Get_GroundNo(void) {
@@ -30,7 +34,7 @@ public:
 	void Car_Init_Rear(void);
 
 	//ステージの構成情報渡し
-	S_STAGE_PHASE_DATA Get_Stage_Phase_Data(void) {
+	S_NOW_WAVE_DATA Get_Stage_Phase_Data(void) {
 		return M_Stage_Data;
 	}
 
@@ -60,7 +64,7 @@ protected:
 	}
 
 	//ステージのデータ
-	S_STAGE_PHASE_DATA M_Stage_Data;
+	S_NOW_WAVE_DATA M_Stage_Data;
 
 	//車の出現可能
 	bool M_Car_Pop_Flg;
@@ -68,12 +72,12 @@ protected:
 	//生成される地面のタイプ
 	int M_Ground_Type;
 
+	//車のデータ
+	std::vector<C_Car_Pop_Data*>M_Car_Data;
+
 private:
 	//全削除
 	void Delete_All_Car(void);
-
-	//車のデータ
-	std::vector<C_Car_Pop_Data*>M_Car_Data;
 
 	//車の番号
 	const unsigned int Car_PopNo;

@@ -461,12 +461,12 @@ bool StageSelectScene::Update_Car(void)
 	l_Pos = M_CarSet->GetPartsPos();
 	float l_Dis;
 	Judg judg;
-	if (judg.Mesh(l_Pos, D3DXVECTOR3(0.0f, -1.0f, 0.0f), sky->GetDrawSkyMat(), sky->GetSkyMesh(), &l_Dis) == true) {
+	if (judg.RayJudg_Mesh(&l_Pos, &D3DXVECTOR3(0.0f, -1.0f, 0.0f), &sky->GetDrawSkyMat(), sky->GetSkyMesh(), &l_Dis) == true) {
 		D3DXVECTOR3 l_Pos2 = l_Pos + D3DXVECTOR3(0.0f, -1.0f, 0.0f)*l_Dis;
 		
 		D3DXMATRIX Mat;
 		D3DXMatrixTranslation(&Mat, l_Pos.x, l_Pos.y, l_Pos.z);
-		if (judg.Mesh(l_Pos2, D3DXVECTOR3(0.0f, 1.0f, 0.0f), Mat, M_CarSet->Get_Mesh(), &l_Dis) == true) {
+		if (judg.RayJudg_Mesh(&l_Pos2, &D3DXVECTOR3(0.0f, 1.0f, 0.0f), &Mat, M_CarSet->Get_Mesh(), &l_Dis) == true) {
 			l_Pos2 = l_Pos2 + D3DXVECTOR3(0.0f, 1.0f, 0.0f)*l_Dis;
 
 			M_CarSet->GroundSize(&l_Pos2.y);

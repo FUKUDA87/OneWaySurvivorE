@@ -100,7 +100,7 @@ TitleScene::TitleScene()
 		player->SetRadF(player->GetRadF() / 2.0f);
 	}
 	if (NowGroNum(player->GetMatCar(), &num, &Dis) == true) {
-		player->SetGroNum(num);//地面の取得
+		player->SetGroNum(&num);//地面の取得
 	}
 
 	//---------------------------------------------------------------------
@@ -239,7 +239,7 @@ bool TitleScene::Update(void)
 		for (unsigned int i = 0; i < ground.size(); i++) {
 			ground[i]->SuperUpdate();
 			//無限の道の削除と作成
-			if (player->GetGroNum() > i) {
+			if (player->GetCon().GroNum > i) {
 
 				float L_Radius = player->GetRadF();
 
@@ -329,7 +329,7 @@ bool TitleScene::Update(void)
 	float Dis;
 	unsigned int num;
 	if (NowGroNum(player->GetMatCar(), &num, &Dis) == true) {
-		player->SetGroNum(num);//地面の取得
+		player->SetGroNum(&num);//地面の取得
 	}
 	player->UpdateCarFM(ground);
 	D3DXMATRIX Mat = player->GetMatCar();

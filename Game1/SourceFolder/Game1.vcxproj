@@ -155,7 +155,7 @@
     <ClInclude Include="h+cpp\Const\Const_Draw_Judg.h" />
     <ClInclude Include="h+cpp\Const\Const_Ground_Type.h" />
     <ClInclude Include="h+cpp\Const\Const_PartsTypeNo.h" />
-    <ClInclude Include="h+cpp\Const\Const_Phase_Type.h" />
+    <ClInclude Include="h+cpp\Const\Const_Wave_Type.h" />
     <ClInclude Include="h+cpp\Const\Const_Rail_Type.h" />
     <ClInclude Include="h+cpp\Const\Const_Sound_Type.h" />
     <ClInclude Include="h+cpp\Const\Const_Stage_Type.h" />
@@ -241,7 +241,11 @@
     <ClInclude Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Ene_101_Pha_3.h" />
     <ClInclude Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\ENo101_AiPhase_1.h" />
     <ClInclude Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\E_101_Phase_0.h" />
-    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\EnemySpeedNo201.h" />
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_SpeedStop_1.h" />
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_SpeedStop_2.h" />
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_1.h" />
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_2.h" />
+    <ClInclude Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_3.h" />
     <ClInclude Include="h+cpp\EnemyData\EnemyNo1\EnemyAi\Enemy_No1_Phase0.h" />
     <ClInclude Include="h+cpp\EnemyData\EnemyNo1\EnemyAi\ENo1_AiPhase.h" />
     <ClInclude Include="h+cpp\EnemyData\EnemyNo1\GunMove2\Enemy_No1_Gun1_Re.h" />
@@ -252,7 +256,6 @@
     <ClInclude Include="h+cpp\EnemyData\EnemyNo1\SpeedData\SpeedUp.h" />
     <ClInclude Include="h+cpp\Enemy\EnemyA.h" />
     <ClInclude Include="h+cpp\Enemy\EnemyAi.h" />
-    <ClInclude Include="h+cpp\Enemy\EnemyAI\EnemyDeadSpeed.h" />
     <ClInclude Include="h+cpp\Enemy\EnemyBase.h" />
     <ClInclude Include="h+cpp\Enemy\EnemyNoConst.h" />
     <ClInclude Include="h+cpp\Enemy\EnemySelect.h" />
@@ -352,6 +355,7 @@
     <ClInclude Include="h+cpp\Move\Parts\StopMove.h" />
     <ClInclude Include="h+cpp\Move\Parts\TireMove_No1.h" />
     <ClInclude Include="h+cpp\Move\Speed\Speed_Dead_A.h" />
+    <ClInclude Include="h+cpp\Move\Speed\Speed_Stop_A.h" />
     <ClInclude Include="h+cpp\Player\Aiming.h" />
     <ClInclude Include="h+cpp\Player\Camera.h" />
     <ClInclude Include="h+cpp\Player\PlayerA.h" />
@@ -509,7 +513,11 @@
     <ClCompile Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\Ene_101_Pha_3.cpp" />
     <ClCompile Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\ENo101_AiPhase_1.cpp" />
     <ClCompile Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\E_101_Phase_0.cpp" />
-    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\EnemySpeedNo201.cpp" />
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_SpeedStop_1.cpp" />
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_SpeedStop_2.cpp" />
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_1.cpp" />
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_2.cpp" />
+    <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_3.cpp" />
     <ClCompile Include="h+cpp\EnemyData\EnemyNo1\EnemyAi\Enemy_No1_Phase0.cpp" />
     <ClCompile Include="h+cpp\EnemyData\EnemyNo1\EnemyAi\ENo1_AiPhase.cpp" />
     <ClCompile Include="h+cpp\EnemyData\EnemyNo1\GunMove2\Enemy_No1_Gun1_Re.cpp" />
@@ -520,7 +528,6 @@
     <ClCompile Include="h+cpp\EnemyData\EnemyNo1\SpeedData\SpeedUp.cpp" />
     <ClCompile Include="h+cpp\Enemy\EnemyA.cpp" />
     <ClCompile Include="h+cpp\Enemy\EnemyAi.cpp" />
-    <ClCompile Include="h+cpp\Enemy\EnemyAI\EnemyDeadSpeed.cpp" />
     <ClCompile Include="h+cpp\Enemy\EnemyBase.cpp" />
     <ClCompile Include="h+cpp\Enemy\EnemySelect.cpp" />
     <ClCompile Include="h+cpp\Enemy\Enemy_No\Enemy_No1.cpp" />
@@ -608,6 +615,7 @@
     <ClCompile Include="h+cpp\Move\Parts\StopMove.cpp" />
     <ClCompile Include="h+cpp\Move\Parts\TireMove_No1.cpp" />
     <ClCompile Include="h+cpp\Move\Speed\Speed_Dead_A.cpp" />
+    <ClCompile Include="h+cpp\Move\Speed\Speed_Stop_A.cpp" />
     <ClCompile Include="h+cpp\Player\Aiming.cpp" />
     <ClCompile Include="h+cpp\Player\Camera.cpp" />
     <ClCompile Include="h+cpp\Player\PlayerA.cpp" />

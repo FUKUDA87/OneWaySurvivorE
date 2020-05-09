@@ -35,14 +35,12 @@ void C_CarBase::InitCar(void)
 	//バレット情報初期化
 	brj.JudgRayFlg = false;
 
-	SkyType = false;
-
 	//前進クォータニオンの初期化
 	CarFM.AnimeFrame = 0.0f;
 	CarFM.QuaInitFlg= false;
 	CarFM.QuaMatInitFlg = false;
 	CarFM.CurFlg = false;
-	Car.Con.SpeedMulJudg = 1.0f;
+	CarFM.SpeedMulJudg = 1.0f;
 	CarFM.BodyHeight = 0.5f;
 
 	//無敵初期化
@@ -54,6 +52,13 @@ void C_CarBase::InitCar(void)
 
 	//時間の初期化
 	MMove_Stop_Time = 0;
+
+	//衝突判定することを許可するフラグの初期化
+	M_CollisionJudg_TrueFlg = true;
+
+	//衝突判定の状態の初期化
+	M_JudgeType = Co_Judge_YES;
+
 }
 
 bool C_CarBase::UpdateCar(void)
@@ -63,11 +68,11 @@ bool C_CarBase::UpdateCar(void)
 
 bool C_CarBase::UpdateCarFM(std::vector<C_Ground_Object*> ground)
 {
+	if (Car.Con.NowSpeed <= 0)return true;
+
 	//前進処理
 	CarFM.NowMat = Car.Base.Mat;
-	motion.Formove(&Car.Con, &CarFM.NowMat, &CarFM.AnimeFrame
-		, ground, &CarFM.QuaInitFlg, &CarFM.QuaMatInitFlg, &Car.Con.SpeedMul
-		, Car.Con.SpeedMulJudg, &CarFM.StartMat, &CarFM.EndMat, &CarFM.WayVec, &CarFM.CurFlg, &CarFM.CurVec, CarFM.BodyHeight);
+	motion.Formove(&CarFM, &Car.Con, ground);
 	//車体の方向を得るためにMatを入れる
 	Car.Con.JudgMat = CarFM.NowMat;
 	Car.Base.Mat = Car.Base.Trans*CarFM.NowMat;
@@ -159,8 +164,8 @@ QuaForMove C_CarBase::GetQuaForMove(void)
 	Q.NowMat = Car.Base.Mat;
 	Q.QuaInitFlg = CarFM.QuaInitFlg;
 	Q.QuaMatInitFlg = CarFM.QuaMatInitFlg;
-	Q.SpeedMul = Car.Con.SpeedMul;
-	Q.SpeedMul2 = Car.Con.SpeedMulJudg;
+	Q.SpeedMul = CarFM.SpeedMul;
+	Q.SpeedMulJudg = CarFM.SpeedMulJudg;
 	Q.StartMat = CarFM.StartMat;
 	Q.WayVec = CarFM.WayVec;
 	return Q;
@@ -176,17 +181,21 @@ bool C_CarBase::UpdateCountM(void)
 	return true;
 }
 
-void C_CarBase::Set_Move_Stop_Time(const int * Time)
+void C_CarBase::Set_Move_Stop_Time(const int * Time, const int * Speed)
 {
-	if (MMove_Stop_Time <= 0)return;
+	if (MMove_Stop_Time > 0)return;
 
 	MMove_Stop_Time += *Time;
 
 	if (MMove_Stop_Time < 0)MMove_Stop_Time *= -1;
+
+	Car.Con.NowSpeed = *Speed;
 }
 
 void C_CarBase::SetMeshCar(int MeshNo)
 {
+	C_CarMeshManager carMeshManager;
+
 	XFILE3 X= carMeshManager.GetMesh(MeshNo);
 	Car.Mesh = X.Mesh1;
 	Car.Con.ColModMesh = X.Mesh2;
@@ -197,12 +206,12 @@ void C_CarBase::SetMeshCar(int MeshNo)
 void C_CarBase::Update_Gun_Data(void)
 {
 	//銃の動きのDataの更新
-	M_S_Gun_Update_Data.Gun_Stop_Flg = Judg_Gun_Move_Data();
+	M_S_Gun_Update_Data.Gun_Stop_Flg = Get_Stop_Flg();
 }
 
 void C_CarBase::Update_Move_Stop_Time(void)
 {
-	if (MMove_Stop_Time == 0)return;
+	if (MMove_Stop_Time <= 0)return;
 
 	MMove_Stop_Time--;
 
@@ -214,10 +223,12 @@ void C_CarBase::Init_S_Gun_Update_Data(void)
 	M_S_Gun_Update_Data.NowPhase = 0;
 }
 
-bool C_CarBase::Judg_Gun_Move_Data(void)
+bool C_CarBase::Get_Stop_Flg(void)
 {
+	//生死の確認
 	if (Dead() == true)return true;
 
+	//動きが停止している時間が起動していると止める
 	if (Get_Move_Stop_Time() > 0)return true;
 
 	return false;

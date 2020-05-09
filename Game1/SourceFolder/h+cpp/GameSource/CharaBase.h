@@ -25,12 +25,15 @@ public:
 	//パーツのダメージを本体に与えるか決めるFlg
 	int Get_Parst_DamageSet_Flg(void);
 
-protected:
-	//今のHp渡し
-	int GetHp(void);
+	//MaxHpの初期化
+	void SetNowHp(const int *Hp);
 
 	//構造体渡し
 	CHARABASE GetCharaBase(void);
+
+protected:
+	//今のHp渡し
+	int GetHp(void);
 
 	//構造体代入
 	void SetCharaBase(const CHARABASE *CharaBaseS);
@@ -48,8 +51,6 @@ protected:
 private: 
 	//初期化渡し
 	CHARABASE GetInitAll(const int MaxHp, const int DFlg);
-	//MaxHpの初期化
-	virtual void SetNowHp(const int *Hp);
 	//ダメージを受ける状態渡し
 	bool GetDamageFlg(void);
 	//構造体初期化

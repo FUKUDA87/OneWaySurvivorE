@@ -4,6 +4,7 @@
 #include"../GameSource/TextureManager.h"
 #include"../GameSource/XfileManager.h"
 #include"StageSelectScene.h"
+#include"../GameSource/GameSystem.h"
 
 extern TextureManager textureManager;
 extern XfileManager xfileManager;
@@ -99,7 +100,10 @@ TitleScene::TitleScene()
 		player->SetMatCar(&TmpMat);
 		player->SetRadF(player->GetRadF() / 2.0f);
 	}
-	if (NowGroNum(player->GetMatCar(), &num, &Dis) == true) {
+
+	// 地面と当たり判定
+	C_GameSystem gameSystem;
+	if (gameSystem.JudgNowGround(&num, &Dis, player->GetMatCar(), ground) == true) {
 		player->SetGroNum(&num);//地面の取得
 	}
 
@@ -325,10 +329,11 @@ bool TitleScene::Update(void)
 			}
 		}
 	}
-	//プレイヤーと地面判定
+	// プレイヤーと地面判定
 	float Dis;
 	unsigned int num;
-	if (NowGroNum(player->GetMatCar(), &num, &Dis) == true) {
+	C_GameSystem gameSystem;
+	if (gameSystem.JudgNowGround(&num, &Dis, player->GetMatCar(), ground) == true) {
 		player->SetGroNum(&num);//地面の取得
 	}
 	player->UpdateCarFM(ground);
@@ -395,41 +400,6 @@ void TitleScene::SetCamera(void)
 	lpD3DDevice->SetTransform(D3DTS_VIEW, &mView);
 	lpD3DDevice->SetTransform(D3DTS_PROJECTION, &mProj);
 
-}
-bool TitleScene::NowGroNum(D3DXMATRIX Mat, unsigned int *Num, float *Dis)
-{
-	if (ground.size() <= 0) {
-		return false;
-	}
-	float size;
-	//地面レイ判定
-	for (unsigned int g = 0; g < ground.size(); g++) {
-
-		float L_Radius = 40.0f;
-
-		//自分の周囲の地面だけを判定
-		if (judg.BallJudg(&judg.SetPosM(&Mat), &judg.SetPosM(&ground[g]->GetMat()), &L_Radius) != true) continue;
-		
-		D3DXVECTOR3 v[4];
-		for (int i = 0; i < 4; i++) {
-			v[i] = ground[g]->GetVer(i);
-		}
-
-		bool L_IdenFlg = ground[g]->GetIdenFlg();
-
-		//レイ判定
-		if (judg.RayJudg_Polygon(&judg.SetPosM(&Mat), &D3DXVECTOR3(0.0f, -1.0f, 0.0f), &ground[g]->GetMat(),
-			&v[0], &v[1], &v[2], &v[3], &size, &L_IdenFlg) != true) continue;
-
-		//レイが当たった時の処理
-
-		*Num = g;
-		*Dis = size;
-
-		return true;
-			
-	}
-	return false;
 }
 
 void TitleScene::ChangeSceneFade(int ChangeSceneNo)

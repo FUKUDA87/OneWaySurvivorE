@@ -62,8 +62,7 @@ public:
 	void SetCamera(void);
 	bool Update(void);
 	bool UpdateE(void);
-	//’n–ÊŽæ“¾
-	bool NowGroNum(D3DXMATRIX Mat,unsigned int *Num,float *Dis);
+	
 	//’e‚ÌƒŒƒC”»’è
 	void BulletJudg(const int *TypeCar,const unsigned int *CarNo);
 

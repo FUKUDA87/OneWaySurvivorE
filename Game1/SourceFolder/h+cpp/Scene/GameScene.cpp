@@ -14,6 +14,7 @@
 #include"../Const/Const_Stage_Type.h"
 #include"../GameSource/StructClass/Struct_Init.h"
 #include"../Gun/Bullet/Const_Bullet_No.h"
+#include"../GameSource/GameSystem.h"
 
 extern int CountManager;
 extern Motion motion;
@@ -228,7 +229,8 @@ bool GameScene::UpdateE(void)
 			//enemyと地面判定
 			unsigned int num;
 			float dis;
-			if (NowGroNum(enemy[e]->GetMatCar(), &num, &dis) == true) {
+			C_GameSystem gameSystem;
+			if (gameSystem.JudgNowGround(&num, &dis, enemy[e]->GetMatCar(), ground) == true) {
 				enemy[e]->SetGroNum(&num);
 			}
 			else {
@@ -285,42 +287,6 @@ void GameScene::SetCamera(void){
 
 	FrustumCulling(&mProj, &mView, &Viewport);
 
-}
-
-bool GameScene::NowGroNum(D3DXMATRIX Mat,unsigned int *Num,float *Dis)
-{
-	if (ground.size() <= 0) return false;
-
-	float size;
-	//地面レイ判定
-	for (unsigned int g = 0; g<ground.size(); g++) {
-
-		float L_Radius = (float)RadJudgF;
-
-		//自分の周囲の地面だけを判定
-		if (judg.BallJudg(&judg.SetPosM(&Mat), &judg.SetPosM(&ground[g]->GetMat()), &L_Radius) != true) continue;
-
-		D3DXVECTOR3 v[4];
-		for (int i = 0; i < 4; i++) {
-			v[i] = ground[g]->GetVer(i);
-		}
-
-		bool L_IdenFlg = ground[g]->GetIdenFlg();
-
-		if (judg.RayJudg_Polygon(&judg.SetPosM(&Mat), &D3DXVECTOR3(0.0f, -1.0f, 0.0f), &ground[g]->GetMat(),
-			&v[0], &v[1], &v[2], &v[3], &size, &L_IdenFlg) == true) {
-
-			//レイが当たった時の処理
-
-			*Num = g;
-			*Dis = size;
-
-			return true;
-
-		}
-
-	}
-	return false;
 }
 
 void GameScene::BulletJudg(const int * TypeCar, const unsigned int * No)
@@ -643,7 +609,8 @@ bool GameScene::UpdateEnemyAI(void)
 		//enemyと地面判定
 		unsigned int num;
 		float dis;
-		if (NowGroNum(enemy[e]->GetMatCar(), &num, &dis) == true) {
+		C_GameSystem gameSystem;
+		if (gameSystem.JudgNowGround(&num, &dis, enemy[e]->GetMatCar(), ground) == true) {
 			enemy[e]->SetGroNum(&num);
 		}
 		else {
@@ -1253,7 +1220,9 @@ void GameScene::AllNew(void)
 		player->SetMatCar(&Trans);
 		player->SetRadF(player->GetRadF() / 2.0f);
 	}
-	if (NowGroNum(player->GetMatCar(), &num, &Dis) == true) {
+	// 地面の当たり判定
+	C_GameSystem gameSystem;
+	if (gameSystem.JudgNowGround(&num, &Dis,player->GetMatCar(),ground) == true) {
 		player->SetGroNum(&num);//地面の取得
 		eneFlg = true;
 	}
@@ -1482,7 +1451,8 @@ bool GameScene::Update_Game(void)
 	//プレイヤーと地面判定
 	float Dis;
 	unsigned int num;
-	if (NowGroNum(player->GetMatCar(), &num, &Dis) == true) {
+	C_GameSystem gameSystem;
+	if (gameSystem.JudgNowGround(&num, &Dis, player->GetMatCar(), ground) == true) {
 		player->SetGroNum(&num);//地面の取得
 		eneFlg = true;//敵の出現開始
 	}
@@ -1542,7 +1512,7 @@ bool GameScene::Update_Game(void)
 	CameraWallJudg();
 
 	//プレイヤーと地面判定2
-	if (NowGroNum(player->GetMatCar(), &num, &Dis) == true) {
+	if (gameSystem.JudgNowGround(&num, &Dis, player->GetMatCar(), ground) == true) {
 		player->SetGroNum(&num);//地面の取得
 		eneFlg = true;//敵の出現開始
 	}
@@ -2413,9 +2383,11 @@ void GameScene::Pop_Enemy(void)
 	//出現
 	enemy.push_back(Manager.Get_Enemy(&L_Data.CarNo, &GroundMat, &TransX));
 
+	// 地面の当たり判定
 	unsigned int num;
 	float dis;
-	if (NowGroNum(enemy[(enemy.size() - 1)]->GetMatCar(), &num, &dis) == true) {
+	C_GameSystem gameSystem;
+	if (gameSystem.JudgNowGround(&num, &dis, enemy[(enemy.size() - 1)]->GetMatCar(), ground) == true) {
 		enemy[(enemy.size() - 1)]->SetGroNum(&num);
 	}
 

@@ -27,23 +27,21 @@ inline void SafeRelease(T& lpAdd)
 }
 class TitleScene :public SceneBase
 {
-
 public:
 	TitleScene();
 	~TitleScene();
-	void Render2D(void);
-	void Render3D(void);
-	bool Update(void);
-	void SetCamera(void);
-	bool NowGroNum(D3DXMATRIX Mat, unsigned int *Num, float *Dis);
+	void Render2D(void);   // 2D描画
+	void Render3D(void);   // 3D描画
+	bool Update(void);     // 更新処理
+	void SetCamera(void);  // カメラ
 
 	//チェンジシーン用
 	void ChangeSceneFade(int ChangeSceneNo);
 	bool SetScene(void);
 
 private:
-	//判定用の関数のクラス
-	Judg judg;
+
+	Judg judg;  // 判定用の関数のクラス
 
 	//<地面
 	std::vector<C_Ground_Object*>ground;
@@ -54,6 +52,7 @@ private:
 	bool GroLenFlg;//長さの変更
 	//外灯表示用カウントダウン
 	C_Count *LightCount;
+
 
 	LPDIRECT3DTEXTURE9 Tex;
 	TitleTex *titleTex;

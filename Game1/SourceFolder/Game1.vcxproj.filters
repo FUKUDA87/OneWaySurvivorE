@@ -1155,6 +1155,9 @@
     <ClInclude Include="h+cpp\Const\Const_Wave_Type.h">
       <Filter>ソース ファイル\Const</Filter>
     </ClInclude>
+    <ClInclude Include="h+cpp\GameSource\GameSystem.h">
+      <Filter>ソース ファイル\GameSource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="h+cpp\2DDraw\BulletHole.cpp">
@@ -1930,6 +1933,9 @@
     </ClCompile>
     <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_3.cpp">
       <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\GameSource\GameSystem.cpp">
+      <Filter>ソース ファイル\GameSource</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

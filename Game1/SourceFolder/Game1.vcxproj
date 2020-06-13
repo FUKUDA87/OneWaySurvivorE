@@ -269,6 +269,7 @@
     <ClInclude Include="h+cpp\GameSource\Count.h" />
     <ClInclude Include="h+cpp\GameSource\Countdown.h" />
     <ClInclude Include="h+cpp\GameSource\Debug.h" />
+    <ClInclude Include="h+cpp\GameSource\GameSystem.h" />
     <ClInclude Include="h+cpp\GameSource\Text_Num.h" />
     <ClInclude Include="h+cpp\GameSource\Draw3DState.h" />
     <ClInclude Include="h+cpp\GameSource\Enum.h" />
@@ -538,6 +539,7 @@
     <ClCompile Include="h+cpp\GameSource\CharaBase.cpp" />
     <ClCompile Include="h+cpp\GameSource\Count.cpp" />
     <ClCompile Include="h+cpp\GameSource\Debug.cpp" />
+    <ClCompile Include="h+cpp\GameSource\GameSystem.cpp" />
     <ClCompile Include="h+cpp\GameSource\Text_Num.cpp" />
     <ClCompile Include="h+cpp\GameSource\Draw3DState.cpp" />
     <ClCompile Include="h+cpp\GameSource\GetSet\float_GetSet.cpp" />

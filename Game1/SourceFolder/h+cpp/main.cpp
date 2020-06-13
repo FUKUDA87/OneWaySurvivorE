@@ -361,7 +361,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev,
 	hwnd = CreateWindowEx(
 		0,
 		szAppName,
-		"One Way Survivor Ver0.9.0",
+		"One Way Survivor Ver1.0.0",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,

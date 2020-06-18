@@ -1,5 +1,5 @@
 #pragma once
-#include"../../../Draw3DBase/PartsBase.h"
+#include"../../../Car/Parts/PartsBase.h"
 
 class C_PartsDraw_Gun :public C_PartsBase {
 public:

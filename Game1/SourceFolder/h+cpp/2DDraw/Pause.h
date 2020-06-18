@@ -1,15 +1,16 @@
 #pragma once
 #include<d3dx9.h>
-#include"Fade.h"
+#include"../Fade/FadeDraw.h"
+#include"../GameSource/Struct.h"
 
-class Pause :public Fade {
+class Pause  
+{
 public:
 	Pause();
-	~Pause() {};
+	~Pause();
+
 	//表示
-	void Draw2DPau();
-	//アップデート
-	bool UpdatePau();
+	void Draw();
 	//表示の有無Flg入れ
 	void SetDFlg(bool Flg) {
 		pau.Base.DrawFlg = Flg;
@@ -32,4 +33,8 @@ protected:
 private:
 	//ステージの情報記録用Flg
 	bool StageSaveFlg;
+
+	C_FadeDraw *fadeDraw;
+	int alpha;
+	
 };

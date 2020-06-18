@@ -3,7 +3,7 @@
 
 class C_Spund_Click_Base :public C_Sound_Base_2D {
 public:
-	C_Spund_Click_Base(const int No, std::string FileName, const int Volume);
+	C_Spund_Click_Base(const int No, std::string FileName);
 
 	virtual void Stop_Sound2(void);
 

@@ -8,5 +8,5 @@ public:
 	C_Sound_Base_2D* Get_Sound(const S_SOUND_DATA * Data);
 private:
 	//‚QD‚©‚RD‚Ì”»’è
-	C_Sound_Base_2D* Judg_Sound(const S_SOUND_DATA * Data,std::string FileName,const int Volume);
+	C_Sound_Base_2D* Judg_Sound(const S_SOUND_DATA * Data,std::string FileName);
 };

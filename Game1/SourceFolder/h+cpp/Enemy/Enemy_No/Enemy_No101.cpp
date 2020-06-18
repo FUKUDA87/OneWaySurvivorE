@@ -55,7 +55,7 @@ C_Enemy_No101::C_Enemy_No101(const D3DXMATRIX * GroundMat, const float * TransX)
 	M_Gun.push_back(Manager.Get_Gun(&g, new C_Enemy_No1_Gun_1_Lockon()));
 
 	/*車のパーツのサイズ変更*/
-	New_Car_Parts_Size(Co_Parts_Gun, 1, 0.7f);
+	NewCarPartsSize(Co_Parts_Gun, 1, 0.7f);
 
 	//判定の状態の初期化
 	Set_JudgeType(&Co_Judge_BOSS);

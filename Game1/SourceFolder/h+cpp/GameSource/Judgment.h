@@ -111,8 +111,10 @@ public:
 	D3DXVECTOR2 HalfSize(const D3DXVECTOR3 sPos, const int Width, const int Height);
 	//2Dの画像の枠計算
 	bool PlaneP(RECT *rc, const D3DXVECTOR3 PosA, const D3DXVECTOR3 sPos, const int Width, const int Height);
+	bool PlaneP(RECT *rc, const float *posX, const float *posY, const float *scalX, const float *scalY, const int *Width, const int *Height);
 	//2D画像クリック(四角形)
 	bool PlaneCri(const D3DXVECTOR3 PosA, const D3DXVECTOR3 sPos, const int Width, const int Height);
+	bool PlaneCri(const D3DXVECTOR3 PosA, const float scalX,const float scalY, const int Width, const int Height);
 	bool PlaneCri(const D3DXMATRIX MatA, const D3DXVECTOR3 sPos, const int Width, const int Height);
 	//マウス位置
 	POINT GetPoint(void);

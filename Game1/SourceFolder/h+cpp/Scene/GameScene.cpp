@@ -2,7 +2,6 @@
 #include"TitleScene.h"
 #include"StageSelectScene.h"
 #include"SceneManager.h"
-#include"../GameSource/option.h"
 #include"../GameSource/Enum.h"
 #include"../GameSource/TextureManager.h"
 #include"../GameSource/XfileManager.h"
@@ -15,16 +14,17 @@
 #include"../GameSource/StructClass/Struct_Init.h"
 #include"../Gun/Bullet/Const_Bullet_No.h"
 #include"../GameSource/GameSystem.h"
+#include"../Fade/Fade.h"
 
 extern int CountManager;
 extern Motion motion;
 extern TextureManager textureManager;
 extern XfileManager xfileManager;
 extern SceneManager sceneManager;
-extern Option option;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 extern LPD3DXSPRITE lpSprite;	// スプライト
 extern LPD3DXFONT lpFont;		// フォント
+extern C_Fade fade;
 
 #define	SCRW		1280	// ウィンドウ幅（Width
 #define	SCRH		720		// ウィンドウ高さ（Height
@@ -60,7 +60,7 @@ GameScene::~GameScene() {
 	AllDelete();
 
 	//メニューの削除
-	DeleteMenu();
+	if (Menu != nullptr)delete Menu;
 }
 void GameScene::Render3D(void) {
 	/*if (player->GetBulSiz() > 0) {
@@ -177,17 +177,13 @@ void GameScene::Render2D(void) {
 	war->Draw2D();
 
 	//ポーズの表示
-	pause->Draw2DPau();
+	pause->Draw();
 
 	//メニューの表示
-	if (Menu.size() > 0) {
-		for (auto && m : Menu) {
-			m->Draw2DAll();
-		}
-	}
+	if (Menu != nullptr)Menu->Draw2DAll();
 
 	//フェードインアウトの表示
-	fade->Draw();
+	fade.Draw();
 	mouse->Draw2D();
 	// 描画終了
 	lpSprite->End();
@@ -878,98 +874,41 @@ bool GameScene::EnemyDelete(const unsigned int * EnemyNo)
 	return false;
 }
 
-void GameScene::ChangeSceneFade(int ChangeSceneNo)
-{
-	if (fade->GetMoveFlg() == false) {
-		if (SceneChangeFlg == false) {
-			SceneNo = ChangeSceneNo;
-			SceneChangeFlg = true;
-			bool BlackFlg = true;
-			if (ChangeSceneNo == GameNo)BlackFlg = false;
-			fade->SetIn(BlackFlg);
-
-			//キー操作不能
-			key.SetFlg(true);
-		}
-	}
-}
-
-void GameScene::ChangeSceneFade(int ChangeSceneNo, int NextStageNo)
-{
-	ChangeSceneFade(ChangeSceneNo);
-	ChangeStageNo = NextStageNo;
-}
-
-bool GameScene::SetScene(void)
-{
-	if (SceneNo == TitleNo) {
-		sceneManager.changeScene(new TitleScene());
-		return false;
-	}
-	if (SceneNo == StageSelectNo) {
-		sceneManager.changeScene(new StageSelectScene());
-		return false;
-	}
-	if (SceneNo == GameNo) {
-		sceneManager.changeScene(new GameScene(ChangeStageNo));
-		return false;
-	}
-	return true;
-}
-
 void GameScene::SetMenu(bool PauseFlg, bool ClearFlg, bool OverFlg)
 {
-	if (Menu.size() > 0)return;
-
-	float yUp;
-	int Mode;
 	//ポーズ------------------------------------
 	if (PauseFlg == true) {
-		yUp = 20.0f;
-		Mode = 1;
+		
+		if (Menu != nullptr)delete Menu;
 
-		Menu.push_back(new C_PauseTouch(
-			&D3DXVECTOR3(1280.0f / 2.0f, 720.0f / 5.0f*4.0f, 0.0f), &D3DXVECTOR3(0.35f, 0.4f, 1.0f), &D3DXVECTOR3(1.0f, 1.0f, 1.0f), &yUp,&Mode));
+		Menu=new C_PauseTouch();
 		return;
 	}
 	//ステージクリア---------------------------------------
 	if (ClearFlg == true) {
-		yUp = 20.0f;
-		Mode = 2;
+		
+		if (Menu != nullptr)delete Menu;
 
-		Menu.push_back(new C_ClearTouch(
-			&D3DXVECTOR3(1280.0f / 2.0f, 720.0f / 5.0f*4.0f, 0.0f), &D3DXVECTOR3(0.35f, 0.4f, 1.0f), &D3DXVECTOR3(1.0f, 1.0f, 1.0f), &yUp, &Mode));
+		Menu = new C_ClearTouch();
 		return;
 	}
 	//ゲームオーバー---------------------------------------
 	if (OverFlg == true) {
-		yUp = 35.0f;
-		Mode = 3;
+		
+		if (Menu != nullptr)delete Menu;
 
-		Menu.push_back(new C_OverTouch(
-			&D3DXVECTOR3(1280.0f / 2.0f, 720.0f / 5.0f*4.0f, 0.0f), &D3DXVECTOR3(0.35f, 0.4f, 1.0f), &D3DXVECTOR3(1.0f, 1.0f, 1.0f), &yUp, &Mode));
+		Menu = new C_OverTouch();
 		return;
 	}
 
 	return;
 }
 
-void GameScene::DeleteMenu(void)
-{
-	if (Menu.size() > 0) {
-		for (unsigned int m = 0; m < Menu.size(); m++) {
-			delete Menu[m];
-			Menu.erase(Menu.begin() + m);
-			m--;
-		}
-	}
-}
-
 bool GameScene::UpdateMenu(void)
 {
-	if (Menu.size() <= 0)return false;
+	if (Menu==nullptr)return false;
 
-	int Touch = Menu[0]->TouchNow2();
+	int Touch = Menu->Touch();
 
 	if (Touch > 0) {
 		//mouse->SetTouchFlg();
@@ -978,73 +917,51 @@ bool GameScene::UpdateMenu(void)
 		return false;
 	}
 
+	if (fade.GetMoveFlg() != false)return false;
+
 	if (key.LClickF() != true)return false;
 
-	//ポーズ時--------------------------------
-	if (Menu[0]->GetMenuMode() == 1) {
-		//プレイを押す処理
-		if (Touch == 1) {
-			if (pause->GetDFlg() == true) {
-				pause->SetDFlg(false);
-				mouse->Init();
-				mouse->ChaDrawFlg(false);
-				pause->SetStaSavFlg(false);
-				if (M_C_Sound_Manager != nullptr) {
-					M_C_Sound_Manager->Strat_Sound_All();
-				}
-
-				//メニュー削除
-				DeleteMenu();
-				return true;
-			}
-		}
-
-		//セレクトを押す処理
-		if (Touch == 2) {
-			if (pause->GetDFlg() == true) {
-				ChangeSceneFade(StageSelectNo);
-				return true;
-			}
-		}
+	// タイトルを押しす処理
+	if (Touch == co_TitleScene) {
+		fade.SetNextScene(co_TitleScene, true);
+		return true;
 	}
 
-	//クリア時----------------------------------------
-	if (Menu[0]->GetMenuMode() == 2) {
-		//タイトルを押しす処理
-		if (Touch == 1) {
-			ChangeSceneFade(TitleNo);
-			return true;
-		}
-
-		//セレクトを押しす処理
-		if (Touch == 2) {
-			ChangeSceneFade(StageSelectNo);
-			return true;
-		}
+	// セレクトを押す処理
+	if (Touch == co_StageSelectScene) {
+		fade.SetNextScene(co_StageSelectScene, true);
+		return true;
 	}
 
-	//ゲームオーバー時----------------------------------------
-	if (Menu[0]->GetMenuMode() == 3) {
-		//リトライを押しす処理
-		if (Touch == 1) {
-			ChangeSceneFade(GameNo, StageNo);
-			return true;
-		}
-
-		//セレクトを押しす処理
-		if (Touch == 2) {
-			ChangeSceneFade(StageSelectNo);
-			return true;
-		}
-
-		//タイトルを押しす処理
-		if (Touch == 3) {
-			ChangeSceneFade(TitleNo);
-			return true;
-		}
+	// リトライを押しす処理
+	if (Touch == co_GameScene) {
+		bool DebugFlg = false;
+		if (StageNo == Co_Stage_Type_Debug)DebugFlg = true;
+		fade.SetNextStageNo(StageNo);
+		fade.SetNextStageNo(&DebugFlg);
+		fade.SetNextScene(co_GameScene, true);
+		return true;
 	}
 
-	//ゲームオーバー時
+	// プレイを押す処理
+	if (Touch == co_PlayGame) {
+		pause->SetDFlg(false);
+		mouse->Init();
+		mouse->ChaDrawFlg(false);
+		pause->SetStaSavFlg(false);
+		if (M_C_Sound_Manager != nullptr) {
+
+			S_OptionData l_OptionData = option->GetOptionData();
+
+			M_C_Sound_Manager->Strat_Sound_All(&l_OptionData.BGMVolume);
+		}
+
+		//メニュー削除
+		if (Menu != nullptr)delete Menu;
+		Menu = new C_NextTouch();
+
+		return true;
+	}
 
 	return true;
 }
@@ -1147,6 +1064,9 @@ bool GameScene::Change_TitleScene(void)
 
 void GameScene::AllNew(void)
 {
+	// フェードインの開始
+	fade.StartFadein();
+
 	Debug_Screen_Init();
 
 	if(M_Text_Num==nullptr)M_Text_Num = new C_Text_Num();
@@ -1238,12 +1158,6 @@ void GameScene::AllNew(void)
 	eneFlg = false;//敵の出現OFF
 	M_C_Game_End = new C_Game_End_Now();
 
-	//シーンの切り替え初期化
-	SceneChangeFlg = false;
-	//フェードの初期化
-	fade = new Fade();
-	fade->ChaFlg(false);
-
 	key.Init();
 
 	war = new Warning();
@@ -1269,6 +1183,10 @@ void GameScene::AllNew(void)
 	if (M_C_Sound_Manager == nullptr)M_C_Sound_Manager = new C_Sound_Manager_Base();
 
 	New_Sound(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 1, &Co_Sound_Change);
+
+	// オプションのインスタンス化
+	option = new C_Option();
+	option->Read();
 }
 
 void GameScene::AllDelete(void)
@@ -1333,9 +1251,6 @@ void GameScene::AllDelete(void)
 	//マウスの削除
 	delete mouse;
 
-	//フェードの削除
-	delete fade;
-
 	//弾痕３Dの削除
 	if (BHole3D.size() > 0) {
 		for (unsigned int b = 0; b < BHole3D.size(); b++) {
@@ -1372,6 +1287,10 @@ void GameScene::AllDelete(void)
 			Delete_Damage_Num_Draw(&v);
 		}
 	}
+
+	// オプションの削除
+	option->Write();
+	if (option != nullptr) delete option;
 }
 
 bool GameScene::Update_Debug(void)
@@ -1399,13 +1318,14 @@ bool GameScene::Update_Debug(void)
 bool GameScene::Update_Fade(void)
 {
 	//フェードのアップデート
-	if (fade->Update() == true) {
+	if (fade.Update() == true) {
 		//キーの無力化
-
+		key.SetFlg(true);
 	}
 	else {
-		if (fade->GetMoveEndFlg() == true) {
-			if (SceneChangeFlg == true)return SetScene();
+		if (fade.GetMoveEndFlg() == true) {
+			sceneManager.changeScene(fade.GetNextScene());
+			return false;
 		}
 	}
 
@@ -1438,7 +1358,7 @@ bool GameScene::Update_Game(void)
 
 	//カメラ-------------------------------------
 	if (Get_End_Flg() == false) {
-		if (fade->GetMoveFlg() == false) {
+		if (fade.GetMoveFlg() == false) {
 			camera->UpdateM(true, mouse);
 		}
 		else {
@@ -2268,13 +2188,15 @@ bool GameScene::Update_Sound(void)
 {
 	if (M_C_Sound_Manager == nullptr)return false;
 
-	M_C_Sound_Manager->Update_Sound(&camera->GetPos(), &camera->GetLook(),&D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+	S_OptionData l_OptionData = option->GetOptionData();
 
-	M_C_Sound_Manager->Set_Sound();
+	M_C_Sound_Manager->Update_Sound(&camera->GetPos(), &camera->GetLook(),&D3DXVECTOR3(0.0f, 1.0f, 0.0f), &l_OptionData.BGMVolume);
+
+	M_C_Sound_Manager->Set_Sound(&l_OptionData.BGMVolume);
 
 	if (player != nullptr) {
 		for (unsigned int s = 0; s < player->Get_Sound_Data_Num(); s++) {
-			if (M_C_Sound_Manager->Judg_Sound(&player->Get_Sound_Data(&s)) == true) {
+			if (M_C_Sound_Manager->Judg_Sound(&player->Get_Sound_Data(&s), &l_OptionData.BGMVolume) == true) {
 				player->Delete_Sound(&s);
 			}
 		}
@@ -2282,7 +2204,7 @@ bool GameScene::Update_Sound(void)
 
 	if (war != nullptr) {
 		for (unsigned int d = 0; d < war->Get_Sound_Data_Num(); d++) {
-			if (M_C_Sound_Manager->Judg_Sound(&war->Get_Sound_Data(&d)) == true) {
+			if (M_C_Sound_Manager->Judg_Sound(&war->Get_Sound_Data(&d), &l_OptionData.BGMVolume) == true) {
 				war->Delete_Sound(&d);
 			}
 		}

@@ -11,6 +11,6 @@ extern LPDIRECTSOUND3DLISTENER8 lpSListener;
 
 C_Sound_2D_Gun_1::C_Sound_2D_Gun_1()
 {
-	int i = 1,Vol=-2500;
-	Init_Sound(&Co_Sound_Category_Bullet, &i, "../GameFolder/Material/wav/Gun4.wav", &Vol);
+	int i = 1;
+	Init_Sound(&Co_Sound_Category_Bullet, &i, "../GameFolder/Material/wav/Gun4.wav");
 }

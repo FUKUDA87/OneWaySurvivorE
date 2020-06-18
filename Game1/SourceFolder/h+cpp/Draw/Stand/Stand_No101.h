@@ -1,5 +1,5 @@
 #pragma once
-#include"../../Draw3DBase/Car_Parts_Joint.h"
+#include"../../Car/Parts/Car_Parts_Joint.h"
 
 class C_Stand_No101 :public C_Car_Parts_Joint
 {

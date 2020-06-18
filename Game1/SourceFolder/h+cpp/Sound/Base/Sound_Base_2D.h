@@ -11,13 +11,13 @@ public:
 	C_Sound_Base_2D();
 	~C_Sound_Base_2D();
 
-	virtual bool Update(const S_CAMERA_POS* CamPos, const bool *PlayFlg);
+	virtual bool Update(const S_CAMERA_POS* CamPos, const bool *PlayFlg,const int *Volume);
 
 	void StopSound_All(void);
 
 	virtual void Stop_Sound2(void);
 
-	virtual void Start_Sound(void);
+	virtual void Start_Sound(const int *Volume);
 
 	S_SOUND_DATA Get_Data(void) {
 		return M_Sound_Data;
@@ -27,14 +27,12 @@ protected:
 	int NowSound;
 	//サウンド変数
 	SoundCol soundCol;
-	//音量
-	int SoundSize;
 
 	//サウンド番号
 	S_SOUND_DATA M_Sound_Data;
 
 	//初期化
-	void Init_Sound(const int *CategoryNo,const int *No, std::string FileName, const int *Volume);
+	void Init_Sound(const int *CategoryNo,const int *No, std::string FileName);
 
 	int M_MoveFlg;
 

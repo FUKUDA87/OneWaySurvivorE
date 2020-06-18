@@ -23,7 +23,7 @@ C_Sound_Base_2D::~C_Sound_Base_2D()
 	//StopSound_All();
 }
 
-bool C_Sound_Base_2D::Update(const S_CAMERA_POS* CamPos, const bool * PlayFlg)
+bool C_Sound_Base_2D::Update(const S_CAMERA_POS * CamPos, const bool * PlayFlg, const int * Volume)
 {
 	if (DeleteFlg > 1)return false;
 
@@ -40,7 +40,7 @@ bool C_Sound_Base_2D::Update(const S_CAMERA_POS* CamPos, const bool * PlayFlg)
 	if ((*PlayFlg != true) && (Loop_Mode_Flg != true)) return true;
 
 	soundCol.Sound->Play(0, 0, 0);
-	soundCol.Sound->SetVolume(SoundSize);
+	soundCol.Sound->SetVolume(*Volume);
 
 	M_MoveFlg = 1;
 
@@ -74,19 +74,19 @@ void C_Sound_Base_2D::Stop_Sound2(void)
 	M_MoveFlg = 2;
 }
 
-void C_Sound_Base_2D::Start_Sound(void)
+void C_Sound_Base_2D::Start_Sound(const int *Volume)
 {
 	/*if (soundCol == nullptr)return;*/
 
 	/*for (int i = 0; i < SoundNum; i++) {*/
 		soundCol.Sound->Play(0, 0, 0);
-		soundCol.Sound->SetVolume(SoundSize);
+		soundCol.Sound->SetVolume(*Volume);
 	/*}*/
 
 	M_MoveFlg = 1;
 }
 
-void C_Sound_Base_2D::Init_Sound(const int * CategoryNo, const int * No, std::string FileName, const int * Volume)
+void C_Sound_Base_2D::Init_Sound(const int * CategoryNo, const int * No, std::string FileName)
 {
 	/*if (soundCol != nullptr)return;*/
 	if (M_Init_Flg != true)return;
@@ -94,8 +94,6 @@ void C_Sound_Base_2D::Init_Sound(const int * CategoryNo, const int * No, std::st
 
 	M_Sound_Data.Sound_CategoryNo = *CategoryNo;
 	M_Sound_Data.Sound_No = *No;
-
-	SoundSize = *Volume;
 
 	soundManager.GetSound(&soundCol, FileName);
 

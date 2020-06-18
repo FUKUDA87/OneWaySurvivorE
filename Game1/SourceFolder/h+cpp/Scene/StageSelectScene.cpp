@@ -2,8 +2,10 @@
 #include"GameScene.h"
 #include"TitleScene.h"
 #include"SceneManager.h"
+#include"../Fade/Fade.h"
 
 extern SceneManager sceneManager;
+extern C_Fade fade;
 
 #define	SCRW		1280	// ウィンドウ幅（Width
 #define	SCRH		720		// ウィンドウ高さ（Height
@@ -12,6 +14,13 @@ extern SceneManager sceneManager;
 
 StageSelectScene::StageSelectScene()
 {
+	// オプションのインスタンス化
+	option = new C_Option();
+	option->Read();
+
+	// フェードインの開始
+	fade.StartFadein();
+
 	Init_New();
 
 	mouse = new C_Mouse();
@@ -24,12 +33,6 @@ StageSelectScene::StageSelectScene()
 	car = new StageCar(&PlayerBody->GetPData());
 	cam = new StageCam();
 	modoru = new Modoru();
-
-	//シーンの切り替え初期化
-	SceneChangeFlg = false;
-	//フェードの初期化
-	fade = new Fade();
-	fade->ChaFlg(false);
 
 	key.Init();
 
@@ -71,8 +74,6 @@ StageSelectScene::~StageSelectScene()
 
 	//マウスの削除
 	delete mouse;
-	//フェードの削除
-	delete fade;
 
 	DeleteCarSel();
 
@@ -92,6 +93,10 @@ StageSelectScene::~StageSelectScene()
 	if (M_C_Garage_Stand != nullptr) {
 		delete M_C_Garage_Stand;
 	}
+
+	// オプションの削除
+	option->Write();
+	if (option != nullptr) delete option;
 
 }
 
@@ -130,21 +135,25 @@ bool StageSelectScene::Update(void)
 	if (Change_TitleScene() != true)return false;
 
 	if (M_C_Sound_Manager != nullptr) {
-		M_C_Sound_Manager->Update_Sound();
 
-		M_C_Sound_Manager->Set_Sound();
+		S_OptionData l_OptionData = option->GetOptionData();
+
+		M_C_Sound_Manager->Update_Sound(&l_OptionData.BGMVolume);
+
+		M_C_Sound_Manager->Set_Sound(&l_OptionData.BGMVolume);
 	}
 
 	mouse->Update();
 
 	//フェードのアップデート
-	if (fade->Update() == true) {
+	if (fade.Update() == true) {
 		//キーの無力化
 
 	}
 	else {
-		if (fade->GetMoveEndFlg() == true) {
-			if (SceneChangeFlg == true)return SetScene();
+		if (fade.GetMoveEndFlg() == true) {
+			sceneManager.changeScene(fade.GetNextScene());
+			return false;
 		}
 	}
 
@@ -178,38 +187,6 @@ void StageSelectScene::SetCamera(void)
 	//行列設定
 	lpD3DDevice->SetTransform(D3DTS_VIEW, &mView);
 	lpD3DDevice->SetTransform(D3DTS_PROJECTION, &mProj);
-}
-
-void StageSelectScene::ChangeSceneFade(int ChangeSceneNo)
-{
-	if (fade->GetMoveFlg() == false) {
-		if (SceneChangeFlg == false) {
-			SceneNo = ChangeSceneNo;
-			if (ChangeSceneNo == GameNo)return;
-			StartFade();
-			return;
-		}
-	}
-}
-
-void StageSelectScene::ChangeSceneFade(int ChangeSceneNo, int NextStageNo)
-{
-
-	ChangeSceneFade(ChangeSceneNo);
-	ChangeStageNo = NextStageNo;
-}
-
-bool  StageSelectScene::SetScene(void)
-{
-	if (SceneNo == TitleNo) {
-		sceneManager.changeScene(new TitleScene());
-		return false;
-	}
-	if (SceneNo = GameNo) {
-		sceneManager.changeScene(new GameScene(ChangeStageNo,&GameScene_DebugFlg));
-		return false;
-	}
-	return true;
 }
 
 void StageSelectScene::DeleteCarSel(void)
@@ -258,7 +235,7 @@ bool StageSelectScene::StageSelectMode()
 	if (modoru->UpdateSu() == false) {
 		mouse->SetTouchFlg();
 		if (KeyFlg == true) {
-			ChangeSceneFade(TitleNo);
+			fade.SetNextScene(co_TitleScene,true);
 			StageModeFlg = false;
 			CarModeFlg = false;
 			return true;
@@ -270,7 +247,7 @@ bool StageSelectScene::StageSelectMode()
 			if (stage[s]->UpdateSu() == false) {
 				mouse->SetTouchFlg();
 				if (KeyFlg == true) {
-					ChangeSceneFade(GameNo, stage[s]->GetStageNo());
+					fade.SetNextStageNo(stage[s]->GetStageNo());
 					InitCarSel();
 					return true;
 				}
@@ -342,7 +319,8 @@ bool StageSelectScene::CarSelectMode()
 	if (KeyFlg == true) {
 		if (Ok->Touch() == true) {
 			Set_GameScene_DebugFlg();
-			StartFade();
+			fade.SetNextStageNo(&GameScene_DebugFlg);
+			fade.SetNextScene(co_GameScene,false);
 			return true;
 		}
 	}
@@ -372,14 +350,6 @@ void StageSelectScene::InitCarSel(void)
 
 }
 
-void StageSelectScene::StartFade(void)
-{
-	SceneChangeFlg = true;
-	bool BlackFlg = true;
-	if (SceneNo == GameNo)BlackFlg = false;
-	fade->SetIn(BlackFlg);
-}
-
 void StageSelectScene::ChangeCar(int * No)
 {
 	//メッシュの種類変え
@@ -398,7 +368,7 @@ void StageSelectScene::ChangeCar(int * No)
 
 void StageSelectScene::ChangeMode_Car(void)
 {
-	if (fade->GetMoveFlg() != false)return;
+	if (fade.GetMoveFlg() != false)return;
 
 	if (CarModeFlg != true)return;
 
@@ -505,7 +475,7 @@ void StageSelectScene::Draw2D_Normal(void)
 
 	Ok->Draw2DOK();
 
-	fade->Draw();
+	fade.Draw();
 	mouse->Draw2D();
 }
 

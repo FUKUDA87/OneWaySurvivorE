@@ -752,5 +752,20 @@ struct S_SideJudgChara {
 	int JudgeType;
 };
 
+// オプションの構造体
+struct S_OptionData
+{
+	int BGMVolume;
+	int SEVolume;
+	float sensitivity;          // 感度
+	bool reverseLR, reverseUD;  // 左右反転・上下反転
+};
+
+// 車のエフェクトの更新に必要な処理
+struct s_CarEffectUpdateData
+{
+
+};
+
 
 //#endif // !Struct_H

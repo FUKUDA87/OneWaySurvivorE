@@ -15,14 +15,14 @@ public:
 
 
 	//音の更新
-	bool Update_Sound(void);
-	bool Update_Sound(const D3DXVECTOR3 *CamPos, const D3DXVECTOR3 *CamLook, const D3DXVECTOR3 *CamHead);
+	bool Update_Sound(const int *Volume);
+	bool Update_Sound(const D3DXVECTOR3 *CamPos, const D3DXVECTOR3 *CamLook, const D3DXVECTOR3 *CamHead, const int *Volume);
 
 	//モードの検索
-	bool Judg_Sound(const S_SOUND_DATA* M_Data);
+	bool Judg_Sound(const S_SOUND_DATA* M_Data, const int *Volume);
 
 	//音の変更
-	void Set_Sound(void);
+	void Set_Sound(const int *Volume);
 
 	void Stop_Sound_All(void);
 
@@ -30,16 +30,16 @@ public:
 
 	void Stop_Sound_2_All(const int CategoryNo);
 
-	void Strat_Sound_All(void);
+	void Strat_Sound_All(const int *Volume);
 
 	//被弾音を流す処理
-	void Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos);
+	void Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos, const int *Volume);
 
 	//被弾した物体が無敵状態の判定と音を流す処理
-	void Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos,const bool *DamageFlg);
+	void Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos,const bool *DamageFlg, const int *Volume);
 protected:
 	//2Dの検索
-	bool Set_Sound_2D(const S_SOUND_DATA* Data);
+	bool Set_Sound_2D(const S_SOUND_DATA* Data, const int *Volume);
 
 	void New_Sound_2D(C_Sound_Base_2D* Sound);
 
@@ -53,10 +53,10 @@ private:
 	bool Judg_Data(const S_SOUND_DATA* M_Data, const S_SOUND_DATA* Set_Data);
 
 	//弾の検索
-	bool Judg_Bullet(const S_SOUND_DATA* Data);
+	bool Judg_Bullet(const S_SOUND_DATA* Data, const int *Volume);
 
 	//BGMの検索
-	bool Judg_BGM(const S_SOUND_DATA* Data);
+	bool Judg_BGM(const S_SOUND_DATA* Data, const int *Volume);
 
 	//音の全削除
 	void Delete_All(void);
@@ -68,19 +68,19 @@ private:
 	bool Delete_All(const S_SOUND_DATA* M_Data,const bool Flg);
 
 	//音を外部からNew
-	bool Set_Sound(const S_SOUND_DATA* Data);
+	bool Set_Sound(const S_SOUND_DATA* Data, const int *Volume);
 
 	//警告音を流す処理
-	bool Judg_Warning(const S_SOUND_DATA* Data);
+	bool Judg_Warning(const S_SOUND_DATA* Data, const int *Volume);
 
 	//クリック音を流す処理
-	bool Judg_Click(const S_SOUND_DATA* Data);
+	bool Judg_Click(const S_SOUND_DATA* Data, const int *Volume);
 
 	//爆発の判定
-	bool Judg_Explosion_3D(const S_SOUND_DATA* Data);
+	bool Judg_Explosion_3D(const S_SOUND_DATA* Data, const int *Volume);
 
 	//最新の音声を流す処理
-	void New_Sound_Play(void);
+	void New_Sound_Play(const int *Volume);
 
 
 };

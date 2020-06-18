@@ -5,12 +5,14 @@
 #include"../GameSource/XfileManager.h"
 #include"StageSelectScene.h"
 #include"../GameSource/GameSystem.h"
+#include"../Fade/Fade.h"
 
 extern TextureManager textureManager;
 extern XfileManager xfileManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
 extern SceneManager sceneManager;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
+extern C_Fade fade;
 
 #define	SCRW		1280	// ウィンドウ幅（Width
 #define	SCRH		720		// ウィンドウ高さ（Height
@@ -21,11 +23,12 @@ void LoadTexture(LPDIRECT3DTEXTURE9 *lpTex, const char fname[], int W, int H, D3
 
 TitleScene::TitleScene()
 {
-	//シーンの切り替え初期化
-	SceneChangeFlg = false;
-	//フェードの初期化
-	fade = new Fade();
-	fade->ChaFlg(false);
+	// オプションのインスタンス化
+	option = new C_Option();
+	option->Read();
+
+	// フェードインの開始
+	fade.StartFadein();
 
 	//プレイヤーの初期化の前に初期化
 	PlaBodData = new C_PlayerBody();
@@ -183,8 +186,6 @@ TitleScene::~TitleScene()
 	}
 	//マウスの削除
 	delete mouse;
-	//フェードの削除
-	delete fade;
 
 	delete PlaBodData;
 
@@ -198,17 +199,21 @@ TitleScene::~TitleScene()
 		delete M_C_Sound_Manager;
 	}
 
-	//textureManager.AllDelete();
-	//xfileManager.AllDelete();
+	// オプションの削除
+	option->Write();
+	if (option != nullptr) delete option;
+
 }
 bool TitleScene::Update(void)
 {
 
 	if (M_C_Sound_Manager != nullptr) {
 
-		M_C_Sound_Manager->Set_Sound();
+		S_OptionData l_OptionData = option->GetOptionData();
 
-		M_C_Sound_Manager->Update_Sound();
+		M_C_Sound_Manager->Set_Sound(&l_OptionData.BGMVolume);
+
+		M_C_Sound_Manager->Update_Sound(&l_OptionData.BGMVolume);
 	}
 
 	Game_End();
@@ -223,13 +228,15 @@ bool TitleScene::Update(void)
 	mouse->Update();
 
 	//フェードのアップデート
-	if (fade->Update() == true) {
+	if (fade.Update() == true) {
 		//キーの無力化
 
 	}
 	else {
-		if (fade->GetMoveEndFlg() == true) {
-			if (SceneChangeFlg == true)return SetScene();
+		// フェードアウトが完了した時
+		if (fade.GetMoveEndFlg() == true) {
+			sceneManager.changeScene(new StageSelectScene());
+			return false;
 		}
 	}
 
@@ -360,7 +367,7 @@ void TitleScene::Render2D(void)
 
 	startTex->DrawSu();
 
-	fade->Draw();
+	fade.Draw();
 
 	//弾痕表示
 	if (BulHol.size() > 0) {
@@ -402,28 +409,6 @@ void TitleScene::SetCamera(void)
 
 }
 
-void TitleScene::ChangeSceneFade(int ChangeSceneNo)
-{
-	if (fade->GetMoveFlg() != false) return;
-	if (SceneChangeFlg != false) return;
-
-	SceneNo = ChangeSceneNo;
-	SceneChangeFlg = true;
-	bool BlackFlg = true;
-	//if (ChangeSceneNo == GameNo)BlackFlg = false;
-	fade->SetIn(BlackFlg);
-		
-}
-
-bool TitleScene::SetScene(void)
-{
-	if (SceneNo == StageSelectNo) {
-		sceneManager.changeScene(new StageSelectScene());
-		return false;
-	}
-	return true;
-}
-
 bool TitleScene::Game_End(void)
 {
 	if (key.EscapeKey_F() == true) {
@@ -445,7 +430,7 @@ void TitleScene::Next_StageScene_Switch(void)
 	if (startTex->GetMoveFlg() != false)return;
 
 	//シーン切り替え状態であるかの確認
-	if (SceneChangeFlg != false) return;
+	if (fade.GetMoveFlg() != false) return;
 
 	//クリックしたかの確認
 	if (key.LClickF() != true) return;
@@ -453,8 +438,8 @@ void TitleScene::Next_StageScene_Switch(void)
 	//スイッチの動作開始
 	startTex->SetMoveFlg(true);
 
-	//シーン切り替えの開始
-	ChangeSceneFade(StageSelectNo);
+	//フェードアウトの開始
+	fade.StartFadeout();
 
 	//BGMの削除
 	M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 1, &Co_Sound_Delete);

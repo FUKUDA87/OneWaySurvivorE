@@ -24,13 +24,12 @@
 #include"../3DDraw/Effect_3D/Spark2.h"
 #include"../Key/CMouse.h"
 #include"../Key/KeyTrue.h"
-#include"../2DDraw/Fade.h"
 #include"../3DDraw/Effect_3D/BulletHole3D.h"
 #include"../Player/PlayerA.h"
 #include"../Enemy/EnemyA.h"
 #include"../Player/PlayerBody.h"
-#include"../2DDraw/PauseTouch.h"
-#include"../2DDraw/OverTouch.h"
+#include"../Menu/PauseTouch.h"
+#include"../Menu/OverTouch.h"
 #include"../GameSource/Count.h"
 #include"../Enemy/EnemySelect.h"
 #include"../EnemyData/Base&Manager/EnemySpeedManager.h"
@@ -42,6 +41,8 @@
 #include"../Draw/Damage_Num/Damage_Move_A.h"
 #include"../Draw/Damage_Num/Damage_Move_B.h"
 #include"../Ground/Ground_Object.h"
+#include"../GameSource/Option/Option.h"
+#include"../Menu/ClearTouch.h"
 
 extern Motion motion;
 
@@ -92,15 +93,9 @@ public:
 	//デリートエネミー
 	bool EnemyDelete(const unsigned int *EnemyNo);
 
-	//チェンジシーン用
-	void ChangeSceneFade(int ChangeSceneNo);
-	void ChangeSceneFade(int ChangeSceneNo, int NextStageNo);
-	bool SetScene(void);
-
 	//メニューの入れ
 	void SetMenu(bool PauseFlg, bool ClearFlg, bool OverFlg);
-	//メニューの削除
-	void DeleteMenu(void);
+
 	//メニューの処理
 	bool UpdateMenu(void);
 	//地面の自動生成
@@ -315,6 +310,9 @@ protected:
 	void Enemy_Stop(const unsigned int *e,const int *Side_Judg_Car_Type);
 
 private:
+
+	C_Option *option;
+
 	//判定用の関数のクラス
 	Judg judg;
 
@@ -367,18 +365,12 @@ private:
 	C_Mouse *mouse;
 	//キー
 	C_KeyTrue key;
-	//フェード
-	Fade *fade;
-	//チェンジシーン用
-	int SceneNo;
-	bool SceneChangeFlg;
-	int ChangeStageNo;
 
 	//弾痕３D
 	std::vector<C_BulHol3D*>BHole3D;
 
 	//タッチ
-	std::vector<C_NextTouch*>Menu;
+	C_NextTouch* Menu;
 
 	//車用の煙エフェクト
 	C_SmokeCar* M_C_SmokeCar;

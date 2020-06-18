@@ -1,5 +1,5 @@
 #pragma once
-#include"../Draw3DBase/CarBulletManager.h"
+#include"../Car/CarBulletManager.h"
 #include"../Enemy/Vector.h"
 
 class C_EnemyBase :public C_CarBulletManager {

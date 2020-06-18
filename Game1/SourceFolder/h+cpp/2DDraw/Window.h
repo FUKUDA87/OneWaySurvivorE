@@ -10,14 +10,8 @@ extern LPD3DXSPRITE lpSprite;	// スプライト
 #define	SCRW		1280	// ウィンドウ幅（Width
 #define	SCRH		720		// ウィンドウ高さ（Height
 
-class Window {
-protected:
-	CHARA2D wind;
-	D3DXVECTOR3 TexPos;//textureのPos
-	//クォータニオン
-	bool MoveFlg;
-	QuaAnim qua;
-	Judg judg;
+class Window 
+{
 public:
 	Window();
 	~Window() {};
@@ -34,4 +28,11 @@ public:
 	bool UpdateSu() {
 		Update();
 	};
+protected:
+	CHARA2D wind;
+	D3DXVECTOR3 TexPos;//textureのPos
+	//クォータニオン
+	bool MoveFlg;
+	QuaAnim qua;
+	Judg judg;
 };

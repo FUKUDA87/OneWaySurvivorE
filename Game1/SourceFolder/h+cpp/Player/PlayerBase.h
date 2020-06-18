@@ -1,5 +1,5 @@
 #pragma once
-#include"../Draw3DBase/CarBulletManager.h"
+#include"../Car/CarBulletManager.h"
 #include"../2DDraw/HpD.h"
 
 class C_PlayerBase :public C_CarBulletManager {

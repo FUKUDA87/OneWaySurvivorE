@@ -11,13 +11,13 @@
 #include"../StageParts/StageTex.h"
 #include"../Key/CMouse.h"
 #include"../Key/KeyTrue.h"
-#include"../2DDraw/Fade.h"
 #include"../StageParts/CarSelect.h"
 #include"../Player/PlayerBody.h"
 #include"../StageParts/OkButton.h"
 #include"../StageParts/CarSet.h"
 #include"../StageParts/Stage_Room.h"
 #include"../Sound/Sound_Manager_Base.h"
+#include"../GameSource/Option/Option.h"
 
 
 class StageSelectScene :public SceneBase {
@@ -28,11 +28,6 @@ public:
 	void Render3D(void);
 	bool Update(void);
 	void SetCamera(void);
-
-	//チェンジシーン用
-	void ChangeSceneFade(int ChangeSceneNo);
-	void ChangeSceneFade(int ChangeSceneNo,int NextStageNo);
-	bool SetScene(void);
 
 	//車選択の削除
 	void DeleteCarSel(void);
@@ -49,8 +44,6 @@ public:
 	//車切り替えモード
 	bool CarSelectMode(void);
 	void InitCarSel(void);
-
-	void StartFade(void);
 
 	//車のボディ変え
 	void ChangeCar(int *No);
@@ -72,6 +65,9 @@ protected:
 	bool Change_TitleScene(void);
 
 private:
+
+	C_Option *option;
+
 	//地面に立つ様に調べる
 	void Car_Ground_Vec(void);
 
@@ -90,12 +86,6 @@ private:
 	C_Mouse *mouse;
 	//キー
 	C_KeyTrue key;
-	//フェード
-	Fade *fade;
-	//チェンジシーン用
-	int SceneNo;
-	bool SceneChangeFlg;
-	int ChangeStageNo;
 
 	//終了処理
 	bool EndFlg;

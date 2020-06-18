@@ -3,7 +3,7 @@
 #include"../../GameSource/Struct.h"
 #include"../EnemyConst/PhaseConst.h"
 #include"../../Gun/GunDraw/NewGun/GunLaser.h"
-#include"../../Draw3DBase/Car_Parts_Joint.h"
+#include"../../Car/Parts/Car_Parts_Joint.h"
 #include<vector>
 #include"../../Const/Const_PartsTypeNo.h"
 

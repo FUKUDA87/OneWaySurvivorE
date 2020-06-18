@@ -9,18 +9,15 @@ void C_Effect_Base::Set_MoveVec(const D3DXVECTOR3 * MoveVec)
 {
 	if (M_Draw.size() < 1)return;
 
-	for (auto && d : M_Draw) {
-		d->Set_MoveVec(MoveVec);
-	}
+	for (auto && d : M_Draw)d->Set_MoveVec(MoveVec);
+	
 }
 
 void C_Effect_Base::Draw(const D3DXVECTOR3 * CameraPos)
 {
 	if (M_Draw.size() < 1)return;
 
-	for (auto && d : M_Draw) {
-		d->Draw3D(CameraPos);
-	}
+	for (auto && d : M_Draw) d->Draw3D(CameraPos);
 }
 
 bool C_Effect_Base::Update(void)

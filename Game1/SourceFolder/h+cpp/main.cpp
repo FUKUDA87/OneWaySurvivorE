@@ -8,7 +8,6 @@
 #include"Scene/TitleScene.h"
 #include"GameSource/TextureManager.h"
 #include"GameSource/XfileManager.h"
-#include"GameSource/option.h"
 #include"GameSource/Debug.h"
 #include"GameSource/Struct.h"
 #include"GameSource/Motion.h"
@@ -16,6 +15,7 @@
 #include"Sound/BulletEmpty1.h"
 #include"Key/KeyTrue.h"
 #include"GameSource/XfileManager2.h"
+#include"Fade/Fade.h"
 
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
@@ -69,8 +69,8 @@ LPD3DXFONT lpFontS;
 HWND Hwnd;
 //サウンドマネージャー
 SoundManager soundManager;
-
-Option option;
+//フェード
+C_Fade fade;
 
 Motion motion;
 //Manager数
@@ -586,14 +586,17 @@ D3DLIGHT_SPOT
 	lpSPrimary->QueryInterface(IID_IDirectSound3DListener8, (LPVOID*)&lpSListenerE);
 	lpSListenerE->SetRolloffFactor(0.05f, DS3D_IMMEDIATE);
 
-	sceneManager.changeScene(new TitleScene());
-
+	// フォグの初期化
 	lpD3DDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
 	lpD3DDevice->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_XRGB(255, 255, 255));
 	lpD3DDevice->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_LINEAR);
 	float Start = (float)FRI, End = (float)FRO;
 	lpD3DDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD*)(&Start));
 	lpD3DDevice->SetRenderState(D3DRS_FOGEND, *(DWORD*)(&End));
+
+	fade.Init();
+
+	sceneManager.changeScene(new TitleScene());
 
 
 	while (1) {

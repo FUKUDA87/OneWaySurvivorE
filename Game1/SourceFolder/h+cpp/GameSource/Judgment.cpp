@@ -599,10 +599,32 @@ bool Judg::PlaneP(RECT * rc, const D3DXVECTOR3 PosA, const D3DXVECTOR3 sPos, con
 	return true;
 }
 
+bool Judg::PlaneP(RECT * rc, const float * posX, const float * posY, const float * scalX, const float * scalY, const int * Width, const int * Height)
+{
+	D3DXVECTOR2 PosL, PosR, size;
+	size = D3DXVECTOR2((float)*Width / 2.0f*(*scalX), (float)*Height / 2.0f*(*scalY));
+	PosL = D3DXVECTOR2(*posX - size.x, *posY - size.y);
+	PosR = D3DXVECTOR2(*posX + size.x, *posY + size.y);
+	*rc = { (int)PosL.x,(int)PosL.y,(int)PosR.x,(int)PosR.y };
+	return true;
+}
+
 bool Judg::PlaneCri(const D3DXVECTOR3 PosA, const D3DXVECTOR3 sPos, const int Width, const int Height)
 {
 	RECT rcM;
 	PlaneP(&rcM, PosA, sPos, Width, Height);
+	POINT Pt;
+	Pt = GetPoint();
+	if ((Pt.x > rcM.left) && (Pt.x < rcM.right) && (Pt.y > rcM.top) && (Pt.y < rcM.bottom)) {
+		return true;
+	}
+	return false;
+}
+
+bool Judg::PlaneCri(const D3DXVECTOR3 PosA, const float scalX, const float scalY, const int Width, const int Height)
+{
+	RECT rcM;
+	PlaneP(&rcM, &PosA.x, &PosA.y, &scalX, &scalY, &Width, &Height);
 	POINT Pt;
 	Pt = GetPoint();
 	if ((Pt.x > rcM.left) && (Pt.x < rcM.right) && (Pt.y > rcM.top) && (Pt.y < rcM.bottom)) {

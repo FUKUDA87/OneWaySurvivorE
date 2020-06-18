@@ -2,13 +2,13 @@
 
 extern LPDIRECTSOUND3DLISTENER8 lpSListener;
 
-C_Sound_Base_3D::C_Sound_Base_3D(const S_SOUND_DATA * Data, std::string FileName, const int Volume)
+C_Sound_Base_3D::C_Sound_Base_3D(const S_SOUND_DATA * Data, std::string FileName)
 {
 	M_Sound_Data = *Data;
-	Init_Sound(&M_Sound_Data.Sound_CategoryNo, &M_Sound_Data.Sound_No, FileName, &Volume);
+	Init_Sound(&M_Sound_Data.Sound_CategoryNo, &M_Sound_Data.Sound_No, FileName);
 }
 
-bool C_Sound_Base_3D::Update(const S_CAMERA_POS * CamPos, const bool * Flg)
+bool C_Sound_Base_3D::Update(const S_CAMERA_POS * CamPos, const bool * Flg,const int *Volume)
 {
 	if (DeleteFlg > 1)return false;
 
@@ -27,7 +27,7 @@ bool C_Sound_Base_3D::Update(const S_CAMERA_POS * CamPos, const bool * Flg)
 			Loop_Mode();
 			if ((*Flg == true) || (Loop_Mode_Flg == true)) {
 				soundCol.Sound->Play(0, 0, 0);
-				soundCol.Sound->SetVolume(SoundSize);
+				soundCol.Sound->SetVolume(*Volume);
 
 				M_MoveFlg = 1;
 			}

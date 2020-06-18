@@ -10,12 +10,12 @@
 #include"../2DDraw/BulletHole.h"
 #include"../Key/CMouse.h"
 #include"../Key/Key.h"
-#include"../2DDraw/Fade.h"
 #include"../Player/PlayerBody.h"
 #include"../Player/PlayerA.h"
 #include"../GameSource/Count.h"
 #include"../Sound/Sound_Manager_Base.h"
 #include"../Ground/Ground_Object.h"
+#include"../GameSource/Option/Option.h"
 
 template<class T>
 inline void SafeRelease(T& lpAdd)
@@ -35,11 +35,9 @@ public:
 	bool Update(void);     // 更新処理
 	void SetCamera(void);  // カメラ
 
-	//チェンジシーン用
-	void ChangeSceneFade(int ChangeSceneNo);
-	bool SetScene(void);
-
 private:
+
+	C_Option *option;
 
 	Judg judg;  // 判定用の関数のクラス
 
@@ -72,11 +70,6 @@ private:
 	C_Mouse *mouse;
 	//キー
 	Key key;
-	//フェード
-	Fade *fade;
-	//チェンジシーン用
-	int SceneNo;
-	bool SceneChangeFlg;
 
 	//ゲームの終了
 	bool Game_End(void);

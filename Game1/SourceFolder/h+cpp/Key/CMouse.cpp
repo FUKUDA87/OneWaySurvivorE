@@ -1,5 +1,5 @@
 #include "CMouse.h"
-#include"../GameSource/TextureManager.h"
+#include"../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
@@ -24,7 +24,7 @@ C_Mouse::C_Mouse()
 	DrawFlg = true;
 	TouchFlg = false;
 	Hand.TEX = { NULL,25,33,NULL,NULL,NULL };
-	Hand.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/Hand2.png", Hand.TEX.Width, Hand.TEX.Height, NULL);
+	Hand.TEX.Tex = textureManager.GetTexture("Hand2.png", Hand.TEX.Width, Hand.TEX.Height, NULL);
 }
 
 C_Mouse::C_Mouse(bool InitPosFlg)
@@ -35,7 +35,7 @@ C_Mouse::C_Mouse(bool InitPosFlg)
 	DrawFlg = true;
 	TouchFlg = false;
 	Hand.TEX = { NULL,25,33,NULL,NULL,NULL };
-	Hand.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/Hand2.png", Hand.TEX.Width, Hand.TEX.Height, NULL);
+	Hand.TEX.Tex = textureManager.GetTexture("Hand2.png", Hand.TEX.Width, Hand.TEX.Height, NULL);
 }
 
 C_Mouse::~C_Mouse()

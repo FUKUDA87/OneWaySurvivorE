@@ -1,5 +1,5 @@
 #include "DrawTextureManager_Base.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 

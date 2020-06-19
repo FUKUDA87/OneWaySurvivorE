@@ -5,8 +5,7 @@
 
 class c_Smoke:public c_EffectBase {
 public:
-	c_Smoke(const D3DXMATRIX *Mat);
-	c_Smoke(const D3DXMATRIX *Mat, const S_Smog *H_Smog);
+	c_Smoke(const D3DXMATRIX *Mat, const S_Smog *H_Smog,const float *HpPer, const int *NowHp);
 	
 	// 更新処理
 	bool Update(const s_CarEffectUpdateData *updateData);
@@ -20,9 +19,8 @@ private:
 	int NowCount;
 	//拡大用
 	float ScalSize;
-
-	//移動行列の初期化
-	void Init_Mat(void);
+	// 煙の種類
+	int Draw_No;
 
 	//表示方法の構造体
 	S_Smog M_S_Smog;
@@ -34,15 +32,9 @@ private:
 	//ポリゴンサイズの変化
 	float GetPolSize(void);
 
-	void Init_Num(void);
-
-	void NumJudg(void);
-
-	void SetNum(const int s_Num);
-
-	//初期化
-	void Init();
-
 	//時限式
 	bool CountUpdate(void);
+
+	// 煙の濃さ
+	int InitDrawNo(const float *HpPer, const int *NowHp);
 };

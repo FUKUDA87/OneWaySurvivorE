@@ -1,5 +1,5 @@
 #include "Score.h"
-#include"../GameSource/TextureManager.h"
+#include"../MaterialManager/TextureManager.h"
 #include"../GameSource/Judgment.h"
 
 extern LPDIRECT3DDEVICE9		lpD3DDevice;
@@ -19,13 +19,13 @@ void C_Score::Init(void)
 {
 	//スコア文字画像ロード
 	score.TEX = { NULL,612,147,NULL,NULL,NULL };
-	score.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/CharScore1.png", score.TEX.Width, score.TEX.Height, NULL);
+	score.TEX.Tex = textureManager.GetTexture("CharScore1.png", score.TEX.Width, score.TEX.Height, NULL);
 	//スコア数画像ロード
 	snum.TEX = { NULL,1511,178,NULL,NULL,NULL };
-	snum.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/Num1.png", snum.TEX.Width, snum.TEX.Height, NULL);
+	snum.TEX.Tex = textureManager.GetTexture("Num1.png", snum.TEX.Width, snum.TEX.Height, NULL);
 	//スコアの＋－画像のロード
 	sPoint.TEX = { NULL,192,112,NULL,NULL,NULL };
-	sPoint.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/CharPM1.png", sPoint.TEX.Width, sPoint.TEX.Height, NULL);
+	sPoint.TEX.Tex = textureManager.GetTexture("CharPM1.png", sPoint.TEX.Width, sPoint.TEX.Height, NULL);
 	//拡大の初期化
 	D3DXVECTOR2 sPos = D3DXVECTOR2(50.0f, 50.0f);
 	score.Base.ScaPos = D3DXVECTOR3(sPos.x*5.0f / (float)score.TEX.Width, sPos.y / (float)score.TEX.Height, 0.0f);

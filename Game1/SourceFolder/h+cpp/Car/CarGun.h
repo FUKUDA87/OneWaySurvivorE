@@ -5,7 +5,6 @@
 
 class C_CarGun :public C_CarParts {
 public:
-	C_CarGun();
 	~C_CarGun();
 
 	//•\¦

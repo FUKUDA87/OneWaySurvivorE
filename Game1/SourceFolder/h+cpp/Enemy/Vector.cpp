@@ -1,5 +1,5 @@
 #include "Vector.h"
-#include"../GameSource/TextureManager.h"
+#include"../MaterialManager/TextureManager.h"
 #include"../GameSource/Judgment.h"
 
 extern TextureManager textureManager;
@@ -11,7 +11,7 @@ extern LPD3DXSPRITE lpSprite;	// スプライト
 void Vector::Init()
 {
 	vector.TEX = { NULL,500,593,NULL,NULL,NULL };
-	vector.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/arrow008ZG3.png",
+	vector.TEX.Tex = textureManager.GetTexture("arrow008ZG3.png",
 		vector.TEX.Width, vector.TEX.Height, NULL);
 	float size = 0.8f;
 	vector.Base.ScaPos = D3DXVECTOR3(100.0f/(float)vector.TEX.Width*0.25f*0.9f, 100.0f/(float)vector.TEX.Height*0.5f*0.9f, 0.0f);
@@ -31,7 +31,7 @@ void Vector::Init()
 
 	//小さい版
 	vectorC.TEX = { NULL,500,593,NULL,NULL,NULL };
-	vectorC.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/arrow008ZG2.png",
+	vectorC.TEX.Tex = textureManager.GetTexture("arrow008ZG2.png",
 		vectorC.TEX.Width, vectorC.TEX.Height, NULL);
 	vectorC.Base.ScaPos = D3DXVECTOR3(100.0f / (float)vectorC.TEX.Width*0.25f*0.75f, 100.0f / (float)vectorC.TEX.Height*0.5f*0.75f, 0.0f);
 	D3DXMatrixScaling(&vectorC.Base.Scal, vectorC.Base.ScaPos.x, vectorC.Base.ScaPos.y, 0);

@@ -3,7 +3,7 @@
 void HpD::InitNum()
 {
 	Slash.TEX = { NULL,18,28,NULL,NULL };
-	Slash.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/slash2.png", Slash.TEX.Width, Slash.TEX.Height, NULL);
+	Slash.TEX.Tex = textureManager.GetTexture("slash2.png", Slash.TEX.Width, Slash.TEX.Height, NULL);
 	Slash.Base.Pos = hp.Base.Pos + (hp.Base.ScaPos / 2.0f);
 	Slash.Base.ScaPos = D3DXVECTOR3(1.0f*0.6f, 20.0f / (float)Slash.TEX.Height*0.6f, 0.0f);
 	D3DXMatrixScaling(&Slash.Base.Scal, Slash.Base.ScaPos.x, Slash.Base.ScaPos.y, Slash.Base.ScaPos.z);

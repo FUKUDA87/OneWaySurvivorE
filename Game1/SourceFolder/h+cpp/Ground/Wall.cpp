@@ -1,9 +1,9 @@
 #include"Wall.h"
-#include"../GameSource/TextureManager.h"
-#include"../GameSource/XfileManager.h"
+#include"../MaterialManager/TextureManager.h"
+#include"../MaterialManager/XfileManager.h"
 #include"../GameSource/Judgment.h"
 
-extern XfileManager xfileManager;
+extern XFileManager xfileManager;
 extern LPDIRECT3DDEVICE9 lpD3DDevice;
 extern TextureManager textureManager;
 
@@ -58,10 +58,10 @@ void Wall::Init_Wall()
 {
 	//壁3Dの初期化
 	//壁のロード
-	xfileManager.GetXfile(&M_Wall.Mesh, "../GameFolder/Material/Xfile/Wall3-3.x");
+	M_Wall.Mesh=xfileManager.GetMesh("Wall3-3.x");
 
 	//壁のコリジョンモデルのロード
-	xfileManager.GetXfile(&M_Wall.ColModMesh, "../GameFolder/Material/Xfile/Wall2CM1.x");
+	M_Wall.ColModMesh=xfileManager.GetMesh("Wall2CM1.x");
 
 	//壁のサイズ計算
 	static bool GetRadFlg = true;

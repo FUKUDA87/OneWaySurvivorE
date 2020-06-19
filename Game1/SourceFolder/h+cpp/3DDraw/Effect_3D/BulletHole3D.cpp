@@ -1,5 +1,5 @@
 #include "BulletHole3D.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
@@ -23,7 +23,7 @@ void C_BulHol3D::InitHol3D(void)
 {
 	//âÊëúÇÃÉçÅ[Éh
 	Hole.TEX = { NULL,300,300,NULL,NULL,NULL };
-	Hole.TEX.Tex=textureManager.GetTexture("../GameFolder/Material/Texture/BulletBack1C.png", Hole.TEX.Width, Hole.TEX.Height, NULL);
+	Hole.TEX.Tex=textureManager.GetTexture("BulletBack1C.png", Hole.TEX.Width, Hole.TEX.Height, NULL);
 
 	NowCount = 1 * 60;
 }

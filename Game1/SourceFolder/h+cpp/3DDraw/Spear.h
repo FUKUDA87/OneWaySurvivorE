@@ -1,9 +1,9 @@
 #pragma once
 #include<d3dx9.h>
-#include"../GameSource/XfileManager.h"
+#include"../MaterialManager/XfileManager.h"
 
 extern LPDIRECT3DDEVICE9 lpD3DDevice;
-extern XfileManager xfileManager;
+extern XFileManager xfileManager;
 
 void DrawMesh(XFILE *XFile);
 

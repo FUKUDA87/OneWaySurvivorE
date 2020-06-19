@@ -1,5 +1,5 @@
 #include "Game_Clear.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 #include"../../GameSource/Judgment.h"
 
 extern TextureManager textureManager;
@@ -13,7 +13,7 @@ C_Game_Clear::C_Game_Clear()
 	Game_End_Flg = true;
 
 	stcl.TEX = { NULL,777,72,NULL,NULL };
-	stcl.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/Char_StageClear_3.png", stcl.TEX.Width, stcl.TEX.Height, NULL);
+	stcl.TEX.Tex = textureManager.GetTexture("Char_StageClear_3.png", stcl.TEX.Width, stcl.TEX.Height, NULL);
 	D3DXMatrixTranslation(&stcl.Base.Mat, (float)SCRW / 2.0f, (float)SCRH / 2.0f, NULL);
 }
 

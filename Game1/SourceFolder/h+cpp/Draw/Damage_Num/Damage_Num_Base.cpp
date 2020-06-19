@@ -1,5 +1,5 @@
 #include "Damage_Num_Base.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 #include"../../GameSource/Judgment.h"
 
 extern TextureManager textureManager;
@@ -22,7 +22,7 @@ C_Damage_Num_Base::C_Damage_Num_Base(const D3DXVECTOR3 * Pos_3D, const D3DXMATRI
 	M_TEX.Width = 1010;
 	M_TEX.Height = 93;
 
-	M_TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/Char_Num_1.png", M_TEX.Width, M_TEX.Height, NULL);
+	M_TEX.Tex = textureManager.GetTexture("Char_Num_1.png", M_TEX.Width, M_TEX.Height, NULL);
 }
 
 bool C_Damage_Num_Base::Update(void)

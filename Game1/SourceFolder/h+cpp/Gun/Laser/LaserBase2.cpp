@@ -1,12 +1,12 @@
 #include "LaserBase2.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 
 C_LaserBase2::C_LaserBase2(const int * TexNo)
 {
 	m_LaserTex = { NULL,1,1,NULL,NULL,NULL };
-	m_LaserTex.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/enemyHp.png", m_LaserTex.Width, m_LaserTex.Height, NULL);
+	m_LaserTex.Tex = textureManager.GetTexture("enemyHp.png", m_LaserTex.Width, m_LaserTex.Height, NULL);
 	Init();
 }
 

@@ -1,5 +1,5 @@
 #include "Spark2.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 #include"../../GameSource/Judgment.h"
 
 extern TextureManager textureManager;
@@ -81,7 +81,7 @@ C_Spark2::C_Spark2(const D3DXMATRIX * Mat, const D3DXVECTOR3 * Pos, const bool *
 		PolSize = 0.01f;
 	}
 	char TexName[100];
-	sprintf_s(TexName, sizeof(TexName),"../GameFolder/Material/Texture/Spark1-9-%d.png" , SparkType);
+	sprintf_s(TexName, sizeof(TexName),"Spark1-9-%d.png" , SparkType);
 	spark.TEX.Tex = textureManager.GetTexture(TexName, spark.TEX.Width, spark.TEX.Height, NULL);
 
 	//ˆÚ“®ˆ—‚Ì‰Šú‰»

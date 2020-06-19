@@ -50,7 +50,7 @@ bool C_Gun_No1_Bullet_Enpty::Update(void)
 void C_Gun_No1_Bullet_Enpty::Init_Bullet(void)
 {
 	//ÉçÅ[Éh
-	Mesh_Load("../GameFolder/Material/XFile/Bullet1-3.x");
+	Mesh_Load("Bullet1-3.x");
 
 	int Big = 40, Small = -20;
 	Big = Big - Small;

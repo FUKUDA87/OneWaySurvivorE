@@ -1,5 +1,5 @@
 #include "Hp2DPlayer.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
@@ -47,9 +47,9 @@ void C_Hp2D::Init(void)
 	TexNum = 2;
 	//緑バー
 	m_HpTex[1] = { NULL,1,1,NULL,NULL,NULL };
-	m_HpTex[1].Tex = textureManager.GetTexture("../GameFolder/Material/Texture/plaHp.png", m_HpTex[1].Width, m_HpTex[1].Height, NULL);
+	m_HpTex[1].Tex = textureManager.GetTexture("plaHp.png", m_HpTex[1].Width, m_HpTex[1].Height, NULL);
 	//白いバー
 	m_HpTex[0] = { NULL,1,1,NULL,NULL,NULL };
-	m_HpTex[0].Tex = textureManager.GetTexture("../GameFolder/Material/Texture/HpH.png", m_HpTex[0].Width, m_HpTex[0].Height, NULL);
+	m_HpTex[0].Tex = textureManager.GetTexture("HpH.png", m_HpTex[0].Width, m_HpTex[0].Height, NULL);
 	
 }

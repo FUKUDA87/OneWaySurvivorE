@@ -6,7 +6,6 @@
 
 class C_CarBulletManager :public C_CarGun {
 public:
-	C_CarBulletManager();
 	~C_CarBulletManager();
 
 	//’e‚ÌXV

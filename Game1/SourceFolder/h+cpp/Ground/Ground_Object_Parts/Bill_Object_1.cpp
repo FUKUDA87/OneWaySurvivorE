@@ -3,7 +3,7 @@
 
 C_Bill_Object_1::C_Bill_Object_1()
 {
-	Mesh_Load("../GameFolder/Material/XFile/BillBase1A1.x");
+	Mesh_Load("BillBase1A1.x");
 }
 
 void C_Bill_Object_1::Update_DrawMat(const D3DXMATRIX * Mat)

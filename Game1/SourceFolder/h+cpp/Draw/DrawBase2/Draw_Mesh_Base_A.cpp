@@ -1,7 +1,7 @@
 #include "Draw_Mesh_Base_A.h"
-#include"../../GameSource/XfileManager.h"
+#include"../../MaterialManager/XfileManager.h"
 
-extern XfileManager xfileManager;
+extern XFileManager xfileManager;
 
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 
@@ -15,13 +15,13 @@ C_Draw_Mesh_Base::C_Draw_Mesh_Base()
 
 C_Draw_Mesh_Base::C_Draw_Mesh_Base(std::string FileName)
 {
-	M_Mesh = xfileManager.GetXfile(FileName);
+	M_Mesh = xfileManager.GetMesh(FileName);
 	Init_Mesh();
 }
 
 C_Draw_Mesh_Base::C_Draw_Mesh_Base(std::string FileName, const D3DXVECTOR3 * ScalPos)
 {
-	M_Mesh = xfileManager.GetXfile(FileName);
+	M_Mesh = xfileManager.GetMesh(FileName);
 	Init_Mesh();
 	Set_ScalPos_Init(ScalPos);
 }
@@ -71,7 +71,7 @@ void C_Draw_Mesh_Base::Mesh_Draw_No1(void)
 
 void C_Draw_Mesh_Base::Mesh_Load(std::string FileName)
 {
-	M_Mesh = xfileManager.GetXfile(FileName);
+	M_Mesh = xfileManager.GetMesh(FileName);
 }
 
 

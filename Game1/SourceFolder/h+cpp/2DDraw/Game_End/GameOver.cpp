@@ -1,5 +1,5 @@
 #include "GameOver.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 #include"../../GameSource/Judgment.h"
 
 extern TextureManager textureManager;
@@ -13,7 +13,7 @@ C_Game_Over::C_Game_Over()
 	Game_End_Flg = true;
 
 	gaov.TEX = { NULL,502,85,NULL,NULL };
-	gaov.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/CharGameOver3.png", gaov.TEX.Width, gaov.TEX.Height, NULL);
+	gaov.TEX.Tex = textureManager.GetTexture("CharGameOver3.png", gaov.TEX.Width, gaov.TEX.Height, NULL);
 	D3DXMatrixTranslation(&gaov.Base.Mat, (float)SCRW / 2.0f, (float)SCRH / 2.0f, NULL);
 }
 

@@ -6,8 +6,8 @@
 #include<time.h>
 #include"Scene/SceneManager.h"
 #include"Scene/TitleScene.h"
-#include"GameSource/TextureManager.h"
-#include"GameSource/XfileManager.h"
+#include"MaterialManager/TextureManager.h"
+#include"MaterialManager/XFileManager.h"
 #include"GameSource/Debug.h"
 #include"GameSource/Struct.h"
 #include"GameSource/Motion.h"
@@ -62,7 +62,7 @@ LPDIRECTSOUND3DLISTENER8 lpSListenerE;
 
 SceneManager sceneManager;
 TextureManager textureManager;
-XfileManager xfileManager;
+XFileManager xfileManager;
 XfileManager2 xfileManager2;
 D3DLIGHT9 Light;
 LPD3DXFONT lpFontS;

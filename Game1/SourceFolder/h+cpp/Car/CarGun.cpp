@@ -4,11 +4,6 @@
 #include"../Gun/GunDraw/Gun_Type/Gun_Gatling_1.h"
 #include"../Gun/GunDraw/Gun_Draw_Manager.h"
 
-C_CarGun::C_CarGun()
-{
-	
-}
-
 C_CarGun::~C_CarGun()
 {
 	AllDelete_Gun();

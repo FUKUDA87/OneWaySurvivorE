@@ -1,5 +1,5 @@
 #include "SpaekDamage.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 #include"../../GameSource/Judgment.h"
 
 extern TextureManager textureManager;
@@ -30,7 +30,7 @@ C_SparkDamage::C_SparkDamage(const D3DXMATRIX * Mat, const D3DXVECTOR3 * Pos, co
 	//スパークの初期化
 	//フラッシュ
 	Flash.TEX = { NULL,128,128,NULL,NULL,NULL };
-	Flash.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/MuzFla1T.png", Flash.TEX.Width, Flash.TEX.Height, NULL);
+	Flash.TEX.Tex = textureManager.GetTexture("MuzFla1T.png", Flash.TEX.Width, Flash.TEX.Height, NULL);
 	Flash.Base.Mat = *Mat;
 	judg.SetMatP(&Flash.Base.Mat, Pos);
 }

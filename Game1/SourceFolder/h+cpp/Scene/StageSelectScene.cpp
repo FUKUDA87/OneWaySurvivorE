@@ -495,7 +495,7 @@ void StageSelectScene::Car_Ground_Vec(void)
 
 void StageSelectScene::Init_New(void)
 {
-	//M_C_Garage_Stand = new C_Stage_Room_Stand(&D3DXVECTOR3(0.0f, 0.0f, 0.0f), "../GameFolder/Material/XFile/Car_Stand_O_1.x");
+	//M_C_Garage_Stand = new C_Stage_Room_Stand(&D3DXVECTOR3(0.0f, 0.0f, 0.0f), "Car_Stand_O_1.x");
 }
 
 void StageSelectScene::Set_GameScene_DebugFlg(void)

@@ -2,11 +2,11 @@
 
 void Spear::Init()
 {
-	xfileManager.GetXfile(&s.Mesh, "../GameFolder/Material/XFile/spear.x");
+	s.Mesh=xfileManager.GetMesh("spear.x");
 	e.Mesh = s.Mesh;
 	s.Base.DrawFlg = true;
 	e.Base.DrawFlg = true;
-	xfileManager.GetXfile(&v.Mesh, "../GameFolder/Material/XFile/Vector1.x");
+	v.Mesh=xfileManager.GetMesh("Vector1.x");
 }
 
 Spear::Spear(D3DXMATRIX TmpStart, D3DXMATRIX TmpEnd)

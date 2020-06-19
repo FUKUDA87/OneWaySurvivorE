@@ -1,5 +1,5 @@
 #include"ground.h"
-#include"../GameSource/TextureManager.h"
+#include"../MaterialManager/TextureManager.h"
 
 extern LPDIRECT3DDEVICE9 lpD3DDevice;
 extern TextureManager textureManager;
@@ -8,7 +8,7 @@ void C_Ground::Init()
 {
 	//画像のロード
 	ground.TEX = { NULL,650,300,NULL,NULL,NULL };
-	ground.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/syadou8-2.png",ground.TEX.Width, ground.TEX.Height, NULL);
+	ground.TEX.Tex = textureManager.GetTexture("syadou8-2.png",ground.TEX.Width, ground.TEX.Height, NULL);
 
 	D3DXMatrixTranslation(&ground.Base.Mat, 0, 0, 0);
 	ground.Base.Flg = true;
@@ -114,7 +114,7 @@ C_Ground::C_Ground(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUN
 			gVec /= 2.0f;
 			gPos += gVec;
 			judg.SetMatP(&ground.Base.Mat, &gPos);
-			ground.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/syadou10-1.png", ground.TEX.Width, ground.TEX.Height, NULL);
+			ground.TEX.Tex = textureManager.GetTexture("syadou10-1.png", ground.TEX.Width, ground.TEX.Height, NULL);
 		}
 		else {
 			if (L_Init_Data.gType == 2) {//カーブ(右肩上がり)

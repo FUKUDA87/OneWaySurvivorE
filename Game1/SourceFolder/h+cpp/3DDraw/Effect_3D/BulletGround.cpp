@@ -1,10 +1,9 @@
 #include "BulletGround.h"
-#include"../../GameSource/TextureManager.h"
-#include"../../GameSource/XfileManager.h"
+#include"../../MaterialManager/TextureManager.h"
+#include"../../MaterialManager/XfileManager.h"
 #include"../../GameSource/Judgment.h"
 
-extern XfileManager xfileManager;
-
+extern XFileManager xfileManager;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;
 extern TextureManager textureManager;
 
@@ -37,7 +36,7 @@ void C_BulGro::InitBG(void)
 {
 	//画像のロード
 	Smoke.TEX = { NULL,32,32,NULL,NULL,NULL };
-	Smoke.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/Smoke02.png", Smoke.TEX.Width, Smoke.TEX.Height, NULL);
+	Smoke.TEX.Tex = textureManager.GetTexture("Smoke02.png", Smoke.TEX.Width, Smoke.TEX.Height, NULL);
 
 	//
 	D3DXMatrixIdentity(&Smoke.Base.Mat);
@@ -59,7 +58,7 @@ void C_BulGro::InitBG(void)
 
 	//破片の初期化
 	//メッシュのロード
-	xfileManager.GetXfile(&AspMesh, "../GameFolder/Material/XFile/AsphaltParts2-2.x");
+	AspMesh=xfileManager.GetMesh("AsphaltParts2-2.x");
 	//破片の数の初期化
 	AspNum = 5;
 	AspMat = new BASE3D[AspNum];

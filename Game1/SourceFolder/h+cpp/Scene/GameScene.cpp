@@ -3,8 +3,8 @@
 #include"StageSelectScene.h"
 #include"SceneManager.h"
 #include"../GameSource/Enum.h"
-#include"../GameSource/TextureManager.h"
-#include"../GameSource/XfileManager.h"
+#include"../MaterialManager/TextureManager.h"
+#include"../MaterialManager/XfileManager.h"
 #include"../GameSource/Motion.h"
 #include"../Draw3DBase/Draw3DManager/CarSmogManager.h"
 #include"../EnemyData/Base&Manager/Enemy_Manager.h"
@@ -19,7 +19,7 @@
 extern int CountManager;
 extern Motion motion;
 extern TextureManager textureManager;
-extern XfileManager xfileManager;
+extern XFileManager xfileManager;
 extern SceneManager sceneManager;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 extern LPD3DXSPRITE lpSprite;	// スプライト

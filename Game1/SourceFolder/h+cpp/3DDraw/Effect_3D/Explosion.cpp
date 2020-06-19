@@ -1,5 +1,5 @@
 #include"Explosion.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 
 extern LPDIRECT3DDEVICE9		lpD3DDevice;
 extern TextureManager textureManager;
@@ -7,7 +7,7 @@ extern TextureManager textureManager;
 void Explo::Init()
 {
 	expl.TEX = { NULL,256,256,NULL,NULL,NULL };
-	expl.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/Smoke.png", expl.TEX.Width, expl.TEX.Height, NULL);
+	expl.TEX.Tex = textureManager.GetTexture("Smoke.png", expl.TEX.Width, expl.TEX.Height, NULL);
 	cou = new Cou(0, 63, 1, false, false);
 }
 

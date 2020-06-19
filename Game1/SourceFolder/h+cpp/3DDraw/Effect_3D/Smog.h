@@ -16,16 +16,6 @@ public:
 	//ï\é¶
 	virtual void Draw3D(D3DXVECTOR3 CamPos);
 
-	void Init_Num(void);
-
-	int GetNum(void) {
-		return M_S_Smog.Draw_No;
-	}
-
-	void NumJudg(void);
-
-	void SetNum(const int s_Num);
-
 	//à íuÇÃï‚ê≥
 	void PosMoveVec(const D3DXVECTOR3*MoveVec);
 protected:

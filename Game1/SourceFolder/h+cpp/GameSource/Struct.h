@@ -430,8 +430,6 @@ struct S_Smog
 	int Alpha, AStart, AUp;
 	//ポリゴンのサイズ
 	float PolSize,PolBit,PolBitUp;
-	//表示用
-	int Draw_No;
 	//移動量の変化
 	S_Random Random;
 };

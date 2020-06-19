@@ -1,7 +1,7 @@
 #pragma once
 #include"Hp.h"
 #include<d3dx9.h>
-#include"../GameSource/TextureManager.h"
+#include"../MaterialManager/TextureManager.h"
 #include"NumA.h"
 
 extern TextureManager textureManager;

@@ -1,5 +1,5 @@
 #include "Num2DBase.h"
-#include"../GameSource/TextureManager.h"
+#include"../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 

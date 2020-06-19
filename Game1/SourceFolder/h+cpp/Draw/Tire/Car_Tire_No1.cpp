@@ -3,6 +3,6 @@
 
 C_Car_Parts_Tire::C_Car_Parts_Tire(const S_CAR_PARTS_DATA * Data,C_Move_Parts_Base * Move):C_Car_Parts_Joint(Data)
 {
-	Draw_New(new C_Draw_Mesh_Base("../GameFolder/Material/XFile/Tire_1_Ver1.x"));
+	Draw_New(new C_Draw_Mesh_Base("Tire_1_Ver1.x"));
 	New_Move(Move);
 }

@@ -1,8 +1,8 @@
 #include "CarBase.h"
-#include"../GameSource/XfileManager.h"
+#include"../MaterialManager/XfileManager.h"
 #include"../GameSource/Motion.h"
 
-extern XfileManager xfileManager;
+extern XFileManager xfileManager;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 extern Motion motion;
 
@@ -13,11 +13,6 @@ C_CarBase::C_CarBase()
 {
 	InitCar();
 	Init_S_Gun_Update_Data();
-}
-
-C_CarBase::~C_CarBase()
-{
-
 }
 
 void C_CarBase::InitCar(void)

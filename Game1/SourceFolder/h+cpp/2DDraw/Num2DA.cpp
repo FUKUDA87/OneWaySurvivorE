@@ -7,7 +7,7 @@ C_Num2DA::C_Num2DA(const D3DXVECTOR3 * Pos, const D3DXVECTOR3 * Scal)
 	//‰Šú‰»
 	SetNum(Pos, Scal);
 	int W = 500, H = 50;
-	SetTex("../GameFolder/Material/Texture/CharNum2.png", &W, &H);
+	SetTex("CharNum2.png", &W, &H);
 }
 
 void C_Num2DA::Draw2DNB(const int * TmpNum)

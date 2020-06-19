@@ -1,5 +1,5 @@
 #include "Smoke.h"
-#include"../../../GameSource/TextureManager.h"
+#include"../../../MaterialManager/TextureManager.h"
 #include"../../../GameSource/Judgment.h"
 
 extern LPDIRECT3DDEVICE9	lpD3DDevice;
@@ -7,26 +7,42 @@ extern TextureManager textureManager;
 
 #define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 
-c_Smoke::c_Smoke(const D3DXMATRIX * Mat)
+c_Smoke::c_Smoke(const D3DXMATRIX * Mat, const S_Smog * H_Smog, const float * HpPer, const int * NowHp)
 {
-	Init();
+	smog.TEX = { NULL,256,256,NULL,NULL,NULL };
+	smog.TEX.Tex = textureManager.GetTexture("Smoke.png", smog.TEX.Width, smog.TEX.Height, NULL);
+	//ŒÀ‚Ì‰Šú‰»
+	NowCount = 1;
 
-	smog.Base.Mat = *Mat;
-
-	Init_Mat();
-
-	Init_Num();
-}
-
-c_Smoke::c_Smoke(const D3DXMATRIX * Mat, const S_Smog * H_Smog)
-{
-	Init();
+	ScalSize = 0.0f;
 
 	smog.Base.Mat = *Mat;
 
 	M_S_Smog = *H_Smog;
 
-	Init_Mat();
+	// ‰Œ‚Ì”Z‚³‚Ì‰Šú‰»
+	Draw_No = InitDrawNo(HpPer, NowHp);
+
+	//‰ñ“]
+	D3DXMATRIX l_RotYMat;
+	D3DXMatrixRotationY(&l_RotYMat, D3DXToRadian(180.0f));
+	smog.Base.Mat = l_RotYMat * smog.Base.Mat;
+
+	//ˆÚ“®ƒxƒNƒgƒ‹‚Ì‰Šú‰»
+	Judg judg;
+	smog.Base.TraPos = judg.GetVecVec_S(&M_S_Smog.MoveVec, &M_S_Smog.Frame);
+
+	//ˆÚ“®‚Å•ªU‚³‚¹‚é
+	D3DXVECTOR3 L_RandPos = D3DXVECTOR3(RandPlus(&M_S_Smog.Random.x), RandPlus(&M_S_Smog.Random.y), RandPlus(&M_S_Smog.Random.z));
+	smog.Base.TraPos += judg.GetVecVec_S(&L_RandPos, &M_S_Smog.Frame) / 10.0f;
+
+
+	smog.Base.TraPos *= 0.5f;
+
+	//ŒÀ‚Ì‰Šú‰»
+	NowCount = 1 * 1000;
+
+	M_S_Smog.AStart = NowCount;
 }
 
 bool c_Smoke::Update(const s_CarEffectUpdateData * updateData)
@@ -36,9 +52,8 @@ bool c_Smoke::Update(const s_CarEffectUpdateData * updateData)
 	judg.Set_TransMat(&smog.Base.Trans, &smog.Base.TraPos);
 	smog.Base.Mat = smog.Base.Trans*smog.Base.Mat;
 
-	if (updateData->CharaBase.NowHp > 0) {
-		judg.VecMatIn(&smog.Base.Mat, updateData->MoveVec);
-	}
+	judg.VecMatIn(&smog.Base.Mat, updateData->MoveVec);
+	
 
 	return CountUpdate();
 }
@@ -71,7 +86,7 @@ void c_Smoke::Draw3D(const D3DXVECTOR3 * CameraPos)
 	smog.v[1].Pos = nPos + vec;
 	smog.v[2].Pos = oPos + vec;
 	smog.v[3].Pos = oPos - vec;
-	int num = M_S_Smog.Draw_No;
+	int num = Draw_No;
 	smog.v[0].Tex = D3DXVECTOR2(32.0f*(num % 8) / 256.0f, 32.0f*(num / 8) / 256.0f);
 	smog.v[1].Tex = D3DXVECTOR2(32.0f*(num % 8 + 1) / 256.0f, 32.0f*(num / 8) / 256.0f);
 	smog.v[2].Tex = D3DXVECTOR2(32.0f*(num % 8 + 1) / 256.0f, 32.0f*(num / 8 + 1) / 256.0f);
@@ -80,16 +95,6 @@ void c_Smoke::Draw3D(const D3DXVECTOR3 * CameraPos)
 
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-}
-
-void c_Smoke::Init()
-{
-	smog.TEX = { NULL,256,256,NULL,NULL,NULL };
-	smog.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/Smoke.png", smog.TEX.Width, smog.TEX.Height, NULL);
-	//ŒÀ‚Ì‰Šú‰»
-	NowCount = 1;
-
-	ScalSize = 0.0f;
 }
 
 bool c_Smoke::CountUpdate(void)
@@ -104,48 +109,17 @@ bool c_Smoke::CountUpdate(void)
 	return true;
 }
 
-void c_Smoke::Init_Num(void)
+int c_Smoke::InitDrawNo(const float * HpPer, const int * NowHp)
 {
-	M_S_Smog.Draw_No = 47;//”–‚¢‚S‚VA”Z‚¢‚R‚T
+	if (*NowHp <= 0)return 35;
+	if (*HpPer < 0.1f)return 47;
+	if (*HpPer < 0.2f)return 50;
+	if (*HpPer < 0.3f)return 53;
+	
+	return 0;
+
+	//”–‚¢‚S‚VA”Z‚¢‚R‚T
 	//”Z‚¢47,”–‚¢53
-}
-
-void c_Smoke::NumJudg(void)
-{
-	if (M_S_Smog.Draw_No < 0)M_S_Smog.Draw_No = 0;
-	if (M_S_Smog.Draw_No > 63)M_S_Smog.Draw_No = 63;
-}
-
-void c_Smoke::SetNum(const int s_Num)
-{
-	M_S_Smog.Draw_No = s_Num;
-	NumJudg();
-}
-
-void c_Smoke::Init_Mat(void)
-{
-
-	//‰ñ“]
-	D3DXMATRIX l_RotYMat;
-	D3DXMatrixRotationY(&l_RotYMat, D3DXToRadian(180.0f));
-	smog.Base.Mat = l_RotYMat * smog.Base.Mat;
-
-	//ˆÚ“®ƒxƒNƒgƒ‹‚Ì‰Šú‰»
-	Judg judg;
-	smog.Base.TraPos = judg.GetVecVec_S(&M_S_Smog.MoveVec, &M_S_Smog.Frame);
-
-	//ˆÚ“®‚Å•ªU‚³‚¹‚é
-	D3DXVECTOR3 L_RandPos = D3DXVECTOR3(RandPlus(&M_S_Smog.Random.x), RandPlus(&M_S_Smog.Random.y), RandPlus(&M_S_Smog.Random.z));
-	smog.Base.TraPos += judg.GetVecVec_S(&L_RandPos, &M_S_Smog.Frame) / 10.0f;
-
-
-	smog.Base.TraPos *= 0.5f;
-
-	//ŒÀ‚Ì‰Šú‰»
-	NowCount = 1 * 1000;
-
-	M_S_Smog.AStart = NowCount;
-
 }
 
 void c_Smoke::Update_Alpha(void)

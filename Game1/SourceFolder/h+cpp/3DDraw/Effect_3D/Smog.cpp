@@ -1,5 +1,5 @@
 #include "Smog.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 #include"../../GameSource/Judgment.h"
 
 extern LPDIRECT3DDEVICE9	lpD3DDevice;
@@ -15,7 +15,6 @@ C_Smog::C_Smog(const D3DXMATRIX *Mat)
 
 	Init_Mat();
 
-	Init_Num();
 }
 
 C_Smog::C_Smog(const D3DXMATRIX * Mat, const S_Smog * H_Smog)
@@ -36,7 +35,7 @@ C_Smog::~C_Smog()
 void C_Smog::Init()
 {
 	smog.TEX = { NULL,256,256,NULL,NULL,NULL };
-	smog.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/Smoke.png", smog.TEX.Width, smog.TEX.Height, NULL);
+	smog.TEX.Tex = textureManager.GetTexture("Smoke.png", smog.TEX.Width, smog.TEX.Height, NULL);
 	//éûå¿ÇÃèâä˙âª
 	NowCount = 1;
 
@@ -95,7 +94,7 @@ void C_Smog::Draw3D(D3DXVECTOR3 CamPos)
 	smog.v[1].Pos = nPos + vec;
 	smog.v[2].Pos = oPos + vec;
 	smog.v[3].Pos = oPos - vec;
-	int num=M_S_Smog.Draw_No;
+	int num = 47;
 	smog.v[0].Tex = D3DXVECTOR2(32.0f*(num % 8) / 256.0f, 32.0f*(num / 8) / 256.0f);
 	smog.v[1].Tex = D3DXVECTOR2(32.0f*(num % 8 + 1) / 256.0f, 32.0f*(num / 8) / 256.0f);
 	smog.v[2].Tex = D3DXVECTOR2(32.0f*(num % 8 + 1) / 256.0f, 32.0f*(num / 8 + 1) / 256.0f);
@@ -104,24 +103,6 @@ void C_Smog::Draw3D(D3DXVECTOR3 CamPos)
 
 	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 	lpD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-}
-
-void C_Smog::Init_Num(void)
-{
-	M_S_Smog.Draw_No = 47;//îñÇ¢ÇSÇVÅAîZÇ¢ÇRÇT
-	//îZÇ¢47,îñÇ¢53
-}
-
-void C_Smog::NumJudg(void)
-{
-	if (M_S_Smog.Draw_No < 0)M_S_Smog.Draw_No = 0;
-	if (M_S_Smog.Draw_No > 63)M_S_Smog.Draw_No = 63;
-}
-
-void C_Smog::SetNum(const int s_Num)
-{
-	M_S_Smog.Draw_No = s_Num;
-	NumJudg();
 }
 
 void C_Smog::Init_Mat(void)

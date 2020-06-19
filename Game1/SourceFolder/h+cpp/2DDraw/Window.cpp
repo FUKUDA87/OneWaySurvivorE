@@ -3,7 +3,7 @@
 Window::Window()
 {
 	wind.TEX = { NULL,928,552,NULL,NULL };
-	wind.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/frame1to.png", wind.TEX.Width, wind.TEX.Height, NULL);
+	wind.TEX.Tex = textureManager.GetTexture("frame1to.png", wind.TEX.Width, wind.TEX.Height, NULL);
 	wind.Base.Pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	wind.Base.ScaPos = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	TexPos = D3DXVECTOR3((float)wind.TEX.Width / 2.0f, (float)wind.TEX.Height / 2.0f, 0);

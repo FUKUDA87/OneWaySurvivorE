@@ -4,7 +4,7 @@
 
 C_Stand_No1::C_Stand_No1(const S_CAR_PARTS_DATA * Data, C_Move_Parts_Base * Move) :C_Car_Parts_Joint(Data)
 {
-	Draw_New(new C_Draw_Mesh_Base("../GameFolder/Material/XFile/stand1.x"));
+	Draw_New(new C_Draw_Mesh_Base("stand1.x"));
 	New_Move(Move);
 	bool Flg = false;
 	Init_Joint_Data(&Flg);

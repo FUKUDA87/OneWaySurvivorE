@@ -28,7 +28,7 @@ void C_Gun_No1_MuzFla_1::Init_Load(void)
 	S_TEX_POS Pos;
 	Pos.Width = 128;
 	Pos.Height = 128;
-	Texture_Load("../GameFolder/Material/Texture/MuzFla1T.png", &Pos);
+	Texture_Load("MuzFla1T.png", &Pos);
 }
 
 void C_Gun_No1_MuzFla_1::Init_Mat(const D3DXMATRIX * Gun_Mouth_Mat)

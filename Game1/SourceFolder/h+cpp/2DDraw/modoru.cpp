@@ -4,7 +4,7 @@ Modoru::Modoru()
 {
 	//戻るtexのロード
 	mod.TEX = { NULL,256,256,NULL,NULL };
-	mod.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/back4.png", mod.TEX.Width, mod.TEX.Height, NULL);
+	mod.TEX.Tex = textureManager.GetTexture("back4.png", mod.TEX.Width, mod.TEX.Height, NULL);
 	//戻るの座標の初期化
 	mod.Base.Pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	//戻るのScal座標の初期化

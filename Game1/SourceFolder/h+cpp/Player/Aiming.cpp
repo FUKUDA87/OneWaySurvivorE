@@ -1,5 +1,5 @@
 #include"Aiming.h"
-#include"../GameSource/TextureManager.h"
+#include"../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 extern LPDIRECT3DDEVICE9 lpD3DDevice;
@@ -13,7 +13,7 @@ void Aiming::Init()
 	//画像のロード
 	aim.TEX = { NULL,100,100,0,0,0 };
 	aim.TEX.Tex= textureManager.GetTexture
-	("../GameFolder/Material/Texture/Aiming1.png", aim.TEX.Width, aim.TEX.Height
+	("Aiming1.png", aim.TEX.Width, aim.TEX.Height
 		, D3DCOLOR_XRGB(aim.TEX.r, aim.TEX.g, aim.TEX.b));
 	//初期化
 	D3DXMatrixTranslation(&aim.Base.Mat, (float)(SCRW / 2 - aim.TEX.Width / 2), (float)(SCRH / 2 - aim.TEX.Height / 2), NULL);
@@ -25,7 +25,7 @@ void Aiming::Init()
 	//画像のロード
 	aimR.TEX = { NULL,400,400,0,0,0 };
 	aimR.TEX.Tex = textureManager.GetTexture
-	("../GameFolder/Material/Texture/Aiming3.png", aimR.TEX.Width, aimR.TEX.Height
+	("Aiming3.png", aimR.TEX.Width, aimR.TEX.Height
 		, D3DCOLOR_XRGB(aimR.TEX.r, aimR.TEX.g, aimR.TEX.b));
 	//初期化
 	D3DXMatrixTranslation(&aimR.Base.Mat, (float)(SCRW / 2 - aimR.TEX.Width / 2), (float)(SCRH / 2 - aimR.TEX.Height / 2), NULL);

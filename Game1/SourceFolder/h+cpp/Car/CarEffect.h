@@ -2,13 +2,6 @@
 #include"CarBase.h"
 #include"../Effect/Car/EffectVectorCar.h"
 
-/*
-車のエフェクトの欲しい情報
-HP
-移動ベクトル
-位置
-*/
-
 class C_CarEffect:public C_CarBase
 {
 public:

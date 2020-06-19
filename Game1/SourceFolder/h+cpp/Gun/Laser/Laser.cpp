@@ -1,5 +1,5 @@
 #include "Laser.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 #include"../../GameSource/Judgment.h"
 
 extern TextureManager textureManager;
@@ -10,10 +10,10 @@ void LaserA::Init()
 {
 	lasS.Base.Flg = true;
 	lasS.TEX = { NULL,32,32,NULL,NULL,NULL };
-	lasS.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/Laser1T.png", lasS.TEX.Width, lasS.TEX.Height, NULL);
+	lasS.TEX.Tex = textureManager.GetTexture("Laser1T.png", lasS.TEX.Width, lasS.TEX.Height, NULL);
 	Las.Base.Flg = true;
 	Las.TEX = { NULL,1,1,NULL,NULL,NULL };
-	Las.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/enemyHp.png", Las.TEX.Width, Las.TEX.Height, NULL);
+	Las.TEX.Tex = textureManager.GetTexture("enemyHp.png", Las.TEX.Width, Las.TEX.Height, NULL);
 	lasFlg = false;
 }
 

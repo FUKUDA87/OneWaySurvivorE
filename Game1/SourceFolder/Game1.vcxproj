@@ -289,10 +289,8 @@
     <ClInclude Include="h+cpp\GameSource\StructClass\Parts_Set_Size.h" />
     <ClInclude Include="h+cpp\GameSource\StructClass\Struct_Init.h" />
     <ClInclude Include="h+cpp\GameSource\TexManagerBase.h" />
-    <ClInclude Include="h+cpp\GameSource\TextureManager.h" />
     <ClInclude Include="h+cpp\GameSource\wavread.h" />
     <ClInclude Include="h+cpp\GameSource\XDraw.h" />
-    <ClInclude Include="h+cpp\GameSource\XfileManager.h" />
     <ClInclude Include="h+cpp\GameSource\XfileManager2.h" />
     <ClInclude Include="h+cpp\Ground\ground.h" />
     <ClInclude Include="h+cpp\Ground\Ground_Object.h" />
@@ -344,6 +342,8 @@
     <ClInclude Include="h+cpp\Manager\DrawTextureManager\BulletManager\DrawTextureManager_Bullet.h" />
     <ClInclude Include="h+cpp\Manager\DrawTextureManager\DrawTextureManager_Base.h" />
     <ClInclude Include="h+cpp\Manager\DrawTextureManager\DrawTextureManager_Manager.h" />
+    <ClInclude Include="h+cpp\MaterialManager\TextureManager.h" />
+    <ClInclude Include="h+cpp\MaterialManager\XFileManager.h" />
     <ClInclude Include="h+cpp\Menu\Button\ButtonBase.h" />
     <ClInclude Include="h+cpp\Menu\Button\ButtonGameScene.h" />
     <ClInclude Include="h+cpp\Menu\Button\PlayButton.h" />
@@ -565,9 +565,7 @@
     <ClCompile Include="h+cpp\GameSource\StructClass\Parts_Set_Data.cpp" />
     <ClCompile Include="h+cpp\GameSource\StructClass\Parts_Set_Size.cpp" />
     <ClCompile Include="h+cpp\GameSource\StructClass\Struct_Init.cpp" />
-    <ClCompile Include="h+cpp\GameSource\TextureManager.cpp" />
     <ClCompile Include="h+cpp\GameSource\wavread.cpp" />
-    <ClCompile Include="h+cpp\GameSource\XfileManager.cpp" />
     <ClCompile Include="h+cpp\GameSource\XfileManager2.cpp" />
     <ClCompile Include="h+cpp\Ground\ground.cpp" />
     <ClCompile Include="h+cpp\Ground\Ground_Object.cpp" />
@@ -616,6 +614,8 @@
     <ClCompile Include="h+cpp\Manager\DrawTextureManager\BulletManager\DrawTextureManager_Bullet.cpp" />
     <ClCompile Include="h+cpp\Manager\DrawTextureManager\DrawTextureManager_Base.cpp" />
     <ClCompile Include="h+cpp\Manager\DrawTextureManager\DrawTextureManager_Manager.cpp" />
+    <ClCompile Include="h+cpp\MaterialManager\TextureManager.cpp" />
+    <ClCompile Include="h+cpp\MaterialManager\XFileManager.cpp" />
     <ClCompile Include="h+cpp\Menu\Button\ButtonBase.cpp" />
     <ClCompile Include="h+cpp\Menu\Button\ButtonGameScene.cpp" />
     <ClCompile Include="h+cpp\Menu\Button\PlayButton.cpp" />

@@ -4,7 +4,7 @@ StageTex::StageTex(const int No, const D3DXVECTOR3 WindPos)
 {
 	//ステージTexロード
 	mod.TEX = { NULL,250,50,NULL,NULL };
-	mod.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/CharStage2.png", mod.TEX.Width, mod.TEX.Height, NULL);
+	mod.TEX.Tex = textureManager.GetTexture("CharStage2.png", mod.TEX.Width, mod.TEX.Height, NULL);
 	mod.Base.Pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	mod.Base.ScaPos = D3DXVECTOR3(1.0f, 1.0f, 0.0f);
 	wind.Base.ScaPos = D3DXVECTOR3(150.0f / wind.TEX.Width, 150.0f / wind.TEX.Height, 0.0f);

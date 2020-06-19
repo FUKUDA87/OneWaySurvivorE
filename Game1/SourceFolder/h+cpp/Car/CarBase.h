@@ -11,7 +11,6 @@
 class C_CarBase:public C_Hp_Draw_New {
 public:
 	C_CarBase();
-	~C_CarBase();
 
 	//‰Šú‰»
 	void InitCar(void);

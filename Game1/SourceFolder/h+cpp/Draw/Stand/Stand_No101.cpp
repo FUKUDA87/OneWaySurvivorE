@@ -3,7 +3,7 @@
 
 C_Stand_No101::C_Stand_No101(const S_CAR_PARTS_DATA * Data, C_Move_Parts_Base * Move):C_Car_Parts_Joint(Data)
 {
-	Draw_New(new C_Draw_Mesh_Base("../GameFolder/Material/XFile/Stand_O_101.x"));
+	Draw_New(new C_Draw_Mesh_Base("Stand_O_101.x"));
 	New_Move(Move);
 	bool Flg = false;
 	Init_Joint_Data(&Flg);

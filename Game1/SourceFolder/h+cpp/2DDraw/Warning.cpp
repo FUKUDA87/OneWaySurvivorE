@@ -6,7 +6,7 @@ Warning::Warning()
 	//Waning文字
 	//ロード
 	war.TEX = { NULL,510,109,NULL,NULL };
-	war.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/CharEmergency1.png", war.TEX.Width, war.TEX.Height, NULL);
+	war.TEX.Tex = textureManager.GetTexture("CharEmergency1.png", war.TEX.Width, war.TEX.Height, NULL);
 	//拡大
 	war.Base.ScaPos = D3DXVECTOR3(9.0f*50.0f / (float)war.TEX.Width, 50.0f / (float)war.TEX.Height, 1.0f);
 	war.Base.ScaPos *= 2.9f;
@@ -16,7 +16,7 @@ Warning::Warning()
 	//赤黒
 	//ロード
 	yel.TEX = { NULL,1300,100,NULL,NULL };
-	yel.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/warnB3.png", yel.TEX.Width, yel.TEX.Height, NULL);
+	yel.TEX.Tex = textureManager.GetTexture("warnB3.png", yel.TEX.Width, yel.TEX.Height, NULL);
 	//拡大
 	D3DXMatrixScaling(&yel.Base.Scal, 1280.0f / (float)yel.TEX.Width, 1.0f*0.8f, 1.0f);
 

@@ -1,5 +1,5 @@
 #include "Pause.h"
-#include"../GameSource/TextureManager.h"
+#include"../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
@@ -10,7 +10,7 @@ extern LPD3DXSPRITE lpSprite;	// スプライト
 Pause::Pause()
 {
 	pau.TEX = { NULL,250,50,NULL,NULL,NULL };
-	pau.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/CharPause1.png", pau.TEX.Width, pau.TEX.Height, NULL);
+	pau.TEX.Tex = textureManager.GetTexture("CharPause1.png", pau.TEX.Width, pau.TEX.Height, NULL);
 	D3DXMatrixTranslation(&pau.Base.Mat, SCRW / 2.0f, SCRH / 2.0f, 0.0f);
 	pau.Base.DrawFlg = false;
 

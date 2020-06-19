@@ -1,5 +1,5 @@
 #include "BulletHole.h"
-#include"../GameSource/TextureManager.h"
+#include"../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
@@ -37,17 +37,17 @@ C_BulletHole::~C_BulletHole()
 void C_BulletHole::InitBulHol(void)
 {
 	BulHol.TEX = { NULL,256,256,NULL,NULL,NULL };
-	BulHol.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/BulletHole01.png", BulHol.TEX.Width, BulHol.TEX.Height, NULL);
+	BulHol.TEX.Tex = textureManager.GetTexture("BulletHole01.png", BulHol.TEX.Width, BulHol.TEX.Height, NULL);
 }
 
 void C_BulletHole::InitBulHol(int No)
 {
 	BulHol.TEX = { NULL,256,256,NULL,NULL,NULL };
 	if (No == 1) {
-		BulHol.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/BulletHole01.png", BulHol.TEX.Width, BulHol.TEX.Height, NULL);
+		BulHol.TEX.Tex = textureManager.GetTexture("BulletHole01.png", BulHol.TEX.Width, BulHol.TEX.Height, NULL);
 	}
 	else {
-		BulHol.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/BulletHole02.png", BulHol.TEX.Width, BulHol.TEX.Height, NULL);
+		BulHol.TEX.Tex = textureManager.GetTexture("BulletHole02.png", BulHol.TEX.Width, BulHol.TEX.Height, NULL);
 	}
 }
 

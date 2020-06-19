@@ -1,5 +1,5 @@
 #include "Spark.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 #include"../../GameSource/Judgment.h"
 
 extern LPDIRECT3DDEVICE9		lpD3DDevice;
@@ -51,7 +51,7 @@ void C_Spark::Init()
 	//ポリゴンサイズの初期化
 	PolSize = 0.015f;
 	char TexName[100];
-	sprintf_s(TexName, sizeof(TexName), "../GameFolder/Material/Texture/spark10-1.png");
+	sprintf_s(TexName, sizeof(TexName), "spark10-1.png");
 	spark.TEX.Tex = textureManager.GetTexture(TexName, spark.TEX.Width, spark.TEX.Height, NULL);
 	//移動行列の初期化
 	D3DXMatrixTranslation(&spark.Base.Mat, 0.0f, 0.0f, 0.0f);

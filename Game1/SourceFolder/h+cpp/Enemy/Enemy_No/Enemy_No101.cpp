@@ -67,7 +67,7 @@ void C_Enemy_No101::New_Car_Judg_Parts(void)
 	M_Car_Parts.push_back(new C_Car_Parts_Judg_Polygon(Get_Data_CarParts(&Co_Parts_Judg, 1), &D3DXVECTOR3(-0.3f, 0.25f, 0.0f),
 		&D3DXVECTOR3(0.3f, 0.25f, 0.0f), &D3DXVECTOR3(0.3f, -0.25f, 0.0f), &D3DXVECTOR3(-0.3f, -0.25f, 0.0f)));
 
-	M_Car_Parts.push_back(new C_Car_Parts_Judg_Mesh(Get_Data_CarParts(&Co_Parts_Judg, 2), "../GameFolder/Material/XFile/Car_O_201_Judg_1.x"));
+	M_Car_Parts.push_back(new C_Car_Parts_Judg_Mesh(Get_Data_CarParts(&Co_Parts_Judg, 2), "Car_O_201_Judg_1.x"));
 
 	M_Car_Parts.push_back(new C_Car_Parts_Judg_Ball(Get_Data_CarParts(&Co_Parts_Judg, 1), 0.3f));
 }

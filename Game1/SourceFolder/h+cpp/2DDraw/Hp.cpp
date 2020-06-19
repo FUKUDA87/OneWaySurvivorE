@@ -1,5 +1,5 @@
 #include "Hp.h"
-#include"../GameSource/TextureManager.h"
+#include"../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
@@ -12,14 +12,14 @@ void HP::Init()
 {
 	//白いバー
 	hp.TEX = { NULL,1,1,NULL,NULL,NULL };
-	hp.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/HpH.png",hp.TEX.Width, hp.TEX.Height, NULL);
+	hp.TEX.Tex = textureManager.GetTexture("HpH.png",hp.TEX.Width, hp.TEX.Height, NULL);
 	hp.Base.ScaPos = D3DXVECTOR3(300,30, 0);
 	D3DXMatrixScaling(&hp.Base.Scal, hp.Base.ScaPos.x, hp.Base.ScaPos.y, 0.0f);
 	hp.Base.Flg = true;
 	hp.Base.Pos = D3DXVECTOR3(SCRW / 2 / 10, SCRH- SCRH / 10, 0);
 	//緑バー
 	Php.TEX = { NULL,1,1,NULL,NULL,NULL };
-	Php.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/plaHp.png", Php.TEX.Width, Php.TEX.Height, NULL);
+	Php.TEX.Tex = textureManager.GetTexture("plaHp.png", Php.TEX.Width, Php.TEX.Height, NULL);
 	Php.Base.ScaPos = hp.Base.ScaPos;
 	D3DXMatrixScaling(&Php.Base.Scal, Php.Base.ScaPos.x, Php.Base.ScaPos.y, 0.0f);
 	Php.Base.Flg = hp.Base.Flg;

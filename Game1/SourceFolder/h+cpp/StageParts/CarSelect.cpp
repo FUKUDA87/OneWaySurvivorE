@@ -1,5 +1,5 @@
 #include "CarSelect.h"
-#include"../GameSource/TextureManager.h"
+#include"../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
@@ -43,12 +43,12 @@ void C_CarSelect::InitCS(void)
 	Arr = new BASE2D[ArrNum];
 	//画像のロード
 	ArrTex = { NULL,150,148,NULL,NULL,NULL };
-	ArrTex.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/Arr2-2.png", ArrTex.Width, ArrTex.Height, NULL);
+	ArrTex.Tex = textureManager.GetTexture("Arr2-2.png", ArrTex.Width, ArrTex.Height, NULL);
 
 	//Backの初期化-----------------------------------------------------------------------------
 	//画像のロード
 	Back.TEX = { NULL,928,552,NULL,NULL,NULL };
-	Back.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/frame1to.png", Back.TEX.Width, Back.TEX.Height, NULL);
+	Back.TEX.Tex = textureManager.GetTexture("frame1to.png", Back.TEX.Width, Back.TEX.Height, NULL);
 
 }
 

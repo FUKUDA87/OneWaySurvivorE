@@ -1,5 +1,5 @@
 #include "OkButton.h"
-#include"../GameSource/TextureManager.h"
+#include"../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
@@ -59,7 +59,7 @@ void C_OK::InitOK(void)
 {
 	//画像のロード
 	OK.TEX = { NULL,163,81,NULL,NULL,NULL };
-	OK.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/CharOk1.png", OK.TEX.Width, OK.TEX.Height, NULL);
+	OK.TEX.Tex = textureManager.GetTexture("CharOk1.png", OK.TEX.Width, OK.TEX.Height, NULL);
 
 	//文字の初期化
 	int CharNum = 2;

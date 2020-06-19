@@ -15,7 +15,7 @@ bool c_CarSmoke::Update(const s_CarEffectUpdateData * updateData)
 	float L_Per = (float)updateData->CharaBase.NowHp / (float)updateData->CharaBase.MaxHp;
 	if (L_Per < 0.3f) {
 		float L_Num = 30.0f;
-		if (rand() % 100 < 20 + (int)(L_Num*0.3f - L_Num * L_Per)) {
+		if (rand() % 100 < (100-(int)(100.0f*L_Per))) {
 			D3DXMATRIX TmpMat;
 			C_CarSmogManager L_CarSmogManager;
 			D3DXVECTOR3 Vec = L_CarSmogManager.GetPos(updateData->CarNo);
@@ -23,10 +23,7 @@ bool c_CarSmoke::Update(const s_CarEffectUpdateData * updateData)
 			judg.Set_TransMat(&TmpMat, &Vec);
 			TmpMat = TmpMat * (updateData->Mat);
 			S_Smog s = L_CarSmogManager.GetSmog(updateData->CarNo);
-			if (L_Per < 0.3f)s.Draw_No = 53;
-			if (L_Per < 0.2f)s.Draw_No = 50;
-			if (L_Per < 0.1f)s.Draw_No = 47;
-			m_Effect.push_back(new c_Smoke(&TmpMat, &s));
+			m_Effect.push_back(new c_Smoke(&TmpMat, &s,&L_Per,&updateData->CharaBase.NowHp));
 		}
 	}
 

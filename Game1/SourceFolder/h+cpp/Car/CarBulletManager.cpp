@@ -1,11 +1,6 @@
 #include "CarBulletManager.h"
 #include"../Draw/Bullet/Bullet_DrawManager.h"
 
-C_CarBulletManager::C_CarBulletManager()
-{
-	
-}
-
 C_CarBulletManager::~C_CarBulletManager()
 {
 	AllDelete();

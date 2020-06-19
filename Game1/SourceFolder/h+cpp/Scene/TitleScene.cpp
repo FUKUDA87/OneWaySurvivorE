@@ -1,14 +1,14 @@
 #include"TitleScene.h"
 #include"SceneManager.h"
 #include"GameScene.h"
-#include"../GameSource/TextureManager.h"
-#include"../GameSource/XfileManager.h"
+#include"../MaterialManager/TextureManager.h"
+#include"../MaterialManager/XfileManager.h"
 #include"StageSelectScene.h"
 #include"../GameSource/GameSystem.h"
 #include"../Fade/Fade.h"
 
 extern TextureManager textureManager;
-extern XfileManager xfileManager;
+extern XFileManager xfileManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
 extern SceneManager sceneManager;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス

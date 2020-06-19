@@ -1,5 +1,5 @@
 #include "Hp3DEnemy.h"
-#include"../../GameSource/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 extern LPDIRECT3DDEVICE9		lpD3DDevice;
@@ -68,5 +68,5 @@ void C_Hp3D::Init(void)
 	m_Hp.DrawFlg = false;
 
 	m_PolTex = { NULL,200,100,NULL,NULL,NULL };
-	m_PolTex.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/HpE5.png", m_PolTex.Width, m_PolTex.Height, NULL);
+	m_PolTex.Tex = textureManager.GetTexture("HpE5.png", m_PolTex.Width, m_PolTex.Height, NULL);
 }

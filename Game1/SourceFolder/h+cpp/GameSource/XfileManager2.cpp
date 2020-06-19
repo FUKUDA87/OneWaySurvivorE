@@ -14,7 +14,9 @@ XFILE_B XfileManager2::GetXfile(std::string FileName)
 {
 	XFILE_B Xfile;
 	if (xfileList.find(FileName) == xfileList.end()) {
-		LoadMesh(&Xfile.Mesh, &FileName[0]);
+		char FileName2[100];
+		sprintf_s(FileName2, sizeof(FileName2), "../GameFolder/Material/XFile/%s", &FileName[0]);
+		LoadMesh(&Xfile.Mesh, FileName2);
 
 		LPD3DXMESH TmpMesh;
 		Xfile.Mesh.lpMesh->CloneMeshFVF(D3DXMESH_NPATCHES | D3DXMESH_MANAGED, D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1, lpD3DDevice, &TmpMesh);

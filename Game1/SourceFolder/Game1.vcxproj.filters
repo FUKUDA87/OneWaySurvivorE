@@ -319,6 +319,9 @@
     <Filter Include="ソース ファイル\Effect\3D\Smoke">
       <UniqueIdentifier>{83d74087-a1a4-448e-88fd-190ba6f16602}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\MaterialManager">
+      <UniqueIdentifier>{ef7c5a07-6eb5-4019-8c9c-88021c622d91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h+cpp\2DDraw\Window.h">
@@ -405,9 +408,6 @@
     <ClInclude Include="h+cpp\EnemyData\EnemyNo101\EnemyAi\ENo101_AiPhase_1.h">
       <Filter>ソース ファイル\EnemyData\EnemyNo101\EnemyAi</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\GameSource\XfileManager.h">
-      <Filter>ソース ファイル\GameSource</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\GameSource\3DSound.h">
       <Filter>ソース ファイル\GameSource</Filter>
     </ClInclude>
@@ -457,9 +457,6 @@
       <Filter>ソース ファイル\GameSource</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\GameSource\TexManagerBase.h">
-      <Filter>ソース ファイル\GameSource</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\GameSource\TextureManager.h">
       <Filter>ソース ファイル\GameSource</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\GameSource\wavread.h">
@@ -1221,6 +1218,12 @@
     <ClInclude Include="h+cpp\Effect\3D\Smoke\Smoke.h">
       <Filter>ソース ファイル\Effect\3D\Smoke</Filter>
     </ClInclude>
+    <ClInclude Include="h+cpp\MaterialManager\TextureManager.h">
+      <Filter>ソース ファイル\MaterialManager</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\MaterialManager\XFileManager.h">
+      <Filter>ソース ファイル\MaterialManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="h+cpp\2DDraw\BulletHole.cpp">
@@ -1328,13 +1331,7 @@
     <ClCompile Include="h+cpp\GameSource\SoundManager.cpp">
       <Filter>ソース ファイル\GameSource</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\GameSource\TextureManager.cpp">
-      <Filter>ソース ファイル\GameSource</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\GameSource\wavread.cpp">
-      <Filter>ソース ファイル\GameSource</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\GameSource\XfileManager.cpp">
       <Filter>ソース ファイル\GameSource</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Ground\ground.cpp">
@@ -2026,6 +2023,12 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Effect\3D\Smoke\Smoke.cpp">
       <Filter>ソース ファイル\Effect\3D\Smoke</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\MaterialManager\TextureManager.cpp">
+      <Filter>ソース ファイル\MaterialManager</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\MaterialManager\XFileManager.cpp">
+      <Filter>ソース ファイル\MaterialManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

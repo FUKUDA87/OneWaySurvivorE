@@ -1,15 +1,15 @@
 #include"Sky.h"
-#include"../GameSource/TextureManager.h"
-#include"../GameSource/XfileManager.h"
+#include"../MaterialManager/TextureManager.h"
+#include"../MaterialManager/XfileManager.h"
 extern LPDIRECT3DDEVICE9 lpD3DDevice;
 extern TextureManager textureManager;
-extern XfileManager xfileManager;
+extern XFileManager xfileManager;
 
 void DrawMesh(XFILE *XFile);
 
 void Sky::Init()
 {
-	xfileManager.GetXfile(&sky.Mesh, "../GameFolder/Material/XFile/Sky_1_1.x");
+	sky.Mesh=xfileManager.GetMesh("Sky_1_1.x");
 	D3DXMatrixTranslation(&sky.Base.Trans, 0, 0, 0);//ˆÊ’u
 	D3DXVECTOR3 Pos(500.0f, 210.0f, 500.0f);
 	D3DXMatrixScaling(&sky.Base.Scal, Pos.x, Pos.y, Pos.z);

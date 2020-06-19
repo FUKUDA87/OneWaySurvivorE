@@ -10,7 +10,7 @@ C_Gun_No101::C_Gun_No101(C_GunMoveBase_A * Move)
 	//中心の行列の動きの初期化
 	New_GunMove(Move);
 	//パーツの初期化
-	M_GunParts.push_back(new C_PartsDraw_Gun(new C_Draw_Mesh_Base("../GameFolder/Material/XFile/gun2EC.x")
+	M_GunParts.push_back(new C_PartsDraw_Gun(new C_Draw_Mesh_Base("gun2EC.x")
 		, &Get_Data_Set(true, &D3DXVECTOR3(0.0f, 0.0f, 0.0f), &D3DXVECTOR3(0.0f, 0.0f, 0.8f), 180, 1, 0)));
 	//カテゴリーの初期化
 	int i = 0;

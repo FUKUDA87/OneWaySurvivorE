@@ -1,5 +1,5 @@
 #include "FadeDraw.h"
-#include"../GameSource/TextureManager.h"
+#include"../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト
@@ -9,7 +9,7 @@ extern LPD3DXSPRITE lpSprite;	// スプライト
 
 C_FadeDraw::C_FadeDraw()
 {
-	fadeTex = textureManager.GetTexture("../GameFolder/Material/Texture/h.png", 3, 3, NULL);
+	fadeTex = textureManager.GetTexture("h.png", 3, 3, NULL);
 }
 
 void C_FadeDraw::Draw(const int * a, const int * r, const int * g, const int * b)

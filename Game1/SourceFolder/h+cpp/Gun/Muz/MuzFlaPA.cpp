@@ -6,7 +6,7 @@ void MuzFlaPA::Init()
 {
 	mf.Base.Flg = true;
 	mf.TEX = { NULL,128,128,NULL,NULL,NULL };
-	mf.TEX.Tex = textureManager.GetTexture("../GameFolder/Material/Texture/MuzFla1T.png", mf.TEX.Width, mf.TEX.Height, NULL);
+	mf.TEX.Tex = textureManager.GetTexture("MuzFla1T.png", mf.TEX.Width, mf.TEX.Height, NULL);
 	//Z‰ñ“]
 	D3DXMatrixRotationZ(&mf.Base.RotZ, D3DXToRadian((float)(rand() % 360)));
 }

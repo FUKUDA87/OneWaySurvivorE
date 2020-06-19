@@ -3,7 +3,7 @@
 
 C_Light_Object_1::C_Light_Object_1()
 {
-	Mesh_Load("../GameFolder/Material/XFile/LightWay2.x");
+	Mesh_Load("LightWay2.x");
 }
 
 void C_Light_Object_1::Update_DrawMat(const D3DXMATRIX * Mat)

@@ -92,8 +92,7 @@ void C_EnemyAi::SetParts(std::vector<C_Ground_Object*> ground)
 
 	Update_Move_Stop_Time();
 
-	Update_Effect();
-	Set_MoveVec_Effect(&brj.MoveVec);
+	UpdateCarEffect();
 }
 
 

@@ -5,5 +5,6 @@
 class c_EffectVectorCar :public c_EffectVector
 {
 public:
-	virtual bool Update(const s_CarEffectUpdateData *updateData) { return false; };
+	// XVˆ—
+	virtual bool Update(const s_CarEffectUpdateData *updateData);
 };

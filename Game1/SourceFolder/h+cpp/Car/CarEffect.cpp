@@ -1,20 +1,43 @@
 #include "CarEffect.h"
+#include"../Effect/Car/Smoke/CarSmoke.h"
+
+C_CarEffect::C_CarEffect()
+{
+	m_EffectManager.push_back(new c_CarSmoke());
+}
 
 C_CarEffect::~C_CarEffect()
 {
 	DeleteCarEffect();
 }
 
-void C_CarEffect::DrawCarEffect(void)
+void C_CarEffect::DrawCarEffect(const D3DXVECTOR3 *CameraPos)
 {
 	if (m_EffectManager.size() < 1)return;
 
-	for (auto && e : m_EffectManager)e->Draw3D();
+	for (auto && e : m_EffectManager)e->Draw3D(CameraPos);
 }
 
 bool C_CarEffect::UpdateCarEffect(void)
 {
-	return false;
+	if (m_EffectManager.size() < 1)return true; 
+
+	// 更新に必要な情報作成
+	s_CarEffectUpdateData updateData;
+	updateData.CharaBase = CharaBase;
+	updateData.CarNo = BodyData.CarBodyNo;
+	updateData.Mat = Car.Base.Mat;
+	updateData.MoveVec = brj.MoveVec;
+	updateData.ScalMat = Car.Base.Scal;
+
+	// 更新
+	for (unsigned int ec = 0; ec < m_EffectManager.size(); ec++) {
+		if (m_EffectManager[ec]->Update(&updateData) != true) {
+			DeleteCarEffect(&ec);
+		}
+	}
+
+	return true;
 }
 
 void C_CarEffect::DeleteCarEffect(void)

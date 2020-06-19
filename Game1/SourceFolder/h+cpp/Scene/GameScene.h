@@ -33,7 +33,6 @@
 #include"../GameSource/Count.h"
 #include"../Enemy/EnemySelect.h"
 #include"../EnemyData/Base&Manager/EnemySpeedManager.h"
-#include"../3DDraw/Effect_3D/CarSmog.h"
 #include"../Const/Const_Draw_Judg.h"
 #include"../Stage_Data/Car_Pop/Car_Pop_New.h"
 #include"../Ground/Stage_Ground/Ground_Pop_New.h"
@@ -137,9 +136,6 @@ protected:
 
 	//火花の更新
 	bool Update_Spark(void);
-
-	//車の煙の更新
-	bool Update_CarSmoke(void);
 
 	//弾痕の更新
 	bool Update_Bullet_Hole(void);
@@ -371,9 +367,6 @@ private:
 
 	//タッチ
 	C_NextTouch* Menu;
-
-	//車用の煙エフェクト
-	C_SmokeCar* M_C_SmokeCar;
 
 	/*車の沸き情報*/
 	C_Car_Pop_New *M_C_Car_Pop;

@@ -310,6 +310,15 @@
     <Filter Include="ソース ファイル\Menu\Button">
       <UniqueIdentifier>{7690e3fe-0acd-44fe-bdef-8f9460a82a66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Effect\Car\Smoke">
+      <UniqueIdentifier>{92f681de-57ae-48f4-a688-228ff0e46c67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Effect\3D">
+      <UniqueIdentifier>{d4075361-1664-468d-b787-c8dc52b9bec4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Effect\3D\Smoke">
+      <UniqueIdentifier>{83d74087-a1a4-448e-88fd-190ba6f16602}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h+cpp\2DDraw\Window.h">
@@ -592,9 +601,6 @@
       <Filter>ソース ファイル\Draw_3D\Effect</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\3DDraw\Effect_3D\BulletHole3D.h">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Effect_3D\CarSmog.h">
       <Filter>ソース ファイル\Draw_3D\Effect</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\3DDraw\Effect_3D\Explosion.h">
@@ -1209,6 +1215,12 @@
     <ClInclude Include="h+cpp\Menu\Button\SelectButton.h">
       <Filter>ソース ファイル\Menu\Button</Filter>
     </ClInclude>
+    <ClInclude Include="h+cpp\Effect\Car\Smoke\CarSmoke.h">
+      <Filter>ソース ファイル\Effect\Car\Smoke</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Effect\3D\Smoke\Smoke.h">
+      <Filter>ソース ファイル\Effect\3D\Smoke</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="h+cpp\2DDraw\BulletHole.cpp">
@@ -1449,9 +1461,6 @@
       <Filter>ソース ファイル\Draw_3D\Effect</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\3DDraw\Effect_3D\BulletHole3D.cpp">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Effect_3D\CarSmog.cpp">
       <Filter>ソース ファイル\Draw_3D\Effect</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\3DDraw\Effect_3D\Explosion.cpp">
@@ -2008,6 +2017,15 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Menu\Button\PlayButton.cpp">
       <Filter>ソース ファイル\Menu\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Effect\Car\EffectVectorCar.cpp">
+      <Filter>ソース ファイル\Effect\Car</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Effect\Car\Smoke\CarSmoke.cpp">
+      <Filter>ソース ファイル\Effect\Car\Smoke</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Effect\3D\Smoke\Smoke.cpp">
+      <Filter>ソース ファイル\Effect\3D\Smoke</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

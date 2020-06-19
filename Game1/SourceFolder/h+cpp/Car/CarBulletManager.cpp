@@ -9,10 +9,6 @@ C_CarBulletManager::C_CarBulletManager()
 C_CarBulletManager::~C_CarBulletManager()
 {
 	AllDelete();
-
-	Delete_All_Effect();
-
-	
 }
 
 bool C_CarBulletManager::Update_ALL_Bullet(void)
@@ -78,7 +74,7 @@ void C_CarBulletManager::Init_Bullet(void)
 
 				M_Bullet.push_back(Bullet_Manager.Get_Bullet(&b, &Mat));
 				M_Gun[g]->Bullet_Shot_Update(&i);
-				M_Effect.push_back(M_Gun[g]->Get_Bullet_Shot_Effect(&i));
+				//M_Effect.push_back(M_Gun[g]->Get_Bullet_Shot_Effect(&i));
 			}
 		}
 	}
@@ -125,48 +121,4 @@ bool C_CarBulletManager::Get_Bullet_GroWal_Judg_Flg(const unsigned int * BulletN
 void C_CarBulletManager::Set_Bullet_GroWal_Judg_Flg(const unsigned int * BulletNo, const bool * Flg)
 {
 	M_Bullet[*BulletNo]->Set_GroWal_Jufg_Flg(Flg);
-}
-
-void C_CarBulletManager::Delete_All_Effect(void)
-{
-	if (M_Effect.size() < 1)return;
-
-	for (unsigned int e = 0; e < M_Effect.size(); e++) {
-		delete M_Effect[e];
-		M_Effect.erase(M_Effect.begin() + e);
-		e--;
-	}
-}
-
-void C_CarBulletManager::Draw_Effect(const D3DXVECTOR3 * CameraPos)
-{
-	if (M_Effect.size() < 1)return;
-
-	for (auto && e : M_Effect) {
-		e->Draw(CameraPos);
-	}
-}
-
-void C_CarBulletManager::Set_MoveVec_Effect(const D3DXVECTOR3 * MoveVec)
-{
-	if (M_Effect.size() < 1)return;
-
-	for (auto && e : M_Effect) {
-		e->Set_MoveVec(MoveVec);
-	}
-}
-
-bool C_CarBulletManager::Update_Effect(void)
-{
-	if (M_Effect.size() < 1)return false;
-
-	for (unsigned int e = 0; e < M_Effect.size(); e++) {
-		if (M_Effect[e]->Update() != true) {
-			delete M_Effect[e];
-			M_Effect.erase(M_Effect.begin() + e);
-			e--;
-		}
-	}
-
-	return true;
 }

@@ -12,7 +12,7 @@ public:
 	virtual bool Update(void);
 
 	// •\Ž¦
-	virtual void Draw3D(void);
+	virtual void Draw3D(const D3DXVECTOR3 *CameraPos);
 
 protected:
 	std::vector<c_EffectBase*>m_Effect;

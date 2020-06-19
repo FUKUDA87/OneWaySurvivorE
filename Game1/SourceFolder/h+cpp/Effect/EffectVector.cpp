@@ -16,11 +16,11 @@ bool c_EffectVector::Update(void)
 	return true;
 }
 
-void c_EffectVector::Draw3D(void)
+void c_EffectVector::Draw3D(const D3DXVECTOR3 *CameraPos)
 {
 	if (m_Effect.size() < 1)return;
 
-	for (auto && e : m_Effect)e->Draw3D();
+	for (auto && e : m_Effect)e->Draw3D(CameraPos);
 }
 
 void c_EffectVector::Delete(void)

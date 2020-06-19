@@ -95,8 +95,6 @@ void GameScene::Render3D(void) {
 		}
 	}
 
-	if (M_C_SmokeCar != nullptr) M_C_SmokeCar->Draw3D_CS(&camera->GetPos());
-
 }
 void GameScene::Render3D_Screen(void)
 {
@@ -1174,9 +1172,6 @@ void GameScene::AllNew(void)
 	spear = new Spear();
 	D3DXMatrixTranslation(&SpeMat, 0.0f, 0.0f, 0.0f);
 
-	//煙
-	M_C_SmokeCar = new C_SmokeCar();
-
 	M_C_Ground_Pop = new C_Ground_Pop_New(1);
 
 	//サウンドの初期化
@@ -1266,9 +1261,6 @@ void GameScene::AllDelete(void)
 	//ライトのカウントダウンの削除
 	if (LightCount != nullptr) {
 		delete LightCount;
-	}
-	if (M_C_SmokeCar != nullptr) {
-		delete M_C_SmokeCar;
 	}
 
 	//地面の情報削除
@@ -1464,8 +1456,6 @@ bool GameScene::Update_Game(void)
 
 	Update_Spark();
 
-	Update_CarSmoke();
-
 	Update_Bullet_Hole();
 
 	Update_Pop_End();
@@ -1562,16 +1552,6 @@ bool GameScene::Update_Spark(void)
 		s--;
 
 	}
-
-	return true;
-}
-
-bool GameScene::Update_CarSmoke(void)
-{
-	if (M_C_SmokeCar == nullptr) return false;
-
-	int CarNo = player->Get_BODYDATA().CarBodyNo;
-	M_C_SmokeCar->Update_CS(&player->GetCharaBase(), &CarNo, &player->GetMatCar(), &player->GetMoveVec());
 
 	return true;
 }

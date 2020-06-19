@@ -134,7 +134,6 @@
     <ClInclude Include="h+cpp\3DDraw\Ball.h" />
     <ClInclude Include="h+cpp\3DDraw\Effect_3D\BulletGround.h" />
     <ClInclude Include="h+cpp\3DDraw\Effect_3D\BulletHole3D.h" />
-    <ClInclude Include="h+cpp\3DDraw\Effect_3D\CarSmog.h" />
     <ClInclude Include="h+cpp\3DDraw\Effect_3D\Explosion.h" />
     <ClInclude Include="h+cpp\3DDraw\Effect_3D\Smog.h" />
     <ClInclude Include="h+cpp\3DDraw\Effect_3D\Smoke2.h" />
@@ -213,7 +212,9 @@
     <ClInclude Include="h+cpp\Draw\Tire\Tire_DrawManager.h" />
     <ClInclude Include="h+cpp\Draw\Tire\Tire_No101.h" />
     <ClInclude Include="h+cpp\Draw\Tire\Tire_No201.h" />
+    <ClInclude Include="h+cpp\Effect\3D\Smoke\Smoke.h" />
     <ClInclude Include="h+cpp\Effect\Car\EffectVectorCar.h" />
+    <ClInclude Include="h+cpp\Effect\Car\Smoke\CarSmoke.h" />
     <ClInclude Include="h+cpp\Effect\EffectBase.h" />
     <ClInclude Include="h+cpp\Effect\EffectVector.h" />
     <ClInclude Include="h+cpp\Effect\Effect_Base.h" />
@@ -435,7 +436,6 @@
     <ClCompile Include="h+cpp\3DDraw\Ball.cpp" />
     <ClCompile Include="h+cpp\3DDraw\Effect_3D\BulletGround.cpp" />
     <ClCompile Include="h+cpp\3DDraw\Effect_3D\BulletHole3D.cpp" />
-    <ClCompile Include="h+cpp\3DDraw\Effect_3D\CarSmog.cpp" />
     <ClCompile Include="h+cpp\3DDraw\Effect_3D\Explosion.cpp" />
     <ClCompile Include="h+cpp\3DDraw\Effect_3D\Smog.cpp" />
     <ClCompile Include="h+cpp\3DDraw\Effect_3D\Smoke2.cpp" />
@@ -499,6 +499,9 @@
     <ClCompile Include="h+cpp\Draw\Tire\Tire_DrawManager.cpp" />
     <ClCompile Include="h+cpp\Draw\Tire\Tire_No101.cpp" />
     <ClCompile Include="h+cpp\Draw\Tire\Tire_No201.cpp" />
+    <ClCompile Include="h+cpp\Effect\3D\Smoke\Smoke.cpp" />
+    <ClCompile Include="h+cpp\Effect\Car\EffectVectorCar.cpp" />
+    <ClCompile Include="h+cpp\Effect\Car\Smoke\CarSmoke.cpp" />
     <ClCompile Include="h+cpp\Effect\EffectVector.cpp" />
     <ClCompile Include="h+cpp\Effect\Effect_Base.cpp" />
     <ClCompile Include="h+cpp\Effect\Gun\No1\Shot\Gun_No1_Bullet_Empty_1.cpp" />

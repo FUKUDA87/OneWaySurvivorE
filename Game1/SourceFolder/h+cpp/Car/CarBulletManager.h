@@ -63,21 +63,4 @@ public:
 
 protected:
 	std::vector<C_Bullet_Base*>M_Bullet;
-
-	std::vector<C_Effect_Base*>M_Effect;
-
-	//エフェクトの全削除
-	void Delete_All_Effect(void);
-
-	//エフェクトの表示
-	void Draw_Effect(const D3DXVECTOR3 *CameraPos);
-
-	//エフェクトに移動量の加算
-	void Set_MoveVec_Effect(const D3DXVECTOR3 *MoveVec);
-
-	//エフェクトの更新
-	bool Update_Effect(void);
-
-private:
-	
 };

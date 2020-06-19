@@ -6,10 +6,10 @@
 #include"Parts/Car_Parts_Joint.h"
 #include"../Const/Const_PartsTypeNo.h"
 #include"../GameSource/StructClass/Parts_Set_Data.h"
-#include"CarBase.h"
+#include"CarEffect.h"
 #include"../GameSource/StructClass/Parts_Set_Size.h"
 
-class C_CarParts:public C_CarBase {
+class C_CarParts:public C_CarEffect {
 public:
 	C_CarParts();
 	~C_CarParts();
@@ -68,8 +68,6 @@ protected:
 	//パーツ表示変数
 	std::vector<C_Car_Parts_Joint*>M_Car_Parts;
 
-	//車のデータ
-	BODYDATA BodyData;
 	//車のパーツ情報上書きFlg
 	bool M_Parts_Save_Flg;
 

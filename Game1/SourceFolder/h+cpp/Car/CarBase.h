@@ -194,6 +194,9 @@ public:
 	}
 
 protected:
+	//車のデータ
+	BODYDATA BodyData;
+
 	//車のモデル入れ
 	void SetMeshCar(int MeshNo);
 

@@ -764,7 +764,10 @@ struct S_OptionData
 // 車のエフェクトの更新に必要な処理
 struct s_CarEffectUpdateData
 {
-
+	CHARABASE CharaBase;
+	int CarNo;
+	D3DXMATRIX Mat,ScalMat;
+	D3DXVECTOR3 MoveVec;
 };
 
 

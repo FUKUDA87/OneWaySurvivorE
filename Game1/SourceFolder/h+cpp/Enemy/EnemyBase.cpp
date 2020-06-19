@@ -54,7 +54,7 @@ void C_EnemyBase::Draw3DAll(const D3DXVECTOR3 * CamPos)
 		}
 	}
 	Draw_Bullet(CamPos);
-	Draw_Effect(CamPos);
+	DrawCarEffect(CamPos);
 }
 
 void C_EnemyBase::Draw2DAll(void)

@@ -80,8 +80,7 @@ bool C_PlayerBase::UpdateAll(const D3DXMATRIX * CamMat)
 
 		Update_Gun();
 	}
-	Update_Effect();
-	Set_MoveVec_Effect(&brj.MoveVec);
+	UpdateCarEffect();
 
 	if (Dead()==true) {
 		if (Car.Base.Flg == true) {
@@ -111,7 +110,7 @@ void C_PlayerBase::Draw3DAll(const D3DXVECTOR3 *CameraPos)
 		Draw_Gun(CameraPos);
 	}
 	Draw_Bullet(CameraPos);
-	Draw_Effect(CameraPos);
+	DrawCarEffect(CameraPos);
 }
 
 void C_PlayerBase::Draw2DAll(void)
@@ -190,7 +189,7 @@ void C_PlayerBase::Init_Bullet(void)
 				D3DXMATRIX Mat = M_Gun[g]->Get_GunMouth_Mat(&i);
 				M_Bullet.push_back(Bullet_Manager.Get_Bullet(&b, &Mat,&Get_Gun_Ray_Data()));
 				M_Gun[g]->Bullet_Shot_Update(&i);
-				M_Effect.push_back(M_Gun[g]->Get_Bullet_Shot_Effect(&i));
+				//M_Effect.push_back(M_Gun[g]->Get_Bullet_Shot_Effect(&i));
 				S_SOUND_DATA Data;
 				Data.Sound_Type = Co_Sound_Type_2D;
 				Data.Sound_CategoryNo = Co_Sound_Category_Bullet;

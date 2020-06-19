@@ -1,14 +1,7 @@
 #pragma once
-#include"CarBulletManager.h"
+#include"CarBase.h"
 #include"../Effect/Car/EffectVectorCar.h"
 
-/*
-エフェクトのVector化
-削除
-追加
-更新
-表示
-*/
 /*
 車のエフェクトの欲しい情報
 HP
@@ -16,20 +9,20 @@ HP
 位置
 */
 
-class C_CarEffect :public C_CarBulletManager
+class C_CarEffect:public C_CarBase
 {
 public:
+	C_CarEffect();
 	~C_CarEffect();
-protected:
-
-private:
-	std::vector<c_EffectVectorCar*>m_EffectManager;// エフェクトの管理
 
 	// 表示
-	void DrawCarEffect(void);
+	void DrawCarEffect(const D3DXVECTOR3 *CameraPos);
 
 	// 更新処理
 	bool UpdateCarEffect(void);
+
+private:
+	std::vector<c_EffectVectorCar*>m_EffectManager;// エフェクトの管理
 
 	// 削除
 	void DeleteCarEffect(void);

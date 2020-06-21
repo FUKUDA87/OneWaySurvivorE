@@ -1,4 +1,4 @@
-#include "Sound_Manager_Base.h"
+#include "GameSoundManager.h"
 #include"SE/Sound_2D_Gun_1.h"
 #include"BGM/Sound_BGM_Manager.h"
 #include"SE/Warning/Sound_Warning_Manager.h"
@@ -6,23 +6,23 @@
 #include"SE/SE_Manager/Sound_Explosion_Manager.h"
 #include"SE/Bullet_Hit/Sound_Bullet_Hit_Manager.h"
 
-C_Sound_Manager_Base::~C_Sound_Manager_Base()
+c_GameSoundManager::~c_GameSoundManager()
 {
 	//Stop_Sound_All();
 
 	Delete_All();
 }
 
-bool C_Sound_Manager_Base::Update_Sound(const int *Volume)
+bool c_GameSoundManager::Update_Sound(const int *Volume)
 {
-	if (M_Sound_2D_Manager.size() < 1)return false;
+	if (m_SoundManager.size() < 1)return false;
 
 	bool Flg = false;
 
-	for (unsigned int s = 0; s < M_Sound_2D_Manager.size(); s++) {
-		if (M_Sound_2D_Manager[s]->Update(&M_CamPos,&Flg,Volume) == false) {
-			delete M_Sound_2D_Manager[s];
-			M_Sound_2D_Manager.erase(M_Sound_2D_Manager.begin() + s);
+	for (unsigned int s = 0; s < m_SoundManager.size(); s++) {
+		if (m_SoundManager[s]->Update(&M_CamPos,&Flg,Volume) == false) {
+			delete m_SoundManager[s];
+			m_SoundManager.erase(m_SoundManager.begin() + s);
 			s--;
 		}
 	}
@@ -30,7 +30,7 @@ bool C_Sound_Manager_Base::Update_Sound(const int *Volume)
 	return false;
 }
 
-bool C_Sound_Manager_Base::Set_Sound(const S_SOUND_DATA * Data, const int *Volume)
+bool c_GameSoundManager::Set_Sound(const S_SOUND_DATA * Data, const int *Volume)
 {
 	//サウンドの種類
 	switch (Data->Sound_CategoryNo)
@@ -58,7 +58,7 @@ bool C_Sound_Manager_Base::Set_Sound(const S_SOUND_DATA * Data, const int *Volum
 	return false;
 }
 
-bool C_Sound_Manager_Base::Judg_Warning(const S_SOUND_DATA * Data, const int *Volume)
+bool c_GameSoundManager::Judg_Warning(const S_SOUND_DATA * Data, const int *Volume)
 {
 	bool Flg = true;
 
@@ -66,12 +66,12 @@ bool C_Sound_Manager_Base::Judg_Warning(const S_SOUND_DATA * Data, const int *Vo
 
 	New_Sound_2D(Manager.Get_Warning(&Data->Sound_No));
 		
-	M_Sound_2D_Manager[M_Sound_2D_Manager.size() - 1]->Update(&M_CamPos, &Flg,Volume);
+	m_SoundManager[m_SoundManager.size() - 1]->Update(&M_CamPos, &Flg,Volume);
 
 	return true;
 }
 
-bool C_Sound_Manager_Base::Judg_Click(const S_SOUND_DATA * Data, const int *Volume)
+bool c_GameSoundManager::Judg_Click(const S_SOUND_DATA * Data, const int *Volume)
 {
 	bool Flg = true;
 
@@ -79,12 +79,12 @@ bool C_Sound_Manager_Base::Judg_Click(const S_SOUND_DATA * Data, const int *Volu
 
 	New_Sound_2D(Manager.Get_Click(&Data->Sound_No));
 
-	M_Sound_2D_Manager[M_Sound_2D_Manager.size() - 1]->Update(&M_CamPos, &Flg,Volume);
+	m_SoundManager[m_SoundManager.size() - 1]->Update(&M_CamPos, &Flg,Volume);
 
 	return true;
 }
 
-bool C_Sound_Manager_Base::Judg_Explosion_3D(const S_SOUND_DATA * Data, const int *Volume)
+bool c_GameSoundManager::Judg_Explosion_3D(const S_SOUND_DATA * Data, const int *Volume)
 {
 	bool Flg = true;
 
@@ -92,21 +92,21 @@ bool C_Sound_Manager_Base::Judg_Explosion_3D(const S_SOUND_DATA * Data, const in
 
 	New_Sound_2D(Manager.Get_Sound(Data));
 
-	M_Sound_2D_Manager[M_Sound_2D_Manager.size() - 1]->Update(&M_CamPos, &Flg,Volume);
+	m_SoundManager[m_SoundManager.size() - 1]->Update(&M_CamPos, &Flg,Volume);
 
 	return true;
 }
 
-void C_Sound_Manager_Base::New_Sound_Play(const int *Volume)
+void c_GameSoundManager::New_Sound_Play(const int *Volume)
 {
 	//音声を流すFlg
 	bool PlayFlg = true;
 
 	//音声を流す処理
-	M_Sound_2D_Manager[M_Sound_2D_Manager.size() - 1]->Update(&M_CamPos, &PlayFlg,Volume);
+	m_SoundManager[m_SoundManager.size() - 1]->Update(&M_CamPos, &PlayFlg,Volume);
 }
 
-void C_Sound_Manager_Base::Set_Sound(const int *Volume)
+void c_GameSoundManager::Set_Sound(const int *Volume)
 {
 	if (Get_Sound_Data_Num() < 1)return;
 
@@ -119,45 +119,45 @@ void C_Sound_Manager_Base::Set_Sound(const int *Volume)
 	}
 }
 
-void C_Sound_Manager_Base::Stop_Sound_All(void)
+void c_GameSoundManager::Stop_Sound_All(void)
 {
-	if (M_Sound_2D_Manager.size() < 1)return;
+	if (m_SoundManager.size() < 1)return;
 
-	for (auto&& s : M_Sound_2D_Manager) {
+	for (auto&& s : m_SoundManager) {
 		s->StopSound_All();
 	}
 }
 
-void C_Sound_Manager_Base::Stop_Sound_2_All(void)
+void c_GameSoundManager::Stop_Sound_2_All(void)
 {
-	if (M_Sound_2D_Manager.size() < 1)return;
+	if (m_SoundManager.size() < 1)return;
 
-	for (auto&& s : M_Sound_2D_Manager) {
+	for (auto&& s : m_SoundManager) {
 		s->Stop_Sound2();
 	}
 }
 
-void C_Sound_Manager_Base::Stop_Sound_2_All(const int CategoryNo)
+void c_GameSoundManager::Stop_Sound_2_All(const int CategoryNo)
 {
-	if (M_Sound_2D_Manager.size() < 1)return;
+	if (m_SoundManager.size() < 1)return;
 
-	for (auto&& s : M_Sound_2D_Manager) {
+	for (auto&& s : m_SoundManager) {
 		if (s->Get_Data().Sound_CategoryNo == CategoryNo) {
 			s->Stop_Sound2();
 		}
 	}
 }
 
-void C_Sound_Manager_Base::Strat_Sound_All(const int *Volume)
+void c_GameSoundManager::Strat_Sound_All(const int *Volume)
 {
-	if (M_Sound_2D_Manager.size() < 1)return;
+	if (m_SoundManager.size() < 1)return;
 
-	for (auto&& s : M_Sound_2D_Manager) {
+	for (auto&& s : m_SoundManager) {
 		s->Start_Sound(Volume);
 	}
 }
 
-void C_Sound_Manager_Base::Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos, const int *Volume)
+void c_GameSoundManager::Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos, const int *Volume)
 {
 	S_SOUND_DATA Data;
 
@@ -204,7 +204,7 @@ void C_Sound_Manager_Base::Set_Bullet_Hit_Sound(const int * BulletHit_Type, cons
 	C_Sound_Bullet_Hit_Manager Sound_Hit_Manager;
 
 	//インスタンス化
-	M_Sound_2D_Manager.push_back(Sound_Hit_Manager.Get_Sound(&Data));
+	m_SoundManager.push_back(Sound_Hit_Manager.Get_Sound(&Data));
 
 	//インスタンス化した音声を流す処理
 	New_Sound_Play(Volume);
@@ -212,7 +212,7 @@ void C_Sound_Manager_Base::Set_Bullet_Hit_Sound(const int * BulletHit_Type, cons
 	return;
 }
 
-void C_Sound_Manager_Base::Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos, const bool * DamageFlg,const int *Volume)
+void c_GameSoundManager::Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos, const bool * DamageFlg,const int *Volume)
 {
 	//被弾音の種類
 	int Type = *BulletHit_Type;
@@ -224,15 +224,15 @@ void C_Sound_Manager_Base::Set_Bullet_Hit_Sound(const int * BulletHit_Type, cons
 	Set_Bullet_Hit_Sound(&Type, Sound_Pos,Volume);
 }
 
-bool C_Sound_Manager_Base::Set_Sound_2D(const S_SOUND_DATA * Data, const int *Volume)
+bool c_GameSoundManager::Set_Sound_2D(const S_SOUND_DATA * Data, const int *Volume)
 {
-	if (M_Sound_2D_Manager.size() < 1)return false;
+	if (m_SoundManager.size() < 1)return false;
 
 	if (Data->Sound_Type != Co_Sound_Type_2D)return false;
 
 	bool Flg = true;
 
-	for (auto && s : M_Sound_2D_Manager) {
+	for (auto && s : m_SoundManager) {
 		if (Judg_Data(&s->Get_Data(), Data) == true) {
 			s->Update(&M_CamPos, &Flg,Volume);
 			return true;
@@ -242,12 +242,12 @@ bool C_Sound_Manager_Base::Set_Sound_2D(const S_SOUND_DATA * Data, const int *Vo
 	return false;
 }
 
-void C_Sound_Manager_Base::New_Sound_2D(C_Sound_Base_2D * Sound)
+void c_GameSoundManager::New_Sound_2D(C_Sound_Base_2D * Sound)
 {
-	M_Sound_2D_Manager.push_back(Sound);
+	m_SoundManager.push_back(Sound);
 }
 
-bool C_Sound_Manager_Base::Judg_Data2(const S_SOUND_DATA * M_Data, const S_SOUND_DATA * Set_Data)
+bool c_GameSoundManager::Judg_Data2(const S_SOUND_DATA * M_Data, const S_SOUND_DATA * Set_Data)
 {
 	if (M_Data->Sound_Type != Set_Data->Sound_Type)return false;
 
@@ -256,7 +256,7 @@ bool C_Sound_Manager_Base::Judg_Data2(const S_SOUND_DATA * M_Data, const S_SOUND
 	return true;
 }
 
-bool C_Sound_Manager_Base::Judg_Data(const S_SOUND_DATA * M_Data, const S_SOUND_DATA * Set_Data)
+bool c_GameSoundManager::Judg_Data(const S_SOUND_DATA * M_Data, const S_SOUND_DATA * Set_Data)
 {
 	if (M_Data->Sound_CategoryNo != Set_Data->Sound_CategoryNo)return false;
 
@@ -265,31 +265,31 @@ bool C_Sound_Manager_Base::Judg_Data(const S_SOUND_DATA * M_Data, const S_SOUND_
 	return true;
 }
 
-bool C_Sound_Manager_Base::Judg_Bullet(const S_SOUND_DATA * Data, const int *Volume)
+bool c_GameSoundManager::Judg_Bullet(const S_SOUND_DATA * Data, const int *Volume)
 {
 	bool Flg = true;
 
 	if (Data->Sound_No == 1) {
 		New_Sound_2D(new C_Sound_2D_Gun_1());
-		M_Sound_2D_Manager[M_Sound_2D_Manager.size() - 1]->Update(&M_CamPos, &Flg,Volume);
+		m_SoundManager[m_SoundManager.size() - 1]->Update(&M_CamPos, &Flg,Volume);
 	}
 
 	return true;
 }
 
-bool C_Sound_Manager_Base::Judg_BGM(const S_SOUND_DATA * Data, const int *Volume)
+bool c_GameSoundManager::Judg_BGM(const S_SOUND_DATA * Data, const int *Volume)
 {
 	bool Flg = true;
 
-	if (M_Sound_2D_Manager.size() > 0) {
-		for (unsigned int s = 0; s < M_Sound_2D_Manager.size();s++) {
-			if (M_Sound_2D_Manager[s]->Get_Data().Sound_CategoryNo == Co_Sound_Category_BGM) {
-				if (M_Sound_2D_Manager[s]->Get_Data().Sound_No == Data->Sound_No) {
+	if (m_SoundManager.size() > 0) {
+		for (unsigned int s = 0; s < m_SoundManager.size();s++) {
+			if (m_SoundManager[s]->Get_Data().Sound_CategoryNo == Co_Sound_Category_BGM) {
+				if (m_SoundManager[s]->Get_Data().Sound_No == Data->Sound_No) {
 					Flg = false;
 				}
 				else {
-					delete M_Sound_2D_Manager[s];
-					M_Sound_2D_Manager.erase(M_Sound_2D_Manager.begin() + s);
+					delete m_SoundManager[s];
+					m_SoundManager.erase(m_SoundManager.begin() + s);
 					s--;
 				}
 			}
@@ -298,12 +298,12 @@ bool C_Sound_Manager_Base::Judg_BGM(const S_SOUND_DATA * Data, const int *Volume
 	if (Flg == true) {
 		C_Sound_BGM_Manager Manager;
 		New_Sound_2D(Manager.Get_BGM(&Data->Sound_No));
-		M_Sound_2D_Manager[M_Sound_2D_Manager.size() - 1]->Update(&M_CamPos, &Flg,Volume);
+		m_SoundManager[m_SoundManager.size() - 1]->Update(&M_CamPos, &Flg,Volume);
 	}
 	return true;
 }
 
-bool C_Sound_Manager_Base::Update_Sound(const D3DXVECTOR3 * CamPos, const D3DXVECTOR3 * CamLook, const D3DXVECTOR3 * CamHead, const int *Volume)
+bool c_GameSoundManager::Update_Sound(const D3DXVECTOR3 * CamPos, const D3DXVECTOR3 * CamLook, const D3DXVECTOR3 * CamHead, const int *Volume)
 {
 	M_CamPos.Pos=*CamPos;
 	M_CamPos.Look = *CamLook;
@@ -314,7 +314,7 @@ bool C_Sound_Manager_Base::Update_Sound(const D3DXVECTOR3 * CamPos, const D3DXVE
 	return true;
 }
 
-bool C_Sound_Manager_Base::Judg_Sound(const S_SOUND_DATA * M_Data, const int *Volume)
+bool c_GameSoundManager::Judg_Sound(const S_SOUND_DATA * M_Data, const int *Volume)
 {
 	if (M_Data->Change_Type < 0)return false;
 
@@ -327,16 +327,16 @@ bool C_Sound_Manager_Base::Judg_Sound(const S_SOUND_DATA * M_Data, const int *Vo
 		Delete_All(M_Data,true);
 		break;
 	case Co_Sound_Start:
-		if (M_Sound_2D_Manager.size() > 0) {
-			for (unsigned int s = 0; s < M_Sound_2D_Manager.size(); s++) {
-				if (Judg_Data2(M_Data, &M_Sound_2D_Manager[s]->Get_Data()) == true) M_Sound_2D_Manager[s]->Start_Sound(Volume);
+		if (m_SoundManager.size() > 0) {
+			for (unsigned int s = 0; s < m_SoundManager.size(); s++) {
+				if (Judg_Data2(M_Data, &m_SoundManager[s]->Get_Data()) == true) m_SoundManager[s]->Start_Sound(Volume);
 			}
 		}
 		break;
 	case Co_Sound_Stop:
-		if (M_Sound_2D_Manager.size() > 0) {
-			for (unsigned int s = 0; s < M_Sound_2D_Manager.size(); s++) {
-				if (Judg_Data2(M_Data, &M_Sound_2D_Manager[s]->Get_Data()) == true) M_Sound_2D_Manager[s]->Stop_Sound2();
+		if (m_SoundManager.size() > 0) {
+			for (unsigned int s = 0; s < m_SoundManager.size(); s++) {
+				if (Judg_Data2(M_Data, &m_SoundManager[s]->Get_Data()) == true) m_SoundManager[s]->Stop_Sound2();
 			}
 		}
 		break;
@@ -362,36 +362,36 @@ bool C_Sound_Manager_Base::Judg_Sound(const S_SOUND_DATA * M_Data, const int *Vo
 	return true;
 }
 
-void C_Sound_Manager_Base::Delete_All(void)
+void c_GameSoundManager::Delete_All(void)
 {
-	if (M_Sound_2D_Manager.size() < 1)return;
+	if (m_SoundManager.size() < 1)return;
 
-	for (unsigned int s = 0; s < M_Sound_2D_Manager.size(); s++) {
-		delete M_Sound_2D_Manager[s];
-		M_Sound_2D_Manager.erase(M_Sound_2D_Manager.begin() + s);
+	for (unsigned int s = 0; s < m_SoundManager.size(); s++) {
+		delete m_SoundManager[s];
+		m_SoundManager.erase(m_SoundManager.begin() + s);
 		s--;
 	}
 }
 
-void C_Sound_Manager_Base::Sound_Delete(unsigned int * No)
+void c_GameSoundManager::Sound_Delete(unsigned int * No)
 {
-	M_Sound_2D_Manager[*No]->StopSound_All();
+	m_SoundManager[*No]->StopSound_All();
 
-	delete M_Sound_2D_Manager[*No];
-	M_Sound_2D_Manager.erase(M_Sound_2D_Manager.begin() + *No);
+	delete m_SoundManager[*No];
+	m_SoundManager.erase(m_SoundManager.begin() + *No);
 	*No -= 1;
 }
 
-bool C_Sound_Manager_Base::Delete_All(const S_SOUND_DATA * M_Data, const bool Flg)
+bool c_GameSoundManager::Delete_All(const S_SOUND_DATA * M_Data, const bool Flg)
 {
-	if (M_Sound_2D_Manager.size() < 1) return true;
+	if (m_SoundManager.size() < 1) return true;
 
 	bool L_Flg = true;
 
-	for (unsigned int s = 0; s < M_Sound_2D_Manager.size(); s++) {
-		if (Judg_Data2(M_Data, &M_Sound_2D_Manager[s]->Get_Data()) == true) {
+	for (unsigned int s = 0; s < m_SoundManager.size(); s++) {
+		if (Judg_Data2(M_Data, &m_SoundManager[s]->Get_Data()) == true) {
 			if (Flg != true) {
-				if (M_Data->Sound_No == M_Sound_2D_Manager[s]->Get_Data().Sound_No) {
+				if (M_Data->Sound_No == m_SoundManager[s]->Get_Data().Sound_No) {
 					L_Flg = false;
 				}
 				else {

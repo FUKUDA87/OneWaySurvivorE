@@ -5,6 +5,13 @@ C_CharaBase::C_CharaBase()
 	SetCharaBase(&GetInitCharaBase());
 
 	Body_DamageFlg = false;
+
+	Hpbar = new C_HpbarDraw();
+}
+
+C_CharaBase::~C_CharaBase()
+{
+	if (Hpbar != nullptr)delete Hpbar;
 }
 
 void C_CharaBase::SetCharaBase(const CHARABASE * CharaBaseS)

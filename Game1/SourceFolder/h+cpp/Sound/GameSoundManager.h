@@ -8,10 +8,10 @@
 #include<vector>
 
 //サウンドの流すクラス
-class C_Sound_Manager_Base:public C_Sound_Data_Vector {
+class c_GameSoundManager:public C_Sound_Data_Vector {
 public:
 	
-	~C_Sound_Manager_Base();
+	~c_GameSoundManager();
 
 
 	//音の更新
@@ -43,7 +43,7 @@ protected:
 
 	void New_Sound_2D(C_Sound_Base_2D* Sound);
 
-	std::vector<C_Sound_Base_2D*>M_Sound_2D_Manager;
+	std::vector<C_Sound_Base_2D*>m_SoundManager;
 
 private:
 	S_CAMERA_POS M_CamPos;

@@ -37,7 +37,7 @@ StageSelectScene::StageSelectScene()
 	key.Init();
 
 	//サウンドの初期化
-	if (M_C_Sound_Manager == nullptr)M_C_Sound_Manager = new C_Sound_Manager_Base();
+	if (M_C_Sound_Manager == nullptr)M_C_Sound_Manager = new c_GameSoundManager();
 
 
 	//選択モードの初期化の前に初期化

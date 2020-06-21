@@ -124,7 +124,7 @@ TitleScene::TitleScene()
 	key.Init();
 
 	//ƒTƒEƒ“ƒh‚Ì‰Šú‰»
-	if (M_C_Sound_Manager == nullptr)M_C_Sound_Manager = new C_Sound_Manager_Base();
+	if (M_C_Sound_Manager == nullptr)M_C_Sound_Manager = new c_GameSoundManager();
 
 	//’e­‚Ì‰Šú‰»
 	if (false) {

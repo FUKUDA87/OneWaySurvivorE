@@ -36,7 +36,7 @@
 #include"../Const/Const_Draw_Judg.h"
 #include"../Stage_Data/Car_Pop/Car_Pop_New.h"
 #include"../Ground/Stage_Ground/Ground_Pop_New.h"
-#include"../Sound/Sound_Manager_Base.h"
+#include"../Sound/GameSoundManager.h"
 #include"../Draw/Damage_Num/Damage_Move_A.h"
 #include"../Draw/Damage_Num/Damage_Move_B.h"
 #include"../Ground/Ground_Object.h"
@@ -375,7 +375,7 @@ private:
 	C_Ground_Pop_New* M_C_Ground_Pop;
 
 	//âπÇÃä«óù
-	C_Sound_Manager_Base* M_C_Sound_Manager;
+	c_GameSoundManager* M_C_Sound_Manager;
 
 	std::vector<C_Damage_Num_Base*>M_Damage_Num_Draw;
 

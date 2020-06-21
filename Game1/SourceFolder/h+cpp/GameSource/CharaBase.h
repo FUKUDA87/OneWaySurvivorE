@@ -1,13 +1,14 @@
 #pragma once
 #include<d3dx9.h>
 #include"Struct.h"
-#include"../Draw/Hp/HpBase.h"
 #include"../Const/Const_Damage.h"
 #include"../Sound/vector/Sound_Data_Vector.h"
+#include"../Draw/Hp/HpbarDraw.h"
 
 class C_CharaBase:public C_Sound_Data_Vector {
 public:
 	C_CharaBase();
+	~C_CharaBase();
 	
 	//éÄñSämîF(trueÇ≈éÄ)
 	virtual bool Dead(void);
@@ -32,6 +33,9 @@ public:
 	CHARABASE GetCharaBase(void);
 
 protected:
+
+	C_HpbarDraw *Hpbar;
+
 	//ç°ÇÃHpìnÇµ
 	int GetHp(void);
 

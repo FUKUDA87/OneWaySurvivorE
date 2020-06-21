@@ -1,8 +1,8 @@
 #include "Object_Base.h"
-#include"../../GameSource/XfileManager2.h"
+#include"../../MaterialManager/XFileManagerData.h"
 #include"../../GameSource/Judgment.h"
 
-extern XfileManager2 xfileManager2;
+extern XFileManagerData xfileManagerData;
 
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 
@@ -31,7 +31,7 @@ void C_Object_Base::Update_DrawMat(const D3DXMATRIX * Mat)
 
 void C_Object_Base::Mesh_Load(std::string FileName)
 {
-	M_Mesh = xfileManager2.GetXfile(FileName);
+	M_Mesh = xfileManagerData.GetMesh(FileName);
 
 	M_Base.Base.DrawFlg = true;
 

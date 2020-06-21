@@ -5,10 +5,9 @@
 #include"../Ground/Ground_Object.h"
 #include"../Draw3DBase/Draw3DManager/CarMeshManager.h"
 #include"../GameSource/CharaBase.h"
-#include"../Draw/Hp/Hp_New.h"
 #include"../GameSource/Const.h"
 
-class C_CarBase:public C_Hp_Draw_New {
+class C_CarBase:public C_CharaBase {
 public:
 	C_CarBase();
 

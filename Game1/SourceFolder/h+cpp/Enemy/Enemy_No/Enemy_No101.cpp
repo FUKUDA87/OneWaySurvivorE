@@ -45,7 +45,7 @@ C_Enemy_No101::C_Enemy_No101(const D3DXMATRIX * GroundMat, const float * TransX)
 	M_BossFlg = true;
 
 	//ƒ{ƒX‚ÌHp‚Ì•\¦‚Ìì¬
-	Hp_Init(new C_Hp2DEnemy(&D3DXVECTOR3(800.0f, 30.0f, 1.0f), &D3DXVECTOR3(1280.0f / 2.0f, 720.0f*0.1f, 0.0f)));
+	Hpbar->Init(new C_Hp2DEnemy(&D3DXVECTOR3(800.0f, 30.0f, 1.0f), &D3DXVECTOR3(1280.0f / 2.0f, 720.0f*0.1f, 0.0f)));
 
 	/*e‚Ì‰Šú‰»*/
 	C_Gun_Darw_Manager Manager;

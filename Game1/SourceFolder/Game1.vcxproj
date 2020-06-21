@@ -199,7 +199,7 @@
     <ClInclude Include="h+cpp\Draw\Hp\Hp2DPlayer.h" />
     <ClInclude Include="h+cpp\Draw\Hp\Hp3DEnemy.h" />
     <ClInclude Include="h+cpp\Draw\Hp\HpBase.h" />
-    <ClInclude Include="h+cpp\Draw\Hp\Hp_New.h" />
+    <ClInclude Include="h+cpp\Draw\Hp\HpbarDraw.h" />
     <ClInclude Include="h+cpp\Draw\Judg\Car_Parts_Judg_Ball.h" />
     <ClInclude Include="h+cpp\Draw\Judg\Car_Parts_Judg_Mesh.h" />
     <ClInclude Include="h+cpp\Draw\Polygon\Polygon_Judg.h" />
@@ -290,8 +290,6 @@
     <ClInclude Include="h+cpp\GameSource\StructClass\Struct_Init.h" />
     <ClInclude Include="h+cpp\GameSource\TexManagerBase.h" />
     <ClInclude Include="h+cpp\GameSource\wavread.h" />
-    <ClInclude Include="h+cpp\GameSource\XDraw.h" />
-    <ClInclude Include="h+cpp\GameSource\XfileManager2.h" />
     <ClInclude Include="h+cpp\Ground\ground.h" />
     <ClInclude Include="h+cpp\Ground\Ground_Object.h" />
     <ClInclude Include="h+cpp\Ground\Ground_Object_Parts\Bill_Object_1.h" />
@@ -344,6 +342,7 @@
     <ClInclude Include="h+cpp\Manager\DrawTextureManager\DrawTextureManager_Manager.h" />
     <ClInclude Include="h+cpp\MaterialManager\TextureManager.h" />
     <ClInclude Include="h+cpp\MaterialManager\XFileManager.h" />
+    <ClInclude Include="h+cpp\MaterialManager\XFileManagerData.h" />
     <ClInclude Include="h+cpp\Menu\Button\ButtonBase.h" />
     <ClInclude Include="h+cpp\Menu\Button\ButtonGameScene.h" />
     <ClInclude Include="h+cpp\Menu\Button\PlayButton.h" />
@@ -365,6 +364,7 @@
     <ClInclude Include="h+cpp\Move\Parts\Move_Parts_Base.h" />
     <ClInclude Include="h+cpp\Move\Parts\StopMove.h" />
     <ClInclude Include="h+cpp\Move\Parts\TireMove_No1.h" />
+    <ClInclude Include="h+cpp\Move\Speed\SpeedDeadStop.h" />
     <ClInclude Include="h+cpp\Move\Speed\Speed_Dead_A.h" />
     <ClInclude Include="h+cpp\Move\Speed\Speed_Stop_A.h" />
     <ClInclude Include="h+cpp\Player\Aiming.h" />
@@ -391,7 +391,7 @@
     <ClInclude Include="h+cpp\Sound\SE\Sound_2D_Gun_1.h" />
     <ClInclude Include="h+cpp\Sound\SE\Warning\Sound_Warning_Base.h" />
     <ClInclude Include="h+cpp\Sound\SE\Warning\Sound_Warning_Manager.h" />
-    <ClInclude Include="h+cpp\Sound\Sound_Manager_Base.h" />
+    <ClInclude Include="h+cpp\Sound\GameSoundManager.h" />
     <ClInclude Include="h+cpp\Sound\vector\Sound_Data_Base.h" />
     <ClInclude Include="h+cpp\Sound\vector\Sound_Data_Vector.h" />
     <ClInclude Include="h+cpp\StageParts\CarSelect.h" />
@@ -487,7 +487,7 @@
     <ClCompile Include="h+cpp\Draw\Hp\Hp2DPlayer.cpp" />
     <ClCompile Include="h+cpp\Draw\Hp\Hp3DEnemy.cpp" />
     <ClCompile Include="h+cpp\Draw\Hp\HpBase.cpp" />
-    <ClCompile Include="h+cpp\Draw\Hp\Hp_New.cpp" />
+    <ClCompile Include="h+cpp\Draw\Hp\HpbarDraw.cpp" />
     <ClCompile Include="h+cpp\Draw\Judg\Car_Parts_Judg_Ball.cpp" />
     <ClCompile Include="h+cpp\Draw\Judg\Car_Parts_Judg_Mesh.cpp" />
     <ClCompile Include="h+cpp\Draw\Polygon\Polygon_Judg.cpp" />
@@ -566,7 +566,6 @@
     <ClCompile Include="h+cpp\GameSource\StructClass\Parts_Set_Size.cpp" />
     <ClCompile Include="h+cpp\GameSource\StructClass\Struct_Init.cpp" />
     <ClCompile Include="h+cpp\GameSource\wavread.cpp" />
-    <ClCompile Include="h+cpp\GameSource\XfileManager2.cpp" />
     <ClCompile Include="h+cpp\Ground\ground.cpp" />
     <ClCompile Include="h+cpp\Ground\Ground_Object.cpp" />
     <ClCompile Include="h+cpp\Ground\Ground_Object_Parts\Bill_Object_1.cpp" />
@@ -616,6 +615,7 @@
     <ClCompile Include="h+cpp\Manager\DrawTextureManager\DrawTextureManager_Manager.cpp" />
     <ClCompile Include="h+cpp\MaterialManager\TextureManager.cpp" />
     <ClCompile Include="h+cpp\MaterialManager\XFileManager.cpp" />
+    <ClCompile Include="h+cpp\MaterialManager\XFileManagerData.cpp" />
     <ClCompile Include="h+cpp\Menu\Button\ButtonBase.cpp" />
     <ClCompile Include="h+cpp\Menu\Button\ButtonGameScene.cpp" />
     <ClCompile Include="h+cpp\Menu\Button\PlayButton.cpp" />
@@ -636,6 +636,7 @@
     <ClCompile Include="h+cpp\Move\Parts\Move_Parts_Base.cpp" />
     <ClCompile Include="h+cpp\Move\Parts\StopMove.cpp" />
     <ClCompile Include="h+cpp\Move\Parts\TireMove_No1.cpp" />
+    <ClCompile Include="h+cpp\Move\Speed\SpeedDeadStop.cpp" />
     <ClCompile Include="h+cpp\Move\Speed\Speed_Dead_A.cpp" />
     <ClCompile Include="h+cpp\Move\Speed\Speed_Stop_A.cpp" />
     <ClCompile Include="h+cpp\Player\Aiming.cpp" />
@@ -661,7 +662,7 @@
     <ClCompile Include="h+cpp\Sound\SE\Sound_2D_Gun_1.cpp" />
     <ClCompile Include="h+cpp\Sound\SE\Warning\Sound_Warning_Base.cpp" />
     <ClCompile Include="h+cpp\Sound\SE\Warning\Sound_Warning_Manager.cpp" />
-    <ClCompile Include="h+cpp\Sound\Sound_Manager_Base.cpp" />
+    <ClCompile Include="h+cpp\Sound\GameSoundManager.cpp" />
     <ClCompile Include="h+cpp\Sound\vector\Sound_Data_Base.cpp" />
     <ClCompile Include="h+cpp\Sound\vector\Sound_Data_Vector.cpp" />
     <ClCompile Include="h+cpp\StageParts\CarSelect.cpp" />

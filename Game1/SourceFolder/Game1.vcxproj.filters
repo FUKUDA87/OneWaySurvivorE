@@ -462,9 +462,6 @@
     <ClInclude Include="h+cpp\GameSource\wavread.h">
       <Filter>ソース ファイル\GameSource</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\GameSource\XDraw.h">
-      <Filter>ソース ファイル\GameSource</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Ground\Wall.h">
       <Filter>ソース ファイル\Ground</Filter>
     </ClInclude>
@@ -972,9 +969,6 @@
     <ClInclude Include="h+cpp\Stage_Data\Stage_1\Stage_No1_3.h">
       <Filter>ソース ファイル\Stage_Data\Stage_1</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\Draw\Hp\Hp_New.h">
-      <Filter>ソース ファイル\Draw\Hp</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Sound\vector\Sound_Data_Base.h">
       <Filter>ソース ファイル\Sound\vector</Filter>
     </ClInclude>
@@ -983,9 +977,6 @@
     </ClInclude>
     <ClInclude Include="h+cpp\Gun\Bullet\Const_Bullet_No.h">
       <Filter>ソース ファイル\Gun\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Sound\Sound_Manager_Base.h">
-      <Filter>ソース ファイル\Sound</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Sound\SE\Sound_2D_Gun_1.h">
       <Filter>ソース ファイル\Sound\SE</Filter>
@@ -1058,9 +1049,6 @@
     </ClInclude>
     <ClInclude Include="h+cpp\Ground\Ground_Object_Parts\Object_Base.h">
       <Filter>ソース ファイル\Ground\Ground_Object_Parts</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\GameSource\XfileManager2.h">
-      <Filter>ソース ファイル\GameSource</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Ground\Ground_Object_Parts\Bill_Object_1.h">
       <Filter>ソース ファイル\Ground\Ground_Object_Parts</Filter>
@@ -1223,6 +1211,18 @@
     </ClInclude>
     <ClInclude Include="h+cpp\MaterialManager\XFileManager.h">
       <Filter>ソース ファイル\MaterialManager</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\MaterialManager\XFileManagerData.h">
+      <Filter>ソース ファイル\MaterialManager</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Move\Speed\SpeedDeadStop.h">
+      <Filter>ソース ファイル\Move\Speed</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Hp\HpbarDraw.h">
+      <Filter>ソース ファイル\Draw\Hp</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Sound\GameSoundManager.h">
+      <Filter>ソース ファイル\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1817,17 +1817,11 @@
     <ClCompile Include="h+cpp\Stage_Data\Stage_1\Stage_No1_3.cpp">
       <Filter>ソース ファイル\Stage_Data\Stage_1</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\Draw\Hp\Hp_New.cpp">
-      <Filter>ソース ファイル\Draw\Hp</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\Sound\vector\Sound_Data_Base.cpp">
       <Filter>ソース ファイル\Sound\vector</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Sound\vector\Sound_Data_Vector.cpp">
       <Filter>ソース ファイル\Sound\vector</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Sound\Sound_Manager_Base.cpp">
-      <Filter>ソース ファイル\Sound</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Sound\SE\Sound_2D_Gun_1.cpp">
       <Filter>ソース ファイル\Sound\SE</Filter>
@@ -1897,9 +1891,6 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Ground\Ground_Object_Parts\Object_Base.cpp">
       <Filter>ソース ファイル\Ground\Ground_Object_Parts</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\GameSource\XfileManager2.cpp">
-      <Filter>ソース ファイル\GameSource</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Ground\Ground_Object_Parts\Bill_Object_1.cpp">
       <Filter>ソース ファイル\Ground\Ground_Object_Parts</Filter>
@@ -2029,6 +2020,18 @@
     </ClCompile>
     <ClCompile Include="h+cpp\MaterialManager\XFileManager.cpp">
       <Filter>ソース ファイル\MaterialManager</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\MaterialManager\XFileManagerData.cpp">
+      <Filter>ソース ファイル\MaterialManager</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Move\Speed\SpeedDeadStop.cpp">
+      <Filter>ソース ファイル\Move\Speed</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Hp\HpbarDraw.cpp">
+      <Filter>ソース ファイル\Draw\Hp</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Sound\GameSoundManager.cpp">
+      <Filter>ソース ファイル\Sound</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

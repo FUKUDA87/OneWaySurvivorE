@@ -1,7 +1,10 @@
 #pragma once
 #include"../../EnemyData/Base&Manager/EnemySpeed.h"
 
-class C_Speed_Stop_A :public C_Speed_Update {
+class c_SpeedDeadStop :public C_Speed_Update {
 public:
+	c_SpeedDeadStop();
 	C_Speed_Update* Update(int *Now_Speed, const s_AISpeedUpdateData * UpdateData);
+private:
+	bool InitFlg;  // ‰Šú‰»ƒtƒ‰ƒO
 };

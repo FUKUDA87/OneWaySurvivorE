@@ -1175,7 +1175,7 @@ void GameScene::AllNew(void)
 	M_C_Ground_Pop = new C_Ground_Pop_New(1);
 
 	//ƒTƒEƒ“ƒh‚Ì‰Šú‰»
-	if (M_C_Sound_Manager == nullptr)M_C_Sound_Manager = new C_Sound_Manager_Base();
+	if (M_C_Sound_Manager == nullptr)M_C_Sound_Manager = new c_GameSoundManager();
 
 	New_Sound(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 1, &Co_Sound_Change);
 

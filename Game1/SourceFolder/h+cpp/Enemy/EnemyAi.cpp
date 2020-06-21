@@ -48,14 +48,22 @@ bool C_EnemyAi::UpdateAi(const CHARAData * cd, const int * Data_Num, std::vector
 
 	}
 
-	//スピード管理
+	//スピード
 	C_Speed_Update *NextSpeed;
 
 	bool CarFlg = GetFlgCar(), L_StopFlg = Get_Stop_Flg();
 
+	// スピードの更新に必要な情報の作成
+	s_AISpeedUpdateData SpeedData;
+	SpeedData.AliveFlg = CarFlg;
+	SpeedData.NowGroNo = Car.Con.GroNum;
+	SpeedData.NowPhase = M_S_Gun_Update_Data.NowPhase;
+	SpeedData.TargetSpeed = cd[0].Speed;
+	SpeedData.TargetGroNo = cd[0].NowGround;
+	SpeedData.UpdateStopFlg = L_StopFlg;
 
-	NextSpeed = speed->Update(&Car.Con.NowSpeed, &CarFlg, &Car.Con.GroNum,
-		&M_S_Gun_Update_Data.NowPhase, &cd[0].Speed, &cd[0].NowGround, &L_StopFlg);
+	// スピードの更新
+	NextSpeed = speed->Update(&Car.Con.NowSpeed, &SpeedData);
 	if (NextSpeed != nullptr) {
 		delete speed;
 		speed = NextSpeed;

@@ -36,7 +36,7 @@ C_Enemy_No1::C_Enemy_No1(const D3DXMATRIX * GroundMat, const float * TransX):C_E
 	/*Ai‚Ì‰Šú‰»*/
 	m_Ai = new C_E_No1_Phase0();
 
-	Hp_Init(new C_Hp3D(&D3DXVECTOR2(0.7f, 0.1f)));
+	Hpbar->Init(new C_Hp3D(&D3DXVECTOR2(0.7f, 0.1f)));
 
 	/*e‚Ì‰Šú‰»*/
 	C_Gun_Darw_Manager Manager;

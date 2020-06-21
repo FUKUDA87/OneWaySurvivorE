@@ -768,5 +768,16 @@ struct s_CarEffectUpdateData
 	D3DXVECTOR3 MoveVec;
 };
 
+// AIのスピード更新情報
+struct s_AISpeedUpdateData
+{
+	bool AliveFlg;// 生存フラグ
+	unsigned int NowGroNo;// 今踏んでいる地面の番号
+	int NowPhase;// 現在のフェーズ
+	int TargetSpeed;// 他の車のスピード
+	unsigned int TargetGroNo;// 他の車のスピード
+	bool UpdateStopFlg;
+};
+
 
 //#endif // !Struct_H

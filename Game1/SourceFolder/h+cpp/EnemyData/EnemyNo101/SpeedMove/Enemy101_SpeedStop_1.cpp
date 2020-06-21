@@ -2,15 +2,12 @@
 #include"../../../Move/Speed/Speed_Dead_A.h"
 #include"Enemy101_Speed_2.h"
 
-
-C_Speed_Update * C_Enemy101_SpeedStop_1::Update(int * Now_Speed, const bool * Car_Flg,
-	const unsigned int * Now_GroNo, const int * Now_Phase, const int * Target_Speed,
-	const unsigned int * Target_GroNo, const bool * UpdateStop_Flg)
+C_Speed_Update * C_Enemy101_SpeedStop_1::Update(int * Now_Speed, const s_AISpeedUpdateData * UpdateData)
 {
 	//HP‚ªƒ[ƒ‚É‚È‚Á‚½Žž
-	if (*Car_Flg != true)return new Speed_Dead_A();
+	if (UpdateData->AliveFlg != true)return new Speed_Dead_A();
 
-	switch (*Now_Phase)
+	switch (UpdateData->NowPhase)
 	{
 	case 2:
 	case 4:

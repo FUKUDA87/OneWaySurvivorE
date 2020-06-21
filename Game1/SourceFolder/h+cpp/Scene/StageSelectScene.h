@@ -16,7 +16,7 @@
 #include"../StageParts/OkButton.h"
 #include"../StageParts/CarSet.h"
 #include"../StageParts/Stage_Room.h"
-#include"../Sound/Sound_Manager_Base.h"
+#include"../Sound/GameSoundManager.h"
 #include"../GameSource/Option/Option.h"
 
 
@@ -114,5 +114,5 @@ private:
 	void Set_GameScene_DebugFlg(void);
 
 	//
-	C_Sound_Manager_Base* M_C_Sound_Manager;
+	c_GameSoundManager* M_C_Sound_Manager;
 };

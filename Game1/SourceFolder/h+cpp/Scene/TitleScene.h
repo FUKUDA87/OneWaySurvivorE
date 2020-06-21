@@ -13,7 +13,7 @@
 #include"../Player/PlayerBody.h"
 #include"../Player/PlayerA.h"
 #include"../GameSource/Count.h"
-#include"../Sound/Sound_Manager_Base.h"
+#include"../Sound/GameSoundManager.h"
 #include"../Ground/Ground_Object.h"
 #include"../GameSource/Option/Option.h"
 
@@ -74,7 +74,7 @@ private:
 	//ゲームの終了
 	bool Game_End(void);
 
-	C_Sound_Manager_Base* M_C_Sound_Manager;
+	c_GameSoundManager* M_C_Sound_Manager;
 
 	//ステージ選択シーンへの移動
 	void Next_StageScene_Switch(void);

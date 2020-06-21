@@ -13,7 +13,6 @@ public:
 	
 	~c_GameSoundManager();
 
-
 	//音の更新
 	bool Update_Sound(const int *Volume);
 	bool Update_Sound(const D3DXVECTOR3 *CamPos, const D3DXVECTOR3 *CamLook, const D3DXVECTOR3 *CamHead, const int *Volume);
@@ -24,28 +23,35 @@ public:
 	//音の変更
 	void Set_Sound(const int *Volume);
 
-	void Stop_Sound_All(void);
+	void Reset(void);
 
-	void Stop_Sound_2_All(void);
+	void Stop(void);
 
-	void Stop_Sound_2_All(const int CategoryNo);
+	void Stop(const int CategoryNo);
 
-	void Strat_Sound_All(const int *Volume);
+	void Restart(const int *Volume);
 
 	//被弾音を流す処理
 	void Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos, const int *Volume);
 
 	//被弾した物体が無敵状態の判定と音を流す処理
 	void Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos,const bool *DamageFlg, const int *Volume);
-protected:
-	//2Dの検索
-	bool Set_Sound_2D(const S_SOUND_DATA* Data, const int *Volume);
 
-	void New_Sound_2D(C_Sound_Base_2D* Sound);
+	/*BGM*/
 
-	std::vector<C_Sound_Base_2D*>m_SoundManager;
+	// 再生開始
+	void BGMStart(void);
+	// 削除
+	void BGMDelete(void);
+	// 再生再開
+	void BGMRestart(const int *Volume);
+	// 停止
+	void BGMStop(void);
 
 private:
+	std::vector<C_Sound_Base_2D*>m_SoundManager;
+	C_Sound_Base_2D *m_BGMSound;
+
 	S_CAMERA_POS M_CamPos;
 
 	//情報の検索
@@ -81,6 +87,11 @@ private:
 
 	//最新の音声を流す処理
 	void New_Sound_Play(const int *Volume);
+
+	//2Dの検索
+	bool Set_Sound_2D(const S_SOUND_DATA* Data, const int *Volume);
+
+	void New_Sound_2D(C_Sound_Base_2D* Sound);
 
 
 };

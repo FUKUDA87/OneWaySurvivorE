@@ -63,7 +63,7 @@ StageSelectScene::StageSelectScene()
 StageSelectScene::~StageSelectScene()
 {
 	if (M_C_Sound_Manager != nullptr) {
-		M_C_Sound_Manager->Stop_Sound_All();
+		M_C_Sound_Manager->Reset();
 		delete M_C_Sound_Manager;
 	}
 

@@ -11,13 +11,17 @@ public:
 	C_Sound_Base_2D();
 	~C_Sound_Base_2D();
 
+	// XVˆ—
 	virtual bool Update(const S_CAMERA_POS* CamPos, const bool *PlayFlg,const int *Volume);
 
-	void StopSound_All(void);
+	// ‹È‚ğÅ‰‚É–ß‚·
+	void Reset(void);
 
-	virtual void Stop_Sound2(void);
+	// ’†’f
+	virtual void Stop(void);
 
-	virtual void Start_Sound(const int *Volume);
+	// ÄŠJ
+	virtual void Restart(const int *Volume);
 
 	S_SOUND_DATA Get_Data(void) {
 		return M_Sound_Data;

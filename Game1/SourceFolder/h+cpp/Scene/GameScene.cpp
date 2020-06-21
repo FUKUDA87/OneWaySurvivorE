@@ -951,7 +951,7 @@ bool GameScene::UpdateMenu(void)
 
 			S_OptionData l_OptionData = option->GetOptionData();
 
-			M_C_Sound_Manager->Strat_Sound_All(&l_OptionData.BGMVolume);
+			M_C_Sound_Manager->Restart(&l_OptionData.BGMVolume);
 		}
 
 		//ƒƒjƒ…[íœ
@@ -1270,7 +1270,7 @@ void GameScene::AllDelete(void)
 
 	//‰¹‚ÌŠÇ—‚Ìíœ
 	if (M_C_Sound_Manager != nullptr) {
-		M_C_Sound_Manager->Stop_Sound_All();
+		M_C_Sound_Manager->Reset();
 		delete M_C_Sound_Manager;
 	}
 
@@ -1482,7 +1482,7 @@ bool GameScene::Update_Game_Pause(void)
 				SetMenu(true, false, false);
 
 				if (M_C_Sound_Manager != nullptr) {
-					M_C_Sound_Manager->Stop_Sound_2_All();
+					M_C_Sound_Manager->Stop();
 				}
 
 				return false;

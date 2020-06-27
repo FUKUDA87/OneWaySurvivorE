@@ -16,6 +16,7 @@
 #include"../Sound/GameSoundManager.h"
 #include"../Ground/Ground_Object.h"
 #include"../GameSource/Option/Option.h"
+#include"../Ground/GroundManager.h"
 
 template<class T>
 inline void SafeRelease(T& lpAdd)
@@ -41,16 +42,7 @@ private:
 
 	Judg judg;  // 判定用の関数のクラス
 
-	//<地面
-	std::vector<C_Ground_Object*>ground;
-	Cou *cou;//bill
-	std::vector<Cou*>GroCou;
-	int GroType, GroKNum, *CurType, NowCur;
-	float AngGro;//カーブ時の角度
-	bool GroLenFlg;//長さの変更
-	//外灯表示用カウントダウン
-	C_Count *LightCount;
-
+	c_GroundManager *groundManager;
 
 	LPDIRECT3DTEXTURE9 Tex;
 	TitleTex *titleTex;

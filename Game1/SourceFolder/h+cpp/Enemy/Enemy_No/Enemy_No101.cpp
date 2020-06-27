@@ -1,6 +1,5 @@
 #include "Enemy_No101.h"
-#include"../../Draw/Hp/Hp2DEnemy.h"
-#include"../../Draw/Hp/Hp3DEnemy.h"
+#include"../../Draw/Hp/Enemy/Hpbar2DEnemy.h"
 #include"../../EnemyData/EnemyNo1/EnemyAi/Enemy_No1_Phase0.h"
 #include"../../Gun/GunDraw/Gun_Draw_Manager.h"
 #include"../../EnemyData/EnemyNo1/GunMove2/Enemy_No1_Gun_1_Lockon.h"
@@ -45,7 +44,7 @@ C_Enemy_No101::C_Enemy_No101(const D3DXMATRIX * GroundMat, const float * TransX)
 	M_BossFlg = true;
 
 	//ƒ{ƒX‚ÌHp‚Ì•\¦‚Ìì¬
-	Hpbar->Init(new C_Hp2DEnemy(&D3DXVECTOR3(800.0f, 30.0f, 1.0f), &D3DXVECTOR3(1280.0f / 2.0f, 720.0f*0.1f, 0.0f)));
+	Hpbar->Init(new c_Hpbar2DEnemy());
 
 	/*e‚Ì‰Šú‰»*/
 	C_Gun_Darw_Manager Manager;

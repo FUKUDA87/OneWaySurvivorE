@@ -24,7 +24,7 @@ C_EnemyAi::~C_EnemyAi()
 	}
 }
 
-bool C_EnemyAi::UpdateAi(const CHARAData * cd, const int * Data_Num, std::vector<C_Ground_Object*> ground, const bool * End_Flg)
+bool C_EnemyAi::UpdateAi(const CHARAData * cd, const int * Data_Num, const bool * End_Flg)
 {
 	if (*Data_Num <= 0) {
 		return false;

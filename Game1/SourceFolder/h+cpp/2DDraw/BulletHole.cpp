@@ -63,3 +63,4 @@ D3DXMATRIX C_BulletHole::GetDrawMatBulHol(void)
 	judg.ScalingMat(&BulHol.Base.Scal, &BulHol.Base.ScaPos);
 	return BulHol.Base.Scal*BulHol.Base.Mat;
 }
+

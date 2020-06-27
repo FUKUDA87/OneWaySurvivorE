@@ -25,7 +25,7 @@ struct TEXTURE {
 	int Width, Height;
 	int r, g, b;
 };
-struct S_TEXTURE_DATA {
+struct s_TEXTURE_DATA {
 	LPDIRECT3DTEXTURE9 Tex;
 	int Width, Height;
 };

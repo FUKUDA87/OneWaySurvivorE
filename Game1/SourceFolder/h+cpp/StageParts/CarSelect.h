@@ -2,7 +2,7 @@
 #include"../GameSource/Judgment.h"
 #include"../GameSource/Struct.h"
 #include<d3dx9.h>
-#include"../2DDraw/Num2DA.h"
+#include"../Draw/Num/2D/Num2DA.h"
 
 class C_CarSelect {
 public:

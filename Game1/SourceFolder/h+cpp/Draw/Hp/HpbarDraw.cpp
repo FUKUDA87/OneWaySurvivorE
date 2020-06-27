@@ -5,31 +5,31 @@ C_HpbarDraw::~C_HpbarDraw()
 	Delete();
 }
 
-void C_HpbarDraw::Init(C_HpBase * InitHpBase)
+void C_HpbarDraw::Init(C_HpbarBase * InitHpBase)
 {
 	Delete();
 
-	HpBase = InitHpBase;
+	HpbarBase = InitHpBase;
 }
 
 void C_HpbarDraw::Delete(void)
 {
-	if (HpBase == nullptr)return;
+	if (HpbarBase == nullptr)return;
 		
-	delete HpBase;
+	delete HpbarBase;
 	
 }
 
 void C_HpbarDraw::Draw2D(const CHARABASE * CharaBase)
 {
-	if (HpBase == nullptr)return;
+	if (HpbarBase == nullptr)return;
 
-	HpBase->Draw2DAll(&CharaBase->NowHp, &CharaBase->MaxHp);
+	HpbarBase->Draw2D(&CharaBase->NowHp, &CharaBase->MaxHp);
 }
 
-void C_HpbarDraw::Draw3D(const CHARABASE * CharaBase, const D3DXVECTOR3 * CamPos, const D3DXMATRIX * Mat, const float UpY)
+void C_HpbarDraw::Draw3D(const CHARABASE * CharaBase, const D3DXMATRIX * Mat, const D3DXVECTOR3 * CamPos, const D3DXVECTOR3 *ScalPos)
 {
-	if (HpBase == nullptr)return;
+	if (HpbarBase == nullptr)return;
 
-	HpBase->Draw3DAll(&CharaBase->NowHp, &CharaBase->MaxHp, CamPos, Mat, UpY);
+	HpbarBase->Draw3D(&CharaBase->NowHp, &CharaBase->MaxHp, Mat, CamPos,ScalPos);
 }

@@ -50,7 +50,7 @@ void C_EnemyBase::Draw3DAll(const D3DXVECTOR3 * CamPos)
 		//ボス以外なら表示
 		if (BodyData.CarBodyNo < 200) {
 			CHARABASE c = GetCharaBase();
-			Hpbar->Draw3D(&CharaBase,CamPos, &Car.Base.Mat, 1.5f*Car.Base.ScaPos.y);
+			Hpbar->Draw3D(&CharaBase, &Car.Base.Mat, CamPos, &Car.Base.ScaPos);
 		}
 	}
 	Draw_Bullet(CamPos);

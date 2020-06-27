@@ -1,6 +1,5 @@
 #pragma once
 #include"../Car/CarBulletManager.h"
-#include"../2DDraw/HpD.h"
 
 class C_PlayerBase :public C_CarBulletManager {
 public:
@@ -52,10 +51,8 @@ public:
 	//’e‚ÌoŒ»
 	void Init_Bullet(void);
 
-protected:
-
 private:
-	HpD *hp;
+	
 	FILE* fp;
 	//’n–Ê‚Ì•\¦”ÍˆÍ
 	float RadField;

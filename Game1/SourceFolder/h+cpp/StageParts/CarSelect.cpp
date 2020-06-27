@@ -93,7 +93,7 @@ void C_CarSelect::Draw2DAll(void)
 {
 	Draw2DCS();
 	if (Num != nullptr) {
-		Num->Draw2DNB(&No);
+		Num->Draw2D(&No);
 	}
 }
 

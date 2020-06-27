@@ -1,6 +1,7 @@
 #pragma once
 #include<d3dx9.h>
 #include"../Key/CMouse.h"
+#include"../Ground/GroundManager.h"
 
 #ifndef Camera_H
 #define Camera_H
@@ -62,6 +63,9 @@ public:
 		CamRotY = *RotY;
 	}
 	void RotXJudg(const D3DXMATRIX *PlayerMat);
+
+	// •Ç‚Æ“–‚½‚è”»’è
+	void WallJudg(const int *RadF,c_GroundManager *groundManager);
 
 protected:
 	D3DXVECTOR3 camPos, camLook;

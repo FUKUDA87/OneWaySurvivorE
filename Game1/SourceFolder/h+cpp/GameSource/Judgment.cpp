@@ -499,12 +499,9 @@ D3DXVECTOR3 Judg::DisPos(D3DXVECTOR3 PosA, D3DXVECTOR3 PosB, float Dis)
 
 D3DXVECTOR3 Judg::Billboard(const D3DXVECTOR3 * OldPos, const D3DXVECTOR3 * NowPos, const D3DXVECTOR3 * camPos, const float * Size)
 {
-	D3DXVECTOR3 LPos, EPos, CPos, cVec, eVec, vec;
-	LPos = *OldPos;
-	EPos = *NowPos;
-	CPos = *camPos;
-	cVec = CPos - LPos;
-	eVec = EPos - LPos;
+	D3DXVECTOR3 cVec, eVec, vec;
+	cVec = *camPos - *OldPos;
+	eVec = *NowPos - *OldPos;
 	D3DXVec3Normalize(&cVec, &cVec);
 	D3DXVec3Normalize(&eVec, &eVec);
 	D3DXVec3Cross(&vec, &cVec, &eVec);
@@ -878,6 +875,13 @@ bool Judg::ReverseFlg2(const bool * Flg)
 		return true;
 	}
 	return false;
+}
+
+int Judg::Reverse(const bool * Flg)
+{
+	if (*Flg == true)return -1;
+
+	return 1;
 }
 
 void Judg::ScalingMat(D3DXMATRIX * ScalMat, const D3DXVECTOR3 * Pos)

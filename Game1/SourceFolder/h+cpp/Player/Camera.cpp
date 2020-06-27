@@ -193,6 +193,56 @@ void Camera::RotXJudg(const D3DXMATRIX * PlayerMat)
 		D3DXMatrixRotationX(&CamRotX, D3DXToRadian((float)Ang));
 	}
 }
+void Camera::WallJudg(const int *RadF, c_GroundManager *groundManager)
+{
+	//レイ
+	D3DXVECTOR3 Vec = camPos - camLook;
+	//レイサイズ
+	float Dis, SmallDis = D3DXVec3Length(&Vec);
+	//レイの正規化
+	D3DXVec3Normalize(&Vec, &Vec);
+	//判定フラグ
+	bool JudgFlg = false;
+	//壁判定
+	//地面の存在確認
+	if (groundManager->GetGroundNum() > 0) {
+		//存在する
+		//地面の数
+		for (unsigned int gc = 0; gc < groundManager->GetGroundNum(); gc++) {
+
+			float L_Radius = (float)*RadF;
+
+			Judg judg;
+
+			//範囲絞り込み
+			if (judg.BallJudg(&camPos, &judg.SetPosM(&groundManager->GetGroundMat(&gc)), &L_Radius) != true) continue;
+
+			//範囲内
+			//左フラグ
+			bool LeftFlg = true;
+			//壁の数
+			for (int wc = 0; wc < groundManager->GetWallNum(&gc); wc++) {
+				//壁の内側を見せないための拡大行列
+				D3DXMATRIX ScalY;
+				D3DXMatrixScaling(&ScalY, 1.3f, 1.0f, 1.0f);
+				//レイ判定
+				if (judg.RayJudg_Mesh(&camLook, &Vec, &(ScalY*groundManager->GetWallDrawMat(&gc,&wc)), groundManager->GetWallColMesh(&gc,&wc), &Dis) == true) {
+					//当たった
+					if (Dis < SmallDis) {
+						SmallDis = Dis;
+						JudgFlg = true;
+					}
+				}
+			}
+
+		}
+	}
+	//判定終了
+	//カメラの位置セット
+	if (JudgFlg == true) {
+		SetCamPos(&(camLook + Vec * (SmallDis - 0.01f)));
+	}
+}
 bool Camera::UpdateQua(void)
 {
 	if (QuaFlg == true) {

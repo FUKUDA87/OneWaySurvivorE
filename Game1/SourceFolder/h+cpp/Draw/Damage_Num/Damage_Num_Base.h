@@ -36,7 +36,7 @@ private:
 	D3DXVECTOR3 M_Vec;
 
 	//ï\é¶ÇÃç\ë¢ëÃ
-	S_TEXTURE_DATA M_TEX;
+	s_TEXTURE_DATA M_TEX;
 
 	//ï\é¶Flg
 	bool M_Draw_Flg;

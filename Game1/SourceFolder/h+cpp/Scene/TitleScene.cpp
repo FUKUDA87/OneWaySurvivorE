@@ -4,7 +4,6 @@
 #include"../MaterialManager/TextureManager.h"
 #include"../MaterialManager/XfileManager.h"
 #include"StageSelectScene.h"
-#include"../GameSource/GameSystem.h"
 #include"../Fade/Fade.h"
 
 extern TextureManager textureManager;
@@ -35,80 +34,8 @@ TitleScene::TitleScene()
 
 	player = new C_PlayerA(&PlaBodData->GetPData());
 	//地面初期化--------------------------------------------------------
-	//外灯の間隔初期化
-	int CountInit = 4;
-	LightCount = new C_Count(&CountInit);
-
-	cou = new Cou(0, 5, 1, true, false);
-	int i = 0, z;
-	ground.push_back(new C_Ground_Object(&i));
-	z = (int)ground[0]->GetPosZ() * 2;
-	i = (int)player->GetRadF() / z;
-	delete ground[0];
-	ground.erase(ground.begin() + 0);
-	for (int n = i * (-1); n < i; n++) {
-		if (cou->CouJudge() == false) {
-			cou->SetNum(0);
-		}
-		if (cou->GetNum() == 1) {
-			ground.push_back(new C_Ground_Object(&n)); //ground.push_back(new BillBase(n));
-		}
-		else {
-			ground.push_back(new C_Ground_Object(&n));
-		}
-		//外灯の初期化
-		if (LightCount->Update() == true)ground[ground.size() - 1]->Init_Light();
-
-		cou->CouUpd();
-	}
-	for (unsigned int i = 0; i < ground.size(); i++) {
-
-		float L_Radius = player->GetRadF();
-
-		if (judg.BallJudg(&judg.SetPosM(&player->GetMatCar()), &judg.SetPosM(&ground[i]->GetMat()), &L_Radius) != false) continue;
-
-		delete ground[i];
-		ground.erase(ground.begin() + i);
-		i--;
-
-	}
-	int c = 2;
-	/*for (int i = (ground.size() - 1); i >= 0; i--) {
-		if (ground[i]->GetObjFlg() == true) {
-			if (c == 4) c = 1;
-			break;
-		}
-		else {
-			c++;
-		}
-	}*/
-	cou->SetNum(c);
-	//カーブの形成初期化
-	GroKNum = 4;
-	GroType = 1;
-	CurType = new int[GroKNum];
-	CurType[0] = CurType[3] = 1;
-	CurType[1] = CurType[2] = 2;
-	NowCur = 0;
-	//playerの位置調整
-	unsigned int num;
-	float Dis;
-	if (ground.size() > 100) {
-		i = (int)(ground.size() - ground.size() / 10);
-		D3DXMATRIX gMat, Trans;
-		gMat = ground[i]->GetWay().StartMat;
-		D3DXMatrixTranslation(&Trans, 0.0f, 0.1f, 0.0f);
-
-		D3DXMATRIX TmpMat= Trans * gMat;
-		player->SetMatCar(&TmpMat);
-		player->SetRadF(player->GetRadF() / 2.0f);
-	}
-
-	// 地面と当たり判定
-	C_GameSystem gameSystem;
-	if (gameSystem.JudgNowGround(&num, &Dis, player->GetMatCar(), ground) == true) {
-		player->SetGroNum(&num);//地面の取得
-	}
+	
+	groundManager = new c_GroundManager(player);
 
 	//---------------------------------------------------------------------
 	//マウスの初期化
@@ -148,10 +75,8 @@ TitleScene::TitleScene()
 		BulHol.push_back(new C_BulletHole(&D3DXVECTOR3(1100.0f, 100.0f, 0.0f), &AngZ, &D3DXVECTOR3(2.1f, 2.1f, 1.0f), 2));
 	}
 
-	int No = 2;
-	C_Struct_Init C_S_Init;
-	M_C_Sound_Manager->New_Sound_Data(&C_S_Init.Get_S_SOUND_DATA(
-		&Co_Sound_Type_2D, &Co_Sound_Category_BGM, &No, &Co_Sound_Change));
+	int No = 2,Volume= option->GetOptionData().BGMVolume;
+	M_C_Sound_Manager->BGMStart(&No, &Volume);
 
 }
 TitleScene::~TitleScene()
@@ -163,19 +88,7 @@ TitleScene::~TitleScene()
 	delete camera;
 	delete sky;
 	//地面の削除
-	for (unsigned int i = 0; i < ground.size(); i++) {
-		delete ground[i];
-		ground.erase(ground.begin() + i); i--;
-	}
-	delete[] CurType;
-	if (GroCou.size() > 0) {
-		for (unsigned int g = 0; g < GroCou.size(); g++) {
-			delete GroCou[g];
-			GroCou.erase(GroCou.begin() + g);
-			g--;
-		}
-	}
-	delete cou;
+	if (groundManager != nullptr)delete groundManager;
 	//弾痕削除
 	if (BulHol.size() > 0) {
 		for (unsigned int b = 0; b < BulHol.size(); b++) {
@@ -188,11 +101,6 @@ TitleScene::~TitleScene()
 	delete mouse;
 
 	delete PlaBodData;
-
-	//ライトのカウントダウンの削除
-	if (LightCount != nullptr) {
-		delete LightCount;
-	}
 
 	if (M_C_Sound_Manager != nullptr) {
 		M_C_Sound_Manager->Reset();
@@ -211,9 +119,9 @@ bool TitleScene::Update(void)
 
 		S_OptionData l_OptionData = option->GetOptionData();
 
-		M_C_Sound_Manager->Set_Sound(&l_OptionData.BGMVolume);
+		M_C_Sound_Manager->New(&l_OptionData.BGMVolume);
 
-		M_C_Sound_Manager->Update_Sound(&l_OptionData.BGMVolume);
+		M_C_Sound_Manager->Update(&l_OptionData.BGMVolume);
 	}
 
 	Game_End();
@@ -246,104 +154,14 @@ bool TitleScene::Update(void)
 	//================================================================================
 	//地面
 	//================================================================================
-	if (ground.size() > 0) {
-		for (unsigned int i = 0; i < ground.size(); i++) {
-			ground[i]->SuperUpdate();
-			//無限の道の削除と作成
-			if (player->GetCon().GroNum > i) {
-
-				float L_Radius = player->GetRadF();
-
-				if (judg.BallJudg(&judg.SetPosM(&player->GetMatCar()), &judg.SetPosM(&ground[i]->GetMat()), &L_Radius) == false) {
-					if (ground[i]->GetFlg() == true) {
-						delete ground[i];
-						ground.erase(ground.begin() + i);
-						i--;
-
-						bool Flg = true;
-						if (Flg == true) {
-							D3DXMATRIX Mat[2];
-							Mat[0] = ground[ground.size() - 1]->GetMat0();
-							Mat[1] = ground[ground.size() - 1]->GetMat1();
-							int StopNum;
-							if (GroCou.size() == 0) {//地面の形成
-								if (GroType == 0) {
-									GroType = CurType[NowCur];
-									NowCur++;
-									if (NowCur == GroKNum)NowCur = 0;
-								}
-								else {
-									GroType = 0;
-									cou->SetNum(2);
-								}
-								if (GroType == 0)StopNum = rand() % 20 + 40;
-								if (GroType == 1)StopNum = 5;
-								if (GroType == 2)StopNum = 5;
-								if (GroType != 0) {
-									AngGro = 90.0f / 5.0f;
-									GroLenFlg = false;
-								}
-								else {
-									GroLenFlg = true;
-								}
-								GroCou.push_back(new Cou(0, StopNum, 1, true, false));
-							}
-							if (cou->CouJudge() == false) {
-								cou->SetNum(0);
-							}
-							S_GROUND_INIT_DATA Init_Data;
-							Init_Data.gType = GroType;
-							Init_Data.Ang = AngGro;
-							Init_Data.Length = 5.0f;
-							Init_Data.LengthAuto = GroLenFlg;
-							if ((cou->GetNum() == 1) && (GroType == 0)) {
-								ground.push_back(new C_Ground_Object(&Mat[1], &Mat[0],&Init_Data)); 
-							}
-							else {
-								ground.push_back(new C_Ground_Object(&Mat[1], &Mat[0], &Init_Data));
-							}
-
-							//外灯の初期化
-							if (LightCount->Update() == true)ground[ground.size() - 1]->Init_Light();
-
-							if (GroCou.size() > 0) {
-								for (unsigned int g = 0; g < GroCou.size(); g++) {
-									GroCou[g]->CouUpd();
-									if (GroCou[g]->CouJudge() == false) {
-										for (unsigned int g = 0; g < GroCou.size(); g++) {
-											delete GroCou[g];
-											GroCou.erase(GroCou.begin() + g);
-											g--;
-										}
-										if (GroCou.size() <= 0) {
-											break;
-										}
-									}
-								}
-							}
-							if (GroType == 0) {
-								cou->CouUpd();
-							}
-						}
-					}
-				}
-				else {
-					//新品の道を判定できるようにする
-					if (ground[i]->GetFlg() == false) {
-						ground[i]->SetFlg(true);
-					}
-				}
-			}
-		}
-	}
+	if (groundManager != nullptr)groundManager->Update(player);
 	// プレイヤーと地面判定
 	float Dis;
 	unsigned int num;
-	C_GameSystem gameSystem;
-	if (gameSystem.JudgNowGround(&num, &Dis, player->GetMatCar(), ground) == true) {
+	if (groundManager->JudgNowGround(&num, &Dis, player->GetMatCar()) == true) {
 		player->SetGroNum(&num);//地面の取得
 	}
-	player->UpdateCarFM(ground);
+	player->UpdateCarFM(groundManager->GetGround());
 	D3DXMATRIX Mat = player->GetMatCar();
 	judg.SetMatP(&Mat, &D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	player->UpdateAll(&Mat);
@@ -384,9 +202,7 @@ void TitleScene::Render2D(void)
 
 void TitleScene::Render3D(void)
 {
-	for (unsigned int i = 0; i < ground.size(); i++) {
-		ground[i]->SuperDraw();
-	}
+	if (groundManager != nullptr)groundManager->Draw3D();
 	player->Draw3DAll(&camera->GetPos());
 	sky->Draw();
 }
@@ -442,8 +258,8 @@ void TitleScene::Next_StageScene_Switch(void)
 	fade.StartFadeout();
 
 	//BGMの削除
-	M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_BGM, 1, &Co_Sound_Delete);
+	M_C_Sound_Manager->BGMDelete();
 
 	//クリック音
-	M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_Click, 1, &Co_Sound_New);
+	M_C_Sound_Manager->New_Sound_Data(&Co_Sound_Type_2D, &Co_Sound_Category_Click, 1, &Co_SoundNew);
 }

@@ -1,6 +1,5 @@
 #include "Enemy_No1.h"
-#include"../../Draw/Hp/Hp2DEnemy.h"
-#include"../../Draw/Hp/Hp3DEnemy.h"
+#include"../../Draw/Hp/Enemy/Hpbar3DEnemy.h"
 #include"../../EnemyData/EnemyNo1/EnemyAi/Enemy_No1_Phase0.h"
 #include"../../Gun/GunDraw/Gun_Draw_Manager.h"
 #include"../../EnemyData/EnemyNo1/GunMove2/Enemy_No1_Gun_1_Lockon.h"
@@ -36,7 +35,7 @@ C_Enemy_No1::C_Enemy_No1(const D3DXMATRIX * GroundMat, const float * TransX):C_E
 	/*Ai‚Ì‰Šú‰»*/
 	m_Ai = new C_E_No1_Phase0();
 
-	Hpbar->Init(new C_Hp3D(&D3DXVECTOR2(0.7f, 0.1f)));
+	Hpbar->Init(new c_Hpbar3DEnemy());
 
 	/*e‚Ì‰Šú‰»*/
 	C_Gun_Darw_Manager Manager;

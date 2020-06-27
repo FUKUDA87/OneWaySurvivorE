@@ -9,7 +9,7 @@ public:
 	C_EnemyAi();
 	~C_EnemyAi();
 	//思考
-	bool UpdateAi(const CHARAData *cd,const int *Data_Num, std::vector<C_Ground_Object*>ground,const bool *End_Flg);
+	bool UpdateAi(const CHARAData *cd,const int *Data_Num,const bool *End_Flg);
 	//アップデート
 	bool UpdateAll(std::vector<C_Ground_Object*>ground);
 

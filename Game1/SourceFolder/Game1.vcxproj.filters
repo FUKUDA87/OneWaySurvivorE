@@ -106,9 +106,6 @@
     <Filter Include="ソース ファイル\Draw_3D">
       <UniqueIdentifier>{fe392756-b091-4612-ad5f-41dd373a720e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Draw_3D\Effect">
-      <UniqueIdentifier>{032e0108-d189-4fd8-94f9-e84b6710a182}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Draw\DrawBase">
       <UniqueIdentifier>{eee0bc81-99a9-4a06-a803-7b91c45d38d0}</UniqueIdentifier>
     </Filter>
@@ -322,6 +319,27 @@
     <Filter Include="ソース ファイル\MaterialManager">
       <UniqueIdentifier>{ef7c5a07-6eb5-4019-8c9c-88021c622d91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Effect\3D\Explosion">
+      <UniqueIdentifier>{cdc02575-9d22-4e2b-b234-ffa39afd1816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Effect\3D\Spark">
+      <UniqueIdentifier>{815aabd7-5a29-4b65-b712-e4fefe7908fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Effect\3D\BulletHole">
+      <UniqueIdentifier>{749e6720-0191-4877-aff9-e61dadd42054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\Hp\Player">
+      <UniqueIdentifier>{271c4bb1-affb-4d8a-96aa-f7bac46c17f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\Hp\Enemy">
+      <UniqueIdentifier>{5931ad51-1534-4acd-b24a-bd282596bca4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\Num">
+      <UniqueIdentifier>{e5babd2f-19c6-4bf3-b867-bafe8f17b2ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\Num\2D">
+      <UniqueIdentifier>{568a4794-d977-48d3-bf38-396cbce5de00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h+cpp\2DDraw\Window.h">
@@ -339,15 +357,6 @@
     <ClInclude Include="h+cpp\2DDraw\modoru.h">
       <Filter>ソース ファイル\2DDraw</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\2DDraw\Num2DA.h">
-      <Filter>ソース ファイル\2DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\2DDraw\Num2DBase.h">
-      <Filter>ソース ファイル\2DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\2DDraw\NumA.h">
-      <Filter>ソース ファイル\2DDraw</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\2DDraw\Pause.h">
       <Filter>ソース ファイル\2DDraw</Filter>
     </ClInclude>
@@ -356,18 +365,6 @@
     </ClInclude>
     <ClInclude Include="h+cpp\2DDraw\Warning.h">
       <Filter>ソース ファイル\2DDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Draw\Hp\HpBase.h">
-      <Filter>ソース ファイル\Draw\Hp</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Draw\Hp\Hp2DEnemy.h">
-      <Filter>ソース ファイル\Draw\Hp</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Draw\Hp\Hp2DPlayer.h">
-      <Filter>ソース ファイル\Draw\Hp</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\Draw\Hp\Hp3DEnemy.h">
-      <Filter>ソース ファイル\Draw\Hp</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Draw3DBase\BaseDataManager\MeshDataManagerBase.h">
       <Filter>ソース ファイル\Draw3DBase\BaseDataManager</Filter>
@@ -587,33 +584,6 @@
     </ClInclude>
     <ClInclude Include="h+cpp\3DDraw\Ball.h">
       <Filter>ソース ファイル\Draw_3D</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Effect_3D\Spark2.h">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Effect_3D\BulletGround.h">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Effect_3D\BulletHole3D.h">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Effect_3D\Explosion.h">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Effect_3D\Smog.h">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Effect_3D\Smoke2.h">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Effect_3D\SpaekDamage.h">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Effect_3D\Spark.h">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\3DDraw\Effect_3D\SparkBase.h">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Draw\DrawBase\DrawBase.h">
       <Filter>ソース ファイル\Draw\DrawBase</Filter>
@@ -1113,9 +1083,6 @@
     <ClInclude Include="h+cpp\Const\Const_Wave_Type.h">
       <Filter>ソース ファイル\Const</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\GameSource\GameSystem.h">
-      <Filter>ソース ファイル\GameSource</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Fade\Fade.h">
       <Filter>ソース ファイル\Fade</Filter>
     </ClInclude>
@@ -1224,6 +1191,54 @@
     <ClInclude Include="h+cpp\Sound\GameSoundManager.h">
       <Filter>ソース ファイル\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="h+cpp\Ground\GroundManager.h">
+      <Filter>ソース ファイル\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Effect\3D\BulletHole\BulletHole3D.h">
+      <Filter>ソース ファイル\Effect\3D\BulletHole</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Effect\3D\Explosion\Explosion3D.h">
+      <Filter>ソース ファイル\Effect\3D\Explosion</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Effect\3D\Spark\BulletGround.h">
+      <Filter>ソース ファイル\Effect\3D\Spark</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Effect\3D\Spark\Spark.h">
+      <Filter>ソース ファイル\Effect\3D\Spark</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Effect\3D\Spark\Spark2.h">
+      <Filter>ソース ファイル\Effect\3D\Spark</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Effect\3D\Spark\SparkDamege.h">
+      <Filter>ソース ファイル\Effect\3D\Spark</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Hp\HpbarBase.h">
+      <Filter>ソース ファイル\Draw\Hp</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Hp\Hpbar2D.h">
+      <Filter>ソース ファイル\Draw\Hp</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Hp\Hpbar3D.h">
+      <Filter>ソース ファイル\Draw\Hp</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Hp\Enemy\Hpbar2DEnemy.h">
+      <Filter>ソース ファイル\Draw\Hp\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Hp\Player\Hpbar2DPlayer.h">
+      <Filter>ソース ファイル\Draw\Hp\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Hp\Enemy\Hpbar3DEnemy.h">
+      <Filter>ソース ファイル\Draw\Hp\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Num\2D\Num2DA.h">
+      <Filter>ソース ファイル\Draw\Num\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Num\2D\Num2DBase.h">
+      <Filter>ソース ファイル\Draw\Num\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Num\2D\NumA.h">
+      <Filter>ソース ファイル\Draw\Num\2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="h+cpp\2DDraw\BulletHole.cpp">
@@ -1238,15 +1253,6 @@
     <ClCompile Include="h+cpp\2DDraw\modoru.cpp">
       <Filter>ソース ファイル\2DDraw</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\2DDraw\Num2DA.cpp">
-      <Filter>ソース ファイル\2DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\2DDraw\Num2DBase.cpp">
-      <Filter>ソース ファイル\2DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\2DDraw\NumA.cpp">
-      <Filter>ソース ファイル\2DDraw</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\2DDraw\Pause.cpp">
       <Filter>ソース ファイル\2DDraw</Filter>
     </ClCompile>
@@ -1258,18 +1264,6 @@
     </ClCompile>
     <ClCompile Include="h+cpp\2DDraw\Window.cpp">
       <Filter>ソース ファイル\2DDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Draw\Hp\Hp2DEnemy.cpp">
-      <Filter>ソース ファイル\Draw\Hp</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Draw\Hp\Hp2DPlayer.cpp">
-      <Filter>ソース ファイル\Draw\Hp</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Draw\Hp\Hp3DEnemy.cpp">
-      <Filter>ソース ファイル\Draw\Hp</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\Draw\Hp\HpBase.cpp">
-      <Filter>ソース ファイル\Draw\Hp</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Draw3DBase\BaseDataManager\CarDataManager.cpp">
       <Filter>ソース ファイル\Draw3DBase\BaseDataManager</Filter>
@@ -1453,33 +1447,6 @@
     </ClCompile>
     <ClCompile Include="h+cpp\3DDraw\Spear.cpp">
       <Filter>ソース ファイル\Draw_3D</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Effect_3D\BulletGround.cpp">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Effect_3D\BulletHole3D.cpp">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Effect_3D\Explosion.cpp">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Effect_3D\Smog.cpp">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Effect_3D\Smoke2.cpp">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Effect_3D\SpaekDamage.cpp">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Effect_3D\Spark.cpp">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Effect_3D\Spark2.cpp">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\3DDraw\Effect_3D\SparkBase.cpp">
-      <Filter>ソース ファイル\Draw_3D\Effect</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Draw\DrawBase\DrawBase.cpp">
       <Filter>ソース ファイル\Draw\DrawBase</Filter>
@@ -1928,9 +1895,6 @@
     <ClCompile Include="h+cpp\EnemyData\EnemyNo101\SpeedMove\Enemy101_Speed_3.cpp">
       <Filter>ソース ファイル\EnemyData\EnemyNo101\SpeedMove</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\GameSource\GameSystem.cpp">
-      <Filter>ソース ファイル\GameSource</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\Fade\Fade.cpp">
       <Filter>ソース ファイル\Fade</Filter>
     </ClCompile>
@@ -2032,6 +1996,54 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Sound\GameSoundManager.cpp">
       <Filter>ソース ファイル\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Ground\GroundManager.cpp">
+      <Filter>ソース ファイル\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Effect\3D\BulletHole\BulletHole3D.cpp">
+      <Filter>ソース ファイル\Effect\3D\BulletHole</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Effect\3D\Explosion\Explosion3D.cpp">
+      <Filter>ソース ファイル\Effect\3D\Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Effect\3D\Spark\BulletGround.cpp">
+      <Filter>ソース ファイル\Effect\3D\Spark</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Effect\3D\Spark\Spark.cpp">
+      <Filter>ソース ファイル\Effect\3D\Spark</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Effect\3D\Spark\Spark2.cpp">
+      <Filter>ソース ファイル\Effect\3D\Spark</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Effect\3D\Spark\SparkDamege.cpp">
+      <Filter>ソース ファイル\Effect\3D\Spark</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Hp\HpbarBase.cpp">
+      <Filter>ソース ファイル\Draw\Hp</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Hp\Hpbar2D.cpp">
+      <Filter>ソース ファイル\Draw\Hp</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Hp\Hpbar3D.cpp">
+      <Filter>ソース ファイル\Draw\Hp</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Hp\Enemy\Hpbar2DEnemy.cpp">
+      <Filter>ソース ファイル\Draw\Hp\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Hp\Player\Hpbar2DPlayer.cpp">
+      <Filter>ソース ファイル\Draw\Hp\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Hp\Enemy\Hpbar3DEnemy.cpp">
+      <Filter>ソース ファイル\Draw\Hp\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Num\2D\Num2DA.cpp">
+      <Filter>ソース ファイル\Draw\Num\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Num\2D\Num2DBase.cpp">
+      <Filter>ソース ファイル\Draw\Num\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Num\2D\NumA.cpp">
+      <Filter>ソース ファイル\Draw\Num\2D</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

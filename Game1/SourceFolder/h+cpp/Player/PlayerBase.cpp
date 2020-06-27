@@ -1,5 +1,6 @@
 #include "PlayerBase.h"
 #include"../Draw/Bullet/Bullet_DrawManager.h"
+#include"../Draw/Hp/Player/Hpbar2DPlayer.h"
 
 C_PlayerBase::C_PlayerBase()
 {
@@ -37,7 +38,7 @@ void C_PlayerBase::InitPlayer(void)
 	RadField = 1000.0f*0.55f;
 	Car.Con.GroNum = 0;
 	//ball = new Ball(player.Base.BodRad);//(player.Base.rad);
-	hp = new HpD();
+	Hpbar->Init(new c_Hpbar2DPlayer());
 	Car.Con.PEFlg = false;
 
 	/*D3DXMATRIX spS, spE;
@@ -55,8 +56,6 @@ void C_PlayerBase::InitPlayer(void)
 
 bool C_PlayerBase::UpdatePlayer(void)
 {
-	CHARABASE c = GetCharaBase();
-	hp->UpdateAll(c.MaxHp, c.NowHp, true);
 	return true;
 }
 
@@ -115,7 +114,7 @@ void C_PlayerBase::Draw3DAll(const D3DXVECTOR3 *CameraPos)
 
 void C_PlayerBase::Draw2DAll(void)
 {
-	hp->DrawAll();
+	Hpbar->Draw2D(&CharaBase);
 }
 
 void C_PlayerBase::SetRodAngY(float Inc, bool KeyFlg)
@@ -194,7 +193,7 @@ void C_PlayerBase::Init_Bullet(void)
 				Data.Sound_Type = Co_Sound_Type_2D;
 				Data.Sound_CategoryNo = Co_Sound_Category_Bullet;
 				Data.Sound_No = 1;
-				Data.Change_Type = Co_Sound_New;
+				Data.Change_Type = Co_SoundNew;
 				New_Sound_Data(&Data);
 			}
 		}

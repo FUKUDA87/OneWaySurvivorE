@@ -143,6 +143,7 @@ public:
 	void ReverseFlg(bool *Flg);
 	//リバースFlg
 	bool ReverseFlg2(const bool *Flg);
+	int Reverse(const bool *Flg);
 	//スケイリングMat入れ
 	void ScalingMat(D3DXMATRIX *ScalMat, const D3DXVECTOR3 *Pos);
 	D3DXMATRIX Get_ScalingMat(const D3DXVECTOR3 *Pos);

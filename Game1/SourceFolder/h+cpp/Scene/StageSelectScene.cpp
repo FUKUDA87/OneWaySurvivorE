@@ -53,10 +53,8 @@ StageSelectScene::StageSelectScene()
 
 	GameScene_DebugFlg = false;
 
-	int No = 3;
-	C_Struct_Init C_S_Init;
-	M_C_Sound_Manager->New_Sound_Data(&C_S_Init.Get_S_SOUND_DATA(
-		&Co_Sound_Type_2D, &Co_Sound_Category_BGM, &No, &Co_Sound_Change));
+	int No = 3,Volume=option->GetOptionData().BGMVolume;
+	M_C_Sound_Manager->BGMStart(&No, &Volume);
 
 }
 
@@ -138,9 +136,9 @@ bool StageSelectScene::Update(void)
 
 		S_OptionData l_OptionData = option->GetOptionData();
 
-		M_C_Sound_Manager->Update_Sound(&l_OptionData.BGMVolume);
+		M_C_Sound_Manager->Update(&l_OptionData.BGMVolume);
 
-		M_C_Sound_Manager->Set_Sound(&l_OptionData.BGMVolume);
+		M_C_Sound_Manager->New(&l_OptionData.BGMVolume);
 	}
 
 	mouse->Update();

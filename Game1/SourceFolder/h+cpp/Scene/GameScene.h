@@ -4,7 +4,6 @@
 #include"SceneBase.h"
 #include"../Ground/Sky.h"
 #include"../Player/Aiming.h"
-#include"../3DDraw/Effect_3D/Explosion.h"
 #include"../Player/Camera.h"
 #include"../GameSource/Countdown.h"
 #include"../GameSource/Debug.h"
@@ -16,15 +15,10 @@
 #include"../GameSource/Judgment.h"
 #include"../3DDraw/Spear.h"
 #include"../GameSource/Motion.h"
-#include"../3DDraw/Effect_3D/Smoke2.h"
 #include"../2DDraw/Score.h"
-#include"../3DDraw/Effect_3D/SpaekDamage.h"
-#include"../3DDraw/Effect_3D/Smog.h"
-#include"../3DDraw/Effect_3D/BulletGround.h"
-#include"../3DDraw/Effect_3D/Spark2.h"
+#include"../Effect/3D/Spark/Spark2.h"
 #include"../Key/CMouse.h"
 #include"../Key/KeyTrue.h"
-#include"../3DDraw/Effect_3D/BulletHole3D.h"
 #include"../Player/PlayerA.h"
 #include"../Enemy/EnemyA.h"
 #include"../Player/PlayerBody.h"
@@ -42,6 +36,8 @@
 #include"../Ground/Ground_Object.h"
 #include"../GameSource/Option/Option.h"
 #include"../Menu/ClearTouch.h"
+#include"../Ground/GroundManager.h"
+#include"../Effect/EffectBase.h"
 
 extern Motion motion;
 
@@ -56,12 +52,91 @@ public:
 	GameScene(const int stageNum);
 	GameScene(const int stageNum,const bool *DebugFlg);
 	~GameScene();
+
+	// 3D描画
 	void Render3D(void);
+
+	// 3D描画の上からの視点
 	void Render3D_Screen(void);
+
+	// 2D描画
 	void Render2D(void);
+
+	// カメラ
 	void SetCamera(void);
+
+	// 更新処理
 	bool Update(void);
-	bool UpdateE(void);
+
+private:
+
+	C_Option *option;
+
+	//判定用の関数のクラス
+	Judg judg;
+
+	//デバッグ用----------------
+	int CountNum, MaxCount;//スロー再生用
+	Spear *spear;
+	D3DXMATRIX SpeMat;
+	//--------------------------
+	//プレイヤーの情報
+	C_PlayerBody *PlayerBody;
+	//プレイヤー
+	C_PlayerBase *player;//
+
+	std::vector<C_EnemyAi*>enemy;
+	bool eneFlg;//出現の切り替え
+	Sky *sky;
+	Aiming *aiming;
+	Camera *camera;
+	Debug *debug;
+	//文字表示
+	C_Text_Num *M_Text_Num;
+
+	c_GroundManager *groundManager;
+
+	C_Game_End_Base* M_C_Game_End;
+
+	Warning *war;
+
+	int StageNo;
+
+
+	Pause *pause;
+
+	//スコア
+	C_Score *score;
+
+	//バレットバースFlg
+	bool BulletBirthFlg;
+
+	//マウス
+	C_Mouse *mouse;
+	//キー
+	C_KeyTrue key;
+
+	//弾痕３D
+	std::vector<c_EffectBase*>effect;
+
+	//タッチ
+	C_NextTouch* Menu;
+
+	/*車の沸き情報*/
+	C_Car_Pop_New *M_C_Car_Pop;
+
+	//音の管理
+	c_GameSoundManager* M_C_Sound_Manager;
+
+	std::vector<C_Damage_Num_Base*>M_Damage_Num_Draw;
+
+	//ミニ画面の表示
+	S_SCREEN_2D M_S_Screen;
+
+	// 初期化
+	void Init(void);
+
+	bool UpdateEnemy(void);
 	
 	//弾のレイ判定
 	void BulletJudg(const int *TypeCar,const unsigned int *CarNo);
@@ -83,8 +158,7 @@ public:
 
 	//移動後の行列作成
 	void ForMoveEnd(D3DXMATRIX *Mat,const CONSTITUTION *Con,const QuaForMove *q,const D3DXMATRIX *TransMat);
-	//カメラと壁判定
-	void CameraWallJudg(void);
+	
 	//BulletBirthFlg
 	bool GetBulletBirthFlg(void);
 	//爆発インスタンス化関数
@@ -97,27 +171,12 @@ public:
 
 	//メニューの処理
 	bool UpdateMenu(void);
-	//地面の自動生成
-	bool GroundCreate(unsigned int *GNo);
+	
 	//Pos2D計算
 	void Pos2DUpdate(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport);
 
-protected:
 	//タイトルに戻るキー
 	bool Change_TitleScene(void);
-
-	//コンストラクタ関数
-	void AllNew(void);
-	//デストラクタ関数
-	void AllDelete(void);
-
-	/*アップデート*/
-
-	//デバックの更新
-	bool Update_Debug(void);
-
-	//フェードの更新
-	bool Update_Fade(void);
 
 	//ゲーム本編の更新
 	bool Update_Game(void);
@@ -127,18 +186,6 @@ protected:
 
 	//ゲームのフレーム数の判定
 	bool Judg_Game_Frame(void);
-
-	//地面の更新
-	bool Update_Ground(void);
-
-	//爆発の更新
-	bool Update_Explo(void);
-
-	//火花の更新
-	bool Update_Spark(void);
-
-	//弾痕の更新
-	bool Update_Bullet_Hole(void);
 
 	//車の前方にカメラを向ける処理
 	bool Update_Camera_Car(void);
@@ -164,9 +211,6 @@ protected:
 	//カメラ行列の取得
 	bool Update_CameraMat(void);
 
-	//地面の出現
-	int Init_Ground_Push(const D3DXMATRIX *Mat1, const D3DXMATRIX *Mat0,const int *Type);
-
 	//ゲーム本編の最後の更新
 	bool Update_Pop_End(void);
 
@@ -175,9 +219,6 @@ protected:
 
 	//車の出現の更新の停止命令渡し
 	bool Get_Car_Pop_Update_MoveFlg(void);
-
-	//地面の情報入れ
-	void Set_Ground_Data(void);
 
 	//ゲームオーバー時
 	void Set_Game_Over(void);
@@ -202,12 +243,6 @@ protected:
 
 	//弾の更新
 	bool Update_Bullet_Move(void);
-
-	//レールの操作
-	int Get_Rail_Num(const int *Way_Rail_Num, const int *Pop_Rail_Num);
-
-	//音の管理
-	bool Update_Sound(void);
 
 	void New_Sound(const int *Type, const int *Category, const int No, const int *Change);
 	void New_Sound(const int *Category, const int No,const D3DXVECTOR3* Pos, const int *Change);
@@ -247,7 +282,6 @@ protected:
 	//弾判定の情報初期化
 	BULLETJUDGDATA GetInitBJD(const float *InitDis);
 	//弾判定集
-	void BulletJudgGround(BULLETJUDGDATA* BJD,const RAYDATA *RD,bool *HitFlg,const float *Rad);
 	void BulletJudgPlayer(BULLETJUDGDATA* BJD, const RAYDATA *RD, const float *Rad);
 	void BulletJudgEnemy(BULLETJUDGDATA* BJD,const RAYDATA *RD, const float *Rad,const unsigned int *EnemyNo);
 	void BulletJudgEnemy_Ball(BULLETJUDGDATA* BJD, const RAYDATA *RD, const float *Rad);
@@ -278,11 +312,6 @@ protected:
 		D3DXMATRIX *RayHit_Mat, float *Over_Dis, bool *Over_Flg, const S_SideJudgChara *Data,
 		const int *JudgMat_Num, const D3DXMATRIX *JudgMat, const D3DXVECTOR3 *Ray_Vec);
 
-	//横の衝突判定で地面と判定
-	bool Side_Judg_Ground(const S_SideJudgChara *Data,
-		const D3DXMATRIX *JudgMat_Base,const D3DXVECTOR3 *Ray_Vec, float *Small_Dis,
-		int *RayHit_No, D3DXMATRIX *RayHit_Mat);
-
 	//横の衝突判定
 	int Side_Judg_Ray(S_SideJudgChara *Next_Data, float *Small_Dis, int *RayHit_No,
 		D3DXMATRIX *RayHit_Mat, float *Over_Dis, bool *Over_Flg, const int *Judg_Car_Type,
@@ -305,83 +334,6 @@ protected:
 	//衝突による敵のAiと攻撃をStopさせる
 	void Enemy_Stop(const unsigned int *e,const int *Side_Judg_Car_Type);
 
-private:
-
-	C_Option *option;
-
-	//判定用の関数のクラス
-	Judg judg;
-
-	//デバッグ用----------------
-	int CountNum, MaxCount;//スロー再生用
-	Spear *spear;
-	D3DXMATRIX SpeMat;
-	//--------------------------
-	//プレイヤーの情報
-	C_PlayerBody *PlayerBody;
-	//プレイヤー
-	C_PlayerBase *player;//
-
-	//地面のメンバ
-	std::vector<C_Ground_Object*>ground;
-	Cou *cou;//bill
-	std::vector<Cou*>GroCou;
-	//外灯表示用カウントダウン
-	C_Count *LightCount;
-
-	std::vector<C_EnemyAi*>enemy;
-	bool eneFlg;//出現の切り替え
-	Sky *sky;
-	Aiming *aiming;
-	std::vector<Explo*>explo;
-	Camera *camera;
-	Debug *debug;
-	//文字表示
-	C_Text_Num *M_Text_Num;
-	
-	C_Game_End_Base* M_C_Game_End;
-
-	Warning *war;
-
-	int StageNo;
-	
-
-	Pause *pause;
-
-	//火花変数
-	std::vector<C_Spark*>SparkV;
-
-	//スコア
-	C_Score *score;
-
-	//バレットバースFlg
-	bool BulletBirthFlg;
-
-	//マウス
-	C_Mouse *mouse;
-	//キー
-	C_KeyTrue key;
-
-	//弾痕３D
-	std::vector<C_BulHol3D*>BHole3D;
-
-	//タッチ
-	C_NextTouch* Menu;
-
-	/*車の沸き情報*/
-	C_Car_Pop_New *M_C_Car_Pop;
-
-	/*地面の情報*/
-	C_Ground_Pop_New* M_C_Ground_Pop;
-
-	//音の管理
-	c_GameSoundManager* M_C_Sound_Manager;
-
-	std::vector<C_Damage_Num_Base*>M_Damage_Num_Draw;
-
-	//ミニ画面の表示
-	S_SCREEN_2D M_S_Screen;
-
 	//ミニ画面の初期化
 	void Debug_Screen_Init(void);
 	//ミニ画面の終了処理
@@ -391,15 +343,6 @@ private:
 
 	//視錐台カリング
 	void FrustumCulling(const D3DXMATRIX *mProj, const D3DXMATRIX *mView, const D3DVIEWPORT9 *Viewport);
-
-	//地面の視錐台カリング
-	void FrustumCulling_Ground(const S_Frustum_Vec *FV_Data);
-
-	//地面の壁の視錐台カリング
-	void FrustumCulling_Ground_Wall(const unsigned int *gNo, const S_Frustum_Vec *FV_Data);
-
-	//地面の表示物の視錐台カリング
-	void FrustumCulling_Ground_Object(const unsigned int *gNo, const S_Frustum_Vec *FV_Data);
 
 	//被弾音を流す処理
 	void Set_BulletHit_Sound(const int *BulletHit_Type, const D3DXVECTOR3 *Sound_Pos);

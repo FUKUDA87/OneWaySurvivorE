@@ -1,4 +1,5 @@
 #include "PartsBase.h"
+#include"../../GameSource/Judgment.h"
 
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 void DrawMesh(XFILE *XFile);

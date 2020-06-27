@@ -1,7 +1,7 @@
 #pragma once
 #include<d3dx9.h>
 #include"../2DDraw/modoru.h"
-#include"../2DDraw/NumA.h"
+#include"../Draw/Num/2D/NumA.h"
 
 class StageTex :public Modoru,NumA {
 private:

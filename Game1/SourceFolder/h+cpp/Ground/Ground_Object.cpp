@@ -69,9 +69,8 @@ void C_Ground_Object::Draw_Object(void)
 {
 	if (M_Object.size() <= 0)return;
 
-	for (auto && o : M_Object) {
-		o->Draw();
-	}
+	for (auto && o : M_Object) o->Draw();
+	
 }
 
 void C_Ground_Object::Delete_All_Object(void)

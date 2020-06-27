@@ -7,7 +7,7 @@
 #include"../TitleParts/TitleSky.h"
 #include"../StageParts/StageCar.h"
 #include"../StageParts/StageCamera.h"
-#include"../2DDraw/modoru.h"
+#include"../Draw/2D/modoru.h"
 #include"../StageParts/StageTex.h"
 #include"../Key/CMouse.h"
 #include"../Key/KeyTrue.h"

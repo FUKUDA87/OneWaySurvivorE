@@ -1,7 +1,7 @@
 #pragma once
 #include"Parts/PartsBase.h"
 #include<vector>
-#include"../Draw3DBase/BaseDataManager/CarDataManager.h"
+#include"../Car/Data/BaseDataManager/CarDataManager.h"
 #include"../GameSource/Judgment.h"
 #include"Parts/Car_Parts_Joint.h"
 #include"../Const/Const_PartsTypeNo.h"

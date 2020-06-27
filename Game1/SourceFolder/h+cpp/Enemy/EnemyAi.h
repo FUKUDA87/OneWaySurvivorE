@@ -1,8 +1,8 @@
 #pragma once
 #include"EnemyBase.h"
-#include"../EnemyData/Base&Manager/EnemySpeed.h"
-#include"../EnemyData/EnemyConst/PhaseConst.h"
-#include"../EnemyData/Base&Manager/EnemyAiPhaseBase.h"
+#include"Data/Base&Manager/EnemySpeed.h"
+#include"Data/Const/PhaseConst.h"
+#include"Data/Base&Manager/EnemyAiPhaseBase.h"
 
 class C_EnemyAi :public C_EnemyBase {
 public:

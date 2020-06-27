@@ -1,5 +1,5 @@
 #include "EnemyAi.h"
-#include"../EnemyData/EnemyNo1/SpeedData/SpeedUp.h"
+#include"Data/No1/Speed/SpeedUp.h"
 
 C_EnemyAi::C_EnemyAi()
 {

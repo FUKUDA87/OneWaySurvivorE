@@ -1,5 +1,5 @@
 #pragma once
-#include"../../EnemyData/Base&Manager/EnemySpeed.h"
+#include"../../Enemy/Data/Base&Manager/EnemySpeed.h"
 
 class c_SpeedDeadStop :public C_Speed_Update {
 public:

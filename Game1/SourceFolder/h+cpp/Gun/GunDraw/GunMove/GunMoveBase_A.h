@@ -2,7 +2,7 @@
 #include<d3dx9.h>
 #include"../../../GameSource/Struct.h"
 #include"../../../GameSource/Judgment.h"
-#include"../../../EnemyData/EnemyConst/PhaseConst.h"
+#include"../../../Enemy/Data/Const/PhaseConst.h"
 #include"../../../Move/GunMove/Auto/Departure_Gun_Auto_Base.h"
 
 class C_GunMoveBase_A {

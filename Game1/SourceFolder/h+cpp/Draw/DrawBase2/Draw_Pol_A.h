@@ -1,7 +1,7 @@
 #pragma once
 #include"Draw3D_Base2.h"
 #include<string>
-#include"../../Manager/DrawTextureManager/DrawTextureManager_Base.h"
+#include"../../Manager/TextureManager/DrawTextureManager_Base.h"
 
 
 //”Âƒ|ƒŠƒSƒ“‚Ì•\¦

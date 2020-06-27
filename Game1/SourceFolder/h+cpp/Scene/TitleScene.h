@@ -7,7 +7,7 @@
 #include"../Ground/Sky.h"
 #include"../GameSource/Countdown.h"
 #include"../Ground/Wall.h"
-#include"../2DDraw/BulletHole.h"
+#include"../Draw/2D/BulletHole.h"
 #include"../Key/CMouse.h"
 #include"../Key/Key.h"
 #include"../Player/PlayerBody.h"

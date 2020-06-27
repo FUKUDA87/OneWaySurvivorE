@@ -1,6 +1,6 @@
 #pragma once
 #include"Draw3D_Base2.h"
-#include"../../3DDraw/Ball.h"
+#include"../../Draw/3D/Ball.h"
 #include<vector>
 
 class C_Draw_Ball_A :public C_Draw3D_Base2 {

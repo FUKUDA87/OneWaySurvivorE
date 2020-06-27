@@ -1,5 +1,5 @@
 #pragma once
-#include"../2DDraw/Window.h"
+#include"../Draw/2D/Window.h"
 
 class C_OK :public Window {
 public:

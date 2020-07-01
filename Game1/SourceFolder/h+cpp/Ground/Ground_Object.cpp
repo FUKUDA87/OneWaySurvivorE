@@ -2,13 +2,14 @@
 #include"Ground_Object_Parts/Bill_Object_1.h"
 #include"Ground_Object_Parts/Light_Object_1_R.h"
 
-C_Ground_Object::C_Ground_Object(const int *i):Wall(i)
+C_Ground_Object::C_Ground_Object(const int *i):C_Ground(i)
 {
 
 }
 
-C_Ground_Object::C_Ground_Object(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUND_INIT_DATA * Init_Data_Ground)
-	:Wall(Mat3,Mat4, Init_Data_Ground)
+C_Ground_Object::C_Ground_Object(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4
+	, const S_GROUND_INIT_DATA * Init_Data_Ground)
+	: C_Ground(Mat3,Mat4, Init_Data_Ground)
 {
 
 }
@@ -18,18 +19,19 @@ C_Ground_Object::~C_Ground_Object()
 	Delete_All_Object();
 }
 
-void C_Ground_Object::SuperDraw()
+bool C_Ground_Object::Update()
 {
-	Draw();
-	WaDraw();
-	Draw_Object();
-}
-
-void C_Ground_Object::SuperUpdate(void)
-{
-	Update();
+	UpdateGround();
 
 	Update_Object();
+
+	return true;
+}
+
+void C_Ground_Object::Draw3D()
+{
+	Draw3DGround();
+	Draw_Object();
 }
 
 S_Base3D_2 C_Ground_Object::Get_Object_Data(const unsigned int * No)
@@ -60,7 +62,7 @@ void C_Ground_Object::Update_Object(void)
 	if (M_Object.size() <= 0)return;
 
 	for (auto && o : M_Object) {
-		int No = o->Get_Mat_No();
+		unsigned int No = o->Get_Mat_No();
 		o->Update_DrawMat(&Get_Object_SetMat(&No));
 	}
 }
@@ -84,7 +86,7 @@ void C_Ground_Object::Delete_All_Object(void)
 	}
 }
 
-D3DXMATRIX C_Ground_Object::Get_Object_SetMat(const int * No)
+D3DXMATRIX C_Ground_Object::Get_Object_SetMat(const unsigned int * No)
 {
-	return Get_Mat_Wall(No);
+	return wall[*No]->GetMat();
 }

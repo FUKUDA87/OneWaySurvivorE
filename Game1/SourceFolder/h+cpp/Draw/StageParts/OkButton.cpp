@@ -1,5 +1,5 @@
 #include "OkButton.h"
-#include"../MaterialManager/TextureManager.h"
+#include"../../MaterialManager/TextureManager.h"
 
 extern TextureManager textureManager;
 extern LPD3DXSPRITE lpSprite;	// スプライト

@@ -20,6 +20,7 @@ C_Enemy_No1::C_Enemy_No1(const D3DXMATRIX * GroundMat, const float * TransX):C_E
 	CarFM.BodyHeight = l_EBD.GroundHeight;
 	Car.Base.ScaPos = l_EBD.ScalPos;
 	SetMeshCar(BodyData.CarBodyNo);
+	NewEffect(new c_Ball3DEffect(Car.Base.BodRad, 1.0f));
 	//スピードセット
 	InitSpeedMove(new SpeedUp1());
 	//パーツの初期化

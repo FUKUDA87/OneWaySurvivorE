@@ -1,8 +1,8 @@
 #include "Object_Base.h"
-#include"../../MaterialManager/XFileManagerData.h"
+#include"../../MaterialManager/XFileManager.h"
 #include"../../GameSource/Judgment.h"
 
-extern XFileManagerData xfileManagerData;
+extern XFileManager xfileManager;
 
 extern LPDIRECT3DDEVICE9		lpD3DDevice;	// Direct3DDeviceインターフェイス
 
@@ -31,7 +31,7 @@ void C_Object_Base::Update_DrawMat(const D3DXMATRIX * Mat)
 
 void C_Object_Base::Mesh_Load(std::string FileName)
 {
-	M_Mesh = xfileManagerData.GetMesh(FileName);
+	M_Mesh = xfileManager.GetMeshB(FileName);
 
 	M_Base.Base.DrawFlg = true;
 
@@ -39,7 +39,7 @@ void C_Object_Base::Mesh_Load(std::string FileName)
 
 	Judg judg;
 
-	judg.Get_Draw_Radius(&M_Base.CullingRad, &M_Mesh.Data.Pos_Big, &M_Mesh.Data.Pos_Small, &M_Base.Base.ScaPos);
+	judg.Get_Draw_Radius(&M_Base.CullingRad, &M_Mesh.Data.BigVec, &M_Mesh.Data.SmallVec, &M_Base.Base.ScaPos);
 }
 
 void C_Object_Base::Init(void)

@@ -51,6 +51,9 @@ public:
 	//’e‚ÌoŒ»
 	void Init_Bullet(void);
 
+	// ƒŒƒC”»’è
+	void RayJudg(BULLETJUDGDATA * BJD, const unsigned int *cc, const RAYDATA * RD, const float * Rad);
+
 private:
 	
 	FILE* fp;

@@ -1,5 +1,5 @@
 #include "StageCamera.h"
-#include"../GameSource/Judgment.h"
+#include"../../GameSource/Judgment.h"
 
 void StageCam::Init_Car(void)
 {

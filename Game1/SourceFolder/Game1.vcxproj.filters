@@ -58,12 +58,6 @@
     <Filter Include="ソース ファイル\Sound">
       <UniqueIdentifier>{b71240db-f219-4290-9f6c-c06ff3ef40d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\StageParts">
-      <UniqueIdentifier>{4ed899dd-a29b-4637-9d8c-a89ef43dd5be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\TitleParts">
-      <UniqueIdentifier>{26c00dbd-2d04-4174-9ad4-71bdd7a0fdb4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Draw\DrawBase">
       <UniqueIdentifier>{eee0bc81-99a9-4a06-a803-7b91c45d38d0}</UniqueIdentifier>
     </Filter>
@@ -337,6 +331,21 @@
     <Filter Include="ソース ファイル\Draw\Effect\Gun\No1\Shot">
       <UniqueIdentifier>{79ccfa6c-f27f-4150-b8ec-331e43357331}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Draw\StageParts">
+      <UniqueIdentifier>{5fd4750a-92ef-49a5-a05b-f5644292abf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\TitleParts">
+      <UniqueIdentifier>{a28fc7f3-99f0-44a3-8784-e4d02ca65c31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\2D\Screen">
+      <UniqueIdentifier>{799d03fd-9c70-44ca-a94a-da8e999caa0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\3D\Ball">
+      <UniqueIdentifier>{9423dcc6-c3d7-4646-aaea-ce79d8362b59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\Effect\Car\Ball">
+      <UniqueIdentifier>{4c218c61-410a-4053-9afb-b13bdd6eb3bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h+cpp\GameSource\3DSound.h">
@@ -473,36 +482,6 @@
     </ClInclude>
     <ClInclude Include="h+cpp\Sound\BulletEmpty1.h">
       <Filter>ソース ファイル\Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\StageParts\StageTex.h">
-      <Filter>ソース ファイル\StageParts</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\StageParts\CarSelect.h">
-      <Filter>ソース ファイル\StageParts</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\StageParts\OkButton.h">
-      <Filter>ソース ファイル\StageParts</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\StageParts\StageCamera.h">
-      <Filter>ソース ファイル\StageParts</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\StageParts\StageCar.h">
-      <Filter>ソース ファイル\StageParts</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\TitleParts\TitleTex.h">
-      <Filter>ソース ファイル\TitleParts</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\TitleParts\StartTex.h">
-      <Filter>ソース ファイル\TitleParts</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\TitleParts\TitelCamera.h">
-      <Filter>ソース ファイル\TitleParts</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\TitleParts\TitleSky.h">
-      <Filter>ソース ファイル\TitleParts</Filter>
-    </ClInclude>
-    <ClInclude Include="h+cpp\StageParts\CarSet.h">
-      <Filter>ソース ファイル\StageParts</Filter>
     </ClInclude>
     <ClInclude Include="h+cpp\Key\KeyTrue.h">
       <Filter>ソース ファイル\Key</Filter>
@@ -735,9 +714,6 @@
     <ClInclude Include="h+cpp\Player\PlayerBody.h">
       <Filter>ソース ファイル\Player</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\StageParts\Stage_Room.h">
-      <Filter>ソース ファイル\StageParts</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Draw\DrawBase2\New_Draw\Draw3D_Base2_New.h">
       <Filter>ソース ファイル\Draw\DrawBase2\New_Draw</Filter>
     </ClInclude>
@@ -960,9 +936,6 @@
     <ClInclude Include="h+cpp\MaterialManager\XFileManager.h">
       <Filter>ソース ファイル\MaterialManager</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\MaterialManager\XFileManagerData.h">
-      <Filter>ソース ファイル\MaterialManager</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Move\Speed\SpeedDeadStop.h">
       <Filter>ソース ファイル\Move\Speed</Filter>
     </ClInclude>
@@ -1122,9 +1095,6 @@
     <ClInclude Include="h+cpp\Draw\2D\GameEnd\GameOver.h">
       <Filter>ソース ファイル\Draw\2D\GameEnd</Filter>
     </ClInclude>
-    <ClInclude Include="h+cpp\Draw\3D\Ball.h">
-      <Filter>ソース ファイル\Draw\3D</Filter>
-    </ClInclude>
     <ClInclude Include="h+cpp\Draw\3D\Spear.h">
       <Filter>ソース ファイル\Draw\3D</Filter>
     </ClInclude>
@@ -1229,6 +1199,54 @@
     </ClInclude>
     <ClInclude Include="h+cpp\Draw\Effect\Gun\No1\Shot\Gun_No1_Shot_Effect.h">
       <Filter>ソース ファイル\Draw\Effect\Gun\No1\Shot</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\TitleParts\StartTex.h">
+      <Filter>ソース ファイル\Draw\TitleParts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\TitleParts\TitelCamera.h">
+      <Filter>ソース ファイル\Draw\TitleParts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\TitleParts\TitleSky.h">
+      <Filter>ソース ファイル\Draw\TitleParts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\TitleParts\TitleTex.h">
+      <Filter>ソース ファイル\Draw\TitleParts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\StageParts\CarSelect.h">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\StageParts\CarSet.h">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\StageParts\OkButton.h">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\StageParts\Stage_Room.h">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\StageParts\StageCamera.h">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\StageParts\StageCar.h">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\StageParts\StageTex.h">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\2D\Screen\Screen.h">
+      <Filter>ソース ファイル\Draw\2D\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\3D\Ball\Ball3D.h">
+      <Filter>ソース ファイル\Draw\3D\Ball</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Effect\Car\Ball\Ball3DEffect.h">
+      <Filter>ソース ファイル\Draw\Effect\Car\Ball</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\GameSource\StructManager.h">
+      <Filter>ソース ファイル\GameSource</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Damage_Num\DamageNumDraw3DManager.h">
+      <Filter>ソース ファイル\Draw\Damage_Num</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1340,38 +1358,8 @@
     <ClCompile Include="h+cpp\Sound\BulletEmpty1.cpp">
       <Filter>ソース ファイル\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\StageParts\CarSelect.cpp">
-      <Filter>ソース ファイル\StageParts</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\StageParts\OkButton.cpp">
-      <Filter>ソース ファイル\StageParts</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\StageParts\StageCamera.cpp">
-      <Filter>ソース ファイル\StageParts</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\StageParts\StageCar.cpp">
-      <Filter>ソース ファイル\StageParts</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\StageParts\StageTex.cpp">
-      <Filter>ソース ファイル\StageParts</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\TitleParts\StartTex.cpp">
-      <Filter>ソース ファイル\TitleParts</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\TitleParts\TitelCamera.cpp">
-      <Filter>ソース ファイル\TitleParts</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\TitleParts\TitleSky.cpp">
-      <Filter>ソース ファイル\TitleParts</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\TitleParts\TitleTex.cpp">
-      <Filter>ソース ファイル\TitleParts</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\main.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="h+cpp\StageParts\CarSet.cpp">
-      <Filter>ソース ファイル\StageParts</Filter>
     </ClCompile>
     <ClCompile Include="h+cpp\Key\KeyTrue.cpp">
       <Filter>ソース ファイル\Key</Filter>
@@ -1586,9 +1574,6 @@
     <ClCompile Include="h+cpp\Player\PlayerBody.cpp">
       <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\StageParts\Stage_Room.cpp">
-      <Filter>ソース ファイル\StageParts</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\Draw\DrawBase2\New_Draw\Draw3D_Base2_New.cpp">
       <Filter>ソース ファイル\Draw\DrawBase2\New_Draw</Filter>
     </ClCompile>
@@ -1775,9 +1760,6 @@
     <ClCompile Include="h+cpp\MaterialManager\XFileManager.cpp">
       <Filter>ソース ファイル\MaterialManager</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\MaterialManager\XFileManagerData.cpp">
-      <Filter>ソース ファイル\MaterialManager</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\Move\Speed\SpeedDeadStop.cpp">
       <Filter>ソース ファイル\Move\Speed</Filter>
     </ClCompile>
@@ -1928,9 +1910,6 @@
     <ClCompile Include="h+cpp\Draw\2D\GameEnd\GameOver.cpp">
       <Filter>ソース ファイル\Draw\2D\GameEnd</Filter>
     </ClCompile>
-    <ClCompile Include="h+cpp\Draw\3D\Ball.cpp">
-      <Filter>ソース ファイル\Draw\3D</Filter>
-    </ClCompile>
     <ClCompile Include="h+cpp\Draw\3D\Spear.cpp">
       <Filter>ソース ファイル\Draw\3D</Filter>
     </ClCompile>
@@ -2029,6 +2008,54 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Draw\Effect\Gun\No1\Shot\Gun_No1_Shot_Effect.cpp">
       <Filter>ソース ファイル\Draw\Effect\Gun\No1\Shot</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\TitleParts\StartTex.cpp">
+      <Filter>ソース ファイル\Draw\TitleParts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\TitleParts\TitelCamera.cpp">
+      <Filter>ソース ファイル\Draw\TitleParts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\TitleParts\TitleSky.cpp">
+      <Filter>ソース ファイル\Draw\TitleParts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\TitleParts\TitleTex.cpp">
+      <Filter>ソース ファイル\Draw\TitleParts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\StageParts\CarSelect.cpp">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\StageParts\CarSet.cpp">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\StageParts\OkButton.cpp">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\StageParts\Stage_Room.cpp">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\StageParts\StageCamera.cpp">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\StageParts\StageCar.cpp">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\StageParts\StageTex.cpp">
+      <Filter>ソース ファイル\Draw\StageParts</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\2D\Screen\Screen.cpp">
+      <Filter>ソース ファイル\Draw\2D\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\3D\Ball\Ball3D.cpp">
+      <Filter>ソース ファイル\Draw\3D\Ball</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Effect\Car\Ball\Ball3DEffect.cpp">
+      <Filter>ソース ファイル\Draw\Effect\Car\Ball</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\GameSource\StructManager.cpp">
+      <Filter>ソース ファイル\GameSource</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Damage_Num\DamageNumDraw3DManager.cpp">
+      <Filter>ソース ファイル\Draw\Damage_Num</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

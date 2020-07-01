@@ -1,9 +1,9 @@
 #pragma once
 #include<d3dx9.h>
 #include"SceneBase.h"
-#include"../TitleParts/TitleTex.h"
-#include"../TitleParts/StartTex.h"
-#include"../TitleParts/TitelCamera.h"
+#include"../Draw/TitleParts/TitleTex.h"
+#include"../Draw/TitleParts/StartTex.h"
+#include"../Draw/TitleParts/TitelCamera.h"
 #include"../Ground/Sky.h"
 #include"../GameSource/Countdown.h"
 #include"../Ground/Wall.h"

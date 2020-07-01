@@ -1,6 +1,7 @@
 #include "GroundManager.h"
 #include"../GameSource/Judgment.h"
 #include"../Const/Const_Rail_Type.h"
+#include"../GameSource/StructManager.h"
 
 c_GroundManager::c_GroundManager(C_PlayerBase * player)
 {
@@ -102,7 +103,7 @@ void c_GroundManager::Draw3D(void)
 {
 	if (ground.size() <= 0)return;
 
-	for (auto && g : ground) g->SuperDraw();
+	for (auto && g : ground) g->Draw3D();
 	
 }
 
@@ -111,7 +112,7 @@ bool c_GroundManager::Update(C_PlayerBase *player)
 	if (ground.size() < 1) return false;
 
 	for (unsigned int gc = 0; gc < ground.size(); gc++) {
-		ground[gc]->SuperUpdate();
+		ground[gc]->Update();
 
 		//–³ŒÀ‚Ì“¹‚Ìíœ‚Æì¬
 		float L_Radius = player->GetRadF();
@@ -271,6 +272,8 @@ void c_GroundManager::BulletJudg(BULLETJUDGDATA * BJD, const RAYDATA * RD, bool 
 		*HitFlg = false;
 	}
 
+	c_StructManager structManager;
+
 	for (unsigned int g = 0; g < ground.size(); g++) {
 		Judg judg;
 		if (judg.BallJudg(&judg.SetPosM(&RD->Mat), &judg.SetPosM(&ground[g]->GetMat()), Rad) == true) {//i‚è‚İ
@@ -295,28 +298,25 @@ void c_GroundManager::BulletJudg(BULLETJUDGDATA * BJD, const RAYDATA * RD, bool 
 				//ƒŒƒC‚ª“–‚½‚Á‚½‚É’e‚ÌˆÚ“®‚ÌVec‚Ì’·‚³‚æ‚è’Z‚¢‚©’²‚×‚é
 				if (Dis < BJD->SamllDis) {
 					BJD->SamllDis = Dis;
-					BJD->Type = co_Ground;
-					BJD->JudgNo1 = g;
+					BJD->HitType = structManager.GetCarType(&co_Ground, &g);
 				}
 			}
 		}
 
 		//•Ç”»’è
-		for (int w = 0; w < ground[g]->Get_Wall_Num(); w++) {
+		for (unsigned int w = 0; w < ground[g]->GetWallNum(); w++) {
 			//“ñ–‡‚Ì•Ç”»’è
-			if (judg.BallJudg(&judg.SetPosM(&RD->Mat), &judg.SetPosM(&ground[g]->Get_Mat_Wall(&w)), Rad) == true) {
+			if (judg.BallJudg(&judg.SetPosM(&RD->Mat), &judg.SetPosM(&ground[g]->GetWallMat(&w)), Rad) == true) {
 				JudgFlg = false;
 				//ƒŒƒC”»’è
-				if (judg.RayJudg_Mesh(&judg.SetPosM(&RD->Mat), &RD->Ray, &ground[g]->Get_DrawMat_Wall(&w), ground[g]->GetColModWall(), &Dis) == true) {
+				if (judg.RayJudg_Mesh(&judg.SetPosM(&RD->Mat), &RD->Ray, &ground[g]->GetWallDrawMat(&w), ground[g]->GetWallColMod(&w), &Dis) == true) {
 					if (HitFlg != nullptr) {
 						*HitFlg = true;
 					}
 					//ƒŒƒC‚ª“–‚½‚Á‚½‚É’e‚ÌˆÚ“®‚ÌVec‚Ì’·‚³‚æ‚è’Z‚¢‚©’²‚×‚é
 					if (Dis < BJD->SamllDis) {
 						BJD->SamllDis = Dis;
-						BJD->Type = co_Wall;
-						BJD->JudgNo1 = g;
-						BJD->JudgNo2 = (unsigned int)w;
+						BJD->HitType = structManager.GetCarType(&co_Wall, &g, &w);
 					}
 				}
 			}
@@ -334,18 +334,18 @@ void c_GroundManager::FrustumCulling(const S_Frustum_Vec * FV_Data, const D3DXVE
 		Judg judg;
 
 		/*•Ç*/
-		if (ground[gc]->Get_Wall_Num() > 0) 
+		if (ground[gc]->GetWallNum() > 0) 
 		{
-			for (int w = 0; w < ground[gc]->Get_Wall_Num(); w++) {
-				D3DXVECTOR3 pos = judg.SetPosM(&ground[gc]->Get_Mat_Wall(&w)) - *CamPos;
-				float Radius = ground[gc]->Get_Data_Wall(&w).CullingRad;
+			for (unsigned int w = 0; w < ground[gc]->GetWallNum(); w++) {
+				D3DXVECTOR3 pos = judg.SetPosM(&ground[gc]->GetWallMat(&w)) - *CamPos;
+				float Radius = ground[gc]->GetWallData(&w).CullingRad;
 
 				bool DrawFlg;
 
 				// ã‰º¶‰E‚Æ‚Ì”äŠr(Near,Far‚ÍÈ—ª) normal E center > radius
 				judg.Judg_Frustum(&DrawFlg, FV_Data, &pos, &Radius);
 
-				ground[gc]->Set_Draw_Flg_Wall(&w, &DrawFlg);
+				ground[gc]->SetWallDrawFlg(&w, &DrawFlg);
 			}
 		}
 
@@ -367,39 +367,37 @@ void c_GroundManager::FrustumCulling(const S_Frustum_Vec * FV_Data, const D3DXVE
 	}
 }
 
-bool c_GroundManager::SideJudg(const S_SideJudgChara * Data, const D3DXMATRIX * JudgMat_Base, 
-	const D3DXVECTOR3 * Ray_Vec, float * Small_Dis, int * RayHit_No, D3DXMATRIX * RayHit_Mat,const float *Radius)
+bool c_GroundManager::BallJudgWall(bool * JudgFlg, float * SmallDis, s_CarType * HitCar
+	, const s_CarType * JudgCar, const D3DXMATRIX * Mat, const float * Radius
+	, const bool * CollisionJudg_TrueFlg)
 {
 	if (ground.size() <= 0)return false;
 
-	//•Ç‚Ì
-	int w = 1;
-	if (Data->LeftFlg == true)w = 0;
+	if (JudgCar->Type == Hit_Type_Wall)return false;
 
-	Judg judg;
-	D3DXVECTOR3 Ray_Pos = judg.SetPosM(JudgMat_Base);
+	bool Flg = false;
 
-	bool Wall_Hit_Flg = false;
+	for (unsigned int gc = 0; gc < ground.size(); gc++) 
+	{
+		if (ground[gc]->GetWallNum() <= 0)continue;
 
-	//’n–Ê”
-	for (unsigned int g = 0; g < ground.size(); g++) {
+		for (unsigned int wc = 0; wc < ground[gc]->GetWallNum(); wc++)
+		{
+			// ‹——£”»’è
+			float Dis;
+			D3DXVECTOR3 pos;
+			ground[gc]->GetBallJudgWall(&Dis, &pos, &wc);
+			Dis += *Radius;
+			Judg judg;
+			if (judg.BallJudg(SmallDis, &judg.SetPosM(Mat), &pos, &Dis, JudgFlg) != true) continue;
 
-		if (judg.BallJudg(&judg.SetPosM(JudgMat_Base), &judg.SetPosM(&ground[g]->Get_Mat_Wall(&w)), Radius) != true) continue;
+			*JudgFlg = true;
+			c_StructManager structManager;
+			*HitCar = structManager.GetCarType(&Hit_Type_Wall, &gc, &wc);
 
-		float Dis;
-
-		//ƒŒƒC”»’è
-		if (judg.RayJudg_Mesh(&Ray_Pos, Ray_Vec, &ground[g]->Get_DrawMat_Wall(&w), ground[g]->GetColModWall(), &Dis) != true) continue;
-
-		if (Dis > *Small_Dis) continue;
-
-		*Small_Dis = Dis;
-		*RayHit_No = 1;
-		*RayHit_Mat = ground[g]->Get_DrawMat_Wall(&w);
-
-		Wall_Hit_Flg = true;
-
+			Flg = true;
+		}
 	}
 
-	return Wall_Hit_Flg;
+	return Flg;
 }

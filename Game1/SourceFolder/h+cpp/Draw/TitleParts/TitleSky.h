@@ -1,5 +1,5 @@
 #pragma once
-#include"../Ground/Sky.h"
+#include"../../Ground/Sky.h"
 
 class StageSky :public Sky{
 public:

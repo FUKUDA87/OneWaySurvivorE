@@ -10,18 +10,19 @@
 //サウンドの流すクラス
 class c_GameSoundManager:public C_Sound_Data_Vector {
 public:
-	
+	c_GameSoundManager(const int *g_BGMVolume, const int *g_SEVolume);
 	~c_GameSoundManager();
 
 	//音の更新
-	bool Update(const int *Volume);
-	bool Update(const D3DXVECTOR3 *CamPos, const D3DXVECTOR3 *CamLook, const D3DXVECTOR3 *CamHead, const int *Volume);
+	bool Update(void);
+	bool Update(const D3DXVECTOR3 *CamPos, const D3DXVECTOR3 *CamLook, const D3DXVECTOR3 *CamHead);
+	void UpdateVolume(const int *g_BGMVolume, const int *g_SEVolume);
 
 	// 音声変更
-	bool Order(const S_SOUND_DATA* M_Data, const int *Volume);
+	bool Order(const S_SOUND_DATA* M_Data);
 
 	// 新規再生
-	void New(const int *Volume);// DataVectorのNew
+	void New(void);// DataVectorのNew
 
 	// サウンドの初期化
 	void Reset(void);
@@ -31,23 +32,23 @@ public:
 	void Stop(const S_SOUND_DATA * M_Data);
 
 	// 停止しているサウンドの再生
-	void Restart(const int *Volume);
-	void Restart(const S_SOUND_DATA * M_Data, const int *Volume);
+	void Restart(void);
+	void Restart(const S_SOUND_DATA * M_Data);
 
 	//被弾音を流す処理
-	void Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos, const int *Volume);
+	void Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos);
 
 	//被弾した物体が無敵状態の判定と音を流す処理
-	void Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos,const bool *DamageFlg, const int *Volume);
+	void Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos,const bool *DamageFlg);
 
 	/*BGM*/
 
 	// 再生開始
-	void BGMStart(const int *No,const int *Volume);
+	void BGMStart(const int *No);
 	// 削除
 	void BGMDelete(void);
 	// 再生再開
-	void BGMRestart(const int *Volume);
+	void BGMRestart(void);
 	// 停止
 	void BGMStop(void);
 	// 初期化
@@ -68,7 +69,7 @@ private:
 	bool Delete(const S_SOUND_DATA* M_Data, const bool Flg);// 削除
 
 	//音を外部からNew
-	bool SearchNew(const S_SOUND_DATA* Data, const int *Volume);
+	bool SearchNew(const S_SOUND_DATA* Data);
 
-
+	int BGMVolume, SEVolume;
 };

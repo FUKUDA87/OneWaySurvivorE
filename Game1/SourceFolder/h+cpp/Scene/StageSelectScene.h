@@ -4,18 +4,18 @@
 #include<d3dx9.h>
 
 //•\Ž¦
-#include"../TitleParts/TitleSky.h"
-#include"../StageParts/StageCar.h"
-#include"../StageParts/StageCamera.h"
+#include"../Draw/TitleParts/TitleSky.h"
+#include"../Draw/StageParts/StageCar.h"
+#include"../Draw/StageParts/StageCamera.h"
 #include"../Draw/2D/modoru.h"
-#include"../StageParts/StageTex.h"
+#include"../Draw/StageParts/StageTex.h"
 #include"../Key/CMouse.h"
 #include"../Key/KeyTrue.h"
-#include"../StageParts/CarSelect.h"
+#include"../Draw/StageParts/CarSelect.h"
 #include"../Player/PlayerBody.h"
-#include"../StageParts/OkButton.h"
-#include"../StageParts/CarSet.h"
-#include"../StageParts/Stage_Room.h"
+#include"../Draw/StageParts/OkButton.h"
+#include"../Draw/StageParts/CarSet.h"
+#include"../Draw/StageParts/Stage_Room.h"
 #include"../Sound/GameSoundManager.h"
 #include"../GameSource/Option/Option.h"
 

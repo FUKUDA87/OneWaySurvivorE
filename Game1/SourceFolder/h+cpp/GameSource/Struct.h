@@ -370,13 +370,18 @@ struct GETGUNDATA {
 	D3DXMATRIX Mat;
 	float Speed;
 };
+
+// 出現している車の情報
+struct s_CarType
+{
+	int Type;
+	unsigned int Numbar[3];
+};
+
 //弾判定用
 struct BULLETJUDGDATA {
-	int Character_Type;
-	int Type;
-	unsigned int JudgNo1;
-	unsigned int JudgNo2;
-	unsigned int JudgNo3;
+	s_CarType JudgType;
+	s_CarType HitType;
 	float SamllDis;//レイの最小の長さ保管
 };
 //レイ判定
@@ -721,33 +726,21 @@ struct S_SCREEN_2D {
 	bool DrawFlg;//表示するかどうかのFlg
 };
 
-struct S_Mesh_Data
+struct s_MeshData
 {
-	D3DXVECTOR3 Pos_Big, Pos_Small;//
-	DWORD NumVertex;//頂点数
+	DWORD NumVertex;               // 頂点数
+	D3DXVECTOR3 BigVec, SmallVec;  //　BigVec=大きい頂点位置、SmallVec=小さい頂点位置
 };
 
 //XFILE2
 struct XFILE_B {
 	XFILE Mesh;
-	S_Mesh_Data Data;
+	s_MeshData Data;
 };
 
 //視錐台の法線の構造体
 struct S_Frustum_Vec {
 	D3DXVECTOR3 nt, nb, nl, nr;
-};
-
-/*横の衝突判定*/
-//横判定する車の情報の構造体
-struct S_SideJudgChara {
-	bool LeftFlg;
-	int Car_Type;
-	unsigned int No;
-	float Rad;
-	
-	//判定の種類
-	int JudgeType;
 };
 
 // オプションの構造体
@@ -765,7 +758,7 @@ struct s_CarEffectUpdateData
 	CHARABASE CharaBase;
 	int CarNo;
 	D3DXMATRIX Mat,ScalMat;
-	D3DXVECTOR3 MoveVec;
+	D3DXVECTOR3 MoveVec,Scal;
 };
 
 // AIのスピード更新情報
@@ -778,6 +771,5 @@ struct s_AISpeedUpdateData
 	unsigned int TargetGroNo;// 他の車のスピード
 	bool UpdateStopFlg;
 };
-
 
 //#endif // !Struct_H

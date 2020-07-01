@@ -6,6 +6,11 @@
 #include"SE/SE_Manager/Sound_Explosion_Manager.h"
 #include"SE/Bullet_Hit/Sound_Bullet_Hit_Manager.h"
 
+c_GameSoundManager::c_GameSoundManager(const int * g_BGMVolume, const int * g_SEVolume)
+{
+	UpdateVolume(g_BGMVolume, g_SEVolume);
+}
+
 c_GameSoundManager::~c_GameSoundManager()
 {
 	//Stop_Sound_All();
@@ -15,16 +20,16 @@ c_GameSoundManager::~c_GameSoundManager()
 	BGMDelete();
 }
 
-bool c_GameSoundManager::Update(const int * Volume)
+bool c_GameSoundManager::Update()
 {
 	bool Flg = false;
 
-	if (m_BGMSound != nullptr)m_BGMSound->Update(&M_CamPos, &Flg, Volume);
+	if (m_BGMSound != nullptr)m_BGMSound->Update(&M_CamPos, &Flg, &BGMVolume);
 
 	if (m_SoundManager.size() < 1)return false;
 
 	for (unsigned int s = 0; s < m_SoundManager.size(); s++) {
-		if (m_SoundManager[s]->Update(&M_CamPos, &Flg, Volume) == false) {
+		if (m_SoundManager[s]->Update(&M_CamPos, &Flg, &SEVolume) == false) {
 			delete m_SoundManager[s];
 			m_SoundManager.erase(m_SoundManager.begin() + s);
 			s--;
@@ -34,31 +39,37 @@ bool c_GameSoundManager::Update(const int * Volume)
 	return false;
 }
 
-bool c_GameSoundManager::Update(const D3DXVECTOR3 * CamPos, const D3DXVECTOR3 * CamLook, const D3DXVECTOR3 * CamHead, const int * Volume)
+bool c_GameSoundManager::Update(const D3DXVECTOR3 * CamPos, const D3DXVECTOR3 * CamLook, const D3DXVECTOR3 * CamHead)
 {
 	M_CamPos.Pos = *CamPos;
 	M_CamPos.Look = *CamLook;
 	M_CamPos.Head = *CamHead;
 
-	Update(Volume);
+	Update();
 
 	return true;
 }
 
-bool c_GameSoundManager::Order(const S_SOUND_DATA * M_Data, const int * Volume)
+void c_GameSoundManager::UpdateVolume(const int * g_BGMVolume, const int * g_SEVolume)
+{
+	BGMVolume = *g_BGMVolume;
+	SEVolume = *g_SEVolume;
+}
+
+bool c_GameSoundManager::Order(const S_SOUND_DATA * M_Data)
 {
 	if (M_Data->Change_Type < 0)return false;
 
 	switch (M_Data->Change_Type)
 	{
 	case Co_SoundNew:
-		SearchNew(M_Data, Volume);
+		SearchNew(M_Data);
 		break;
 	case Co_SoundDelete:
 		Delete(M_Data, true);
 		break;
 	case Co_SoundStart:
-		Restart(M_Data, Volume);
+		Restart(M_Data);
 		break;
 	case Co_SoundStop:
 		Stop(M_Data);
@@ -68,7 +79,7 @@ bool c_GameSoundManager::Order(const S_SOUND_DATA * M_Data, const int * Volume)
 		Delete();
 		break;
 	case Co_SoundStartAll:
-		Restart(Volume);
+		Restart();
 		break;
 	case Co_SoundStopAll:
 		Stop();
@@ -120,23 +131,23 @@ void c_GameSoundManager::Stop(const S_SOUND_DATA * M_Data)
 	}
 }
 
-void c_GameSoundManager::Restart(const int *Volume)
+void c_GameSoundManager::Restart()
 {
-	BGMRestart(Volume);
+	BGMRestart();
 
 	if (m_SoundManager.size() < 1)return;
 
 	for (auto&& s : m_SoundManager) {
-		s->Restart(Volume);
+		s->Restart(&SEVolume);
 	}
 }
 
-void c_GameSoundManager::Restart(const S_SOUND_DATA * M_Data, const int * Volume)
+void c_GameSoundManager::Restart(const S_SOUND_DATA * M_Data)
 {
 	// BGMÇÃåüçı
 	if (M_Data->Sound_Type == Co_Sound_Type_2D) {
 		if (M_Data->Sound_CategoryNo == Co_Sound_Category_BGM) {
-			BGMRestart(Volume);
+			BGMRestart();
 			return;
 		}
 	}
@@ -145,11 +156,11 @@ void c_GameSoundManager::Restart(const S_SOUND_DATA * M_Data, const int * Volume
 
 	// åüçı
 	for (unsigned int s = 0; s < m_SoundManager.size(); s++) {
-		if (JudgData(M_Data, &m_SoundManager[s]->Get_Data()) == true) m_SoundManager[s]->Restart(Volume);
+		if (JudgData(M_Data, &m_SoundManager[s]->Get_Data()) == true) m_SoundManager[s]->Restart(&SEVolume);
 	}
 }
 
-void c_GameSoundManager::Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos, const int *Volume)
+void c_GameSoundManager::Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos)
 {
 	S_SOUND_DATA Data;
 
@@ -200,12 +211,12 @@ void c_GameSoundManager::Set_Bullet_Hit_Sound(const int * BulletHit_Type, const 
 
 	//ÉCÉìÉXÉ^ÉìÉXâªÇµÇΩâπê∫Çó¨Ç∑èàóù
 	bool PlayFlg = true;
-	m_SoundManager[m_SoundManager.size() - 1]->Update(&M_CamPos, &PlayFlg, Volume);
+	m_SoundManager[m_SoundManager.size() - 1]->Update(&M_CamPos, &PlayFlg, &SEVolume);
 
 	return;
 }
 
-void c_GameSoundManager::Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos, const bool * DamageFlg,const int *Volume)
+void c_GameSoundManager::Set_Bullet_Hit_Sound(const int * BulletHit_Type, const D3DXVECTOR3 * Sound_Pos, const bool * DamageFlg)
 {
 	//îÌíeâπÇÃéÌóﬁ
 	int Type = *BulletHit_Type;
@@ -214,10 +225,10 @@ void c_GameSoundManager::Set_Bullet_Hit_Sound(const int * BulletHit_Type, const 
 	if (*DamageFlg != true) Type *= -1;
 
 	//îÌíeâπÇó¨Ç∑èàóù
-	Set_Bullet_Hit_Sound(&Type, Sound_Pos,Volume);
+	//Set_Bullet_Hit_Sound(&Type, Sound_Pos);
 }
 
-void c_GameSoundManager::BGMStart(const int *No, const int *Volume)
+void c_GameSoundManager::BGMStart(const int *No)
 {
 	BGMDelete();
 
@@ -226,7 +237,7 @@ void c_GameSoundManager::BGMStart(const int *No, const int *Volume)
 
 	bool Flg = true;
 
-	m_BGMSound->Update(&M_CamPos, &Flg, Volume);
+	m_BGMSound->Update(&M_CamPos, &Flg, &BGMVolume);
 }
 
 void c_GameSoundManager::BGMDelete(void)
@@ -238,11 +249,11 @@ void c_GameSoundManager::BGMDelete(void)
 	m_BGMSound = nullptr;
 }
 
-void c_GameSoundManager::BGMRestart(const int *Volume)
+void c_GameSoundManager::BGMRestart()
 {
 	if (m_BGMSound == nullptr)return;
 
-	m_BGMSound->Restart(Volume);
+	m_BGMSound->Restart(&BGMVolume);
 }
 
 void c_GameSoundManager::BGMStop(void)
@@ -313,7 +324,7 @@ bool c_GameSoundManager::Delete(const S_SOUND_DATA * M_Data, const bool Flg)
 	return L_Flg;
 }
 
-bool c_GameSoundManager::SearchNew(const S_SOUND_DATA * Data, const int * Volume)
+bool c_GameSoundManager::SearchNew(const S_SOUND_DATA * Data)
 {
 	bool PlayFlg = false;
 
@@ -327,7 +338,7 @@ bool c_GameSoundManager::SearchNew(const S_SOUND_DATA * Data, const int * Volume
 		}
 		break;
 	case Co_Sound_Category_BGM:
-		BGMStart(&Data->Sound_No, Volume);
+		BGMStart(&Data->Sound_No);
 		break;
 	case Co_Sound_Category_Warning:
 		C_Sound_Warning_Manager WarningManager;
@@ -352,19 +363,19 @@ bool c_GameSoundManager::SearchNew(const S_SOUND_DATA * Data, const int * Volume
 	}
 
 	if (PlayFlg == true) {
-		m_SoundManager[m_SoundManager.size() - 1]->Update(&M_CamPos, &PlayFlg, Volume);
+		m_SoundManager[m_SoundManager.size() - 1]->Update(&M_CamPos, &PlayFlg, &SEVolume);
 	}
 
 	return true;
 }
 
-void c_GameSoundManager::New(const int * Volume)
+void c_GameSoundManager::New()
 {
 	if (Get_Sound_Data_Num() < 1)return;
 
 	for (unsigned int d = 0; d < Get_Sound_Data_Num(); d++) {
 
-		if (Order(&Get_Sound_Data(&d), Volume) == true) {
+		if (Order(&Get_Sound_Data(&d)) == true) {
 
 			Delete_Sound(&d);
 		}

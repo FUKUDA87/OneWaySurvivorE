@@ -1,6 +1,6 @@
 #pragma once
 #include"Draw3D_Base2.h"
-#include"../../Draw/3D/Ball.h"
+#include"../../Draw/3D/Ball/Ball3D.h"
 #include<vector>
 
 class C_Draw_Ball_A :public C_Draw3D_Base2 {
@@ -32,7 +32,7 @@ public:
 protected:
 	float M_Dis;
 
-	std::vector<Ball*>M_Ball;
+	std::vector<c_Ball3D*>M_Ball;
 
 	//ëSçÌèú
 	void Delete_All_Ball(void);

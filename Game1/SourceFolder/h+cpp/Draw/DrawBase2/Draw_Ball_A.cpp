@@ -1,4 +1,5 @@
 #include "Draw_Ball_A.h"
+#include"../../GameSource/Judgment.h"
 
 C_Draw_Ball_A::C_Draw_Ball_A(const float Dis)
 {
@@ -16,13 +17,14 @@ C_Draw_Ball_A::~C_Draw_Ball_A()
 void C_Draw_Ball_A::Draw3D(const D3DXVECTOR3 * CameraPos)
 {
 	Count--;
-	if(Count==0)M_Ball.push_back(new Ball(Get_Dis()));
+	if(Count==0)M_Ball.push_back(new c_Ball3D(Get_Dis()));
 	if (Count < 0)Count = 0;
 
 	if (M_Ball.size() < 1)return;
 
 	for (auto && b : M_Ball) {
-		b->Update(Get_DrawMat());
+		Judg judg;
+		b->SetPos(&judg.SetPosM(&Get_DrawMat()));
 		b->Draw();
 	}
 }

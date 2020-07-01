@@ -1,6 +1,6 @@
 #pragma once
 #include<d3dx9.h>
-#include"../Player/Camera.h"
+#include"../../Player/Camera.h"
 #ifndef TitleCamera_H
 #define TitleCamera_H
 

@@ -51,7 +51,8 @@ TitleScene::TitleScene()
 	key.Init();
 
 	//ƒTƒEƒ“ƒh‚Ì‰Šú‰»
-	if (M_C_Sound_Manager == nullptr)M_C_Sound_Manager = new c_GameSoundManager();
+	int BGMVolume = option->GetOptionData().BGMVolume, SEVolume = option->GetOptionData().SEVolume;
+	M_C_Sound_Manager = new c_GameSoundManager(&BGMVolume, &SEVolume);
 
 	//’e­‚Ì‰Šú‰»
 	if (false) {
@@ -75,8 +76,8 @@ TitleScene::TitleScene()
 		BulHol.push_back(new C_BulletHole(&D3DXVECTOR3(1100.0f, 100.0f, 0.0f), &AngZ, &D3DXVECTOR3(2.1f, 2.1f, 1.0f), 2));
 	}
 
-	int No = 2,Volume= option->GetOptionData().BGMVolume;
-	M_C_Sound_Manager->BGMStart(&No, &Volume);
+	int No = 2;
+	M_C_Sound_Manager->BGMStart(&No);
 
 }
 TitleScene::~TitleScene()
@@ -119,9 +120,12 @@ bool TitleScene::Update(void)
 
 		S_OptionData l_OptionData = option->GetOptionData();
 
-		M_C_Sound_Manager->New(&l_OptionData.BGMVolume);
+		M_C_Sound_Manager->UpdateVolume(&l_OptionData.BGMVolume, &l_OptionData.SEVolume);
 
-		M_C_Sound_Manager->Update(&l_OptionData.BGMVolume);
+		M_C_Sound_Manager->Update();
+
+		M_C_Sound_Manager->New();
+
 	}
 
 	Game_End();

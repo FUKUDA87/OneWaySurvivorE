@@ -6,6 +6,7 @@
 #include"../Car/Data/Draw3DManager/CarMeshManager.h"
 #include"../GameSource/CharaBase.h"
 #include"../GameSource/Const.h"
+#include"../GameSource/StructManager.h"
 
 class C_CarBase:public C_CharaBase {
 public:
@@ -124,12 +125,12 @@ public:
 		CarFM.SpeedMulJudg = *size;
 	}
 	//前進判定用の移動ベクトル渡し
-	D3DXVECTOR3 GetForMoveVec(const int *i) {
-		return ForMoveVec[*i];
+	D3DXVECTOR3 GetForMoveVec(void) {
+		return ForMoveVec;
 	}
 	//前進判定用の移動ベクトル入れ
-	void SetForMoveVec(const D3DXVECTOR3 *Vec,const int *i) {
-		ForMoveVec[*i] = *Vec;
+	void SetForMoveVec(const D3DXVECTOR3 *Vec) {
+		ForMoveVec = *Vec;
 	}
 	//前進判定用の移動後Mat渡し
 	D3DXMATRIX GetForMoveEndMat(void) {
@@ -191,6 +192,19 @@ public:
 		return M_S_Gun_Update_Data;
 	}
 
+	// 球判定
+	bool BallJudgCar(const D3DXVECTOR3 *Pos, const float *Radius);
+	bool BallJudgCar(bool * JudgFlg, float * SmallDis, const D3DXMATRIX * EndMat, const float * Radius);
+
+	// レイ判定
+	virtual void RayJudg(BULLETJUDGDATA * BJD,const unsigned int *cc, const RAYDATA * RD, const float * Rad);
+
+	// 車
+	int GetConstCar(void);
+
+	// 横移動の反映
+	void SetSideTransMat(const float *MoveX);
+
 protected:
 	//車のデータ
 	BODYDATA BodyData;
@@ -230,6 +244,9 @@ protected:
 		M_JudgeType = *Type;
 	}
 
+	// レイ判定
+	bool RayJudgCar(const D3DXVECTOR3 *Pos, const D3DXVECTOR3 *Ray, BULLETJUDGDATA * BJD);
+
 private:
 	//衝突判定の状態
 	int M_JudgeType;
@@ -242,7 +259,7 @@ private:
 
 	//前進クォータニオン用
 	D3DXMATRIX ForMoveEndMat;//前進完了時のMat
-	D3DXVECTOR3 ForMoveVec[3];//移動前から移動後のVec
+	D3DXVECTOR3 ForMoveVec;//移動前から移動後のVec
 	QuaForMove Q;//前進判定用クォータニオン
 
 	//無敵タイム

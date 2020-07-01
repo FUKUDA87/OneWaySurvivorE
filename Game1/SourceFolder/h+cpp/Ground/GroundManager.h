@@ -36,26 +36,22 @@ public:
 	// 視錐台カリング
 	void FrustumCulling(const S_Frustum_Vec * FV_Data,const D3DXVECTOR3 *CamPos);
 
-	// 左右の当たり判定
-	bool SideJudg(const S_SideJudgChara * Data,
-		const D3DXMATRIX * JudgMat_Base, const D3DXVECTOR3 * Ray_Vec, float * Small_Dis,
-		int * RayHit_No, D3DXMATRIX * RayHit_Mat, const float *Radius);
+	// 壁と球判定
+	bool BallJudgWall(bool *JudgFlg, float *SmallDis, s_CarType * HitCar, const s_CarType * JudgCar,
+		const D3DXMATRIX *Mat, const float *Radius, const bool *CollisionJudg_TrueFlg);
 
 	std::vector<C_Ground_Object*> GetGround(void) {
 		return ground;
 	}
 
 	unsigned int GetGroundNum(void) { return ground.size(); }
-
 	D3DXMATRIX GetGroundMat(const unsigned int* count) { return ground[*count]->GetMat(); }
 
-	int GetWallNum(const unsigned int* count) { return ground[*count]->Get_Wall_Num(); }
-
-	D3DXMATRIX GetWallMat(const unsigned int* count, const int *wallCount) { return ground[*count]->Get_Mat_Wall(wallCount); }
-
-	D3DXMATRIX GetWallDrawMat(const unsigned int* count, const int *wallCount) { return ground[*count]->Get_DrawMat_Wall(wallCount); }
-
-	LPD3DXMESH GetWallColMesh(const unsigned int* count, const int *wallCount) { return ground[*count]->GetColModWall(); }
+	unsigned int GetWallNum(const unsigned int* gc) { return ground[*gc]->GetWallNum(); }
+	D3DXMATRIX GetWallMat(const unsigned int* gc, const unsigned int *wc) { return ground[*gc]->GetWallMat(wc); }
+	D3DXMATRIX GetWallDrawMat(const unsigned int* gc, const unsigned int *wc) { return ground[*gc]->GetWallDrawMat(wc); }
+	LPD3DXMESH GetWallColMesh(const unsigned int* gc, const unsigned int *wc) { return ground[*gc]->GetWallColMod(wc); }
+	void GetBallJudgWall(float *Radius, D3DXVECTOR3 *Pos, const unsigned int* gc, const unsigned int *wc) { ground[*gc]->GetBallJudgWall(Radius, Pos, wc); }
 private:
 	//地面のメンバ
 	std::vector<C_Ground_Object*>ground;

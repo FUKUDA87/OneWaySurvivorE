@@ -200,6 +200,21 @@ void C_PlayerBase::Init_Bullet(void)
 	}
 }
 
+void C_PlayerBase::RayJudg(BULLETJUDGDATA * BJD, const unsigned int * cc, const RAYDATA * RD, const float * Rad)
+{
+	int carType = GetConstCar();
+
+	if (BallJudgCar(&judg.SetPosM(&RD->Mat), Rad) != true)return;
+
+	c_StructManager structManager;
+
+	D3DXVECTOR3 Pos = judg.SetPosM(&RD->Mat);
+
+	if (RayJudgCar(&Pos, &RD->Ray, BJD) == true)BJD->HitType = structManager.GetCarType(&carType, cc);
+
+	//プレイヤーはパーツと銃判定をしない
+}
+
 void C_PlayerBase::Init_Ray_Data(void)
 {
 	M_Gun_Ray_Data.Flg = false;

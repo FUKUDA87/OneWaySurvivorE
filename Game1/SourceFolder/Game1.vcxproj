@@ -147,14 +147,16 @@
     <ClInclude Include="h+cpp\Draw\2D\modoru.h" />
     <ClInclude Include="h+cpp\Draw\2D\Pause.h" />
     <ClInclude Include="h+cpp\Draw\2D\Score.h" />
+    <ClInclude Include="h+cpp\Draw\2D\Screen\Screen.h" />
     <ClInclude Include="h+cpp\Draw\2D\Warning.h" />
     <ClInclude Include="h+cpp\Draw\2D\Window.h" />
-    <ClInclude Include="h+cpp\Draw\3D\Ball.h" />
+    <ClInclude Include="h+cpp\Draw\3D\Ball\Ball3D.h" />
     <ClInclude Include="h+cpp\Draw\3D\Spear.h" />
     <ClInclude Include="h+cpp\Draw\Bullet\Bullet_DrawManager.h" />
     <ClInclude Include="h+cpp\Draw\Bullet\Bullet_No1.h" />
     <ClInclude Include="h+cpp\Draw\Bullet\Bullet_No2.h" />
     <ClInclude Include="h+cpp\Draw\Bullet\Bullet_No99.h" />
+    <ClInclude Include="h+cpp\Draw\Damage_Num\DamageNumDraw3DManager.h" />
     <ClInclude Include="h+cpp\Draw\Damage_Num\Damage_Move_A.h" />
     <ClInclude Include="h+cpp\Draw\Damage_Num\Damage_Move_B.h" />
     <ClInclude Include="h+cpp\Draw\Damage_Num\Damage_Num_Base.h" />
@@ -188,6 +190,7 @@
     <ClInclude Include="h+cpp\Draw\Effect\3D\Spark\Spark.h" />
     <ClInclude Include="h+cpp\Draw\Effect\3D\Spark\Spark2.h" />
     <ClInclude Include="h+cpp\Draw\Effect\3D\Spark\SparkDamege.h" />
+    <ClInclude Include="h+cpp\Draw\Effect\Car\Ball\Ball3DEffect.h" />
     <ClInclude Include="h+cpp\Draw\Effect\Car\EffectVectorCar.h" />
     <ClInclude Include="h+cpp\Draw\Effect\Car\Smoke\CarSmoke.h" />
     <ClInclude Include="h+cpp\Draw\Effect\EffectBase.h" />
@@ -220,6 +223,13 @@
     <ClInclude Include="h+cpp\Draw\Num\2D\NumA.h" />
     <ClInclude Include="h+cpp\Draw\Polygon\Polygon_Judg.h" />
     <ClInclude Include="h+cpp\Draw\Screen_2D\Screen_2D.h" />
+    <ClInclude Include="h+cpp\Draw\StageParts\CarSelect.h" />
+    <ClInclude Include="h+cpp\Draw\StageParts\CarSet.h" />
+    <ClInclude Include="h+cpp\Draw\StageParts\OkButton.h" />
+    <ClInclude Include="h+cpp\Draw\StageParts\StageCamera.h" />
+    <ClInclude Include="h+cpp\Draw\StageParts\StageCar.h" />
+    <ClInclude Include="h+cpp\Draw\StageParts\StageTex.h" />
+    <ClInclude Include="h+cpp\Draw\StageParts\Stage_Room.h" />
     <ClInclude Include="h+cpp\Draw\Stand\Stand_DrawManager.h" />
     <ClInclude Include="h+cpp\Draw\Stand\Stand_No0.h" />
     <ClInclude Include="h+cpp\Draw\Stand\Stand_No1.h" />
@@ -228,6 +238,10 @@
     <ClInclude Include="h+cpp\Draw\Tire\Tire_DrawManager.h" />
     <ClInclude Include="h+cpp\Draw\Tire\Tire_No101.h" />
     <ClInclude Include="h+cpp\Draw\Tire\Tire_No201.h" />
+    <ClInclude Include="h+cpp\Draw\TitleParts\StartTex.h" />
+    <ClInclude Include="h+cpp\Draw\TitleParts\TitelCamera.h" />
+    <ClInclude Include="h+cpp\Draw\TitleParts\TitleSky.h" />
+    <ClInclude Include="h+cpp\Draw\TitleParts\TitleTex.h" />
     <ClInclude Include="h+cpp\Enemy\Data\Base&amp;Manager\EnemyAiPhaseBase.h" />
     <ClInclude Include="h+cpp\Enemy\Data\Base&amp;Manager\EnemyDataNoConst.h" />
     <ClInclude Include="h+cpp\Enemy\Data\Base&amp;Manager\EnemySpeed.h" />
@@ -277,6 +291,7 @@
     <ClInclude Include="h+cpp\GameSource\Countdown.h" />
     <ClInclude Include="h+cpp\GameSource\Debug.h" />
     <ClInclude Include="h+cpp\GameSource\Option\Option.h" />
+    <ClInclude Include="h+cpp\GameSource\StructManager.h" />
     <ClInclude Include="h+cpp\GameSource\Text_Num.h" />
     <ClInclude Include="h+cpp\GameSource\Draw3DState.h" />
     <ClInclude Include="h+cpp\GameSource\Enum.h" />
@@ -349,7 +364,6 @@
     <ClInclude Include="h+cpp\Manager\TextureManager\DrawTextureManager_Manager.h" />
     <ClInclude Include="h+cpp\MaterialManager\TextureManager.h" />
     <ClInclude Include="h+cpp\MaterialManager\XFileManager.h" />
-    <ClInclude Include="h+cpp\MaterialManager\XFileManagerData.h" />
     <ClInclude Include="h+cpp\Move\GunMove\Auto\Departure_A.h" />
     <ClInclude Include="h+cpp\Move\GunMove\Auto\Departure_B.h" />
     <ClInclude Include="h+cpp\Move\GunMove\Auto\Departure_Gun_Auto_Base.h" />
@@ -391,13 +405,6 @@
     <ClInclude Include="h+cpp\Sound\GameSoundManager.h" />
     <ClInclude Include="h+cpp\Sound\vector\Sound_Data_Base.h" />
     <ClInclude Include="h+cpp\Sound\vector\Sound_Data_Vector.h" />
-    <ClInclude Include="h+cpp\StageParts\CarSelect.h" />
-    <ClInclude Include="h+cpp\StageParts\CarSet.h" />
-    <ClInclude Include="h+cpp\StageParts\OkButton.h" />
-    <ClInclude Include="h+cpp\StageParts\StageCamera.h" />
-    <ClInclude Include="h+cpp\StageParts\StageCar.h" />
-    <ClInclude Include="h+cpp\StageParts\StageTex.h" />
-    <ClInclude Include="h+cpp\StageParts\Stage_Room.h" />
     <ClInclude Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Base.h" />
     <ClInclude Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Data.h" />
     <ClInclude Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Manager.h" />
@@ -409,10 +416,6 @@
     <ClInclude Include="h+cpp\Stage_Data\Stage_1\Stage_No1_3.h" />
     <ClInclude Include="h+cpp\Stage_Data\Stage_D1\Stage_D1_1.h" />
     <ClInclude Include="h+cpp\Stage_Data\Stage_D1\Stage_D1_2.h" />
-    <ClInclude Include="h+cpp\TitleParts\StartTex.h" />
-    <ClInclude Include="h+cpp\TitleParts\TitelCamera.h" />
-    <ClInclude Include="h+cpp\TitleParts\TitleSky.h" />
-    <ClInclude Include="h+cpp\TitleParts\TitleTex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="h+cpp\Car\CarBase.cpp" />
@@ -436,14 +439,16 @@
     <ClCompile Include="h+cpp\Draw\2D\modoru.cpp" />
     <ClCompile Include="h+cpp\Draw\2D\Pause.cpp" />
     <ClCompile Include="h+cpp\Draw\2D\Score.cpp" />
+    <ClCompile Include="h+cpp\Draw\2D\Screen\Screen.cpp" />
     <ClCompile Include="h+cpp\Draw\2D\Warning.cpp" />
     <ClCompile Include="h+cpp\Draw\2D\Window.cpp" />
-    <ClCompile Include="h+cpp\Draw\3D\Ball.cpp" />
+    <ClCompile Include="h+cpp\Draw\3D\Ball\Ball3D.cpp" />
     <ClCompile Include="h+cpp\Draw\3D\Spear.cpp" />
     <ClCompile Include="h+cpp\Draw\Bullet\Bullet_DrawManager.cpp" />
     <ClCompile Include="h+cpp\Draw\Bullet\Bullet_No1.cpp" />
     <ClCompile Include="h+cpp\Draw\Bullet\Bullet_No2.cpp" />
     <ClCompile Include="h+cpp\Draw\Bullet\Bullet_No99.cpp" />
+    <ClCompile Include="h+cpp\Draw\Damage_Num\DamageNumDraw3DManager.cpp" />
     <ClCompile Include="h+cpp\Draw\Damage_Num\Damage_Move_A.cpp" />
     <ClCompile Include="h+cpp\Draw\Damage_Num\Damage_Move_B.cpp" />
     <ClCompile Include="h+cpp\Draw\Damage_Num\Damage_Num_Base.cpp" />
@@ -473,6 +478,7 @@
     <ClCompile Include="h+cpp\Draw\Effect\3D\Spark\Spark.cpp" />
     <ClCompile Include="h+cpp\Draw\Effect\3D\Spark\Spark2.cpp" />
     <ClCompile Include="h+cpp\Draw\Effect\3D\Spark\SparkDamege.cpp" />
+    <ClCompile Include="h+cpp\Draw\Effect\Car\Ball\Ball3DEffect.cpp" />
     <ClCompile Include="h+cpp\Draw\Effect\Car\EffectVectorCar.cpp" />
     <ClCompile Include="h+cpp\Draw\Effect\Car\Smoke\CarSmoke.cpp" />
     <ClCompile Include="h+cpp\Draw\Effect\EffectVector.cpp" />
@@ -503,6 +509,13 @@
     <ClCompile Include="h+cpp\Draw\Num\2D\Num2DBase.cpp" />
     <ClCompile Include="h+cpp\Draw\Num\2D\NumA.cpp" />
     <ClCompile Include="h+cpp\Draw\Polygon\Polygon_Judg.cpp" />
+    <ClCompile Include="h+cpp\Draw\StageParts\CarSelect.cpp" />
+    <ClCompile Include="h+cpp\Draw\StageParts\CarSet.cpp" />
+    <ClCompile Include="h+cpp\Draw\StageParts\OkButton.cpp" />
+    <ClCompile Include="h+cpp\Draw\StageParts\StageCamera.cpp" />
+    <ClCompile Include="h+cpp\Draw\StageParts\StageCar.cpp" />
+    <ClCompile Include="h+cpp\Draw\StageParts\StageTex.cpp" />
+    <ClCompile Include="h+cpp\Draw\StageParts\Stage_Room.cpp" />
     <ClCompile Include="h+cpp\Draw\Stand\Stand_DrawManager.cpp" />
     <ClCompile Include="h+cpp\Draw\Stand\Stand_No0.cpp" />
     <ClCompile Include="h+cpp\Draw\Stand\Stand_No1.cpp" />
@@ -511,6 +524,10 @@
     <ClCompile Include="h+cpp\Draw\Tire\Tire_DrawManager.cpp" />
     <ClCompile Include="h+cpp\Draw\Tire\Tire_No101.cpp" />
     <ClCompile Include="h+cpp\Draw\Tire\Tire_No201.cpp" />
+    <ClCompile Include="h+cpp\Draw\TitleParts\StartTex.cpp" />
+    <ClCompile Include="h+cpp\Draw\TitleParts\TitelCamera.cpp" />
+    <ClCompile Include="h+cpp\Draw\TitleParts\TitleSky.cpp" />
+    <ClCompile Include="h+cpp\Draw\TitleParts\TitleTex.cpp" />
     <ClCompile Include="h+cpp\Enemy\Data\Base&amp;Manager\EnemySpeed.cpp" />
     <ClCompile Include="h+cpp\Enemy\Data\Base&amp;Manager\EnemySpeedManager.cpp" />
     <ClCompile Include="h+cpp\Enemy\Data\Base&amp;Manager\Enemy_Gun_Move_Base.cpp" />
@@ -554,6 +571,7 @@
     <ClCompile Include="h+cpp\GameSource\Count.cpp" />
     <ClCompile Include="h+cpp\GameSource\Debug.cpp" />
     <ClCompile Include="h+cpp\GameSource\Option\Option.cpp" />
+    <ClCompile Include="h+cpp\GameSource\StructManager.cpp" />
     <ClCompile Include="h+cpp\GameSource\Text_Num.cpp" />
     <ClCompile Include="h+cpp\GameSource\Draw3DState.cpp" />
     <ClCompile Include="h+cpp\GameSource\GetSet\float_GetSet.cpp" />
@@ -619,7 +637,6 @@
     <ClCompile Include="h+cpp\Manager\TextureManager\DrawTextureManager_Manager.cpp" />
     <ClCompile Include="h+cpp\MaterialManager\TextureManager.cpp" />
     <ClCompile Include="h+cpp\MaterialManager\XFileManager.cpp" />
-    <ClCompile Include="h+cpp\MaterialManager\XFileManagerData.cpp" />
     <ClCompile Include="h+cpp\Move\GunMove\Auto\Departure_A.cpp" />
     <ClCompile Include="h+cpp\Move\GunMove\Auto\Departure_B.cpp" />
     <ClCompile Include="h+cpp\Move\GunMove\Auto\Departure_Gun_Auto_Base.cpp" />
@@ -659,13 +676,6 @@
     <ClCompile Include="h+cpp\Sound\GameSoundManager.cpp" />
     <ClCompile Include="h+cpp\Sound\vector\Sound_Data_Base.cpp" />
     <ClCompile Include="h+cpp\Sound\vector\Sound_Data_Vector.cpp" />
-    <ClCompile Include="h+cpp\StageParts\CarSelect.cpp" />
-    <ClCompile Include="h+cpp\StageParts\CarSet.cpp" />
-    <ClCompile Include="h+cpp\StageParts\OkButton.cpp" />
-    <ClCompile Include="h+cpp\StageParts\StageCamera.cpp" />
-    <ClCompile Include="h+cpp\StageParts\StageCar.cpp" />
-    <ClCompile Include="h+cpp\StageParts\StageTex.cpp" />
-    <ClCompile Include="h+cpp\StageParts\Stage_Room.cpp" />
     <ClCompile Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Base.cpp" />
     <ClCompile Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Data.cpp" />
     <ClCompile Include="h+cpp\Stage_Data\Car_Pop\Car_Pop_Manager.cpp" />
@@ -677,10 +687,6 @@
     <ClCompile Include="h+cpp\Stage_Data\Stage_1\Stage_No1_3.cpp" />
     <ClCompile Include="h+cpp\Stage_Data\Stage_D1\Stage_D1_1.cpp" />
     <ClCompile Include="h+cpp\Stage_Data\Stage_D1\Stage_D1_2.cpp" />
-    <ClCompile Include="h+cpp\TitleParts\StartTex.cpp" />
-    <ClCompile Include="h+cpp\TitleParts\TitelCamera.cpp" />
-    <ClCompile Include="h+cpp\TitleParts\TitleSky.cpp" />
-    <ClCompile Include="h+cpp\TitleParts\TitleTex.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

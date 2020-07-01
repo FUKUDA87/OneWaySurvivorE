@@ -14,7 +14,6 @@
 #include"GameSource/SoundManager.h"
 #include"Sound/BulletEmpty1.h"
 #include"Key/KeyTrue.h"
-#include"MaterialManager/XFileManagerData.h"
 #include"Fade/Fade.h"
 
 #pragma comment(lib, "d3d9.lib")
@@ -63,7 +62,6 @@ LPDIRECTSOUND3DLISTENER8 lpSListenerE;
 SceneManager sceneManager;
 TextureManager textureManager;
 XFileManager xfileManager;
-XFileManagerData xfileManagerData;
 D3DLIGHT9 Light;
 LPD3DXFONT lpFontS;
 HWND Hwnd;

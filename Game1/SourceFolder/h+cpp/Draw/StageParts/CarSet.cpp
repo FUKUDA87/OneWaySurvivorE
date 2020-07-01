@@ -1,10 +1,10 @@
 #include "CarSet.h"
 #include<stdio.h>
-#include"../MaterialManager/XfileManager.h"
-#include"../Car/Data/Draw3DManager/CarNoManager.h"
-#include"../Draw/Tire/Car_Tire_No1.h"
-#include"../Draw/DrawBase2/Draw_Mesh_Base_A.h"
-#include"../Draw/DrawBase2/Draw_Pol_A.h"
+#include"../../MaterialManager/XfileManager.h"
+#include"../../Car/Data/Draw3DManager/CarNoManager.h"
+#include"../Tire/Car_Tire_No1.h"
+#include"../DrawBase2/Draw_Mesh_Base_A.h"
+#include"../DrawBase2/Draw_Pol_A.h"
 
 
 extern XFileManager xfileManager;

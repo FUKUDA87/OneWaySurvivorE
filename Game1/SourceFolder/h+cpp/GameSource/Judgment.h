@@ -12,6 +12,7 @@ class Judg {
 public:
 	//‹——£”»’è
 	bool BallJudg(const D3DXVECTOR3 *PosA, const D3DXVECTOR3 *PosB,const float *Radius);
+	bool BallJudg(float * SmallDis, const D3DXVECTOR3 * PosA, const D3DXVECTOR3 * PosB, const float * Radius, const bool *Flg);
 	//‹——£”»’è+‹…‚Æ‹…
 	bool ball(D3DXMATRIX mat1, D3DXMATRIX mat2, float rad, D3DXMATRIX *Trans1, D3DXMATRIX *Trans2);
 	//‹——£”»’è+‹——£æ“¾
@@ -194,7 +195,7 @@ public:
 	D3DXVECTOR3 Get_Size2D(const float *Size);
 
 	//ƒŒƒC‚ª“–‚½‚Á‚½À•W‚ğ‹‚ß‚é
-	void Get_Ray_Pos3D(D3DXVECTOR3 *Ray_Hit_Pos, const D3DXVECTOR3 *Ray_Pos, const D3DXVECTOR3* Ray_Vec, const float *Ray_Dis);
+	D3DXVECTOR3 GetRayHitPos(const D3DXVECTOR3 *RayPos, const D3DXVECTOR3* RayVec, const float *RayDis);
 
 	//Vec3‚ÉVec2‚ğ‘«‚·
 	void Set_Vec3_Vec2(D3DXVECTOR3 *Vec3, const D3DXVECTOR2 *Vec2);

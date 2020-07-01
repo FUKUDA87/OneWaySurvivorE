@@ -122,6 +122,23 @@ float C_CarParts::Get_Parts_Draw_Dis(const unsigned int * M_Car_PartsNo)
 	return M_Car_Parts[*M_Car_PartsNo]->Get_Draw_Dis();
 }
 
+void C_CarParts::RayJudg(BULLETJUDGDATA * BJD, const unsigned int * cc
+	, const RAYDATA * RD, const float * Rad)
+{
+	int carType = GetConstCar();
+
+	if (BallJudgCar(&judg.SetPosM(&RD->Mat), Rad) != true)return;
+
+	c_StructManager structManager;
+
+	D3DXVECTOR3 Pos = judg.SetPosM(&RD->Mat);
+
+	if (RayJudgCar(&Pos, &RD->Ray, BJD) == true)BJD->HitType = structManager.GetCarType(&carType, cc);
+
+	RayJudgParts(BJD, &Pos, &carType, cc, &RD->Ray);
+
+}
+
 
 void C_CarParts::New_CarParts(const BODYDATA * CarData)
 {
@@ -266,6 +283,60 @@ void C_CarParts::DeleteCarPartsData(void)
 		delete M_CarPartsData[d];
 		M_CarPartsData.erase(M_CarPartsData.begin() + d);
 		d--;
+	}
+}
+
+void C_CarParts::RayJudgParts(BULLETJUDGDATA * BJD, const D3DXVECTOR3 * Pos
+	, const int * CarType, const unsigned int * cc, const D3DXVECTOR3 * Ray)
+{
+	//パーツ
+	if (M_Car_Parts.size() <= 0) return;
+
+	c_StructManager structManager;
+
+	int PartsType = 0;
+	switch (*CarType)
+	{
+	case co_PlayerCar:
+		PartsType = co_PlayerParts;
+		break;
+	case co_EnemyCar:
+		PartsType = co_EnemyParts;
+		break;
+	}
+
+	for (unsigned int pc = 0; pc < M_Car_Parts.size(); pc++) {
+		//if (enemy[e]->GetPartsData(&p).MeshDrawFlg <= 0)continue;
+
+		//メッシュ判定
+		if (M_Car_Parts[pc]->Get_Draw_Draw_JudgFlg() == Co_Draw_Mesh) {
+
+			//表示行列
+			D3DXMATRIX DrawMat = M_Car_Parts[pc]->Get_Draw_DrawMat();
+
+			//レイ判定
+			if (judg.RayJudg_Mesh_SmallDis(Pos, Ray, &DrawMat
+				, M_Car_Parts[pc]->Get_Draw_Mesh(), &BJD->SamllDis) != true) continue;
+
+			BJD->HitType = structManager.GetCarType(&PartsType, cc, &pc);
+
+		}
+		else {
+			//板ポリゴン判定
+			if (M_Car_Parts[pc]->Get_Draw_Draw_JudgFlg() == Co_Draw_Pol) {
+
+				int a = 0, b = 1, c = 2, d = 3;
+
+				//レイ判定
+				if (judg.RayJudg_Polygon_SmallDis(Pos, Ray, &M_Car_Parts[pc]->Get_Draw_DrawMat(),
+					&M_Car_Parts[pc]->Get_Draw_Pol_Pos(&a), &M_Car_Parts[pc]->Get_Draw_Pol_Pos(&b)
+					, &M_Car_Parts[pc]->Get_Draw_Pol_Pos(&c), &M_Car_Parts[pc]->Get_Draw_Pol_Pos(&d)
+					, &BJD->SamllDis) != true) continue;
+
+				BJD->HitType = structManager.GetCarType(&PartsType, cc, &pc);
+
+			}
+		}
 	}
 }
 

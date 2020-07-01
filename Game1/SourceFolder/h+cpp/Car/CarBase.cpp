@@ -187,6 +187,81 @@ void C_CarBase::Set_Move_Stop_Time(const int * Time, const int * Speed)
 	Car.Con.NowSpeed = *Speed;
 }
 
+bool C_CarBase::BallJudgCar(const D3DXVECTOR3 * Pos, const float * Radius)
+{
+	D3DXVECTOR3 carPos = judg.SetPosM(&Car.Base.Mat);
+
+	if (judg.BallJudg(Pos, &carPos, Radius))return true;
+
+	return false;
+}
+
+bool C_CarBase::BallJudgCar(bool * JudgFlg, float * SmallDis,const D3DXMATRIX * EndMat, const float * Radius)
+{
+	float Dis = *Radius + GetBodRadCar()*GetScalPosCar().z;
+
+	if (judg.BallJudg(SmallDis, &judg.SetPosM(EndMat), &judg.SetPosM(&GetForMoveEndMat()), &Dis, JudgFlg)) 
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void C_CarBase::RayJudg(BULLETJUDGDATA * BJD, const unsigned int *cc, const RAYDATA * RD, const float * Rad)
+{
+	int carType = GetConstCar();
+
+	if (BallJudgCar(&judg.SetPosM(&RD->Mat), Rad) != true)return;
+
+	c_StructManager structManager;
+
+	D3DXVECTOR3 Pos = judg.SetPosM(&RD->Mat);
+
+	if (RayJudgCar(&Pos, &RD->Ray, BJD) == true)BJD->HitType = structManager.GetCarType(&carType, cc);
+
+}
+
+int C_CarBase::GetConstCar(void)
+{
+	switch (M_Driver)
+	{
+	case Hit_Type_Player:
+		return co_PlayerCar;
+		break;
+	case Hit_Type_Enemy:
+		return co_EnemyCar;
+		break;
+	}
+
+	return 0;
+}
+
+void C_CarBase::SetSideTransMat(const float * MoveX)
+{
+	D3DXMATRIX trans;
+	D3DXMatrixTranslation(&trans, *MoveX, 0.0f, 0.0f);
+	Car.Base.Trans = trans * Car.Base.Trans;
+	Car.Base.Mat = Car.Base.Trans*Car.Con.JudgMat;
+}
+
+bool C_CarBase::RayJudgCar(const D3DXVECTOR3 * Pos, const D3DXVECTOR3 * Ray, BULLETJUDGDATA * BJD)
+{
+	float Dis;
+
+	if (judg.RayJudg_Mesh(Pos, Ray, &GetDrawMatCar(), GetMeshCar(), &Dis))
+	{
+		//ƒŒƒC‚ª“–‚½‚Á‚½Žž‚É’e‚ÌˆÚ“®‚ÌVec‚Ì’·‚³‚æ‚è’Z‚¢‚©’²‚×‚é
+		if (Dis < BJD->SamllDis) {
+			//’Z‚¢Žž
+			BJD->SamllDis = Dis;
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void C_CarBase::SetMeshCar(int MeshNo)
 {
 	C_CarMeshManager carMeshManager;

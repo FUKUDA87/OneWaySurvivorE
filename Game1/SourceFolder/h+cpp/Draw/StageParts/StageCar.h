@@ -1,5 +1,5 @@
 #pragma once
-#include"../Player/PlayerA.h"
+#include"../../Player/PlayerA.h"
 #include<d3dx9.h>
 
 class StageCar:public C_PlayerA {

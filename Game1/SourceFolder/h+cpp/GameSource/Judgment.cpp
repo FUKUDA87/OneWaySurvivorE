@@ -15,6 +15,30 @@ bool Judg::BallJudg(const D3DXVECTOR3 * PosA, const D3DXVECTOR3 * PosB, const fl
 	return false;
 }
 
+bool Judg::BallJudg(float * SmallDis,const D3DXVECTOR3 * PosA, const D3DXVECTOR3 * PosB, const float * Radius, const bool *Flg)
+{
+	D3DXVECTOR3 targetPos;
+
+	targetPos = (*PosB) - (*PosA);
+
+	float length = D3DXVec3Length(&targetPos);
+
+	if (length > *Radius)return false;
+
+	float Dis = *Radius - length;
+
+	if (*Flg == false) {
+		*SmallDis = Dis;
+		return true;
+	}
+
+	if (*SmallDis > Dis)return false;
+
+	*SmallDis = Dis;
+
+	return true;
+}
+
 bool Judg::ball(D3DXMATRIX mat1, D3DXMATRIX mat2, float rad,D3DXMATRIX *Trans1,D3DXMATRIX *Trans2)
 {
 	D3DXVECTOR3 pos1, pos2, targetPos;
@@ -1156,9 +1180,10 @@ D3DXVECTOR3 Judg::Get_Size2D(const float * Size)
 	return Scal;
 }
 
-void Judg::Get_Ray_Pos3D(D3DXVECTOR3 * Ray_Hit_Pos, const D3DXVECTOR3 * Ray_Pos, const D3DXVECTOR3 * Ray_Vec, const float * Ray_Dis)
+D3DXVECTOR3 Judg::GetRayHitPos(const D3DXVECTOR3 * RayPos, const D3DXVECTOR3 * RayVec, const float * RayDis)
 {
-	*Ray_Hit_Pos = (*Ray_Pos) + (*Ray_Vec)*(*Ray_Dis);
+	D3DXVECTOR3 RayHitPos = (*RayPos) + (*RayVec)*(*RayDis);
+	return RayHitPos;
 }
 
 void Judg::Set_Vec3_Vec2(D3DXVECTOR3 * Vec3, const D3DXVECTOR2 * Vec2)

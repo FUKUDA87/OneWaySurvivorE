@@ -221,7 +221,7 @@ void Camera::WallJudg(const int *RadF, c_GroundManager *groundManager)
 			//左フラグ
 			bool LeftFlg = true;
 			//壁の数
-			for (int wc = 0; wc < groundManager->GetWallNum(&gc); wc++) {
+			for (unsigned int wc = 0; wc < groundManager->GetWallNum(&gc); wc++) {
 				//壁の内側を見せないための拡大行列
 				D3DXMATRIX ScalY;
 				D3DXMatrixScaling(&ScalY, 1.3f, 1.0f, 1.0f);
@@ -243,8 +243,66 @@ void Camera::WallJudg(const int *RadF, c_GroundManager *groundManager)
 		SetCamPos(&(camLook + Vec * (SmallDis - 0.01f)));
 	}
 }
-bool Camera::UpdateQua(void)
+
+void Camera::InitCarCameraMove(const bool *GameEndFlg, const bool *KeyFlg, const D3DXMATRIX *PlayerMat)
 {
+	//カメラをplaeyrの前方に振り向かせるクォータニオンの初期化
+	if (*GameEndFlg != false) return;
+	//前方に振り向く計算
+	if ((*KeyFlg != true) || (GetQuaFlg() != false))return;
+
+	D3DXVECTOR3 cVec, ccVec, pVec, ppVec;
+	D3DXVec3TransformNormal(&cVec, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &GetMat());
+	D3DXVec3TransformNormal(&pVec, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), PlayerMat);
+	ccVec = cVec;
+	ppVec = pVec;
+
+	float Dot, Ang, FrameUp;
+
+	//クォータニオンのフレーム数を計算
+	Dot = D3DXVec3Dot(&pVec, &cVec);
+	if (Dot > 1.0f)Dot = 1.0f;
+	if (Dot < -1.0f)Dot = -1.0f;
+	Ang = D3DXToDegree(acos(Dot));
+	FrameUp = 1.0f / Ang * 6.0f;
+
+	//RotYの計算
+	D3DXMATRIX CamRotY, CamRotX;
+	ppVec.y = 0;
+
+	//内積
+	Dot = D3DXVec3Dot(&D3DXVECTOR3(0.0f, 0.0f, 1.0f), &ppVec);
+	if (Dot > 1.0f)Dot = 1.0f;
+	if (Dot < -1.0f)Dot = -1.0f;
+	Ang = D3DXToDegree(acos(Dot));
+	if (ppVec.x < 0.0f)Ang *= -1.0f;
+	D3DXMatrixRotationY(&CamRotY, D3DXToRadian(Ang));
+	//camera->SetRotY(&CamRotY);
+
+
+	//RotXの計算
+	D3DXMATRIX Mat = *PlayerMat;
+	D3DXMatrixRotationY(&CamRotX, D3DXToRadian(-Ang));
+	Mat = CamRotX * Mat;
+	D3DXVec3TransformNormal(&pVec, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &Mat);
+	//内積
+	Dot = D3DXVec3Dot(&D3DXVECTOR3(0.0f, 0.0f, 1.0f), &pVec);
+	if (Dot > 1.0f)Dot = 1.0f;
+	if (Dot < -1.0f)Dot = -1.0f;
+	Ang = D3DXToDegree(acos(Dot));
+	if (pVec.y > 0.0f)Ang *= -1.0f;
+	D3DXMatrixRotationX(&CamRotX, D3DXToRadian(Ang));
+	//camera->SetRotX(&CamRotX);
+
+	//クォータニオンの初期値をセット
+	SetQuaMat(&CamRotX, &CamRotY, &FrameUp);
+
+}
+
+bool Camera::UpdateQua(const bool *GameEndFlg, const bool *KeyFlg, const D3DXMATRIX *PlayerMat)
+{
+	InitCarCameraMove(GameEndFlg,KeyFlg,PlayerMat);
+
 	if (QuaFlg == true) {
 		Anime += FrameUp;
 		if (Anime > 1.0f) {

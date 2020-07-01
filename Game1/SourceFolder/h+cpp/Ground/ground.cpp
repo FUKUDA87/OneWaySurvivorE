@@ -4,30 +4,7 @@
 extern LPDIRECT3DDEVICE9 lpD3DDevice;
 extern TextureManager textureManager;
 
-void C_Ground::Init()
-{
-	//画像のロード
-	ground.TEX = { NULL,650,300,NULL,NULL,NULL };
-	ground.TEX.Tex = textureManager.GetTexture("syadou8-2.png",ground.TEX.Width, ground.TEX.Height, NULL);
-
-	D3DXMatrixTranslation(&ground.Base.Mat, 0, 0, 0);
-	ground.Base.Flg = true;
-	ground.Base.Pos= D3DXVECTOR3(13.0f, 0.0f, 5.0f);
-	way.RailNum = 5;
-	MoveFlg = false;
-	D3DXMatrixRotationY(&ground.Base.RotY, D3DXToRadian(0.0f));
-	D3DXVECTOR3 Pos = ground.Base.Pos;
-	ground.v[0].Pos = D3DXVECTOR3(-Pos.x, 0.0f, Pos.z);//x,y,z
-	ground.v[1].Pos = D3DXVECTOR3(Pos.x, 0.0f, Pos.z);
-	ground.v[2].Pos = D3DXVECTOR3(Pos.x, 0.0f, -Pos.z);
-	ground.v[3].Pos = D3DXVECTOR3(-Pos.x, 0.0f, -Pos.z);
-
-	way.WayType = 0;
-	way.Ang = 0.0f;
-
-	//地面の表示Flg初期化
-	ground.Base.DrawFlg = true;
-}
+#define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 
 C_Ground::C_Ground(const int * i)
 {
@@ -47,6 +24,8 @@ C_Ground::C_Ground(const int * i)
 		way.CurTransX[g] = CurX;
 		CurX -= 5.0f;
 	}
+
+	InitWall();
 }
 
 C_Ground::C_Ground(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUND_INIT_DATA * Init_Data_Ground)
@@ -177,16 +156,33 @@ C_Ground::C_Ground(const D3DXMATRIX *Mat3, const D3DXMATRIX *Mat4, const S_GROUN
 		way.CurTransX[i] = CurX;
 		CurX -= 5.0f;
 	}
+
+	InitWall();
 }
 
 C_Ground::~C_Ground()
 {
-	if (way.CurTransX != nullptr) {
-		delete[] way.CurTransX;
+	if (way.CurTransX != nullptr) delete[] way.CurTransX;
+
+	if (wall.size() > 0)
+	{
+		for (unsigned int wc = 0; wc < wall.size(); wc++) {
+			delete wall[wc];
+			wall.erase(wall.begin() + wc);
+			wc--;
+		}
 	}
 }
 
-void C_Ground::Update(void) {
+bool C_Ground::Update()
+{
+	UpdateGround();
+
+	return true;
+}
+
+void C_Ground::UpdateGround()
+{
 	ground.v[0].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
 	ground.v[1].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
 	ground.v[2].Color = D3DCOLOR_ARGB(255, 255, 255, 255);
@@ -196,32 +192,59 @@ void C_Ground::Update(void) {
 	ground.v[1].Tex = D3DXVECTOR2(1.0f, 0.0f);
 	ground.v[2].Tex = D3DXVECTOR2(1.0f, 1.0f);
 	ground.v[3].Tex = D3DXVECTOR2(0.0f, 1.0f);
-}
-#define	FVF_VERTEX (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
-void C_Ground::Draw(void) {
-	//地面の表示確認
-	//if (ground.Base.DrawFlg == true) {
-		//地面の表示
-		lpD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-		lpD3DDevice->SetTexture(0, ground.TEX.Tex);
-		lpD3DDevice->SetTransform(D3DTS_WORLD, &DrawMat);
-		lpD3DDevice->SetFVF(FVF_VERTEX);//バグ
-		lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, ground.v, sizeof(VERTEX));//2はポリゴン数
-		lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-		/*D3DXMATRIX Rot;
-		D3DXMatrixRotationX(&Rot, D3DXToRadian(180.0f));
-		spear->Draw3D(Rot*way.StartMat);*/
-	//}
 }
-D3DXMATRIX C_Ground::GetMat(void) {
-	return ground.Base.Mat;
+
+void C_Ground::Draw3DGround()
+{
+	//地面の表示
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	lpD3DDevice->SetTexture(0, ground.TEX.Tex);
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &DrawMat);
+	lpD3DDevice->SetFVF(FVF_VERTEX);//バグ
+	lpD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, ground.v, sizeof(VERTEX));//2はポリゴン数
+	lpD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+	if (wall.size() > 0)
+	{
+		for (auto && w : wall)w->Draw3D();
+	}
 }
-bool C_Ground::GetFlg(void) {
-	return ground.Base.Flg;
+
+void C_Ground::Init()
+{
+	//画像のロード
+	ground.TEX = { NULL,650,300,NULL,NULL,NULL };
+	ground.TEX.Tex = textureManager.GetTexture("syadou8-2.png", ground.TEX.Width, ground.TEX.Height, NULL);
+
+	D3DXMatrixTranslation(&ground.Base.Mat, 0, 0, 0);
+	ground.Base.Flg = true;
+	ground.Base.Pos = D3DXVECTOR3(13.0f, 0.0f, 5.0f);
+	way.RailNum = 5;
+	MoveFlg = false;
+	D3DXMatrixRotationY(&ground.Base.RotY, D3DXToRadian(0.0f));
+	D3DXVECTOR3 Pos = ground.Base.Pos;
+	ground.v[0].Pos = D3DXVECTOR3(-Pos.x, 0.0f, Pos.z);//x,y,z
+	ground.v[1].Pos = D3DXVECTOR3(Pos.x, 0.0f, Pos.z);
+	ground.v[2].Pos = D3DXVECTOR3(Pos.x, 0.0f, -Pos.z);
+	ground.v[3].Pos = D3DXVECTOR3(-Pos.x, 0.0f, -Pos.z);
+
+	way.WayType = 0;
+	way.Ang = 0.0f;
+
+	//地面の表示Flg初期化
+	ground.Base.DrawFlg = true;
 }
-void C_Ground::SetFlg(bool b) {
-	ground.Base.Flg = b;
+
+void C_Ground::InitWall(void)
+{
+	// 壁の初期化
+	// 左
+	bool LeftFlg = true;
+	wall.push_back(new c_Wall(&IdenFlg, &LeftFlg, &ground.Base.Mat, &ground.v[3].Pos, &ground.v[0].Pos));
+	// 右
+	LeftFlg = false;
+	wall.push_back(new c_Wall(&IdenFlg, &LeftFlg, &ground.Base.Mat, &ground.v[2].Pos, &ground.v[1].Pos));
 }
 
 D3DXMATRIX C_Ground::GetMat0()

@@ -112,6 +112,47 @@ void C_CarGun::New_Car_Parts_Gun(std::vector<C_Parts_Set_Data*> M_Set_Data)
 	}
 }
 
+void C_CarGun::RayJudgGun(BULLETJUDGDATA * BJD, const D3DXVECTOR3 * Pos, const int * CarType, const unsigned int * cc, const D3DXVECTOR3 * Ray)
+{
+	//èe
+	if (M_Gun.size() <= 0) return;
+
+	c_StructManager structManager;
+
+	int GunType = 0;
+	switch (*CarType)
+	{
+	case co_PlayerCar:
+		GunType = co_PlayerGun;
+		break;
+	case co_EnemyCar:
+		GunType = co_EnemyGun;
+		break;
+	}
+
+	for (unsigned int gc = 0; gc < M_Gun.size(); gc++) {
+		//if (enemy[e]->GetGunData(&g).Base.DrawFlg != true)continue;
+
+		bool Flg = M_Gun[gc]->Dead();
+		if (judg.ReverseFlg2(&Flg) != true) continue;
+
+		if (M_Gun[gc]->Get_Draw_Parts_Num() <= 0) continue;
+
+		for (unsigned int gpc = 0; gpc < M_Gun[gc]->Get_Draw_Parts_Num(); gpc++) {
+
+			if (M_Gun[gc]->Get_Draw_Parts_Draw_JudgFlg(&gpc) != Co_Draw_Mesh) continue;
+
+			//ÉåÉCîªíË
+			if (judg.RayJudg_Mesh_SmallDis(Pos, Ray, &M_Gun[gc]->Get_Draw_Parts_Draw_Mat(&gpc)
+				, M_Gun[gc]->Get_Draw_Parts_Mesh(&gpc), &BJD->SamllDis) != true) continue;
+
+			BJD->HitType = structManager.GetCarType(&GunType, cc, &gc, &gpc);
+
+		}
+	}
+
+}
+
 void C_CarGun::Delete_Gun(unsigned int * GunNo)
 {
 	if (M_Gun.size() < 1)return;
@@ -256,6 +297,26 @@ void C_CarGun::Set_Gun_Bullet_No(const unsigned int * M_GunNo, const int * Bulle
 	if (*M_GunNo >= M_Gun.size())return;
 
 	M_Gun[*M_GunNo]->Set_Bullet_No(BulletNo);
+}
+
+void C_CarGun::RayJudg(BULLETJUDGDATA * BJD, const unsigned int * cc, const RAYDATA * RD, const float * Rad)
+{
+	int carType = GetConstCar();
+
+	if (BallJudgCar(&judg.SetPosM(&RD->Mat), Rad) != true)return;
+
+	c_StructManager structManager;
+
+	D3DXVECTOR3 Pos = judg.SetPosM(&RD->Mat);
+
+	// é‘ëÃîªíË
+	if (RayJudgCar(&Pos, &RD->Ray, BJD) == true)BJD->HitType = structManager.GetCarType(&carType, cc);
+
+	// ÉpÅ[ÉcîªíË
+	RayJudgParts(BJD, &Pos, &carType, cc, &RD->Ray);
+
+	// èeîªíË
+	RayJudgGun(BJD, &Pos, &carType, cc, &RD->Ray);
 }
 
 void C_CarGun::AllDelete_Gun(void)

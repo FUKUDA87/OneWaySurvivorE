@@ -9,8 +9,10 @@ class XFileManager
 public:
 	~XFileManager();
 	XFILE GetMesh(std::string FileName);
+	XFILE_B GetMeshB(std::string FileName);
 	void AllDelete(void);
 private:
 	std::map<std::string, XFILE*>xfileList;
+	std::map<std::string, s_MeshData*>MeshDataList;
 };
 

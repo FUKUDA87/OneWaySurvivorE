@@ -1,8 +1,8 @@
 #pragma once
 #include<d3dx9.h>
-#include"../GameSource/Struct.h"
-#include"../GameSource/Judgment.h"
-#include"../Draw/DrawBase2/Draw3D_Base2.h"
+#include"../../GameSource/Struct.h"
+#include"../../GameSource/Judgment.h"
+#include"../DrawBase2/Draw3D_Base2.h"
 
 class C_CarSet {
 public:

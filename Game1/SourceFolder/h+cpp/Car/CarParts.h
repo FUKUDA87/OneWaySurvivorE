@@ -62,7 +62,8 @@ public:
 		return BodyData;
 	}
 
-	/*パーツのサウンドデータの取得*/
+	// レイ判定
+	void RayJudg(BULLETJUDGDATA * BJD, const unsigned int *cc, const RAYDATA * RD, const float * Rad);
 
 protected:
 	//パーツ表示変数
@@ -105,6 +106,9 @@ protected:
 
 	// 車のパーツ位置情報削除
 	void DeleteCarPartsData(void);
+
+	// レイ判定
+	void RayJudgParts(BULLETJUDGDATA * BJD, const D3DXVECTOR3 *Pos, const int *CarType, const unsigned int *cc, const D3DXVECTOR3 *Ray);
 
 private:
 

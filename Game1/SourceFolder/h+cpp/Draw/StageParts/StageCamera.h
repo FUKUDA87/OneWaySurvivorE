@@ -1,7 +1,7 @@
 #pragma once
-#include"../Player/Camera.h"
+#include"../../Player/Camera.h"
 #include<d3dx9.h>
-#include"../Key/CMouse.h"
+#include"../../Key/CMouse.h"
 
 
 class StageCam :public Camera {

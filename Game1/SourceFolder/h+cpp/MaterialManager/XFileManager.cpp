@@ -1,4 +1,5 @@
 #include"XFileManager.h"
+#include"../GameSource/Judgment.h"
 
 void LoadMesh(struct XFILE *XFile, const char FName[]);
 void ReleaseMesh(struct XFILE *XFile);
@@ -26,10 +27,62 @@ XFILE XFileManager::GetMesh(std::string FileName)
 	}
 	return *Mesh;
 }
+XFILE_B XFileManager::GetMeshB(std::string FileName)
+{
+	XFILE_B Xfile;
+
+	Xfile.Mesh = GetMesh(FileName);
+
+	s_MeshData *Data;
+
+	if (MeshDataList.find(FileName) == MeshDataList.end()) {
+
+		Data = new s_MeshData();
+
+		Data->NumVertex = Xfile.Mesh.lpMesh->GetNumVertices();
+
+		CLONEVERTEX *pV;
+		D3DXVECTOR3 BigPos, SmallPos;
+		Xfile.Mesh.lpMesh->LockVertexBuffer(0, (LPVOID*)&pV);
+
+		Judg judg;
+		for (DWORD No = 0; No < Data->NumVertex; No++) {
+			if (No > 0) {
+				judg.Pos_Big_Judg(&BigPos, &(pV + No)->Pos);
+				judg.Pos_Small_Judg(&SmallPos, &(pV + No)->Pos);
+			}
+			else {
+				BigPos = SmallPos = (pV + No)->Pos;
+			}
+		}
+
+
+		Data->BigVec = BigPos;
+		Data->SmallVec = SmallPos;
+
+		Xfile.Mesh.lpMesh->UnlockVertexBuffer();
+
+		MeshDataList[FileName] = Data;
+	}
+	else {
+		Data = MeshDataList[FileName];
+	}
+
+	Xfile.Data = *Data;
+
+	return Xfile;
+}
 void XFileManager::AllDelete(void) {
+
 	for (auto itr = xfileList.begin(); itr != xfileList.end(); itr++) {
 		ReleaseMesh(itr->second);
 		delete itr->second;
 	}
 	xfileList.clear();
+
+
+	for (auto itr = MeshDataList.begin(); itr != MeshDataList.end(); itr++) {
+		delete itr->second;
+	}
+	MeshDataList.clear();
 }

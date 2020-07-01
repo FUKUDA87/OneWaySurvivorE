@@ -1,6 +1,6 @@
 #include "Stage_Room.h"
-#include"../GameSource/Judgment.h"
-#include"../Draw/DrawBase2/Draw_Mesh_Base_A.h"
+#include"../../GameSource/Judgment.h"
+#include"../DrawBase2/Draw_Mesh_Base_A.h"
 
 C_Stage_Room_Stand::C_Stage_Room_Stand(const D3DXVECTOR3 * Set_Pos, std::string FileName)
 {

@@ -37,7 +37,8 @@ StageSelectScene::StageSelectScene()
 	key.Init();
 
 	//サウンドの初期化
-	if (M_C_Sound_Manager == nullptr)M_C_Sound_Manager = new c_GameSoundManager();
+	int BGMVolume = option->GetOptionData().BGMVolume, SEVolume = option->GetOptionData().SEVolume;
+	M_C_Sound_Manager = new c_GameSoundManager(&BGMVolume, &SEVolume);
 
 
 	//選択モードの初期化の前に初期化
@@ -53,8 +54,8 @@ StageSelectScene::StageSelectScene()
 
 	GameScene_DebugFlg = false;
 
-	int No = 3,Volume=option->GetOptionData().BGMVolume;
-	M_C_Sound_Manager->BGMStart(&No, &Volume);
+	int No = 3;
+	M_C_Sound_Manager->BGMStart(&No);
 
 }
 
@@ -136,9 +137,11 @@ bool StageSelectScene::Update(void)
 
 		S_OptionData l_OptionData = option->GetOptionData();
 
-		M_C_Sound_Manager->Update(&l_OptionData.BGMVolume);
+		M_C_Sound_Manager->UpdateVolume(&l_OptionData.BGMVolume, &l_OptionData.SEVolume);
 
-		M_C_Sound_Manager->New(&l_OptionData.BGMVolume);
+		M_C_Sound_Manager->Update();
+
+		M_C_Sound_Manager->New();
 	}
 
 	mouse->Update();

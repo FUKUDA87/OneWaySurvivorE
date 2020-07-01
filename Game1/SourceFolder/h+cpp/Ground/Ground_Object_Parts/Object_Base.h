@@ -27,7 +27,7 @@ public:
 	}
 
 	//行列の種類渡し
-	int Get_Mat_No(void) {
+	unsigned int Get_Mat_No(void) {
 		return M_Set_Mat_No;
 	}
 
@@ -39,7 +39,7 @@ protected:
 	S_Base3D_2 M_Base;
 
 	//行列の代入の種類
-	int M_Set_Mat_No;
+	unsigned int M_Set_Mat_No;
 
 	//メッシュのロード
 	void Mesh_Load(std::string FileName);

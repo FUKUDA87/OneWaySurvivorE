@@ -67,6 +67,10 @@ public:
 	//e‚ª”­Ë‚·‚é’e‚Ì•ÏX
 	void Set_Gun_Bullet_No(const unsigned int *M_GunNo, const int *BulletNo);
 
+	// ƒŒƒC”»’è
+	void RayJudg(BULLETJUDGDATA * BJD, const unsigned int *cc, const RAYDATA * RD, const float * Rad);
+
+
 protected:
 	//‘S‚Ä‚Ìe‚Ìíœ
 	void AllDelete_Gun(void);
@@ -86,6 +90,9 @@ protected:
 	//e‚Ì‚­‚Á‚Â‚¯
 	virtual void New_Car_Parts_Gun(const BODYDATA *CarData);
 	virtual void New_Car_Parts_Gun(std::vector<C_Parts_Set_Data*>M_Set_Data);
+
+	// ƒŒƒC”»’è
+	void RayJudgGun(BULLETJUDGDATA * BJD, const D3DXVECTOR3 *Pos, const int *CarType, const unsigned int *cc, const D3DXVECTOR3 *Ray);
 
 private:
 

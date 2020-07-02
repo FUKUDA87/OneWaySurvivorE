@@ -6,7 +6,7 @@ public:
 	//弾の番号と銃口の行列
 	C_Bullet_No1(const D3DXMATRIX *Mat);
 	//プレイヤーが照準を合わせた時のコンストラクタ
-	C_Bullet_No1(const D3DXMATRIX *Mat, const S_RAY_HIT_JUDG_DATA* RayData);
+	C_Bullet_No1(const D3DXMATRIX *Mat, const S_RayHitJudgData* RayData);
 private:
 	//初期化
 	void Init_No1(void);

@@ -204,11 +204,11 @@ void C_PlayerBase::RayJudg(BULLETJUDGDATA * BJD, const unsigned int * cc, const 
 {
 	int carType = GetConstCar();
 
-	if (BallJudgCar(&judg.SetPosM(&RD->Mat), Rad) != true)return;
+	D3DXVECTOR3 Pos = judg.SetPosM(&RD->Mat);
+
+	if (BallJudgCar(&Pos, Rad) != true)return;
 
 	c_StructManager structManager;
-
-	D3DXVECTOR3 Pos = judg.SetPosM(&RD->Mat);
 
 	if (RayJudgCar(&Pos, &RD->Ray, BJD) == true)BJD->HitType = structManager.GetCarType(&carType, cc);
 

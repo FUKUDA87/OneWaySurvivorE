@@ -245,6 +245,13 @@ void C_CarBase::SetSideTransMat(const float * MoveX)
 	Car.Base.Mat = Car.Base.Trans*Car.Con.JudgMat;
 }
 
+void C_CarBase::SideJudgData(D3DXMATRIX * Mat, float * Radius)
+{
+	*Radius = Car.Base.BodRad*Car.Base.ScaPos.z;
+	D3DXMatrixTranslation(Mat, 0.0f, -CarFM.BodyHeight, 0.0f);
+	*Mat = *Mat * Car.Base.Mat;
+}
+
 bool C_CarBase::RayJudgCar(const D3DXVECTOR3 * Pos, const D3DXVECTOR3 * Ray, BULLETJUDGDATA * BJD)
 {
 	float Dis;

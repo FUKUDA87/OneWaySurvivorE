@@ -117,3 +117,13 @@ void C_CarBulletManager::Set_Bullet_GroWal_Judg_Flg(const unsigned int * BulletN
 {
 	M_Bullet[*BulletNo]->Set_GroWal_Jufg_Flg(Flg);
 }
+
+RAYDATA C_CarBulletManager::GetBulletJudgData(const unsigned int * bc)
+{
+	RAYDATA rayData;
+
+	rayData.Mat = M_Bullet[*bc]->Get_BASE3D().Mat;
+	D3DXVec3TransformNormal(&rayData.Ray, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &rayData.Mat);
+
+	return rayData;
+}

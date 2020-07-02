@@ -163,7 +163,7 @@ private:
 	bool EnemyDelete(const unsigned int *EnemyNo);
 
 	//メニューの入れ
-	void SetMenu(bool PauseFlg, bool ClearFlg, bool OverFlg);
+	void SetMenu(C_NextTouch* NewMenu);
 
 	//メニューの処理
 	bool UpdateMenu(void);
@@ -180,17 +180,11 @@ private:
 	//ゲームのフレーム数の判定
 	bool JudgGameFrame(void);
 
-	//プレイヤーの照準によるレイ判定と弾の撃つと更新
-	bool UpdatePlayerBullet(void);
-
 	//今いる車で横判定
 	/*bool UpdateCarSideJudg(void);*/
 
 	//プレイヤーの横移動処理
 	bool UpdatePlayerXTrans(void);
-
-	//車の今の位置の更新
-	bool UpdateCarSetMat(void);
 
 	//ゲーム本編の最後の更新
 	bool UpdatePopEnd(void);
@@ -211,16 +205,11 @@ private:
 	bool UpdateBullet(void);
 
 	//弾の出現準備の更新
-	bool UpdateBulletEnemyInit(void);
-
-	//弾の出現の更新
-	bool UpdateBulletInit(void);
+	void BulletInitPlayer(void);
+	void BulletInitEnemy(void);
 
 	//弾の判定の更新
 	bool UpdateBulletJudg(void);
-
-	//弾の更新
-	bool UpdateBulletMove(void);
 
 	void NewSound(const int *Type, const int *Category, const int No, const int *Change);
 	void NewSound(const int *Category, const int No,const D3DXVECTOR3* Pos, const int *Change);
@@ -236,12 +225,6 @@ private:
 
 	//車の出現可能調査(出現可能ならtrue)
 	bool CarPopJudg(const D3DXMATRIX *GroundMat, const float *TransX);
-
-	//出現する車とプレイヤーの出現判定
-	bool CarPopJudgPlayer(const D3DXVECTOR3 *PopPos, const float *PopRadius);
-
-	//出現する車とエネミーの出現判定
-	bool CarPopJudgEnemy(const D3DXVECTOR3 *PopPos, const float *PopRadius);
 
 	//車の生存確認
 

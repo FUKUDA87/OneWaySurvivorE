@@ -7,7 +7,7 @@ C_Bullet_No2::C_Bullet_No2(const D3DXMATRIX * Mat) :C_Bullet_Base(Mat)
 	Init_No2();
 }
 
-C_Bullet_No2::C_Bullet_No2(const D3DXMATRIX * Mat, const S_RAY_HIT_JUDG_DATA * RayData) :C_Bullet_Base(Mat, RayData)
+C_Bullet_No2::C_Bullet_No2(const D3DXMATRIX * Mat, const S_RayHitJudgData * RayData) :C_Bullet_Base(Mat, RayData)
 {
 	Init_No2();
 }

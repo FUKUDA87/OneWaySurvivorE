@@ -6,7 +6,7 @@ public:
 	//弾の番号と銃口の行列
 	C_Bullet_No99(const D3DXMATRIX *Mat);
 	//プレイヤーが照準を合わせた時のコンストラクタ
-	C_Bullet_No99(const D3DXMATRIX *Mat, const S_RAY_HIT_JUDG_DATA* RayData);
+	C_Bullet_No99(const D3DXMATRIX *Mat, const S_RayHitJudgData* RayData);
 protected:
 	void Init_99(void);
 };

@@ -205,6 +205,9 @@ public:
 	// ‰¡ˆÚ“®‚Ì”½‰f
 	void SetSideTransMat(const float *MoveX);
 
+	// ‰¡”»’è‚Ì€”õî•ñ“n‚µ
+	void SideJudgData(D3DXMATRIX *Mat, float *Radius);
+
 protected:
 	//Ô‚Ìƒf[ƒ^
 	BODYDATA BodyData;

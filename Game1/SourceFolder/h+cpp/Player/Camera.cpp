@@ -244,12 +244,14 @@ void Camera::WallJudg(const int *RadF, c_GroundManager *groundManager)
 	}
 }
 
-void Camera::InitCarCameraMove(const bool *GameEndFlg, const bool *KeyFlg, const D3DXMATRIX *PlayerMat)
+void Camera::InitCarCameraMove(const bool *KeyFlg, const D3DXMATRIX *PlayerMat)
 {
-	//カメラをplaeyrの前方に振り向かせるクォータニオンの初期化
-	if (*GameEndFlg != false) return;
-	//前方に振り向く計算
-	if ((*KeyFlg != true) || (GetQuaFlg() != false))return;
+	if (QuaFlg == true)return;
+
+	if (*KeyFlg == false)return;
+
+	// カメラをplaeyrの前方に振り向かせるクォータニオンの初期化
+	// 前方に振り向く計算
 
 	D3DXVECTOR3 cVec, ccVec, pVec, ppVec;
 	D3DXVec3TransformNormal(&cVec, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &GetMat());
@@ -279,7 +281,6 @@ void Camera::InitCarCameraMove(const bool *GameEndFlg, const bool *KeyFlg, const
 	D3DXMatrixRotationY(&CamRotY, D3DXToRadian(Ang));
 	//camera->SetRotY(&CamRotY);
 
-
 	//RotXの計算
 	D3DXMATRIX Mat = *PlayerMat;
 	D3DXMatrixRotationY(&CamRotX, D3DXToRadian(-Ang));
@@ -299,9 +300,9 @@ void Camera::InitCarCameraMove(const bool *GameEndFlg, const bool *KeyFlg, const
 
 }
 
-bool Camera::UpdateQua(const bool *GameEndFlg, const bool *KeyFlg, const D3DXMATRIX *PlayerMat)
+bool Camera::UpdateQua(const bool *KeyFlg, const D3DXMATRIX *PlayerMat)
 {
-	InitCarCameraMove(GameEndFlg,KeyFlg,PlayerMat);
+	InitCarCameraMove(KeyFlg,PlayerMat);
 
 	if (QuaFlg == true) {
 		Anime += FrameUp;

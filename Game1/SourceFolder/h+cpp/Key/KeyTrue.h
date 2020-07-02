@@ -3,6 +3,8 @@
 
 class C_KeyTrue :public Key {
 public:
+	//右クリック
+	bool RClick();
 	//左クリック
 	bool LClick();
 	//左クリック+KeyFlg

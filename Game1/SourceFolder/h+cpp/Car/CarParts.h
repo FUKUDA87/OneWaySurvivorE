@@ -28,35 +28,8 @@ public:
 	//カメラに行列渡し
 	D3DXMATRIX Get_Camera_Mat(void);
 
-	//パーツ数渡し
-	unsigned int Get_Car_Parts_Num(void) {
-		return M_Car_Parts.size();
-	}
-
-	/*
-	判定
-	*/
-
-	//表示物Flg
-	int Get_Parts_Draw_Draw_JudgFlg(const unsigned int *M_Car_PartsNo);
-
-	//ポリゴンの頂点
-	D3DXVECTOR3 Get_Parts_Draw_Pol_Pos(const unsigned int *M_Car_PartsNo,const int *PosNo);
-
-	//メッシュ
-	LPD3DXMESH Get_Parts_Draw_Mesh(const unsigned int *M_Car_PartsNo);
-
-	//IdenFlg
-	bool Get_Parts_Draw_Iden_Flg(const unsigned int *M_Car_PartsNo);
-
-	//表示行列渡し
-	D3DXMATRIX Get_Parts_Draw_DrawMat(const unsigned int *M_Car_PartsNo);
-
 	//パーツのHpを減らす処理
 	bool Damage_CarParts(const unsigned int *M_CarPartsNo, const int *Damage);
-
-	//表示行列渡し
-	float Get_Parts_Draw_Dis(const unsigned int *M_Car_PartsNo);
 
 	BODYDATA Get_BODYDATA(void) {
 		return BodyData;
@@ -64,6 +37,9 @@ public:
 
 	// レイ判定
 	void RayJudg(BULLETJUDGDATA * BJD, const unsigned int *cc, const RAYDATA * RD, const float * Rad);
+
+	// 球判定
+	void BallJudgParst(BULLETJUDGDATA * BJD, const D3DXVECTOR3 *Pos, const int *CarType, const unsigned int *cc, const D3DXVECTOR3 *Ray, const float *Rad);
 
 protected:
 	//パーツ表示変数

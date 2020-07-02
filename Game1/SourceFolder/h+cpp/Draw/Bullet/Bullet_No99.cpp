@@ -5,7 +5,7 @@ C_Bullet_No99::C_Bullet_No99(const D3DXMATRIX * Mat):C_Bullet_No2(Mat)
 	Init_99();
 }
 
-C_Bullet_No99::C_Bullet_No99(const D3DXMATRIX * Mat, const S_RAY_HIT_JUDG_DATA * RayData):C_Bullet_No2(Mat,RayData)
+C_Bullet_No99::C_Bullet_No99(const D3DXMATRIX * Mat, const S_RayHitJudgData * RayData):C_Bullet_No2(Mat,RayData)
 {
 	Init_99();
 }

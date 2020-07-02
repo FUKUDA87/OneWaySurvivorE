@@ -39,12 +39,12 @@ public:
 	void Set_CameraMat(const D3DXMATRIX *CameraMat);
 
 	//レイの座標渡し
-	S_RAY_HIT_JUDG_DATA Get_Gun_Ray_Data(void) {
+	S_RayHitJudgData Get_Gun_Ray_Data(void) {
 		return M_Gun_Ray_Data;
 	}
 
 	//レイの情報入れ
-	void Set_Gun_Ray_Data(const S_RAY_HIT_JUDG_DATA *Data) {
+	void Set_Gun_Ray_Data(const S_RayHitJudgData *Data) {
 		M_Gun_Ray_Data = *Data;
 	}
 
@@ -64,7 +64,7 @@ private:
 	D3DXMATRIX CurRotMatY;
 
 	//レイ判定銃の座標の取得
-	S_RAY_HIT_JUDG_DATA M_Gun_Ray_Data;
+	S_RayHitJudgData M_Gun_Ray_Data;
 
 	//初期化
 	void Init_Ray_Data(void);

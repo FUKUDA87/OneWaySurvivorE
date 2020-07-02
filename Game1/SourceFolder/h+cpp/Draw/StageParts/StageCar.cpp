@@ -10,7 +10,7 @@ bool StageCar::UpdateAll(void)
 {
 	//標準パーツのアップデート
 	Update_Car_Parts();
-	Update_Gun();
+	//Update_Gun();
 
 	return true;
 }

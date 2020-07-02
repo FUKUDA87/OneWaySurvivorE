@@ -60,6 +60,8 @@ public:
 		return M_Bullet[*NowBulletNo]->Get_S_BULLET().Damage;
 	}
 
+	RAYDATA GetBulletJudgData(const unsigned int *bc);
+
 protected:
 	std::vector<C_Bullet_Base*>M_Bullet;
 };

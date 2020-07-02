@@ -74,34 +74,6 @@ D3DXMATRIX C_CarParts::Get_Camera_Mat(void)
 	return Mat;
 }
 
-int C_CarParts::Get_Parts_Draw_Draw_JudgFlg(const unsigned int * M_Car_PartsNo)
-{
-	if ((M_Car_Parts.size() < 1) || (*M_Car_PartsNo < 0) || (*M_Car_PartsNo >= M_Car_Parts.size()))return 0;
-	return M_Car_Parts[*M_Car_PartsNo]->Get_Draw_Draw_JudgFlg();
-}
-
-D3DXVECTOR3 C_CarParts::Get_Parts_Draw_Pol_Pos(const unsigned int * M_Car_PartsNo, const int * PosNo)
-{
-	if ((M_Car_Parts.size() < 1) || (*M_Car_PartsNo < 0) || (*M_Car_PartsNo >= M_Car_Parts.size()))return D3DXVECTOR3(0.0f,0.0f,0.0f);
-	return M_Car_Parts[*M_Car_PartsNo]->Get_Draw_Pol_Pos(PosNo);
-}
-
-LPD3DXMESH C_CarParts::Get_Parts_Draw_Mesh(const unsigned int * M_Car_PartsNo)
-{
-	return M_Car_Parts[*M_Car_PartsNo]->Get_Draw_Mesh();
-}
-
-bool C_CarParts::Get_Parts_Draw_Iden_Flg(const unsigned int * M_Car_PartsNo)
-{
-	if ((M_Car_Parts.size() < 1) || (*M_Car_PartsNo < 0) || (*M_Car_PartsNo >= M_Car_Parts.size()))return false;
-	return M_Car_Parts[*M_Car_PartsNo]->Get_Draw_Iden_Flg();
-}
-
-D3DXMATRIX C_CarParts::Get_Parts_Draw_DrawMat(const unsigned int * M_Car_PartsNo)
-{
-	return M_Car_Parts[*M_Car_PartsNo]->Get_Draw_DrawMat();
-}
-
 bool C_CarParts::Damage_CarParts(const unsigned int * M_CarPartsNo, const int * Damage)
 {
 	bool DamageFlg;
@@ -114,12 +86,6 @@ bool C_CarParts::Damage_CarParts(const unsigned int * M_CarPartsNo, const int * 
 	if (HpDamage(&Flg, Damage) == true) DamageFlg = true;
 
 	return DamageFlg;
-}
-
-float C_CarParts::Get_Parts_Draw_Dis(const unsigned int * M_Car_PartsNo)
-{
-	if ((M_Car_Parts.size() < 1) || (*M_Car_PartsNo < 0) || (*M_Car_PartsNo >= M_Car_Parts.size()))return 0.0f;
-	return M_Car_Parts[*M_Car_PartsNo]->Get_Draw_Dis();
 }
 
 void C_CarParts::RayJudg(BULLETJUDGDATA * BJD, const unsigned int * cc
@@ -137,6 +103,44 @@ void C_CarParts::RayJudg(BULLETJUDGDATA * BJD, const unsigned int * cc
 
 	RayJudgParts(BJD, &Pos, &carType, cc, &RD->Ray);
 
+}
+
+void C_CarParts::BallJudgParst(BULLETJUDGDATA * BJD, const D3DXVECTOR3 * Pos, const int * CarType, const unsigned int * cc, const D3DXVECTOR3 * Ray,const float *Rad)
+{
+
+	if (judg.BallJudg(Pos, &judg.SetPosM(&Car.Base.Mat), Rad) != true)return;
+
+	/*ÉpÅ[Éc*/
+	if (M_Car_Parts.size() <= 0)return;
+
+	c_StructManager structManager;
+
+	int PartsType = 0;
+
+	switch (*CarType)
+	{
+	case co_PlayerCar:
+		PartsType=co_PlayerParts;
+		break;
+	case co_EnemyCar:
+		PartsType= co_EnemyParts;
+		break;
+	}
+
+	for (unsigned int pc = 0; pc < M_Car_Parts.size(); pc++) {
+
+		if (M_Car_Parts[pc]->Get_Draw_Draw_JudgFlg() != Co_Draw_Ball) continue;
+
+		float L_Radius = M_Car_Parts[pc]->Get_Draw_Dis();
+
+		if (judg.BallJudg(Pos, &judg.SetPosM(&M_Car_Parts[pc]->Get_Draw_DrawMat()),
+			&L_Radius) != true) continue;
+
+		//ç≈ëÂÇÊÇËè¨Ç≥Ç¢Ç©
+		BJD->HitType = structManager.GetCarType(&co_EnemyParts, cc, &pc);
+
+	}
+	
 }
 
 

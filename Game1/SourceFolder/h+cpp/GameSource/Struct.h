@@ -567,11 +567,11 @@ struct S_DRAW3D_DATA {
 };
 
 //レイ判定の結果の構造体
-struct S_RAY_HIT_JUDG_DATA {
+struct S_RayHitJudgData {
 	//レイが当たった判定
 	bool Flg;
 	//レイが当たった位置
-	D3DXMATRIX Mat;
+	D3DXVECTOR3 HitPos;
 };
 
 //弾の初期化の情報渡し
@@ -582,7 +582,7 @@ struct S_BULLET3D_INIT_DATA {
 	/*銃の動き*/
 
 	/*プレイヤーの場合*/
-	S_RAY_HIT_JUDG_DATA RayHitData;
+	S_RayHitJudgData RayHitData;
 
 	/*敵の場合*/
 

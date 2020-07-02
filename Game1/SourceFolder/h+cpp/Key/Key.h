@@ -35,7 +35,7 @@ public:
 	//左クリック+KeyFlg
 	virtual bool LClickF();
 	//右クリック
-	bool RClick();
+	virtual bool RClick();
 	//右クリック+KeyFlg
 	bool RClickF();
 	//Nキー

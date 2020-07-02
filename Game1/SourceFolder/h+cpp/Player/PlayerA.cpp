@@ -47,7 +47,7 @@ void C_PlayerA::InitPlayerA(void)
 	//Ô‰Šú‰»
 	SetMeshCar(BodyData.CarBodyNo);
 
-	NewEffect(new c_Ball3DEffect(Car.Base.BodRad, 1.0f));
+	//NewEffect(new c_Ball3DEffect(Car.Base.BodRad, 1.0f));
 
 	New_Set_Car_Parts(&BodyData);
 

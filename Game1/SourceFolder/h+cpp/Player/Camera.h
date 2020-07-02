@@ -18,7 +18,7 @@ public:
 	virtual bool UpdateM(bool MouFlg,C_Mouse *mouse);
 	virtual bool Update(D3DXMATRIX mat);
 	//クォータニオンのアップデート
-	virtual bool UpdateQua(const bool *GameEndFlg, const bool *KeyFlg, const D3DXMATRIX *PlayerMat);
+	virtual bool UpdateQua(const bool *KeyFlg,const D3DXMATRIX *PlayerMat);
 	D3DXVECTOR3 GetLook();
 	D3DXVECTOR3 GetPos();
 	float GetSize(D3DXVECTOR3 Pos, D3DXVECTOR3 Look);
@@ -81,7 +81,7 @@ protected:
 
 private:
 	// カメラを車正面に向ける処理
-	void InitCarCameraMove(const bool *GameEndFlg,const bool *KeyFlg,const D3DXMATRIX *PlayerMat);
+	void InitCarCameraMove(const bool *KeyFlg, const D3DXMATRIX *PlayerMat);
 };
 
 #endif // !Camera_H

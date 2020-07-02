@@ -23,7 +23,7 @@ C_Bullet_Base * C_Bullet_DrawManager::Get_Bullet(const int * BulletNo, const D3D
 	return new C_Bullet_No1(Mat);
 }
 
-C_Bullet_Base * C_Bullet_DrawManager::Get_Bullet(const int * BulletNo, const D3DXMATRIX * Mat, const S_RAY_HIT_JUDG_DATA * RayData)
+C_Bullet_Base * C_Bullet_DrawManager::Get_Bullet(const int * BulletNo, const D3DXMATRIX * Mat, const S_RayHitJudgData * RayData)
 {
 	switch (*BulletNo)
 	{

@@ -10,7 +10,7 @@ public:
 	//弾の番号と銃口の行列
 	C_Bullet_Base(const D3DXMATRIX *Mat);
 	//プレイヤーが照準を合わせた時のコンストラクタ
-	C_Bullet_Base(const D3DXMATRIX *Mat, const S_RAY_HIT_JUDG_DATA* RayData);
+	C_Bullet_Base(const D3DXMATRIX *Mat, const S_RayHitJudgData* RayData);
 	~C_Bullet_Base();
 
 	//表示
@@ -79,7 +79,7 @@ private:
 	void M_Draw_Delete_All(void);
 
 	//弾を照準の方向に傾ける処理
-	void RayPos_Bullet(const S_RAY_HIT_JUDG_DATA* RayData);
+	void RayPos_Bullet(const S_RayHitJudgData* RayData);
 
 	//初期化
 	void Init(void);

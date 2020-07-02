@@ -474,17 +474,13 @@ bool GameScene::SideJudg(bool * WallJudgFlg, const s_CarType *carType, const flo
 	D3DXMATRIX tmp;
 	if ((player != nullptr) && (carType->Type == Hit_Type_Player))
 	{
-		radius = player->GetBodRadCar()*player->GetScalPosCar().z;
-		D3DXMatrixTranslation(&tmp, 0.0f, -player->GetQuaForMove().BodyHeight, 0.0f);
-		tmp = tmp * player->GetMatCar();
+		player->SideJudgData(&tmp, &radius);
 		flg = true;
 	}
 	else {
 		if ((enemy.size() > 0) && (carType->Type == Hit_Type_Enemy) && (carType->Numbar[0] < enemy.size()))
 		{
-			radius = enemy[carType->Numbar[0]]->GetBodRadCar()*enemy[carType->Numbar[0]]->GetScalPosCar().z;
-			D3DXMatrixTranslation(&tmp, 0.0f, -enemy[carType->Numbar[0]]->GetQuaForMove().BodyHeight, 0.0f);
-			tmp = tmp * enemy[carType->Numbar[0]]->GetMatCar();
+			enemy[carType->Numbar[0]]->SideJudgData(&tmp, &radius);
 			flg = true;
 		}
 		else {
@@ -805,34 +801,11 @@ bool GameScene::EnemyDelete(const unsigned int * EnemyNo)
 	return false;
 }
 
-void GameScene::SetMenu(bool PauseFlg, bool ClearFlg, bool OverFlg)
+void GameScene::SetMenu(C_NextTouch * NewMenu)
 {
-	//ポーズ------------------------------------
-	if (PauseFlg == true) {
-		
-		if (Menu != nullptr)delete Menu;
+	if (Menu != nullptr)delete Menu;
 
-		Menu=new C_PauseTouch();
-		return;
-	}
-	//ステージクリア---------------------------------------
-	if (ClearFlg == true) {
-		
-		if (Menu != nullptr)delete Menu;
-
-		Menu = new C_ClearTouch();
-		return;
-	}
-	//ゲームオーバー---------------------------------------
-	if (OverFlg == true) {
-		
-		if (Menu != nullptr)delete Menu;
-
-		Menu = new C_OverTouch();
-		return;
-	}
-
-	return;
+	Menu = NewMenu;
 }
 
 bool GameScene::UpdateMenu(void)
@@ -928,7 +901,13 @@ bool GameScene::UpdateGame(void)
 	//プレイヤー
 	//========================================
 
-	UpdateCarSetMat();
+	//車の今の位置の更新
+	if (player != nullptr) player->SetCarMoveMat();
+
+	if (enemy.size() > 0)
+	{
+		for (auto && e : enemy) e->SetCarMoveMat();
+	}
 
 	//カメラ-------------------------------------
 	if (GetEndFlg() == false) {
@@ -991,8 +970,12 @@ bool GameScene::UpdateGame(void)
 	}
 
 	//カメラのクォータニオンのアップデート
-	bool gameEndFlg = GetEndFlg(), keyFlg = key.RClickF();
-	camera->UpdateQua(&gameEndFlg, &keyFlg, &player->GetMatCar());
+	bool keyFlg = key.RClickF();
+	if (GetEndFlg() != true)
+	{
+		keyFlg = key.RClickF();
+	}
+	camera->UpdateQua(&keyFlg, &player->GetMatCar());
 
 	//カーブの車体の角度を反映
 	player->SetCurRotMat();
@@ -1032,7 +1015,7 @@ bool GameScene::UpdateGame(void)
 	if (UpdateEnemy() == false) {
 		if (GetEndFlg() == false) {
 			GemeEndChange(&Co_Stage_End_Clear);
-			SetMenu(false, true, false);
+			SetMenu(new C_ClearTouch());
 		}
 	}
 
@@ -1077,7 +1060,7 @@ bool GameScene::UpdateGamePause(void)
 				if ((GetAsyncKeyState('8') & 0x8000) && (GetAsyncKeyState('9') & 0x8000) && (GetAsyncKeyState('0') & 0x8000)) {
 					pause->SetStaSavFlg(true);
 				}
-				SetMenu(true, false, false);
+				SetMenu(new C_PauseTouch());
 
 				if (soundGameManager != nullptr) {
 					soundGameManager->Stop();
@@ -1102,62 +1085,6 @@ bool GameScene::JudgGameFrame(void)
 		CountNum += 1;
 	}
 	return false;
-}
-
-bool GameScene::UpdatePlayerBullet(void)
-{
-	//照準のレイ判定
-	S_RAY_HIT_JUDG_DATA Hit_Data;
-	Hit_Data.Flg = false;
-
-	BULLETJUDGDATA l_DisD;
-	float Dis = 2000.0f;
-	c_StructManager structManager;
-	l_DisD = structManager.GetBULLETJUDGDATA(&structManager.GetCarType(&co_PlayerCar),&Dis);
-	
-	RAYDATA l_RayR;
-	l_RayR.Mat = judg.SetMatP(&camera->GetPos());
-	l_RayR.Ray = camera->GetVec();
-	float Rad = 400.0f;
-
-	//敵のレイ判定
-	RayJudgEnemy(&l_DisD, &l_RayR, &Rad);
-	if (l_DisD.HitType.Type > 0)Hit_Data.Flg = true;
-	//照準の変化
-	if (Hit_Data.Flg == true) {
-		aiming->ChaFlg();
-	}
-	else {
-		aiming->ResFlg();
-	}
-	//地面
-	if(groundManager!=nullptr)groundManager->BulletJudg(&l_DisD, &l_RayR, nullptr, &Rad);
-	if (l_DisD.HitType.Type > 0)Hit_Data.Flg = true;
-	//建物のレイ判定
-	//バレットの出現処理
-	if (Hit_Data.Flg == false) {
-		player->Set_Gun_Ray_Data(&Hit_Data);
-	}
-	else {
-
-		//レイが当たった座標
-		D3DXVECTOR3 RayHitPos = judg.GetRayHitPos(&camera->GetPos(), &l_RayR.Ray, &l_DisD.SamllDis);
-
-		//レイが当たった座標を行列に変換
-		Hit_Data.Mat = judg.SetMatP(&RayHitPos);
-
-		player->Set_Gun_Ray_Data(&Hit_Data);
-	}
-
-	bool T_Flg = false;
-	if (key.LClickF_N() == true) {
-		T_Flg = true;
-	}
-	unsigned int GunNo = 0;
-
-	player->Set_Gun_Trigger(&GunNo, &T_Flg);
-
-	return true;
 }
 
 bool GameScene::UpdatePlayerXTrans(void)
@@ -1201,17 +1128,6 @@ bool GameScene::UpdatePlayerXTrans(void)
 	return true;
 }
 
-bool GameScene::UpdateCarSetMat(void)
-{
-	if (player != nullptr) player->SetCarMoveMat();
-
-	if (enemy.size() > 0) {
-		for (auto && e : enemy) e->SetCarMoveMat();
-	}
-
-	return true;
-}
-
 bool GameScene::UpdatePopEnd(void)
 {
 	if (carPop == nullptr) return false;
@@ -1221,10 +1137,12 @@ bool GameScene::UpdatePopEnd(void)
 	//現在の生存している敵数の調査
 	int Num = 0;
 
-	if (enemy.size() > 0) {
-
-		for (auto && e : enemy) if (e->GetFlgCar() == true)Num++;
-
+	if (enemy.size() > 0) 
+	{
+		for (auto && e : enemy)
+		{
+			if (e->GetFlgCar() == true)Num++;
+		}
 	}
 
 	carPop->Set_Now_Enemy_Num_N(&Num);
@@ -1309,7 +1227,7 @@ void GameScene::SetGameOver(void)
 	player->SetSpeedCar(&(player->GetCon().Speed *0.0f));
 	war->SetFlg(false);
 	//メニューの表示
-	SetMenu(false, false, true);
+	SetMenu(new C_OverTouch());
 }
 
 void GameScene::SetGameClear(void)
@@ -1317,7 +1235,7 @@ void GameScene::SetGameClear(void)
 	if (GetEndFlg() == true)return;
 
 	GemeEndChange(&Co_Stage_End_Clear);
-	SetMenu(false, true, false);
+	SetMenu(new C_ClearTouch());
 
 	int No = 5;
 	soundGameManager->BGMStart(&No);
@@ -1334,40 +1252,108 @@ bool GameScene::UpdateBullet(void)
 	}
 
 	//弾の出現準備
-	UpdatePlayerBullet();
-	UpdateBulletEnemyInit();
+	BulletInitPlayer();
+	BulletInitEnemy();
 
 	//弾の出現
-	UpdateBulletInit();
+	if (player != nullptr) 
+	{
+		if (GetEndFlg() != true) player->Init_Bullet();
+	}
+
+	if (enemy.size() > 0)
+	{
+		for (auto && e : enemy) e->Init_Bullet();
+	}
 
 	//弾の当たり判定
 	UpdateBulletJudg();
 
 	//弾の更新
-	UpdateBulletMove();
+	if (player != nullptr) player->Update_Bullet();
+
+	if (enemy.size() > 0)
+	{
+		for (auto && e : enemy) e->Update_Bullet();
+	}
 
 	return true;
 }
 
-bool GameScene::UpdateBulletEnemyInit(void)
+void GameScene::BulletInitPlayer(void)
 {
-	if (enemy.size() < 1)return true;
+	//照準のレイ判定
+	S_RayHitJudgData HitData;
+	HitData.Flg = false;
 
-	for (unsigned int i = 0; i < enemy.size(); i++) {
+	BULLETJUDGDATA l_DisD;
+	float Dis = 2000.0f;
+	c_StructManager structManager;
+	l_DisD = structManager.GetBULLETJUDGDATA(&structManager.GetCarType(&co_PlayerCar), &Dis);
 
-		if (enemy[i]->Get_Gun_Num() <= 0) continue;
+	RAYDATA l_RayR;
+	l_RayR.Mat = judg.SetMatP(&camera->GetPos());
+	l_RayR.Ray = camera->GetVec();
+	float Rad = 400.0f;
 
-		for (unsigned int g = 0; g < enemy[i]->Get_Gun_Num(); g++) {
+	//敵のレイ判定
+	RayJudgEnemy(&l_DisD, &l_RayR, &Rad);
+	if (l_DisD.HitType.Type > 0)HitData.Flg = true;
 
-			if (enemy[i]->Get_Gun_Data(&g).Ray_Judg_Flg != true) continue;
+	//照準の変化
+	if (HitData.Flg == true) {
+		aiming->ChaFlg();
+	}
+	else {
+		aiming->ResFlg();
+	}
+
+	//地面
+	if (groundManager != nullptr)groundManager->BulletJudg(&l_DisD, &l_RayR, nullptr, &Rad);
+
+	if (l_DisD.HitType.Type > 0)HitData.Flg = true;
+	//建物のレイ判定
+	//バレットの出現処理
+	if (HitData.Flg == false) {
+		player->Set_Gun_Ray_Data(&HitData);
+	}
+	else {
+
+		//レイが当たった座標
+		HitData.HitPos = judg.GetRayHitPos(&camera->GetPos(), &l_RayR.Ray, &l_DisD.SamllDis);
+
+		player->Set_Gun_Ray_Data(&HitData);
+	}
+
+	bool T_Flg = false;
+	if (key.LClickF_N() == true) {
+		T_Flg = true;
+	}
+	unsigned int GunNo = 0;
+
+	player->Set_Gun_Trigger(&GunNo, &T_Flg);
+
+}
+
+void GameScene::BulletInitEnemy(void)
+{
+	if (enemy.size() < 1)return;
+
+	for (unsigned int ec = 0; ec < enemy.size(); ec++) 
+	{
+		if (enemy[ec]->Get_Gun_Num() <= 0) continue;
+
+		for (unsigned int gc = 0; gc < enemy[ec]->Get_Gun_Num(); gc++) 
+		{
+			if (enemy[ec]->Get_Gun_Data(&gc).Ray_Judg_Flg != true) continue;
 
 			//レイ判定
 			c_StructManager structManager;
 			BULLETJUDGDATA b;
-			b.SamllDis = enemy[i]->Get_Gun_Data(&g).RayDis;
-			b.JudgType = structManager.GetCarType(&co_EnemyCar, &i);
+			b.SamllDis = enemy[ec]->Get_Gun_Data(&gc).RayDis;
+			b.JudgType = structManager.GetCarType(&co_EnemyCar, &ec);
 			RAYDATA r;
-			r.Mat = enemy[i]->Get_Gun_Data(&g).DrawBase.Mat;
+			r.Mat = enemy[ec]->Get_Gun_Data(&gc).DrawBase.Mat;
 			D3DXVec3TransformNormal(&r.Ray, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &r.Mat);
 			float Rad = (float)RadChara*2.0f;
 
@@ -1379,29 +1365,11 @@ bool GameScene::UpdateBulletEnemyInit(void)
 			bool Ray_HitFlg = false;
 			if (b.HitType.Type > 0)Ray_HitFlg = true;
 
-			enemy[i]->Set_Ray_Hit_Flg(&g, &Ray_HitFlg);
-			enemy[i]->Set_Ray_Dis(&g, &b.SamllDis);
+			enemy[ec]->Set_Ray_Hit_Flg(&gc, &Ray_HitFlg);
+			enemy[ec]->Set_Ray_Dis(&gc, &b.SamllDis);
 		}
 	}
 
-	return true;
-}
-
-bool GameScene::UpdateBulletInit(void)
-{
-	if (player != nullptr) {
-		if (GetEndFlg() != true) {
-			player->Init_Bullet();
-		}
-	}
-
-	if (enemy.size() < 1)return true;
-
-	for (auto && e : enemy) {
-		e->Init_Bullet();
-	}
-
-	return true;
 }
 
 bool GameScene::UpdateBulletJudg(void)
@@ -1423,8 +1391,7 @@ bool GameScene::UpdateBulletJudg(void)
 				c_StructManager structManager;
 				Bullet = structManager.GetBULLETJUDGDATA(&structManager.GetCarType(&co_PlayerCar), &Dis);
 
-				BulletRay.Mat = player->Get_Bullet_Mat(&bc);
-				D3DXVec3TransformNormal(&BulletRay.Ray, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &BulletRay.Mat);
+				BulletRay = player->GetBulletJudgData(&bc);
 
 				//地面
 				if (player->Get_Bullet_GroWal_Judg_Flg(&bc) == true) 
@@ -1449,50 +1416,33 @@ bool GameScene::UpdateBulletJudg(void)
 	{
 		for (unsigned int ec = 0; ec < enemy.size(); ec++) 
 		{
-			if (enemy[ec]->Get_BulletNum() > 0)
+			if (enemy[ec]->Get_BulletNum() <= 0)continue;
+
+			for (unsigned int bc = 0; bc < enemy[ec]->Get_BulletNum(); bc++)
 			{
-				for (unsigned int bc = 0; bc < enemy[ec]->Get_BulletNum(); bc++)
+				//初期化
+				Dis = enemy[ec]->Get_Bullet_MoveDis(&bc);
+				c_StructManager structManager;
+				Bullet = structManager.GetBULLETJUDGDATA(&structManager.GetCarType(&co_EnemyCar, &ec), &Dis);
+
+				BulletRay = enemy[ec]->GetBulletJudgData(&bc);
+
+				//プレイヤー
+				RayJudgPlayer(&Bullet, &BulletRay, &Rad);
+				//地面
+				if (enemy[ec]->Get_Bullet_GroWal_Judg_Flg(&bc) == true)
 				{
-					//初期化
-					Dis = enemy[ec]->Get_Bullet_MoveDis(&bc);
-					c_StructManager structManager;
-					Bullet = structManager.GetBULLETJUDGDATA(&structManager.GetCarType(&co_EnemyCar, &ec), &Dis);
-
-					BulletRay.Mat = enemy[ec]->Get_Bullet_Mat(&bc);
-					D3DXVec3TransformNormal(&BulletRay.Ray, &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &BulletRay.Mat);
-
-					//プレイヤー
-					RayJudgPlayer(&Bullet, &BulletRay, &Rad);
-					//地面
-					if (enemy[ec]->Get_Bullet_GroWal_Judg_Flg(&bc) == true) 
-					{
-						bool GroWalJudgFlg;
-						if (groundManager != nullptr)groundManager->BulletJudg(&Bullet, &BulletRay, &GroWalJudgFlg, &Rad);
-						//次も壁と地面を判定できるかの代入
-						enemy[ec]->Set_Bullet_GroWal_Judg_Flg(&bc, &GroWalJudgFlg);
-					}
-					//敵
-					RayJudgEnemy(&Bullet, &BulletRay, &Rad);
-					//判定結果と弾の削除
-					if (SetBulletDamage(&Bullet, &BulletRay, enemy[ec]->Get_Bullet_Damage(&bc)) == true)enemy[ec]->Delete_Bullet(&bc);
+					bool GroWalJudgFlg;
+					if (groundManager != nullptr)groundManager->BulletJudg(&Bullet, &BulletRay, &GroWalJudgFlg, &Rad);
+					//次も壁と地面を判定できるかの代入
+					enemy[ec]->Set_Bullet_GroWal_Judg_Flg(&bc, &GroWalJudgFlg);
 				}
+				//敵
+				RayJudgEnemy(&Bullet, &BulletRay, &Rad);
+				//判定結果と弾の削除
+				if (SetBulletDamage(&Bullet, &BulletRay, enemy[ec]->Get_Bullet_Damage(&bc)) == true)enemy[ec]->Delete_Bullet(&bc);
 			}
 		}
-	}
-
-	return true;
-}
-
-bool GameScene::UpdateBulletMove(void)
-{
-	if (player != nullptr) {
-		player->Update_Bullet();
-	}
-
-	if (enemy.size() < 1)return true;
-
-	for (auto && e : enemy) {
-		e->Update_Bullet();
 	}
 
 	return true;
@@ -1602,50 +1552,30 @@ bool GameScene::CarPopJudg(const D3DXMATRIX * GroundMat, const float * TransX)
 	float Radius = 4.0f*2.0f;
 
 	//プレイヤーとの判定
-	if (CarPopJudgPlayer(&Pop_Pos, &Radius) == true)return false;
+	if (player != nullptr)
+	{
+		if(player->BallJudgCar(&Pop_Pos,&Radius))return false;
+	}
 
 	//エネミーとの判定
-	if (CarPopJudgEnemy(&Pop_Pos, &Radius) == true)return false;
+	if (enemy.size() > 0)
+	{
+		for (auto && e : enemy)
+		{
+			if (e->BallJudgCar(&Pop_Pos, &Radius))return false;
+		}
+	}
 
 	//出現可能
 	return true;
 }
 
-bool GameScene::CarPopJudgPlayer(const D3DXVECTOR3 * Pop_Pos, const float * Pop_Radius)
-{
-	if (player == nullptr)return false;
-
-	D3DXVECTOR3 Pos;
-
-	judg.SetPosM(&Pos, &player->GetMatCar());
-
-	return judg.Pop_BallJudg(Pop_Pos, &Pos, Pop_Radius);
-}
-
-bool GameScene::CarPopJudgEnemy(const D3DXVECTOR3 * Pop_Pos, const float * Pop_Radius)
-{
-	if (enemy.size() <= 0) return false;
-
-	for (auto && e : enemy) {
-		
-		D3DXVECTOR3 Pos;
-
-		judg.SetPosM(&Pos, &e->GetMatCar());
-
-		if (judg.Pop_BallJudg(Pop_Pos, &Pos, Pop_Radius) == true)return true;
-
-	}
-
-	return false;
-}
-
 void GameScene::RayJudgPlayer(BULLETJUDGDATA * BJD, const RAYDATA * RD, const float *Rad)
 {
-	if (player != nullptr)return;
+	if (player == nullptr)return;
 	if (BJD->JudgType.Type == co_PlayerCar)return;
 
 	player->RayJudg(BJD, nullptr, RD, Rad);
-
 }
 
 void GameScene::RayJudgEnemy(BULLETJUDGDATA * BJD, const RAYDATA * RD, const float * Rad)
@@ -1669,30 +1599,9 @@ void GameScene::BulletJudgEnemyBall(BULLETJUDGDATA * BJD, const RAYDATA * RD, co
 	D3DXVECTOR3 BPos;
 	judg.SetPosM(&BPos, &RD->Mat);
 
-	c_StructManager structManager;
-
 	//enemyの数
 	for (unsigned int e = 0; e < enemy.size(); e++) {
-
-		//
-		if (judg.BallJudg(&judg.SetPosM(&RD->Mat), &judg.SetPosM(&enemy[e]->GetMatCar()), Rad) != true) continue;
-
-		/*パーツ*/
-		if (enemy[e]->Get_Car_Parts_Num() <= 0) continue;
-
-		for (unsigned int p = 0; p < enemy[e]->Get_Car_Parts_Num(); p++) {
-
-			if (enemy[e]->Get_Parts_Draw_Draw_JudgFlg(&p) != Co_Draw_Ball) continue;
-
-			float L_Radius = enemy[e]->Get_Parts_Draw_Dis(&p);
-
-			if (judg.BallJudg(&BPos, &judg.SetPosM(&enemy[e]->Get_Parts_Draw_DrawMat(&p)),
-				&L_Radius) != true) continue;
-
-			//最大より小さいか
-			BJD->HitType = structManager.GetCarType(&co_EnemyParts, &e, &p);
-
-		}
+		enemy[e]->BallJudgParst(BJD, &BPos, &co_EnemyCar, &e, &RD->Ray, Rad);
 	}
 }
 

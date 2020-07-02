@@ -199,6 +199,10 @@
     <ClInclude Include="h+cpp\Draw\Effect\Gun\No1\Shot\Gun_No1_Bullet_Empty_1.h" />
     <ClInclude Include="h+cpp\Draw\Effect\Gun\No1\Shot\Gun_No1_MozFla_1.h" />
     <ClInclude Include="h+cpp\Draw\Effect\Gun\No1\Shot\Gun_No1_Shot_Effect.h" />
+    <ClInclude Include="h+cpp\Draw\Gun\GunBase.h" />
+    <ClInclude Include="h+cpp\Draw\Gun\GunPartsBase.h" />
+    <ClInclude Include="h+cpp\Draw\Gun\Type\A\GunA.h" />
+    <ClInclude Include="h+cpp\Draw\Gun\Type\A\GunAPartsA.h" />
     <ClInclude Include="h+cpp\Draw\Hp\Enemy\Hpbar2DEnemy.h" />
     <ClInclude Include="h+cpp\Draw\Hp\Enemy\Hpbar3DEnemy.h" />
     <ClInclude Include="h+cpp\Draw\Hp\Hpbar2D.h" />
@@ -486,6 +490,10 @@
     <ClCompile Include="h+cpp\Draw\Effect\Gun\No1\Shot\Gun_No1_Bullet_Empty_1.cpp" />
     <ClCompile Include="h+cpp\Draw\Effect\Gun\No1\Shot\Gun_No1_MozFla_1.cpp" />
     <ClCompile Include="h+cpp\Draw\Effect\Gun\No1\Shot\Gun_No1_Shot_Effect.cpp" />
+    <ClCompile Include="h+cpp\Draw\Gun\GunBase.cpp" />
+    <ClCompile Include="h+cpp\Draw\Gun\GunPartsBase.cpp" />
+    <ClCompile Include="h+cpp\Draw\Gun\Type\A\GunA.cpp" />
+    <ClCompile Include="h+cpp\Draw\Gun\Type\A\GunAPartsA.cpp" />
     <ClCompile Include="h+cpp\Draw\Hp\Enemy\Hpbar2DEnemy.cpp" />
     <ClCompile Include="h+cpp\Draw\Hp\Enemy\Hpbar3DEnemy.cpp" />
     <ClCompile Include="h+cpp\Draw\Hp\Hpbar2D.cpp" />

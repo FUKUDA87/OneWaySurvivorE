@@ -2,6 +2,15 @@
 
 bool C_KeyTrue::LClickFlg = false;
 
+bool C_KeyTrue::RClick()
+{
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000) {
+		return true;
+	}
+	
+	return false;
+}
+
 bool C_KeyTrue::LClick()
 {
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000) {

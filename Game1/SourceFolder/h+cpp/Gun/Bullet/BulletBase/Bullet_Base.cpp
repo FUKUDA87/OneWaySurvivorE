@@ -9,7 +9,7 @@ C_Bullet_Base::C_Bullet_Base(const D3DXMATRIX *Mat)
 	Init();
 }
 
-C_Bullet_Base::C_Bullet_Base(const D3DXMATRIX * Mat, const S_RAY_HIT_JUDG_DATA * RayData)
+C_Bullet_Base::C_Bullet_Base(const D3DXMATRIX * Mat, const S_RayHitJudgData * RayData)
 {
 	//s—ñ‚Ì‰Šú‰»
 	Set_Mat(Mat);
@@ -118,7 +118,7 @@ void C_Bullet_Base::M_Draw_Delete_All(void)
 
 }
 
-void C_Bullet_Base::RayPos_Bullet(const S_RAY_HIT_JUDG_DATA * RayData)
+void C_Bullet_Base::RayPos_Bullet(const S_RayHitJudgData * RayData)
 {
 	if (RayData->Flg != true)return;
 
@@ -127,7 +127,7 @@ void C_Bullet_Base::RayPos_Bullet(const S_RAY_HIT_JUDG_DATA * RayData)
 	//’e‚ªÆ€‚Ì•û‚ÉŒü‚©‚¤ˆ—
 	double Ang, ang = 0.0f;
 	D3DXMATRIX RotMat;
-	judg.CroDot(M_Base.Mat, &RotMat, judg.SetPosM(&RayData->Mat), D3DXVECTOR3(0.0f, 0.0f, 1.0f), &Ang, ang, false);
+	judg.CroDot(M_Base.Mat, &RotMat, RayData->HitPos, D3DXVECTOR3(0.0f, 0.0f, 1.0f), &Ang, ang, false);
 	M_Base.Mat = RotMat* M_Base.Mat;
 }
 

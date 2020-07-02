@@ -69,12 +69,12 @@ void c_DamageNumDraw3DManager::NewDamageNumDraw(const int * Character_Type, cons
 
 	Judg judg;
 
-	D3DXVECTOR3 Ray_Hit_Pos;
+	D3DXVECTOR3 RayHitPos;
 
-	judg.Get_Ray_Pos3D(&Ray_Hit_Pos, &judg.SetPosM(Ray_Mat), Ray_Vec, Ray_Dis);
+	judg.GetRayHitPos(&judg.SetPosM(Ray_Mat), Ray_Vec, Ray_Dis);
 
 	int L_Damage = *Damage;
 	if (*DamageFlg != true)L_Damage = 0;
 
-	damageNumDraw.push_back(new C_Damage_Move_B(&Ray_Hit_Pos, PlayerJudgMat, &L_Damage));
+	damageNumDraw.push_back(new C_Damage_Move_B(&RayHitPos, PlayerJudgMat, &L_Damage));
 }

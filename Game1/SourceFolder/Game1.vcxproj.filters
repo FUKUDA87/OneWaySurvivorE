@@ -346,6 +346,15 @@
     <Filter Include="ソース ファイル\Draw\Effect\Car\Ball">
       <UniqueIdentifier>{4c218c61-410a-4053-9afb-b13bdd6eb3bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Draw\Gun">
+      <UniqueIdentifier>{4cea2df3-6678-4a9a-9484-846e77284de6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\Gun\Type">
+      <UniqueIdentifier>{071ca6c9-9632-4fe9-b609-a696a6581829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Draw\Gun\Type\A">
+      <UniqueIdentifier>{28b82786-05ad-4fbb-be84-be6c20fbdf8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h+cpp\GameSource\3DSound.h">
@@ -1248,6 +1257,18 @@
     <ClInclude Include="h+cpp\Draw\Damage_Num\DamageNumDraw3DManager.h">
       <Filter>ソース ファイル\Draw\Damage_Num</Filter>
     </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Gun\GunBase.h">
+      <Filter>ソース ファイル\Draw\Gun</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Gun\GunPartsBase.h">
+      <Filter>ソース ファイル\Draw\Gun</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Gun\Type\A\GunA.h">
+      <Filter>ソース ファイル\Draw\Gun\Type\A</Filter>
+    </ClInclude>
+    <ClInclude Include="h+cpp\Draw\Gun\Type\A\GunAPartsA.h">
+      <Filter>ソース ファイル\Draw\Gun\Type\A</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="h+cpp\GameSource\3DSound.cpp">
@@ -2056,6 +2077,18 @@
     </ClCompile>
     <ClCompile Include="h+cpp\Draw\Damage_Num\DamageNumDraw3DManager.cpp">
       <Filter>ソース ファイル\Draw\Damage_Num</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Gun\GunPartsBase.cpp">
+      <Filter>ソース ファイル\Draw\Gun</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Gun\GunBase.cpp">
+      <Filter>ソース ファイル\Draw\Gun</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Gun\Type\A\GunA.cpp">
+      <Filter>ソース ファイル\Draw\Gun\Type\A</Filter>
+    </ClCompile>
+    <ClCompile Include="h+cpp\Draw\Gun\Type\A\GunAPartsA.cpp">
+      <Filter>ソース ファイル\Draw\Gun\Type\A</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
